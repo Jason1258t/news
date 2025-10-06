@@ -388,3 +388,35 @@ body {
         padding: 1.5rem 1rem;
     }
 }
+
+/* Навигация между статьями */
+.article-navigation {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e9ecef;
+    text-align: center;
+}
+
+.nav-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: #4a90e2;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: background 0.3s ease;
+}
+
+.nav-button:hover {
+    background: #357abd;
+}
+
+/* Стили для темной темы */
+body.dark-theme .nav-button {
+    background: #5da8ff;
+}
+
+body.dark-theme .nav-button:hover {
+    background: #4a90e2;
+}
