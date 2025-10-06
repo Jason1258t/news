@@ -18,6 +18,7 @@
                     <div class="logo">
                         <h1>ПГТУ Breaking NEWS</h1>
                     </div>
+                    
                     <nav class="nav">
                         <a href="#" class="nav-link">Главная</a>
                         <a href="#" class="nav-link">Политика</a>
@@ -25,9 +26,11 @@
                         <a href="#" class="nav-link">Технологии</a>
                         <a href="#" class="nav-link">Спорт</a>
                     </nav>
-                    <div class="header-actions">
-                        <button class="search-btn">Поиск</button>
-                        <button class="theme-toggle">Тема</button>
+                    
+                    <div class="burger-menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
                     </div>
                 </div>
             </div>
@@ -36,7 +39,6 @@
         <main class="main">
             <div class="container">
                 <div class="article-container">
-                    <!-- Контент статьи будет добавлен позже -->
                     <div class="article-content" id="article-content">
                         <article class="news-article">
                             <div class="article-header">
@@ -262,5 +264,26 @@
                 </div>
             </div>
         </footer>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const burgerMenu = document.querySelector('.burger-menu');
+                const nav = document.querySelector('.nav');
+                
+                burgerMenu.addEventListener('click', function() {
+                    nav.classList.toggle('active');
+                    burgerMenu.classList.toggle('active');
+                });
+                
+
+                const navLinks = document.querySelectorAll('.nav-link');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        nav.classList.remove('active');
+                        burgerMenu.classList.remove('active');
+                    });
+                });
+            });
+        </script>
     </body>
 </html>
