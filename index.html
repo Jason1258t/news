@@ -3,8 +3,73 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>ПГТУ Breaking NEWS</title>
-        <link rel="stylesheet" href="styles.css" />
+        <title>
+            ПГТУ Breaking NEWS - «ГосСват» — новый мессенджер для женщин
+        </title>
+
+        <!-- Основные мета-теги -->
+        <meta
+            name="description"
+            content="Революционный мессенджер «ГосСват» позиционируется как национальная платформа для создания крепких семейных уз, но уже в первый день работы вызвал бурю негодования и сарказма."
+        />
+        <meta
+            name="keywords"
+            content="мессенджер, Госуслуги, технологии, общество, ПГТУ, новости"
+        />
+        <meta name="author" content="ПГТУ Breaking NEWS" />
+
+        <!-- Open Graph мета-теги (для Facebook, Telegram, VK) -->
+        <meta
+            property="og:title"
+            content="«ГосСват» — новый мессенджер для женщин, ищущих «мальчиков до 18»"
+        />
+        <meta
+            property="og:description"
+            content="Интеграция с Госуслугами, Озон Банком и домом продажи Стерлигова вызвала общественный резонанс"
+        />
+        <meta property="og:type" content="article" />
+        <meta
+            property="og:url"
+            content="https://yourdomain.com/article/gossvat"
+        />
+        <meta
+            property="og:image"
+            content="https://yourdomain.com/assets/gossvat_preview.png"
+        />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:site_name" content="ПГТУ Breaking NEWS" />
+        <meta property="og:locale" content="ru_RU" />
+
+        <!-- Twitter Card мета-теги -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+            name="twitter:title"
+            content="«ГосСват» — новый мессенджер для женщин, ищущих «мальчиков до 18»"
+        />
+        <meta
+            name="twitter:description"
+            content="Интеграция с Госуслугами, Озон Банком и домом продажи Стерлигова вызвала общественный резонанс"
+        />
+        <meta
+            name="twitter:image"
+            content="https://yourdomain.com/assets/gossvat_preview.png"
+        />
+        <meta name="twitter:site" content="@pgtu_news" />
+
+        <!-- Дополнительные мета-теги -->
+        <meta
+            property="article:published_time"
+            content="2025-04-05T00:00:00+03:00"
+        />
+        <meta property="article:author" content="ПГТУ Breaking NEWS" />
+        <meta property="article:section" content="Технологии" />
+        <meta property="article:tag" content="мессенджер" />
+        <meta property="article:tag" content="Госуслуги" />
+        <meta property="article:tag" content="технологии" />
+        <meta property="article:tag" content="общество" />
+
+        <link rel="stylesheet" href="styles/main.css" />
         <link rel="icon" type="image/png" href="assets/logo.png" />
         <link
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
@@ -18,7 +83,7 @@
                     <div class="logo">
                         <h1>ПГТУ Breaking NEWS</h1>
                     </div>
-                    
+
                     <nav class="nav">
                         <a href="#" class="nav-link">Главная</a>
                         <a href="#" class="nav-link">Политика</a>
@@ -26,7 +91,7 @@
                         <a href="#" class="nav-link">Технологии</a>
                         <a href="#" class="nav-link">Спорт</a>
                     </nav>
-                    
+
                     <div class="burger-menu">
                         <span></span>
                         <span></span>
@@ -266,21 +331,20 @@
         </footer>
 
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const burgerMenu = document.querySelector('.burger-menu');
-                const nav = document.querySelector('.nav');
-                
-                burgerMenu.addEventListener('click', function() {
-                    nav.classList.toggle('active');
-                    burgerMenu.classList.toggle('active');
-                });
-                
+            document.addEventListener("DOMContentLoaded", function () {
+                const burgerMenu = document.querySelector(".burger-menu");
+                const nav = document.querySelector(".nav");
 
-                const navLinks = document.querySelectorAll('.nav-link');
-                navLinks.forEach(link => {
-                    link.addEventListener('click', function() {
-                        nav.classList.remove('active');
-                        burgerMenu.classList.remove('active');
+                burgerMenu.addEventListener("click", function () {
+                    nav.classList.toggle("active");
+                    burgerMenu.classList.toggle("active");
+                });
+
+                const navLinks = document.querySelectorAll(".nav-link");
+                navLinks.forEach((link) => {
+                    link.addEventListener("click", function () {
+                        nav.classList.remove("active");
+                        burgerMenu.classList.remove("active");
                     });
                 });
             });
