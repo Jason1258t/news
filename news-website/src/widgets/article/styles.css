@@ -1,21 +1,7 @@
 @import url("../../shared/ui/Header/styles.css");
 @import url("../../shared/ui/Footer/styles.css");
 
-.main {
-    padding: 2rem 0;
-    min-height: calc(100vh - 200px);
-}
-
-.article-container {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    overflow: hidden;
-}
-
-.article-content {
-    padding: 3rem;
-}
+/* layout primitives moved to global styles */
 
 .news-article {
     max-width: 800px;

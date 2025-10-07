@@ -1,0 +1,6 @@
+@import url("../../shared/ui/Header/styles.css");
+
+.logo a {
+    color: inherit;
+    text-decoration: none;
+}

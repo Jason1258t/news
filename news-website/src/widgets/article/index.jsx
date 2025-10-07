@@ -5,8 +5,8 @@ const Article = () => {
     return (
         <main className="main">
             <div className="container">
-                <div className="article-container">
-                    <div className="article-content" id="article-content">
+                <div className="layout-surface">
+                    <div className="layout-content" id="article-content">
                         <article className="news-article">
                             <div className="article-header">
                                 <div className="article-meta">

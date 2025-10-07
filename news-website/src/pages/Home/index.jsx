@@ -22,15 +22,16 @@ const Home = () => {
             <div className="container">
                 <div className="feed-grid">
                     {articles.map((a) => (
-                        <ArticleCard
-                            key={a.slug}
-                            to={`/articles/${a.slug}`}
-                            title={a.title}
-                            excerpt={a.description}
-                            date={a.date}
-                            category={a.category}
-                            imageUrl={a.imageUrl}
-                        />
+                        <div key={a.slug} className="layout-surface">
+                            <ArticleCard
+                                to={`/articles/${a.slug}`}
+                                title={a.title}
+                                excerpt={a.description}
+                                date={a.date}
+                                category={a.category}
+                                imageUrl={a.imageUrl}
+                            />
+                        </div>
                     ))}
                 </div>
             </div>

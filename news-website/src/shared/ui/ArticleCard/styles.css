@@ -1,8 +1,14 @@
 .article-card {
+    display: block;
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     overflow: hidden;
+    width: 100%;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    text-decoration: none;
+    color: inherit;
 }
 
 .article-card-imageWrap {
@@ -12,12 +18,22 @@
 .article-card-image {
     display: block;
     width: 100%;
-    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
 }
 
-.article-card-body {
-    padding: 1.25rem 1.25rem 1.5rem;
+@media (max-width: 768px) {
+    .article-card {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+
+    .article-card-image {
+        aspect-ratio: 4 / 3;
+    }
 }
+
+/* body spacing uses .article-content from globals */
 
 .article-card-meta {
     display: flex;
@@ -44,6 +60,4 @@
     margin-bottom: 1rem;
 }
 
-.article-card-actions .nav-button {
-    display: inline-block;
-}
+/* Removed explicit button; full card is clickable */
