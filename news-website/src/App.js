@@ -1,10 +1,11 @@
-import Header from "features/header";
+import Header from "features/Header";
 import { Footer } from "shared/ui";
 import Home from "pages/Home";
 import Article from "pages/Article";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import ScrollToTop from "./shared/lib/ScrollToTop";
+import AboutPage from "pages/About";
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
                 <Header />
                 <Routes>
                     <Route path="/" element={<Home />} />
+                    <Route path="/about" element={<AboutPage />} />
                     <Route path="/articles/:slug" element={<Article />} />
                 </Routes>
                 <Footer />

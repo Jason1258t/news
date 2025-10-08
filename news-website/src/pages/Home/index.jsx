@@ -2,8 +2,8 @@ import React from "react";
 import { ArticleCard } from "shared/ui";
 import { articlesStorage } from "features/articles_storage";
 import "./styles.css";
-// import { useMetaTags } from "features/use_meta/useMeta";
 import { Helmet } from "react-helmet-async";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
     const articles = Object.entries(articlesStorage).map(([slug, article]) => ({
@@ -15,24 +15,11 @@ const Home = () => {
         imageUrl: article.hero.url,
     }));
 
-    const metaData = {
-        title: "ПГТУ Breaking NEWS - Самые свежие и актуальные новости",
-        description:
-            "Эксклюзивные материалы о технологиях, обществе и исследованиях. Только проверенная информация и глубокий анализ событий.",
-        siteName: "ПГТУ Breaking NEWS",
-        url: "https://jason1258t.github.io/news",
-        image: "https://i.ibb.co/rfF9d2CD/Screenshot-2025-10-08-at-14-59-13.png",
-        keywords:
-            "новости, технологии, общество, исследования, ПГТУ, аналитика",
-        author: "ПГТУ Breaking NEWS",
-    };
-
-    // useMetaTags(metaData);
+    const navigate = useNavigate();
 
     return (
         <>
             <Helmet>
-                {/* Основные мета-теги */}
                 <title>
                     ПГТУ Breaking NEWS - Самые свежие и актуальные новости
                 </title>
@@ -46,7 +33,6 @@ const Home = () => {
                 />
                 <meta name="author" content="ПГТУ Breaking NEWS" />
 
-                {/* Open Graph */}
                 <meta
                     property="og:title"
                     content="ПГТУ Breaking NEWS - Самые свежие и актуальные новости"
@@ -102,20 +88,6 @@ const Home = () => {
                                 технологий, общества и не только. Только
                                 проверенная информация и эксклюзивные материалы.
                             </p>
-                            <div className="hero-stats">
-                                <div className="stat">
-                                    <span className="stat-number">
-                                        {Object.keys(articlesStorage).length}
-                                    </span>
-                                    <span className="stat-label">статей</span>
-                                </div>
-                                <div className="stat">
-                                    <span className="stat-number">2025</span>
-                                    <span className="stat-label">
-                                        год основания
-                                    </span>
-                                </div>
-                            </div>
                         </div>
                     </section>
 
@@ -167,7 +139,6 @@ const Home = () => {
                         </div>
                     </section>
 
-                    {/* Призыв к действию */}
                     <section className="cta-section">
                         <div className="cta-content">
                             <h3>Оставайтесь в курсе событий</h3>
@@ -176,10 +147,21 @@ const Home = () => {
                                 получать самые важные и интересные новости
                             </p>
                             <div className="cta-buttons">
-                                <button className="btn btn-primary">
+                                <button
+                                    className="btn btn-primary"
+                                    onClick={() =>
+                                        window.open(
+                                            "https://t.me/SSalVamvRotSuki"
+                                        )
+                                    }
+                                >
                                     Подписаться
                                 </button>
-                                <button className="btn btn-secondary">
+
+                                <button
+                                    className="btn btn-secondary"
+                                    onClick={() => navigate("/about")}
+                                >
                                     О проекте
                                 </button>
                             </div>
