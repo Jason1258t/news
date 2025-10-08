@@ -23,19 +23,6 @@
     object-fit: cover;
 }
 
-@media (max-width: 768px) {
-    .article-card {
-        padding-left: 0.75rem;
-        padding-right: 0.75rem;
-    }
-
-    .article-card-image {
-        aspect-ratio: 4 / 3;
-    }
-}
-
-/* body spacing uses .article-content from globals */
-
 .article-card-meta {
     display: flex;
     justify-content: space-between;
@@ -61,4 +48,17 @@
     margin-bottom: 1rem;
 }
 
-/* Removed explicit button; full card is clickable */
+@media (max-width: 768px) {
+    .article-card {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+
+    .article-card-image {
+        aspect-ratio: 4 / 3;
+    }
+    .article-card-meta {
+        flex-direction: column;
+        align-items: start;
+    }
+}

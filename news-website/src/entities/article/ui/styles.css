@@ -1,8 +1,3 @@
-@import url("features/Header/styles.css");
-@import url("features/Footer/styles.css");
-
-/* layout primitives moved to global styles */
-
 .news-article {
     max-width: 800px;
     margin: 0 auto;

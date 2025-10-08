@@ -1,5 +1,5 @@
-import Header from "features/Header";
-import Footer from "features/Footer";
+import Header from "widgets/Header";
+import Footer from "widgets/Footer";
 import Home from "pages/Home";
 import Article from "pages/Article";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";

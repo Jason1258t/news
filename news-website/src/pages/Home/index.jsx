@@ -5,8 +5,6 @@ import ArticleCard from "widgets/ArticleCard";
 import { articlesStorage } from "features/articles_storage";
 import EditorsPick from "features/EditorsPick";
 import TrendingTopics from "features/TrendingTopics";
-
-
 import "./styles.css";
 
 const Home = () => {
@@ -81,7 +79,7 @@ const Home = () => {
 
             <main className="main">
                 <div className="container">
-                    {/* Герой секция */}
+
                     <section className="hero-section">
                         <div className="hero-content">
                             <h1 className="hero-title">ПГТУ Breaking NEWS</h1>
@@ -130,7 +128,7 @@ const Home = () => {
                         </aside>
                     </div>
 
-                    {/* CTA секция */}
+
                     <section className="cta-section">
                         <div className="cta-content">
                             <h3>Оставайтесь в курсе событий</h3>

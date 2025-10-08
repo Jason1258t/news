@@ -39,7 +39,7 @@
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
 }
 
-/* Hero Section */
+
 .hero-section {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
@@ -48,6 +48,9 @@
     margin-bottom: 3rem;
     text-align: center;
 }
+
+/* Показываем hero только на экранах больше 768px */
+
 
 .hero-title {
     font-size: 3rem;
@@ -266,6 +269,10 @@
 }
 
 @media (max-width: 768px) {
+    .hero-section {
+        display: none;
+    }
+
     .hero-title {
         font-size: 2rem;
     }
@@ -303,10 +310,6 @@
 }
 
 @media (max-width: 480px) {
-    .hero-section {
-        padding: 3rem 1.5rem;
-    }
-    
     .cta-section {
         padding: 3rem 1.5rem;
     }

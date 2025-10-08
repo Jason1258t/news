@@ -13,6 +13,10 @@ body {
     background-color: #fff;
 }
 
+a {
+    color: #667eea;
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
