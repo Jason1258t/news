@@ -1,71 +1,12 @@
-import React from "react";
-import { RenderHTML } from "../../../shared/lib/html";
-
-const Heading = ({ level, text }) => {
-    const Tag = `h${level}`;
-    return (
-        <Tag>
-            <RenderHTML html={text} />
-        </Tag>
-    );
-};
-
-const Paragraph = ({ html }) => (
-    <p>
-        <RenderHTML html={html} />
-    </p>
-);
-
-const List = ({ items }) => (
-    <ul>
-        {items.map((it, idx) => (
-            <li key={idx}>
-                <RenderHTML html={it} />
-            </li>
-        ))}
-    </ul>
-);
-
-const ImageBlock = ({ url, alt, caption }) => (
-    <div className="article-image">
-        <img src={url} alt={alt} />
-        {caption ? <span className="image-caption">{caption}</span> : null}
-    </div>
-);
-
-const Blockquote = ({ html, footer, variant }) => (
-    <blockquote
-        className={`quote${
-            variant && variant !== "default" ? ` ${variant}` : ""
-        }`}
-    >
-        <p>
-            <RenderHTML html={html} />
-        </p>
-        {footer ? (
-            <footer>
-                <RenderHTML html={footer} />
-            </footer>
-        ) : null}
-    </blockquote>
-);
-
-const Highlight = ({ title, content }) => (
-    <div className="highlight-box">
-        {title ? <h3>{title}</h3> : null}
-        {content?.map((block, i) => (
-            <ContentBlock key={i} block={block} />
-        ))}
-    </div>
-);
-
-const FooterNote = ({ html }) => (
-    <div className="article-footer">
-        <p>
-            <RenderHTML html={html} />
-        </p>
-    </div>
-);
+import {
+    Heading,
+    Paragraph,
+    List,
+    ImageBlock,
+    Blockquote,
+    Highlight,
+    FooterNote,
+} from "entities/article/ui";
 
 const ContentBlock = ({ block }) => {
     switch (block.type) {

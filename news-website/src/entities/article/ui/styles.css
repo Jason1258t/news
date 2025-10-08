@@ -1,5 +1,5 @@
-@import url("../../shared/ui/Header/styles.css");
-@import url("../../shared/ui/Footer/styles.css");
+@import url("shared/ui/Header/styles.css");
+@import url("shared/ui/Footer/styles.css");
 
 /* layout primitives moved to global styles */
 
