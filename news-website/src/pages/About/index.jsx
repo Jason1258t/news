@@ -133,17 +133,21 @@ const AboutPage = () => {
                             <div className="contact-actions">
                                 <button
                                     className="btn btn-primary"
-                                    onClick={() => window.open(
-                                        "https://t.me/kabanchik207_prime"
-                                    )}
+                                    onClick={() =>
+                                        window.open(
+                                            "https://t.me/kabanchik207_prime"
+                                        )
+                                    }
                                 >
                                     Написать редакции
                                 </button>
                                 <button
                                     className="btn btn-secondary"
-                                    onClick={() => window.open(
-                                        "https://t.me/kabanchik207_prime"
-                                    )}
+                                    onClick={() =>
+                                        window.open(
+                                            "https://t.me/kabanchik207_prime"
+                                        )
+                                    }
                                 >
                                     Предложить тему
                                 </button>
@@ -169,6 +173,30 @@ const AboutPage = () => {
                                 <div className="stat-label">
                                     студенческая инициатива
                                 </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section className="disclaimer-section">
+                        <div className="disclaimer-content">
+                            <div className="disclaimer-icon">⚠️</div>
+                            <div className="disclaimer-text">
+                                <h3>Важная информация</h3>
+                                <p>
+                                    <strong>
+                                        Большая часть контента на этом сайте
+                                        является художественным вымыслом и
+                                        сатирой.
+                                    </strong>
+                                    Наши материалы созданы в образовательных и
+                                    развлекательных целях, чтобы развивать
+                                    навыки написания статей и работы с
+                                    современными веб-технологиями.
+                                </p>
+                                <p className="disclaimer-note">
+                                    Все совпадения с реальными событиями и
+                                    лицами случайны.
+                                </p>
                             </div>
                         </div>
                     </section>

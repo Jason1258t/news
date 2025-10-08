@@ -225,3 +225,59 @@
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
+.disclaimer-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+
+.disclaimer-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.disclaimer-note {
+    font-style: italic;
+    opacity: 0.8;
+    font-size: 0.9rem;
+}
+
+/* Минималистичный вариант */
+.disclaimer-section {
+    background: #f8f9fa;
+    border-left: 4px solid #667eea;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.disclaimer-text h3 {
+    color: #2c3e50;
+    margin-bottom: 0.75rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.disclaimer-text p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+}
+
+/* Responsive Design for Disclaimer */
+@media (max-width: 768px) {
+    .disclaimer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .disclaimer-icon {
+        align-self: center;
+    }
+    
+    .disclaimer-section {
+        padding: 1.5rem;
+    }
+}
