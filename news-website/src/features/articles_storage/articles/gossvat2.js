@@ -9,13 +9,13 @@ export const gossvat2Article = {
     section: "Технологии",
     tags: ["ГосСват 2.0", "ИИ-монах", "матримониальный паспорт", "технологии", "мессенджер"],
     hero: {
-        url: "assets/gossvat2_preview.png",
+        url: "https://i.ibb.co/Myq60Rsx/gossvat2-preview.png",
         alt: "Интерфейс мессенджера ГосСват 2.0",
         caption: "Новый интерфейс «ГосСват 2.0» с ИИ-монахом и цифровым матримониальным паспортом"
     },
     og: {
         url: "https://jason1258t.github.io/news/article-gossvat2.html",
-        image: "https://jason1258t.github.io/news/assets/gossvat2_preview.png",
+        image: "https://i.ibb.co/Myq60Rsx/gossvat2-preview.png",
         title: "ГосСват 2.0: Маменькин Мессенджер — с ИИ-монахом и цифровым паспортом",
         description: "Новая версия скандального приложения теперь гарантирует духовное бессмертие через патриархальный брак, подтверждённый блокчейном"
     },

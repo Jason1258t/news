@@ -10,13 +10,13 @@ export const onlineCompilersArticle = {
     section: "Технологии",
     tags: ["онлайн-компиляторы", "психология", "разработка", "программирование", "когнитивные искажения", "технологии"],
     hero: {
-        url: "assets/compilers_preview.png",
+        url: "https://i.ibb.co/Kj1Lnw9c/compilers-preview.jpg",
         alt: "Влияние онлайн-компиляторов на психику разработчиков",
         caption: "МРТ-исследование показывает снижение активности префронтальной коры у разработчиков, использующих онлайн-компиляторы"
     },
     og: {
         url: "https://jason1258t.github.io/news/online-compilers-danger.html",
-        image: "https://jason1258t.github.io/news/assets/compilers_preview.png",
+        image: "https://i.ibb.co/Kj1Lnw9c/compilers-preview.jpg",
         title: "Онлайн-компиляторы разрушают психику и культуру разработки",
         description: "Новые исследования показывают катастрофическое влияние онлайн-компиляторов на когнитивные способности разработчиков"
     },

@@ -5,8 +5,9 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     overflow: hidden;
     width: 100%;
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
+    padding-top: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
     text-decoration: none;
     color: inherit;
 }

@@ -6,6 +6,6 @@ import { gossvat2Article } from "./articles/gossvat2";
 export const articlesStorage = {
     "messenger-gossvat": gossvatArticle,
     "ai-warning": aiWarningArticle,
-    "online-complillers": onlineCompilersArticle,
-    "gossvat2": gossvat2Article,
+    "online-compilers-danger": onlineCompilersArticle,
+    "gossvat-2-mamenkin-messenger": gossvat2Article,
 };

@@ -1,5 +1,5 @@
 export const gossvatArticle = {
-    slug: "gossvat-new-messenger",
+    slug: "messenger-gossvat",
     title: "«ГосСват» — новый мессенджер для женщин, ищущих «мальчиков до 18»: интеграция с Госуслугами, Озон Банком и домом продажи Стерлигова вызвала общественный резонанс",
     description: "Революционный мессенджер позиционируется как «национальная платформа для создания крепких семейных уз», но уже в первый день работы вызвал бурю негодования и сарказма.",
     category: "Технологии • Общество",
@@ -9,13 +9,13 @@ export const gossvatArticle = {
     section: "Технологии",
     tags: ["мессенджер", "Госуслуги", "технологии", "общество"],
     hero: {
-        url: "assets/gossvat_preview.png",
+        url: "https://i.ibb.co/sdvSz66n/gossvat-preview.png",
         alt: "Интерфейс мессенджера ГосСват",
         caption: "Главный экран мессенджера «ГосСват» с интеграцией государственных услуг"
     },
     og: {
         url: "https://jason1258t.github.io/news/",
-        image: "https://jason1258t.github.io/news/assets/gossvat_preview.png",
+        image: "https://i.ibb.co/sdvSz66n/gossvat-preview.png",
         title: "«ГосСват» — новый мессенджер для женщин, ищущих «мальчиков до 18»",
         description: "Интеграция с Госуслугами, Озон Банком и домом продажи Стерлигова вызвала общественный резонанс"
     },

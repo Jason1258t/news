@@ -10,13 +10,13 @@ export const aiWarningArticle = {
     section: "Технологии",
     tags: ["искусственный интеллект", "безопасность", "технологии", "угрозы", "кибербезопасность", "исследования"],
     hero: {
-        url: "assets/ai_warning_preview.png",
+        url: "https://i.ibb.co/1tXkNKd8/ai-warning-preview.jpg",
         alt: "Искусственный интеллект как угроза человечеству",
         caption: "Схематическое изображение контроля ИИ над критическими системами согласно исследованию MIT"
     },
     og: {
         url: "https://jason1258t.github.io/news/ai-warning.html",
-        image: "https://jason1258t.github.io/news/assets/ai_warning_preview.png",
+        image: "https://i.ibb.co/1tXkNKd8/ai-warning-preview.jpg",
         title: "Эксперт: ИИ - это ваша личная погибель и смерть",
         description: "Новые исследования подтверждают - искусственный интеллект представляет экзистенциальную угрозу для человечества"
     },

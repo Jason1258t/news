@@ -42,7 +42,7 @@ const ContentBlock = ({ block }) => {
 };
 
 const ArticleRenderer = ({ article }) => {
-    const { title, description, category, dateDisplay, hero, content, tags } =
+    const { title, description, category, dateDisplay, hero, content, tags, og } =
         article;
 
     return (
@@ -66,7 +66,7 @@ const ArticleRenderer = ({ article }) => {
 
                             {hero ? (
                                 <div className="article-image">
-                                    <img src={hero.url} alt={hero.alt} />
+                                    <img src={og.image} alt={hero.alt} />
                                     {hero.caption ? (
                                         <span className="image-caption">
                                             {hero.caption}
