@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./styles.css";
+import logo from '../../logo.jpg';
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,6 +13,7 @@ const Header = () => {
             <div className="container">
                 <div className="header-content">
                     <div className="logo">
+                        <img src={logo}/>
                         <h1>
                             <Link to="/">ПГТУ Breaking NEWS</Link>
                         </h1>

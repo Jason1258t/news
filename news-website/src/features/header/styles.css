@@ -19,6 +19,16 @@
     position: relative;
 }
 
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 3rem;
+    margin-right: 1rem;
+}
+
 .logo h1 {
     font-size: 1.5rem;
     font-weight: 700;
