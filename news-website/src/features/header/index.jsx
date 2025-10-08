@@ -13,7 +13,7 @@ const Header = () => {
             <div className="container">
                 <div className="header-content">
                     <div className="logo">
-                        <img src={logo}/>
+                        <img src={logo} alt="ПГТУ Breaking NEWS logo"/>
                         <h1>
                             <Link to="/">ПГТУ Breaking NEWS</Link>
                         </h1>
