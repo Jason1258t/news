@@ -1,5 +1,5 @@
 import Header from "features/Header";
-import { Footer } from "shared/ui";
+import Footer from "features/Footer";
 import Home from "pages/Home";
 import Article from "pages/Article";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";

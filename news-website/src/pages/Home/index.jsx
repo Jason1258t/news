@@ -1,9 +1,13 @@
 import React from "react";
-import { ArticleCard } from "shared/ui";
-import { articlesStorage } from "features/articles_storage";
-import "./styles.css";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
+import ArticleCard from "widgets/ArticleCard";
+import { articlesStorage } from "features/articles_storage";
+import EditorsPick from "features/EditorsPick";
+import TrendingTopics from "features/TrendingTopics";
+
+
+import "./styles.css";
 
 const Home = () => {
     const articles = Object.entries(articlesStorage).map(([slug, article]) => ({
@@ -55,7 +59,6 @@ const Home = () => {
                 <meta property="og:site_name" content="ПГТУ Breaking NEWS" />
                 <meta property="og:locale" content="ru_RU" />
 
-                {/* Twitter Card */}
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta
                     name="twitter:title"
@@ -70,7 +73,6 @@ const Home = () => {
                     content="https://i.ibb.co/rfF9d2CD/Screenshot-2025-10-08-at-14-59-13.png"
                 />
 
-                {/* Canonical */}
                 <link
                     rel="canonical"
                     href="https://jason1258t.github.io/news"
@@ -79,7 +81,7 @@ const Home = () => {
 
             <main className="main">
                 <div className="container">
-                    {/* Заголовок и описание сайта */}
+                    {/* Герой секция */}
                     <section className="hero-section">
                         <div className="hero-content">
                             <h1 className="hero-title">ПГТУ Breaking NEWS</h1>
@@ -91,54 +93,44 @@ const Home = () => {
                         </div>
                     </section>
 
-                    {/* Категории/фильтры */}
-                    <section className="categories-section">
-                        <h2 className="section-title">Рубрики</h2>
-                        <div className="categories-grid">
-                            <button className="category-tag active">
-                                Все статьи
-                            </button>
-                            <button className="category-tag">Технологии</button>
-                            <button className="category-tag">Общество</button>
-                            <button className="category-tag">
-                                Безопасность
-                            </button>
-                            <button className="category-tag">
-                                Исследования
-                            </button>
-                        </div>
-                    </section>
-
-                    {/* Последние статьи */}
-                    <section className="latest-articles">
-                        <div className="section-header">
-                            <h2 className="section-title">
-                                Последние публикации
-                            </h2>
-                            <p className="section-subtitle">
-                                Самые свежие материалы нашего издания
-                            </p>
-                        </div>
-
-                        <div className="feed-grid">
-                            {articles.map((article) => (
-                                <div
-                                    key={article.slug}
-                                    className="layout-surface"
-                                >
-                                    <ArticleCard
-                                        to={`/articles/${article.slug}`}
-                                        title={article.title}
-                                        excerpt={article.description}
-                                        date={article.date}
-                                        category={article.category}
-                                        imageUrl={article.imageUrl}
-                                    />
+                    <div className="home-layout">
+                        <div className="main-content">
+                            <section className="latest-articles">
+                                <div className="section-header">
+                                    <h2 className="section-title">
+                                        Последние публикации
+                                    </h2>
+                                    <p className="section-subtitle">
+                                        Самые свежие материалы нашего издания
+                                    </p>
                                 </div>
-                            ))}
-                        </div>
-                    </section>
 
+                                <div className="feed-grid">
+                                    {articles.map((article) => (
+                                        <div
+                                            key={article.slug}
+                                            className="layout-surface"
+                                        >
+                                            <ArticleCard
+                                                to={`/articles/${article.slug}`}
+                                                title={article.title}
+                                                excerpt={article.description}
+                                                date={article.date}
+                                                category={article.category}
+                                                imageUrl={article.imageUrl}
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        </div>
+                        <aside className="sidebar right-sidebar">
+                            <EditorsPick />
+                            <TrendingTopics />
+                        </aside>
+                    </div>
+
+                    {/* CTA секция */}
                     <section className="cta-section">
                         <div className="cta-content">
                             <h3>Оставайтесь в курсе событий</h3>
@@ -157,7 +149,6 @@ const Home = () => {
                                 >
                                     Подписаться
                                 </button>
-
                                 <button
                                     className="btn btn-secondary"
                                     onClick={() => navigate("/about")}
