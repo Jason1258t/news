@@ -13,12 +13,7 @@ export const gossvatArticle = {
         alt: "Интерфейс мессенджера ГосСват",
         caption: "Главный экран мессенджера «ГосСват» с интеграцией государственных услуг"
     },
-    og: {
-        url: "https://jason1258t.github.io/news/",
-        image: "https://i.ibb.co/sdvSz66n/gossvat-preview.png",
-        title: "«ГосСват» — новый мессенджер для женщин, ищущих «мальчиков до 18»",
-        description: "Интеграция с Госуслугами, Озон Банком и домом продажи Стерлигова вызвала общественный резонанс"
-    },
+
     content: [
         {
             type: "paragraph",

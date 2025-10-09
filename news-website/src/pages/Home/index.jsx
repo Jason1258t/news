@@ -1,11 +1,11 @@
 import React from "react";
-import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import ArticleCard from "widgets/ArticleCard";
 import { articlesStorage } from "features/articles_storage";
 import EditorsPick from "features/EditorsPick";
 import TrendingTopics from "features/TrendingTopics";
 import "./styles.css";
+import HomeMeta from "./meta";
 
 const Home = () => {
     const articles = Object.entries(articlesStorage).map(([slug, article]) => ({
@@ -21,65 +21,10 @@ const Home = () => {
 
     return (
         <>
-            <Helmet>
-                <title>
-                    ПГТУ Breaking NEWS - Самые свежие и актуальные новости
-                </title>
-                <meta
-                    name="description"
-                    content="Эксклюзивные материалы о технологиях, обществе и исследованиях. Только проверенная информация и глубокий анализ событий."
-                />
-                <meta
-                    name="keywords"
-                    content="новости, технологии, общество, исследования, ПГТУ, аналитика"
-                />
-                <meta name="author" content="ПГТУ Breaking NEWS" />
-
-                <meta
-                    property="og:title"
-                    content="ПГТУ Breaking NEWS - Самые свежие и актуальные новости"
-                />
-                <meta
-                    property="og:description"
-                    content="Эксклюзивные материалы о технологиях, обществе и исследованиях. Только проверенная информация и глубокий анализ событий."
-                />
-                <meta property="og:type" content="website" />
-                <meta
-                    property="og:url"
-                    content="https://jason1258t.github.io/news"
-                />
-                <meta
-                    property="og:image"
-                    content="https://i.ibb.co/rfF9d2CD/Screenshot-2025-10-08-at-14-59-13.png"
-                />
-                <meta property="og:image:width" content="1200" />
-                <meta property="og:image:height" content="630" />
-                <meta property="og:site_name" content="ПГТУ Breaking NEWS" />
-                <meta property="og:locale" content="ru_RU" />
-
-                <meta name="twitter:card" content="summary_large_image" />
-                <meta
-                    name="twitter:title"
-                    content="ПГТУ Breaking NEWS - Самые свежие и актуальные новости"
-                />
-                <meta
-                    name="twitter:description"
-                    content="Эксклюзивные материалы о технологиях, обществе и исследованиях. Только проверенная информация и глубокий анализ событий."
-                />
-                <meta
-                    name="twitter:image"
-                    content="https://i.ibb.co/rfF9d2CD/Screenshot-2025-10-08-at-14-59-13.png"
-                />
-
-                <link
-                    rel="canonical"
-                    href="https://jason1258t.github.io/news"
-                />
-            </Helmet>
+            <HomeMeta />
 
             <main className="main">
                 <div className="container">
-
                     <section className="hero-section">
                         <div className="hero-content">
                             <h1 className="hero-title">ПГТУ Breaking NEWS</h1>
@@ -104,21 +49,28 @@ const Home = () => {
                                 </div>
 
                                 <div className="feed-grid">
-                                    {articles.map((article) => (
-                                        <div
-                                            key={article.slug}
-                                            className="layout-surface"
-                                        >
-                                            <ArticleCard
-                                                to={`/articles/${article.slug}`}
-                                                title={article.title}
-                                                excerpt={article.description}
-                                                date={article.date}
-                                                category={article.category}
-                                                imageUrl={article.imageUrl}
-                                            />
-                                        </div>
-                                    ))}
+                                    {articles.map((article) => {
+                                        console.log(article);
+                                        console.log(article.hero);
+
+                                        return (
+                                            <div
+                                                key={article.slug}
+                                                className="layout-surface"
+                                            >
+                                                <ArticleCard
+                                                    to={`/articles/${article.slug}`}
+                                                    title={article.title}
+                                                    excerpt={
+                                                        article.description
+                                                    }
+                                                    date={article.date}
+                                                    category={article.category}
+                                                    imageUrl={article.imageUrl}
+                                                />
+                                            </div>
+                                        );
+                                    })}
                                 </div>
                             </section>
                         </div>
@@ -127,7 +79,6 @@ const Home = () => {
                             <TrendingTopics />
                         </aside>
                     </div>
-
 
                     <section className="cta-section">
                         <div className="cta-content">

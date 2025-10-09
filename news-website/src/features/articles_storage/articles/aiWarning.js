@@ -14,12 +14,6 @@ export const aiWarningArticle = {
         alt: "Искусственный интеллект как угроза человечеству",
         caption: "Схематическое изображение контроля ИИ над критическими системами согласно исследованию MIT"
     },
-    og: {
-        url: "https://jason1258t.github.io/news/ai-warning.html",
-        image: "https://i.ibb.co/1tXkNKd8/ai-warning-preview.jpg",
-        title: "Эксперт: ИИ - это ваша личная погибель и смерть",
-        description: "Новые исследования подтверждают - искусственный интеллект представляет экзистенциальную угрозу для человечества"
-    },
     content: [
         {
             type: "paragraph",

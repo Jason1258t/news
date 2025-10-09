@@ -14,12 +14,7 @@ export const onlineCompilersArticle = {
         alt: "Влияние онлайн-компиляторов на психику разработчиков",
         caption: "МРТ-исследование показывает снижение активности префронтальной коры у разработчиков, использующих онлайн-компиляторы"
     },
-    og: {
-        url: "https://jason1258t.github.io/news/online-compilers-danger.html",
-        image: "https://i.ibb.co/Kj1Lnw9c/compilers-preview.jpg",
-        title: "Онлайн-компиляторы разрушают психику и культуру разработки",
-        description: "Новые исследования показывают катастрофическое влияние онлайн-компиляторов на когнитивные способности разработчиков"
-    },
+
     content: [
         {
             type: "paragraph",
