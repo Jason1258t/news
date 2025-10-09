@@ -1,45 +1,5 @@
-import {
-    Heading,
-    Paragraph,
-    List,
-    ImageBlock,
-    Blockquote,
-    Highlight,
-    FooterNote,
-} from "entities/article/ui";
+import { ContentBlock } from "./ContentBloc";
 
-const ContentBlock = ({ block }) => {
-    switch (block.type) {
-        case "heading":
-            return <Heading level={block.level} text={block.text} />;
-        case "paragraph":
-            return <Paragraph html={block.html} />;
-        case "list":
-            return <List items={block.items} />;
-        case "image":
-            return (
-                <ImageBlock
-                    url={block.url}
-                    alt={block.alt}
-                    caption={block.caption}
-                />
-            );
-        case "blockquote":
-            return (
-                <Blockquote
-                    html={block.html}
-                    footer={block.footer}
-                    variant={block.variant}
-                />
-            );
-        case "highlight":
-            return <Highlight title={block.title} content={block.content} />;
-        case "footer-note":
-            return <FooterNote html={block.html} />;
-        default:
-            return null;
-    }
-};
 
 const ArticleRenderer = ({ article }) => {
     const { title, description, category, dateDisplay, hero, content, tags } =

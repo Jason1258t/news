@@ -49,28 +49,21 @@ const Home = () => {
                                 </div>
 
                                 <div className="feed-grid">
-                                    {articles.map((article) => {
-                                        console.log(article);
-                                        console.log(article.hero);
-
-                                        return (
-                                            <div
-                                                key={article.slug}
-                                                className="layout-surface"
-                                            >
-                                                <ArticleCard
-                                                    to={`/articles/${article.slug}`}
-                                                    title={article.title}
-                                                    excerpt={
-                                                        article.description
-                                                    }
-                                                    date={article.date}
-                                                    category={article.category}
-                                                    imageUrl={article.imageUrl}
-                                                />
-                                            </div>
-                                        );
-                                    })}
+                                    {articles.map((article) => (
+                                        <div
+                                            key={article.slug}
+                                            className="layout-surface"
+                                        >
+                                            <ArticleCard
+                                                to={`/articles/${article.slug}`}
+                                                title={article.title}
+                                                excerpt={article.description}
+                                                date={article.date}
+                                                category={article.category}
+                                                imageUrl={article.imageUrl}
+                                            />
+                                        </div>
+                                    ))}
                                 </div>
                             </section>
                         </div>
