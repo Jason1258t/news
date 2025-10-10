@@ -32,7 +32,7 @@ export const fetchArticles = async () => {
             collection(db, "articles"),
             orderBy("datePublishedISO", "desc")
         );
-
+        
         const querySnapshot = await getDocs(articlesQuery);
 
         return querySnapshot.docs.map((doc) => mapArticleFromFirestore(doc));

@@ -22,7 +22,7 @@ export const HomeFeed = () => {
                         excerpt={article.description}
                         date={article.date}
                         category={article.category}
-                        imageUrl={article.imageUrl}
+                        imageUrl={article.hero.url}
                     />
                 </div>
             ))}
