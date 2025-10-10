@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { articlesStorage } from "features/articles_storage";
-import ArticleRenderer from "features/article_render";
+import { articlesStorage } from "features/articles/articles_storage";
+import ArticleRenderer from "features/articles/ArticleRenderer";
 import { ArticleMeta } from "./ArticleMeta";
 
 const Article = () => {
@@ -18,7 +18,7 @@ const Article = () => {
     }
 
     const fullUrl = `https://jason1258t.github.io/news/#/articles/${article.slug}`;
-    const imageUrl = article.hero.url; 
+    const imageUrl = article.hero.url;
 
     return (
         <>

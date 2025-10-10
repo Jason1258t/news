@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 
-export const ArticleMeta = ({article, fullUrl, imageUrl}) => (
+export const ArticleMeta = ({ article, fullUrl, imageUrl }) => (
     <Helmet>
         {/* Основные мета-теги */}
         <title>{`${article.title} | ПГТУ Breaking NEWS`}</title>

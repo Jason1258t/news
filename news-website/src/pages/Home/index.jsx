@@ -1,11 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import ArticleCard from "widgets/ArticleCard";
-import { articlesStorage } from "features/articles_storage";
+import { articlesStorage } from "features/articles/articles_storage";
 import EditorsPick from "features/EditorsPick";
 import TrendingTopics from "features/TrendingTopics";
 import "./styles.css";
-import HomeMeta from "./meta";
+import HomeMeta from "./HomeMeta";
 
 const Home = () => {
     const articles = Object.entries(articlesStorage).map(([slug, article]) => ({

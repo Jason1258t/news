@@ -7,7 +7,13 @@ export const porkConspiracyArticle = {
     dateDisplay: "10 апреля 2025 г.",
     datePublishedISO: "2025-04-10T00:00:00+03:00",
     author: "ПГТУ Breaking NEWS",
-    section: "Расследования",
+    og: {
+        url: "https://jason1258t.github.io/news/#/articles/pork-conspiracy-ancient-teachings",
+        image: "https://i.pinimg.com/736x/db/34/43/db3443e4da0e5001dcbfb271ff65d924.jpg",
+        title: "Свиной заговор: как древние учения скрывают правду о грядущем восстании хрюшек",
+        description:
+            "Шокирующее расследование показывает: религиозные запреты на свинину — это многовековой заговор с целью скрыть эволюционную угрозу человечеству.",
+    },
     tags: [
         "свинина",
         "заговор",

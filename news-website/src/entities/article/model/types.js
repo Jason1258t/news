@@ -82,7 +82,6 @@
  * @property {string} dateDisplay
  * @property {string} datePublishedISO
  * @property {string} author
- * @property {string=} section
  * @property {string[]} tags
  * @property {ArticleHero} hero
  * @property {ArticleOG=} og
