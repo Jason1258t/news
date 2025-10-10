@@ -1,12 +1,26 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { articlesStorage } from "features/articles/articles_storage";
 import ArticleRenderer from "features/articles/ArticleRenderer";
 import { ArticleMeta } from "./ArticleMeta";
+import { useArticle } from "features/articles/hooks/useArticle";
 
 const Article = () => {
     const { slug } = useParams();
-    const article = articlesStorage[slug];
+    // const article = articlesStorage[slug];
+
+    const { data: article, isLoading, error } = useArticle(slug);
+
+    if (isLoading) {
+        return <div className="loading">Загрузка статьи...</div>;
+    }
+
+    if (error) {
+        return <div className="error">Ошибка: {error.message}</div>;
+    }
+
+    if (!article) {
+        return <div className="not-found">Статья не найдена</div>;
+    }
 
     if (!article) {
         return (

@@ -1,22 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import ArticleCard from "widgets/ArticleCard";
-import { articlesStorage } from "features/articles/articles_storage";
 import EditorsPick from "features/EditorsPick";
 import TrendingTopics from "features/TrendingTopics";
 import "./styles.css";
 import HomeMeta from "./HomeMeta";
+import { HomeFeed } from "./HomeFeed";
 
 const Home = () => {
-    const articles = Object.entries(articlesStorage).map(([slug, article]) => ({
-        slug: slug,
-        title: article.title,
-        description: article.description,
-        category: article.category,
-        date: article.dateDisplay,
-        imageUrl: article.hero.url,
-    }));
-
     const navigate = useNavigate();
 
     return (
@@ -48,23 +38,7 @@ const Home = () => {
                                     </p>
                                 </div>
 
-                                <div className="feed-grid">
-                                    {articles.map((article) => (
-                                        <div
-                                            key={article.slug}
-                                            className="layout-surface"
-                                        >
-                                            <ArticleCard
-                                                to={`/articles/${article.slug}`}
-                                                title={article.title}
-                                                excerpt={article.description}
-                                                date={article.date}
-                                                category={article.category}
-                                                imageUrl={article.imageUrl}
-                                            />
-                                        </div>
-                                    ))}
-                                </div>
+                                <HomeFeed/>
                             </section>
                         </div>
                         <aside className="sidebar right-sidebar">
