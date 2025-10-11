@@ -1,16 +1,15 @@
-/* Home/components/TrendingTopics/TrendingTopics.css */
 .trending-widget {
     background: #fff;
     border-radius: 12px;
     padding: 1.5rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--shadow);
     margin-bottom: 1.5rem;
 }
 
 .widget-title {
     font-size: 1.1rem;
     font-weight: 600;
-    color: #2c3e50;
+    color: var(--text-dark);
     margin-bottom: 1rem;
     display: flex;
     align-items: center;
@@ -28,7 +27,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem 0;
-    border-bottom: 1px solid #f1f3f4;
+    border-bottom: 1px solid var(--border-light);
     transition: background-color 0.2s ease;
     cursor: pointer;
     border-radius: 6px;
@@ -36,7 +35,7 @@
 }
 
 .topic-item:hover {
-    background-color: #f8f9fa;
+    background-color: var(--background-light);
 }
 
 .topic-item:last-child {
@@ -45,13 +44,13 @@
 
 .topic-name {
     font-weight: 500;
-    color: #2c3e50;
+    color: var(--text-dark);
     font-size: 0.9rem;
 }
 
 .topic-count {
-    background: #f1f3f4;
-    color: #666;
+    background: var(--border-light);
+    color: var(--text-light);
     padding: 0.25rem 0.5rem;
     border-radius: 12px;
     font-size: 0.8rem;

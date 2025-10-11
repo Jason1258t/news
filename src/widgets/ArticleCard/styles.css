@@ -2,7 +2,7 @@
     display: block;
     background: #fff;
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--shadow);
     overflow: hidden;
     width: 100%;
     padding-top: 1rem;
@@ -29,13 +29,13 @@
     align-items: center;
     margin-bottom: 0.75rem;
     font-size: 0.9rem;
-    color: #666;
+    color: var(--text-light);
 }
 
 .article-card-title {
     font-size: 1.25rem;
     margin: 0 0 0.5rem 0;
-    color: #2c3e50;
+    color: var(--text-dark);
 }
 
 .article-card-title a {
@@ -44,7 +44,7 @@
 }
 
 .article-card-excerpt {
-    color: #666;
+    color: var(--text-light);
     margin-bottom: 1rem;
 }
 

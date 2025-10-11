@@ -1,0 +1,63 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #fff;
+}
+
+a {
+    color: #667eea;
+}
+
+/* Цветовая палитра */
+:root {
+    --primary-color: #667eea;
+    --text-dark: #2c3e50;
+    --text-light: #666;
+    --text-muted: #495057;
+    --border-color: #e9ecef;
+    --border-light: #f1f3f4;
+    --background-light: #f8f9fa;
+    --warning-bg: #fff3cd;
+    --warning-border: #ffeaa7;
+    --accent-red: #e74c3c;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    --shadow-light: 0 2px 10px rgba(0, 0, 0, 0.05);
+    /* Dark theme colors */
+    --dark-bg: #2c3e50;
+    --dark-border: #34495e;
+    --dark-text: #bdc3c7;
+    --dark-text-light: #fff;
+    /* Header specific */
+    --header-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    --mobile-nav-border: #f0f0f0;
+}
+
+/* Базовые стили для заголовков */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 2.5rem;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    font-size: 1.8rem;
+    margin: 2.5rem 0 1.5rem 0;
+}
+
+h3 {
+    font-size: 1.3rem;
+}

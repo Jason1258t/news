@@ -17,7 +17,7 @@ const Home = () => {
                 <div className="container">
                     <section className="hero-section">
                         <div className="hero-content">
-                            <h1 className="hero-title">ПГТУ Breaking NEWS</h1>
+                            <h1 className="hero-title" >ПГТУ Breaking NEWS</h1>
                             <p className="hero-subtitle">
                                 Самые свежие и актуальные новости из мира
                                 технологий, общества и не только. Только

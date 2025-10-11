@@ -1,4 +1,3 @@
-// Home/components/TrendingTopics/index.js
 import React from "react";
 import "./styles.css";
 

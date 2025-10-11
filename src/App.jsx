@@ -8,6 +8,8 @@ import ScrollToTop from "./shared/lib/ScrollToTop";
 import AboutPage from "pages/About";
 import { QueryProvider } from "app/query/QueryProvider";
 import CreateArticlePage from "pages/CreateArticle";
+import 'app/theme.css';
+import 'app/layout.css';
 
 const App = () => {
     return (

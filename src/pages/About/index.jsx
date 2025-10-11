@@ -30,7 +30,7 @@ const AboutPage = () => {
 
             <main className="main">
                 <div className="container">
-                    {/* Герой секция */}
+
                     <section className="about-hero">
                         <div className="about-hero-content">
                             <h1 className="about-title">О проекте</h1>

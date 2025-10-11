@@ -5,7 +5,7 @@
 
 .article-header {
     margin-bottom: 2rem;
-    border-bottom: 1px solid #e9ecef;
+    border-bottom: 1px solid var(--border-color);
     padding-bottom: 1.5rem;
 }
 
@@ -15,11 +15,11 @@
     align-items: center;
     margin-bottom: 1rem;
     font-size: 0.9rem;
-    color: #666;
+    color: var(--text-light);
 }
 
 .category {
-    background: #4a90e2;
+    background: var(--primary-color);
     color: white;
     padding: 0.3rem 0.8rem;
     border-radius: 20px;
@@ -31,12 +31,12 @@
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: 1rem;
-    color: #2c3e50;
+    color: var(--text-dark);
 }
 
 .article-excerpt {
     font-size: 1.2rem;
-    color: #666;
+    color: var(--text-light);
     line-height: 1.6;
     font-style: italic;
 }
@@ -57,7 +57,7 @@
     display: block;
     margin-top: 0.5rem;
     font-size: 0.9rem;
-    color: #666;
+    color: var(--text-light);
     font-style: italic;
 }
 
@@ -68,18 +68,14 @@
 .lead {
     font-size: 1.3rem;
     font-weight: 500;
-    color: #2c3e50;
-    border-left: 4px solid #4a90e2;
+    color: var(--text-dark);
+    border-left: 4px solid var(--primary-color);
     padding-left: 1.5rem;
     margin: 2rem 0;
 }
 
 .article-content h2 {
-    font-size: 1.8rem;
-    font-weight: 600;
-    margin: 2.5rem 0 1.5rem 0;
-    color: #2c3e50;
-    border-bottom: 2px solid #f8f9fa;
+    border-bottom: 2px solid var(--background-light);
     padding-bottom: 0.5rem;
 }
 
@@ -95,7 +91,7 @@
 
 .article-content li::before {
     content: "•";
-    color: #4a90e2;
+    color: var(--primary-color);
     font-weight: bold;
     display: inline-block;
     width: 1em;
@@ -103,8 +99,8 @@
 }
 
 .highlight-box {
-    background: #f8f9fa;
-    border-left: 4px solid #4a90e2;
+    background: var(--background-light);
+    border-left: 4px solid var(--primary-color);
     padding: 1.5rem;
     margin: 2rem 0;
     border-radius: 0 8px 8px 0;
@@ -112,13 +108,13 @@
 
 .highlight-box h3 {
     margin-top: 0;
-    color: #2c3e50;
+    color: var(--text-dark);
     font-size: 1.3rem;
 }
 
 .quote {
-    background: #f8f9fa;
-    border-left: 4px solid #e74c3c;
+    background: var(--background-light);
+    border-left: 4px solid var(--accent-red);
     padding: 1.5rem;
     margin: 2rem 0;
     font-style: italic;
@@ -129,13 +125,13 @@
     margin-top: 1rem;
     font-style: normal;
     font-weight: 500;
-    color: #666;
+    color: var(--text-light);
     text-align: right;
 }
 
 .article-footer {
-    background: #fff3cd;
-    border: 1px solid #ffeaa7;
+    background: var(--warning-bg);
+    border: 1px solid var(--warning-border);
     padding: 1.5rem;
     border-radius: 8px;
     margin: 2rem 0;
@@ -147,12 +143,12 @@
     gap: 0.5rem;
     margin-top: 2rem;
     padding-top: 1.5rem;
-    border-top: 1px solid #e9ecef;
+    border-top: 1px solid var(--border-color);
 }
 
 .tag {
-    background: #e9ecef;
-    color: #495057;
+    background: var(--border-color);
+    color: var(--text-muted);
     padding: 0.3rem 0.8rem;
     border-radius: 20px;
     font-size: 0.9rem;
