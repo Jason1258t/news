@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import { useCreateArticle } from "features/articles/hooks/useCreateArticle";
 import "./styles.css";
+import { prompt } from "./prompt";
 
 const CreateArticlePage = () => {
     const [jsonInput, setJsonInput] = useState("");
@@ -147,6 +148,22 @@ const CreateArticlePage = () => {
                                         JSON данные статьи
                                     </label>
                                     <div className="form-actions">
+                                        <button type="button"
+                                        onClick={
+                                            async () => {
+                                                try {
+                                                    await navigator.clipboard.writeText(prompt);
+                                                    console.log('Text copied to clipboard successfully!');
+                                                    alert("Шаблон успешно скопирован!");
+                                                  } catch (err) {
+                                                    console.error('Failed to copy text: ', err);
+                                                  }
+                                            }
+                                        }
+                                        className="btn btn-outline"
+                                        disabled={loading}>
+                                            Скопировать шаблон промпта
+                                        </button>
                                         <button
                                             type="button"
                                             onClick={loadExample}
