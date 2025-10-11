@@ -18,11 +18,6 @@
         "web-vitals": "^2.1.4"
     },
     "scripts": {
-        "init:articles": "node initArticles/run-init.js",
-        "init:articles:force": "node initArticles/run-init.js --force",
-        "init:article": "node initArticles/run-init.js --article",
-        "init:articles:list": "node initArticles/run-init.js --list",
-        "init:articles:help": "node initArticles/run-init.js --help",
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
