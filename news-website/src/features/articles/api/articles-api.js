@@ -5,6 +5,8 @@ import {
     doc,
     query,
     orderBy,
+    setDoc,
+    serverTimestamp
 } from "firebase/firestore";
 import { db } from "app/firebase";
 import { formatDate } from "shared/lib/date-utils";
@@ -26,6 +28,105 @@ const mapArticleFromFirestore = (doc) => {
     };
 };
 
+/**
+ * Создает новую статью в Firestore
+ * @param {Object} articleData - Данные статьи
+ * @returns {Promise<{success: boolean, slug?: string, error?: string}>}
+ */
+export const createArticle = async (articleData) => {
+    try {
+        // Валидация обязательных полей
+        if (!articleData.slug) {
+            throw new Error("Поле 'slug' обязательно для заполнения");
+        }
+        
+        if (!articleData.title) {
+            throw new Error("Поле 'title' обязательно для заполнения");
+        }
+        
+        if (!articleData.description) {
+            throw new Error("Поле 'description' обязательно для заполнения");
+        }
+        
+        if (!articleData.content || !Array.isArray(articleData.content)) {
+            throw new Error("Поле 'content' обязательно и должно быть массивом");
+        }
+
+        // Проверяем, не существует ли уже статья с таким slug
+        const existingDoc = await getDoc(doc(db, "articles", articleData.slug));
+        if (existingDoc.exists()) {
+            throw new Error(`Статья с slug "${articleData.slug}" уже существует`);
+        }
+
+        // Подготавливаем данные для сохранения
+        const articleToSave = {
+            ...articleData,
+            // Убеждаемся, что дата в правильном формате
+            datePublishedISO: articleData.datePublishedISO || new Date().toISOString(),
+            // Добавляем timestamp'ы
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp(),
+        };
+
+        // Удаляем поле dateDisplay, если оно есть (будет генерироваться автоматически)
+        delete articleToSave.dateDisplay;
+
+        // Сохраняем статью в Firestore
+        const docRef = doc(db, "articles", articleData.slug);
+        await setDoc(docRef, articleToSave);
+
+        console.log(`✅ Статья "${articleData.title}" успешно создана`);
+
+        return {
+            success: true,
+            slug: articleData.slug
+        };
+
+    } catch (error) {
+        console.error("❌ Ошибка при создании статьи:", error);
+        return {
+            success: false,
+            error: error.message
+        };
+    }
+};
+
+/**
+ * Обновляет существующую статью
+ * @param {string} slug - Slug статьи
+ * @param {Object} updates - Обновляемые поля
+ * @returns {Promise<{success: boolean, error?: string}>}
+ */
+export const updateArticle = async (slug, updates) => {
+    try {
+        const docRef = doc(db, "articles", slug);
+        const existingDoc = await getDoc(docRef);
+        
+        if (!existingDoc.exists()) {
+            throw new Error(`Статья с slug "${slug}" не найдена`);
+        }
+
+        // Удаляем поле dateDisplay из обновлений
+        const updatesToSave = { ...updates };
+        delete updatesToSave.dateDisplay;
+
+        await setDoc(docRef, {
+            ...updatesToSave,
+            updatedAt: serverTimestamp()
+        }, { merge: true });
+
+        return { success: true };
+
+    } catch (error) {
+        console.error("❌ Ошибка при обновлении статьи:", error);
+        return {
+            success: false,
+            error: error.message
+        };
+    }
+};
+
+// Существующие функции остаются без изменений
 export const fetchArticles = async () => {
     try {
         const articlesQuery = query(

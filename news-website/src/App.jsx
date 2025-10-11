@@ -7,6 +7,7 @@ import { HelmetProvider } from "react-helmet-async";
 import ScrollToTop from "./shared/lib/ScrollToTop";
 import AboutPage from "pages/About";
 import { QueryProvider } from "app/query/QueryProvider";
+import CreateArticlePage from "pages/CreateArticle";
 
 const App = () => {
     return (
@@ -19,6 +20,10 @@ const App = () => {
                         <Route path="/" element={<Home />} />
                         <Route path="/about" element={<AboutPage />} />
                         <Route path="/articles/:slug" element={<Article />} />
+                        <Route
+                            path="/create-article"
+                            element={<CreateArticlePage />}
+                        />
                     </Routes>
                     <Footer />
                 </Router>
