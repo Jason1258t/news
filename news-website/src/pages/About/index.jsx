@@ -155,28 +155,6 @@ const AboutPage = () => {
                         </div>
                     </section>
 
-                    {/* Статистика */}
-                    <section className="about-stats">
-                        <div className="stats-grid">
-                            <div className="stat-item">
-                                <div className="stat-number">4</div>
-                                <div className="stat-label">
-                                    опубликованных статьи
-                                </div>
-                            </div>
-                            <div className="stat-item">
-                                <div className="stat-number">2025</div>
-                                <div className="stat-label">год основания</div>
-                            </div>
-                            <div className="stat-item">
-                                <div className="stat-number">100%</div>
-                                <div className="stat-label">
-                                    студенческая инициатива
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
                     <section className="disclaimer-section">
                         <div className="disclaimer-content">
                             <div className="disclaimer-icon">⚠️</div>
