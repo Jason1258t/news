@@ -1,11 +1,14 @@
-// HomeFeed.jsx
 import React from "react";
 import ArticleCard from "widgets/ArticleCard";
 import { useArticles } from "features/articles/hooks/useArticles";
 import styles from './HomeFeed.module.css';
+import { useSearchParams } from "react-router-dom";
 
 const HomeFeed = () => {
-    const { data: articles, isLoading, error } = useArticles();
+    const [searchParams] = useSearchParams();
+    const category = searchParams.get("category");
+
+    const { data: articles, isLoading, error } = useArticles(category);
 
     if (isLoading) {
         return <div className={styles.loading}>Загрузка статей...</div>;

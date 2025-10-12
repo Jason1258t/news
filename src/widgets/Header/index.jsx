@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./styles.css";
-import logo from 'logo.jpg';
+import logo from "logo.jpg";
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -13,7 +13,7 @@ const Header = () => {
             <div className="container">
                 <div className="header-content">
                     <div className="logo">
-                        <img src={logo} alt="ПГТУ Breaking NEWS logo"/>
+                        <img src={logo} alt="ПГТУ Breaking NEWS logo" />
                         <h1>
                             <Link to="/">ПГТУ Breaking NEWS</Link>
                         </h1>
@@ -23,18 +23,18 @@ const Header = () => {
                         <Link to="/" className="nav-link">
                             Главная
                         </Link>
-                        <a href="#" className="nav-link">
+                        <Link to="/?category=Наука" className="nav-link">
                             Наука
-                        </a>
-                        <a href="#" className="nav-link">
+                        </Link>
+                        <Link to="/?category=Общество" className="nav-link">
                             Общество
-                        </a>
-                        <a href="#" className="nav-link">
+                        </Link>
+                        <Link to="/?category=Технологии" className="nav-link">
                             Технологии
-                        </a>
-                        <a href="#" className="nav-link">
+                        </Link>
+                        <Link to="/?category=Спорт" className="nav-link">
                             Спорт
-                        </a>
+                        </Link>
                     </nav>
 
                     <div

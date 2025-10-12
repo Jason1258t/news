@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchArticles } from "../api/articles-api";
 
-export const useArticles = () => {
+export const useArticles = (category) => {
     return useQuery({
-        queryKey: ["articles"],
-        queryFn: fetchArticles,
+        queryKey: ["articles", category],
+        queryFn: () => fetchArticles(category),
         staleTime: 10 * 60 * 1000,
     });
 };

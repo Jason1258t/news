@@ -8,13 +8,19 @@ const EditorsPickWidget = () => {
     return (
         <HomeWidget title="👑 Выбор редакции<">
             <div
-                style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "1rem",
+                }}
             >
                 {editorsPicks.map((pick, index) => (
                     <Link
                         key={index}
                         to={pick.articleUrl}
                         style={{ textDecoration: "none" }}
+                        target="_blank"
+                        rel="noopener noreferrer"
                     >
                         <EditorsPickCard key={index} pick={pick} />
                     </Link>

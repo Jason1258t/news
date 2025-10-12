@@ -6,7 +6,6 @@ import { useArticle } from "features/articles/hooks/useArticle";
 
 const Article = () => {
     const { slug } = useParams();
-    // const article = articlesStorage[slug];
 
     const { data: article, isLoading, error } = useArticle(slug);
 

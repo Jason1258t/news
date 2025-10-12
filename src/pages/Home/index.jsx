@@ -6,12 +6,15 @@ import HeroWidget from "widgets/Hero";
 import CTASetcion from "features/CTA";
 import "./styles.css";
 import HomeMeta from "./HomeMeta";
+import { useSearchParams } from "react-router-dom";
 
-const Home = () => {
+const HomePage = () => {
+    const [searchParams] = useSearchParams();
+    const category = searchParams.get("category");
+
     return (
         <>
             <HomeMeta />
-
             <main className="main">
                 <div className="container">
                     <HeroWidget
@@ -24,13 +27,17 @@ const Home = () => {
                     <div className="home-layout">
                         <div className="main-content">
                             <section className="latest-articles">
-                                <div className="section-header">
-                                    <h2 className="section-title">
-                                        Последние публикации
-                                    </h2>
-                                    <p className="section-subtitle">
-                                        Самые свежие материалы нашего издания
-                                    </p>
+                                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                                    <div className="section-header">
+                                        <h2 className="section-title">
+                                            Последние публикации
+                                        </h2>
+                                        <p className="section-subtitle">
+                                            Самые свежие материалы нашего
+                                            издания
+                                        </p>
+                                    </div>
+                                    {category && <h2 style={{margin: 0}}> • {category}</h2>}
                                 </div>
                                 <HomeFeed />
                             </section>
@@ -41,11 +48,11 @@ const Home = () => {
                         </aside>
                     </div>
 
-                    <CTASetcion/>
+                    <CTASetcion />
                 </div>
             </main>
         </>
     );
 };
 
-export default Home;
+export default HomePage;

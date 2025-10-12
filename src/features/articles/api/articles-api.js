@@ -5,8 +5,9 @@ import {
     doc,
     query,
     orderBy,
+    where,
     setDoc,
-    serverTimestamp
+    serverTimestamp,
 } from "firebase/firestore";
 import { db } from "app/firebase";
 import { formatDate } from "shared/lib/date-utils";
@@ -35,43 +36,41 @@ const mapArticleFromFirestore = (doc) => {
  */
 export const createArticle = async (articleData) => {
     try {
-        // Валидация обязательных полей
         if (!articleData.slug) {
             throw new Error("Поле 'slug' обязательно для заполнения");
         }
-        
+
         if (!articleData.title) {
             throw new Error("Поле 'title' обязательно для заполнения");
         }
-        
+
         if (!articleData.description) {
             throw new Error("Поле 'description' обязательно для заполнения");
         }
-        
+
         if (!articleData.content || !Array.isArray(articleData.content)) {
-            throw new Error("Поле 'content' обязательно и должно быть массивом");
+            throw new Error(
+                "Поле 'content' обязательно и должно быть массивом"
+            );
         }
 
-        // Проверяем, не существует ли уже статья с таким slug
         const existingDoc = await getDoc(doc(db, "articles", articleData.slug));
         if (existingDoc.exists()) {
-            throw new Error(`Статья с slug "${articleData.slug}" уже существует`);
+            throw new Error(
+                `Статья с slug "${articleData.slug}" уже существует`
+            );
         }
 
-        // Подготавливаем данные для сохранения
         const articleToSave = {
             ...articleData,
-            // Убеждаемся, что дата в правильном формате
-            datePublishedISO: articleData.datePublishedISO || new Date().toISOString(),
-            // Добавляем timestamp'ы
+            datePublishedISO:
+                articleData.datePublishedISO || new Date().toISOString(),
             createdAt: serverTimestamp(),
             updatedAt: serverTimestamp(),
         };
 
-        // Удаляем поле dateDisplay, если оно есть (будет генерироваться автоматически)
         delete articleToSave.dateDisplay;
 
-        // Сохраняем статью в Firestore
         const docRef = doc(db, "articles", articleData.slug);
         await setDoc(docRef, articleToSave);
 
@@ -79,14 +78,13 @@ export const createArticle = async (articleData) => {
 
         return {
             success: true,
-            slug: articleData.slug
+            slug: articleData.slug,
         };
-
     } catch (error) {
         console.error("❌ Ошибка при создании статьи:", error);
         return {
             success: false,
-            error: error.message
+            error: error.message,
         };
     }
 };
@@ -101,7 +99,7 @@ export const updateArticle = async (slug, updates) => {
     try {
         const docRef = doc(db, "articles", slug);
         const existingDoc = await getDoc(docRef);
-        
+
         if (!existingDoc.exists()) {
             throw new Error(`Статья с slug "${slug}" не найдена`);
         }
@@ -110,30 +108,42 @@ export const updateArticle = async (slug, updates) => {
         const updatesToSave = { ...updates };
         delete updatesToSave.dateDisplay;
 
-        await setDoc(docRef, {
-            ...updatesToSave,
-            updatedAt: serverTimestamp()
-        }, { merge: true });
+        await setDoc(
+            docRef,
+            {
+                ...updatesToSave,
+                updatedAt: serverTimestamp(),
+            },
+            { merge: true }
+        );
 
         return { success: true };
-
     } catch (error) {
         console.error("❌ Ошибка при обновлении статьи:", error);
         return {
             success: false,
-            error: error.message
+            error: error.message,
         };
     }
 };
 
-// Существующие функции остаются без изменений
-export const fetchArticles = async () => {
-    try {
-        const articlesQuery = query(
+const getArticlesQuery = (category) => {
+    if (category) {
+        return query(
             collection(db, "articles"),
+            where("category", "array-contains", category),
             orderBy("datePublishedISO", "desc")
         );
-        
+    }
+    return query(
+        collection(db, "articles"),
+        orderBy("datePublishedISO", "desc")
+    );
+};
+
+export const fetchArticles = async (category) => {
+    try {
+        const articlesQuery = getArticlesQuery(category);
         const querySnapshot = await getDocs(articlesQuery);
 
         return querySnapshot.docs.map((doc) => mapArticleFromFirestore(doc));
