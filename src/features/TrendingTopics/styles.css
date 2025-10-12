@@ -1,21 +1,3 @@
-.trending-widget {
-    background: #fff;
-    border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: var(--shadow);
-    margin-bottom: 1.5rem;
-}
-
-.widget-title {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--text-dark);
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
 .trending-topics {
     display: flex;
     flex-direction: column;

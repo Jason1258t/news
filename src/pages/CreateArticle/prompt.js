@@ -91,13 +91,15 @@ export const prompt = `types:
 
 export {}; // JSDoc-only typedefs module
 
+Важное уточнение, что категории хроанятся массивом, а уже потом изменяются в строку
+
 
 example:
 {
     "slug": "grind-humanity-origin",
     "title": "Гринд: Древняя сила, что породила человечество",
     "description": "Что, если величайшая движущая сила цивилизации — это не огонь и не колесо, а скучное монотонное действие, которое мы называем гриндом? Как игры вроде Genshin Impact, Minecraft и Dota 2 связаны с зарождением человечества.",
-    "category": "Игры • Наука • Психология",
+    "category": ["Наука", "Общество"],
     "datePublishedISO": "2024-12-12T00:00:00+03:00",
     "author": "ПГТУ Breaking NEWS",
     "tags": ["гринд", "игры", "психология", "эволюция", "Genshin Impact", "Minecraft", "Dota 2"],

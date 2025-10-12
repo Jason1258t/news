@@ -1,0 +1,30 @@
+.feedGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.layoutSurface {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.layoutSurface:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.loading {
+    margin: 4rem auto;
+    text-align: center;
+    color: var(--text-light);
+}
+
+.error {
+    margin: 4rem auto;
+    text-align: center;
+    counter-reset: var(--accent-red);
+}

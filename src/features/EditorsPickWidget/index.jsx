@@ -1,16 +1,18 @@
 import React from "react";
-import "./styles.css";
 import EditorsPickCard from "entities/editors-pick/ui";
 import { Link } from "react-router-dom";
 import { editorsPicks } from "./picks";
+import HomeWidget from "widgets/HomeWidget";
 
 const EditorsPickWidget = () => {
     return (
-        <div className="widget editors-pick-widget">
-            <h3 className="widget-title">👑 Выбор редакции</h3>
-            <div className="editors-picks">
+        <HomeWidget title="👑 Выбор редакции<">
+            <div
+                style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+            >
                 {editorsPicks.map((pick, index) => (
                     <Link
+                        key={index}
                         to={pick.articleUrl}
                         style={{ textDecoration: "none" }}
                     >
@@ -18,7 +20,7 @@ const EditorsPickWidget = () => {
                     </Link>
                 ))}
             </div>
-        </div>
+        </HomeWidget>
     );
 };
 

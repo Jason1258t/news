@@ -1,5 +1,6 @@
 import React from "react";
 import "./styles.css";
+import HomeWidget from "widgets/HomeWidget";
 
 const TrendingTopics = () => {
     const trendingTopics = [
@@ -11,8 +12,7 @@ const TrendingTopics = () => {
     ];
 
     return (
-        <div className="widget trending-widget">
-            <h3 className="widget-title">🔥 В тренде</h3>
+        <HomeWidget title="🔥 В тренде">
             <div className="trending-topics">
                 {trendingTopics.map((topic, index) => (
                     <div key={index} className="topic-item">
@@ -21,7 +21,7 @@ const TrendingTopics = () => {
                     </div>
                 ))}
             </div>
-        </div>
+        </HomeWidget>
     );
 };
 

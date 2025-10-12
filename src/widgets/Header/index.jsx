@@ -24,10 +24,10 @@ const Header = () => {
                             Главная
                         </Link>
                         <a href="#" className="nav-link">
-                            Политика
+                            Наука
                         </a>
                         <a href="#" className="nav-link">
-                            Экономика
+                            Общество
                         </a>
                         <a href="#" className="nav-link">
                             Технологии

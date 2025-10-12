@@ -17,7 +17,7 @@ const mapArticleFromFirestore = (doc) => {
         slug: doc.id,
         title: data.title || "",
         description: data.description || "",
-        category: data.category || "",
+        category: (data.category || []).join(" • "),
         dateDisplay: formatDate(data.datePublishedISO),
         datePublishedISO: data.datePublishedISO || new Date().toISOString(),
         author: data.author || "",

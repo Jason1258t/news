@@ -1,0 +1,84 @@
+/* CTA Section */
+.section {
+    background: #f7fafc;
+    padding: 4rem 2rem; /* Увеличили padding */
+    border-radius: 15px;
+    text-align: center;
+    margin-top: 3rem; /* Увеличили отступ сверху */
+}
+
+.content h3 {
+    font-size: 2.2rem; /* Увеличили размер */
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+}
+
+.content p {
+    color: #718096;
+    margin-bottom: 2.5rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.1rem; /* Увеличили размер */
+}
+
+.buttons {
+    display: flex;
+    gap: 1.5rem; /* Увеличили gap */
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 0.75rem 2rem; /* Увеличили padding */
+    border: none;
+    border-radius: 10px; /* Увеличили border-radius */
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1rem;
+}
+
+.btnPrimary {
+    background: #667eea;
+    color: white;
+}
+
+.btnPrimary:hover {
+    background: #5a6fd8;
+    transform: translateY(-3px); /* Увеличили анимацию */
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.btnSecondary {
+    background: transparent;
+    color: #667eea;
+    border: 2px solid #667eea;
+}
+
+.btnSecondary:hover {
+    background: #667eea;
+    color: white;
+    transform: translateY(-3px);
+}
+
+@media (max-width: 768px) {        
+    .buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    .btn {
+        width: 220px;
+        padding: 0.5rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .section {
+        padding: 3rem 1.5rem;
+    }
+}

@@ -1,11 +1,12 @@
-.editors-pick-widget {
+.widget {
     background: #fff;
     border-radius: 12px;
     padding: 1.5rem;
     box-shadow: var(--shadow);
+    margin-bottom: 1.5rem;
 }
 
-.widget-title {
+.title {
     font-size: 1.1rem;
     font-weight: 600;
     color: var(--text-dark);
@@ -13,10 +14,4 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-}
-
-.editors-picks {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
 }

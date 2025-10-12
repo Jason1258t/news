@@ -1,15 +1,13 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import EditorsPickWidget from "features/EditorsPickWidget";
 import TrendingTopics from "features/TrendingTopics";
+import HomeFeed from "features/HomeFeed";
+import HeroWidget from "widgets/Hero";
+import CTASetcion from "features/CTA";
 import "./styles.css";
 import HomeMeta from "./HomeMeta";
-import { HomeFeed } from "./HomeFeed";
-import HeroWidget from "widgets/Hero";
 
 const Home = () => {
-    const navigate = useNavigate();
-
     return (
         <>
             <HomeMeta />
@@ -34,7 +32,6 @@ const Home = () => {
                                         Самые свежие материалы нашего издания
                                     </p>
                                 </div>
-
                                 <HomeFeed />
                             </section>
                         </div>
@@ -44,33 +41,7 @@ const Home = () => {
                         </aside>
                     </div>
 
-                    <section className="cta-section">
-                        <div className="cta-content">
-                            <h3>Оставайтесь в курсе событий</h3>
-                            <p>
-                                Подпишитесь на наши обновления, чтобы первыми
-                                получать самые важные и интересные новости
-                            </p>
-                            <div className="cta-buttons">
-                                <button
-                                    className="btn btn-primary"
-                                    onClick={() =>
-                                        window.open(
-                                            "https://t.me/SSalVamvRotSuki"
-                                        )
-                                    }
-                                >
-                                    Подписаться
-                                </button>
-                                <button
-                                    className="btn btn-secondary"
-                                    onClick={() => navigate("/about")}
-                                >
-                                    О проекте
-                                </button>
-                            </div>
-                        </div>
-                    </section>
+                    <CTASetcion/>
                 </div>
             </main>
         </>
