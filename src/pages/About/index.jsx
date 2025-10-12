@@ -1,8 +1,8 @@
-// AboutPage.js
 import React from "react";
 import { Helmet } from "react-helmet-async";
 
 import "./styles.css";
+import HeroWidget from "widgets/Hero";
 
 const AboutPage = () => {
     return (
@@ -30,17 +30,12 @@ const AboutPage = () => {
 
             <main className="main">
                 <div className="container">
-
-                    <section className="about-hero">
-                        <div className="about-hero-content">
-                            <h1 className="about-title">О проекте</h1>
-                            <p className="about-subtitle">
-                                ПГТУ Breaking NEWS — это независимое
+                    <HeroWidget
+                        title="О проекте"
+                        subtitle=" ПГТУ Breaking NEWS — это независимое
                                 студенческое издание, созданное для тех, кто
-                                хочет знать больше.
-                            </p>
-                        </div>
-                    </section>
+                                хочет знать больше."
+                    />
 
                     {/* Миссия и ценности */}
                     <section className="about-mission">

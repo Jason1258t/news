@@ -1,29 +1,3 @@
-/* About Page Styles */
-.about-hero {
-    background: linear-gradient(135deg, var(--primary-color) 0%, #764ba2 100%);
-    color: white;
-    padding: 4rem 2rem;
-    border-radius: 15px;
-    margin-bottom: 3rem;
-    margin-top: 3rem;
-    text-align: center;
-}
-
-.about-title {
-    font-size: 3rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    color: white;
-}
-
-.about-subtitle {
-    font-size: 1.3rem;
-    opacity: 0.9;
-    max-width: 600px;
-    margin: 0 auto;
-    line-height: 1.6;
-}
-
 /* Mission Section */
 .about-mission {
     margin-bottom: 4rem;

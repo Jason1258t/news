@@ -1,10 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import EditorsPick from "features/EditorsPick";
+import EditorsPickWidget from "features/EditorsPickWidget";
 import TrendingTopics from "features/TrendingTopics";
 import "./styles.css";
 import HomeMeta from "./HomeMeta";
 import { HomeFeed } from "./HomeFeed";
+import HeroWidget from "widgets/Hero";
 
 const Home = () => {
     const navigate = useNavigate();
@@ -15,16 +16,12 @@ const Home = () => {
 
             <main className="main">
                 <div className="container">
-                    <section className="hero-section">
-                        <div className="hero-content">
-                            <h1 className="hero-title" >ПГТУ Breaking NEWS</h1>
-                            <p className="hero-subtitle">
-                                Самые свежие и актуальные новости из мира
+                    <HeroWidget
+                        title="ПГТУ Breaking NEWS"
+                        subtitle="Самые свежие и актуальные новости из мира
                                 технологий, общества и не только. Только
-                                проверенная информация и эксклюзивные материалы.
-                            </p>
-                        </div>
-                    </section>
+                                проверенная информация и эксклюзивные материалы."
+                    />
 
                     <div className="home-layout">
                         <div className="main-content">
@@ -38,11 +35,11 @@ const Home = () => {
                                     </p>
                                 </div>
 
-                                <HomeFeed/>
+                                <HomeFeed />
                             </section>
                         </div>
                         <aside className="sidebar right-sidebar">
-                            <EditorsPick />
+                            <EditorsPickWidget />
                             <TrendingTopics />
                         </aside>
                     </div>
