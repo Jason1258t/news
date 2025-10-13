@@ -1,5 +1,5 @@
 import React from "react";
-import EditorsPickWidget from "features/EditorsPickWidget";
+import EditorsPickWidget from "features/editors-pick/ui";
 import TrendingTopics from "features/TrendingTopics";
 import HomeFeed from "features/HomeFeed";
 import HeroWidget from "widgets/Hero";
@@ -27,8 +27,8 @@ const HomePage = () => {
                     <div className="home-layout">
                         <div className="main-content">
                             <section className="latest-articles">
-                                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                                    <div className="section-header">
+                                <div className="section-header">
+                                    <div>
                                         <h2 className="section-title">
                                             Последние публикации
                                         </h2>
@@ -37,7 +37,12 @@ const HomePage = () => {
                                             издания
                                         </p>
                                     </div>
-                                    {category && <h2 style={{margin: 0}}> • {category}</h2>}
+                                    {category && (
+                                        <h2 className="category-name">
+                                            <span> • </span>
+                                            {category}
+                                        </h2>
+                                    )}
                                 </div>
                                 <HomeFeed />
                             </section>

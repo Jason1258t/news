@@ -25,6 +25,9 @@
 
 .section-header {
     margin-bottom: 0.5rem; /* Увеличили отступ */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .section-title {
@@ -40,6 +43,10 @@
     max-width: 500px;
 }
 
+.category-name {
+    margin: 0;
+}
+
 /* Responsive Design */
 @media (max-width: 1200px) {
     .home-layout {
@@ -53,32 +60,44 @@
         grid-template-columns: 1fr;
         gap: 2rem;
     }
-    
+
     .sidebar {
         position: static;
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 1.5rem;
     }
-    
+
     .section-title {
         font-size: 1.5rem;
     }
 }
 
-@media (max-width: 768px) {    
+@media (max-width: 768px) {
+    .section-header div, span {
+        display: none;
+    }
+
+    .section-header {
+        justify-content: center;
+    }
+
+    .category-name {
+        text-align: center;
+    }
+
     .sidebar {
         grid-template-columns: 1fr;
     }
-    
+
     .section-title {
         font-size: 1.8rem;
     }
-    
+
     .feed-grid {
         gap: 1.5rem;
     }
-    
+
     .container {
         padding: 0 1rem;
     }

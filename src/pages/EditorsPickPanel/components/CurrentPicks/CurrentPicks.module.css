@@ -1,0 +1,26 @@
+.container {
+    /* aspect-ratio: 1; */
+    height: calc(100vh - 300px);
+    background-color: #fff;
+    box-shadow: var(--shadow);
+    border-radius: 16px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.cardContainer {
+    width: 300px;
+}
+
+.actionsContainer {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 0.5rem;
+    height: auto;
+    background: var(--background-light);
+    border-radius: 8px;
+}

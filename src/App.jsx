@@ -8,6 +8,7 @@ import ScrollToTop from "./shared/lib/ScrollToTop";
 import AboutPage from "pages/About";
 import { QueryProvider } from "app/query/QueryProvider";
 import CreateArticlePage from "pages/CreateArticle";
+import EditorsPickPanel from "pages/EditorsPickPanel";
 import "app/theme.css";
 import "app/layout.css";
 
@@ -25,6 +26,10 @@ const App = () => {
                         <Route
                             path="/create-article"
                             element={<CreateArticlePage />}
+                        />
+                        <Route
+                            path="editors-pick-panel"
+                            element={<EditorsPickPanel />}
                         />
                     </Routes>
                     <Footer />

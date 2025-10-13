@@ -1,7 +1,7 @@
 .btn {
-    padding: 0.75rem 2rem; 
+    padding: 0.75rem 2rem;
     border: none;
-    border-radius: 10px; 
+    border-radius: 10px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -11,13 +11,17 @@
 }
 
 .btnFilled {
-    background: #667eea;
+    background-color: var(--primary-color);
     color: white;
 }
 
-.btnFilled:hover {
+.btnFilled:disabled {
+    background-color: var(--text-light);
+}
+
+.btnFilled:not(:disabled):hover {
     background: #5a6fd8;
-    transform: translateY(-3px); 
+    transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
 }
 
