@@ -3,6 +3,9 @@ import { useParams } from "react-router-dom";
 import ArticleRenderer from "features/articles/ArticleRenderer";
 import { ArticleMeta } from "./ArticleMeta";
 import { useArticle } from "features/articles/hooks/useArticle";
+import LoadingWidget from "./components/LoadingWidget";
+import ErrorWidget from "./components/ErrorWidget";
+import NotFoundWidget from "./components/NotFoundWidget";
 
 const Article = () => {
     const { slug } = useParams();
@@ -10,16 +13,16 @@ const Article = () => {
     const { data: article, isLoading, error } = useArticle(slug);
 
     if (isLoading) {
-        return <div className="loading">Загрузка статьи...</div>;
+        return <LoadingWidget/>;
     }
 
     if (error) {
-        return <div className="error">Ошибка: {error.message}</div>;
+        return <ErrorWidget message={error?.message} onRetry={() => {}}/>;
     }
 
-    if (!article) {
-        return <div className="not-found">Статья не найдена</div>;
-    }
+    // if (!article) {
+        return <NotFoundWidget/>;
+    // }
 
     if (!article) {
         return (

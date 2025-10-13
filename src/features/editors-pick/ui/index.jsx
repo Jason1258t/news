@@ -6,7 +6,7 @@ import HomeWidget from "widgets/HomeWidget";
 
 const EditorsPickWidget = () => {
     return (
-        <HomeWidget title="👑 Выбор редакции<">
+        <HomeWidget title="👑 Выбор редакции">
             <div
                 style={{
                     display: "flex",
