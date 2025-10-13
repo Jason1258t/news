@@ -1,0 +1,41 @@
+.btn {
+    padding: 0.75rem 2rem; 
+    border: none;
+    border-radius: 10px; 
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1rem;
+}
+
+.btnFilled {
+    background: #667eea;
+    color: white;
+}
+
+.btnFilled:hover {
+    background: #5a6fd8;
+    transform: translateY(-3px); 
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.btnOutlined {
+    background: transparent;
+    color: #667eea;
+    border: 2px solid #667eea;
+}
+
+.btnOutlined:hover {
+    background: #667eea;
+    color: white;
+    transform: translateY(-3px);
+}
+
+@media (max-width: 768px) {
+    .btn {
+        width: 220px;
+        padding: 0.5rem 1.5rem;
+    }
+}

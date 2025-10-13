@@ -1,6 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./CTASection.module.css";
+import FilledButton from "widgets/buttons/FilledButton";
+import OutlinedButton from "widgets/buttons/OutlinedButton";
 
 const CTASetcion = () => {
     const navigate = useNavigate();
@@ -14,20 +16,16 @@ const CTASetcion = () => {
                     важные и интересные новости
                 </p>
                 <div className={styles.buttons}>
-                    <button
-                        className={`${styles.btn} ${styles.btnPrimary}`}
+                    <FilledButton
                         onClick={() =>
                             window.open("https://t.me/SSalVamvRotSuki")
                         }
                     >
                         Подписаться
-                    </button>
-                    <button
-                        className={`${styles.btn} ${styles.btnSecondary}`}
-                        onClick={() => navigate("/about")}
-                    >
+                    </FilledButton>
+                    <OutlinedButton onClick={() => navigate("/about")}>
                         О проекте
-                    </button>
+                    </OutlinedButton>
                 </div>
             </div>
         </section>
