@@ -3,9 +3,9 @@ import { useParams } from "react-router-dom";
 import ArticleRenderer from "features/articles/ArticleRenderer";
 import { ArticleMeta } from "./ArticleMeta";
 import { useArticle } from "features/articles/hooks/useArticle";
-import LoadingWidget from "./components/LoadingWidget";
-import ErrorWidget from "./components/ErrorWidget";
-import NotFoundWidget from "./components/NotFoundWidget";
+import LoadingWidget from "../../widgets/status/loading";
+import ErrorWidget from "../../widgets/status/error";
+import NotFoundWidget from "../../widgets/status/not-found";
 
 const Article = () => {
     const { slug } = useParams();
@@ -13,7 +13,7 @@ const Article = () => {
     const { data: article, isLoading, error } = useArticle(slug);
 
     if (isLoading) {
-        return <LoadingWidget/>;
+        return <LoadingWidget message="Загрузка статьи..."/>;
     }
 
     if (error) {
@@ -21,7 +21,7 @@ const Article = () => {
     }
 
     if (!article) {
-        return <NotFoundWidget/>;
+        return <NotFoundWidget message="Статья не найдена"/>;
     }
 
     if (!article) {

@@ -7,6 +7,7 @@ import CTASetcion from "features/CTA";
 import "./styles.css";
 import HomeMeta from "./HomeMeta";
 import { useSearchParams } from "react-router-dom";
+import FeedHeader from "./components/FeedHeader";
 
 const HomePage = () => {
     const [searchParams] = useSearchParams();
@@ -26,28 +27,10 @@ const HomePage = () => {
 
                     <div className="home-layout">
                         <div className="main-content">
-                            <section className="latest-articles">
-                                <div className="section-header">
-                                    <div>
-                                        <h2 className="section-title">
-                                            Последние публикации
-                                        </h2>
-                                        <p className="section-subtitle">
-                                            Самые свежие материалы нашего
-                                            издания
-                                        </p>
-                                    </div>
-                                    {category && (
-                                        <h2 className="category-name">
-                                            <span> • </span>
-                                            {category}
-                                        </h2>
-                                    )}
-                                </div>
-                                <HomeFeed />
-                            </section>
+                            <FeedHeader category={category}/>
+                            <HomeFeed />
                         </div>
-                        <aside className="sidebar right-sidebar">
+                        <aside className="sidebar">
                             <EditorsPickWidget />
                             <TrendingTopics />
                         </aside>

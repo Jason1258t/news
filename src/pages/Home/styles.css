@@ -18,11 +18,6 @@
     gap: 1.5rem;
 }
 
-/* Latest Articles - больше воздуха */
-.latest-articles {
-    margin-bottom: 4rem;
-}
-
 .section-header {
     margin-bottom: 0.5rem; /* Увеличили отступ */
     display: flex;
@@ -92,10 +87,6 @@
 
     .section-title {
         font-size: 1.8rem;
-    }
-
-    .feed-grid {
-        gap: 1.5rem;
     }
 
     .container {

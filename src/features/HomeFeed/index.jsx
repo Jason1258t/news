@@ -3,6 +3,8 @@ import ArticleCard from "widgets/ArticleCard";
 import { useArticles } from "features/articles/hooks/useArticles";
 import styles from './HomeFeed.module.css';
 import { useSearchParams } from "react-router-dom";
+import LoadingWidget from "widgets/status/loading";
+import ErrorWidget from "widgets/status/error";
 
 const HomeFeed = () => {
     const [searchParams] = useSearchParams();
@@ -11,11 +13,11 @@ const HomeFeed = () => {
     const { data: articles, isLoading, error } = useArticles(category);
 
     if (isLoading) {
-        return <div className={styles.loading}>Загрузка статей...</div>;
+        return <LoadingWidget/>;
     }
 
     if (error) {
-        return <div className={styles.error}>Ошибка: {error.message}</div>;
+        return <ErrorWidget message={error?.message}/>;
     }
 
     return (
