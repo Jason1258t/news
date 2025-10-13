@@ -20,9 +20,9 @@ const Article = () => {
         return <ErrorWidget message={error?.message} onRetry={() => {}}/>;
     }
 
-    // if (!article) {
+    if (!article) {
         return <NotFoundWidget/>;
-    // }
+    }
 
     if (!article) {
         return (
