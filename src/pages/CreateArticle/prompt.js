@@ -92,7 +92,7 @@ export const prompt = `types:
 export {}; // JSDoc-only typedefs module
 
 Важное уточнение, что категории хроанятся массивом, а уже потом изменяются в строку
-
+<important>Ты должен ответить в виде json файла. Другие слова и уточнения не приветствуются<important>
 
 example:
 {
