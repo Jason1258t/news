@@ -11,8 +11,8 @@ const ArticlesList = () => {
             <h2 style={{ margin: 0, marginBottom: "1rem" }}>Список статей</h2>
             <div className={styles.list}>
                 {articles ? (
-                    articles.map((article) => (
-                        <EditorsPickCard pick={article.og} />
+                    articles.map((article, i) => (
+                        <EditorsPickCard key={i} pick={article.og} />
                     ))
                 ) : (
                     <>
