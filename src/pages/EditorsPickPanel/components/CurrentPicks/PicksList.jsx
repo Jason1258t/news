@@ -11,7 +11,12 @@ const PicksList = ({
     removeEditorsPick,
     changeBadge,
 }) => {
-    if (loading) return <LoadingWidget />;
+    if (loading)
+        return (
+            <div className={styles.picksList}>
+                <LoadingWidget />
+            </div>
+        );
     if (editorsPicks.length === 0) {
         return <div className={styles.emptyMessage}>Тут пока пусто</div>;
     }

@@ -37,7 +37,7 @@
 .badge {
     padding: 8px 16px;
     border: 2px solid #e0e0e0;
-    border-radius: 20px;
+    border-radius: 8px;
     background: #f8f9fa;
     color: #666;
     cursor: pointer;
@@ -47,13 +47,13 @@
 }
 
 .badge:hover {
-    border-color: #007bff;
-    color: #007bff;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
 }
 
 .badgeSelected {
-    border-color: #007bff;
-    background: #007bff;
+    border-color: var(--primary-color);
+    background: var(--primary-color);
     color: white;
 }
 
