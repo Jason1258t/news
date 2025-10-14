@@ -18,7 +18,7 @@ const CTASetcion = () => {
                 <div className={styles.buttons}>
                     <FilledButton
                         onClick={() =>
-                            window.open("https://t.me/SSalVamvRotSuki")
+                            window.open("https://t.me/pgtu_breaking_news")
                         }
                     >
                         Подписаться

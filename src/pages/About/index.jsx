@@ -140,7 +140,7 @@ const AboutPage = () => {
                                     className="btn btn-secondary"
                                     onClick={() =>
                                         window.open(
-                                            "https://t.me/kabanchik207_prime"
+                                            "https://t.me/+L7dQmwJ8nSBjMmIy"
                                         )
                                     }
                                 >
