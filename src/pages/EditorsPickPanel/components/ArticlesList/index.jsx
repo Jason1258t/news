@@ -3,7 +3,7 @@ import { useArticles } from "features/articles/hooks/useArticles";
 import EditorsPickCard from "entities/editors-pick/ui";
 import styles from "./ArticlesList.module.css";
 
-const ArticlesList = () => {
+const ArticlesList = ({onArticleSelected}) => {
     const { data: articles, isLoading, error } = useArticles();
 
     return (
@@ -12,7 +12,9 @@ const ArticlesList = () => {
             <div className={styles.list}>
                 {articles ? (
                     articles.map((article, i) => (
-                        <EditorsPickCard key={i} pick={article.og} />
+                        <div className={styles.cardWrapper} onClick={() => onArticleSelected(article)}>
+                            <EditorsPickCard key={i} pick={article.og} />
+                        </div>
                     ))
                 ) : (
                     <>

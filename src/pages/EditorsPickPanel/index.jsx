@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import { useEffect } from "react";
 import ArticlesList from "./components/ArticlesList";
 import CurrentPicks from "./components/CurrentPicks";
-import BadgesOverlay from "./components/BagesOverlay";
+import { useEditorsPickStore } from "features/editors-pick/data/useEditorsPicksStore";
 
 const EditorsPickPanel = () => {
-    const [isOpen, setIsOpen] = useState(false);
-
+    const editorsPicksStore = useEditorsPickStore();
+    useEffect(() => {
+        editorsPicksStore.loadEditorsPicks();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     return (
         <>
             <div className="main">
@@ -13,11 +16,14 @@ const EditorsPickPanel = () => {
                     style={{ display: "flex", gap: "3rem" }}
                     className="container"
                 >
-                    <ArticlesList />
-                    <CurrentPicks changeBadge={() => setIsOpen(true)} />
+                    <ArticlesList
+                        onArticleSelected={(article) =>
+                            editorsPicksStore.addEditorsPick(article.og)
+                        }
+                    />
+                    <CurrentPicks store={editorsPicksStore} />
                 </div>
             </div>
-            <BadgesOverlay isOpen={isOpen} onClose={() => setIsOpen(false)} />
         </>
     );
 };

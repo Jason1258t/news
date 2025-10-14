@@ -4,8 +4,6 @@ import {
     getDoc,
     doc,
     query,
-    orderBy,
-    where,
     setDoc,
     deleteDoc,
     serverTimestamp,
@@ -52,21 +50,15 @@ const mapEditorsPickFromFirestore = (doc) => {
  * @param {ArticleBadge} options.badge - Фильтр по метке
  * @returns {Promise<EditorsPick[]>}
  */
-export const fetchEditorsPicks = async (badge = null ) => {
+export const fetchEditorsPicks = async () => {
     try {
         let articlesQuery = collection(db, "editors-pick");
-        const constraints = [];
-
-        if (badge) {
-            constraints.push(where("badge", "==", badge));
-        }
-
-        constraints.push(orderBy("createdAt", "desc"));
-
-        articlesQuery = query(articlesQuery, ...constraints);
+        articlesQuery = query(articlesQuery);
         const querySnapshot = await getDocs(articlesQuery);
 
-        return querySnapshot.docs.map((doc) => mapEditorsPickFromFirestore(doc));
+        return querySnapshot.docs.map((doc) =>
+            mapEditorsPickFromFirestore(doc)
+        );
     } catch (error) {
         console.error("❌ Ошибка при получении редакционной подборки:", error);
         throw new Error("Не удалось загрузить редакционную подборку");
@@ -93,7 +85,9 @@ export const createEditorsPick = async (pickData) => {
         }
 
         // Генерируем ID автоматически
-        const pickId = `pick_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        const pickId = `pick_${Date.now()}_${Math.random()
+            .toString(36)
+            .substr(2, 9)}`;
 
         const pickToSave = {
             title: pickData.title.trim(),
@@ -140,9 +134,12 @@ export const updateEditorsPick = async (id, updates) => {
             updatedAt: serverTimestamp(),
         };
 
-        if (updatesToSave.title) updatesToSave.title = updatesToSave.title.trim();
-        if (updatesToSave.description) updatesToSave.description = updatesToSave.description.trim();
-        if (updatesToSave.articleUrl) updatesToSave.articleUrl = updatesToSave.articleUrl.trim();
+        if (updatesToSave.title)
+            updatesToSave.title = updatesToSave.title.trim();
+        if (updatesToSave.description)
+            updatesToSave.description = updatesToSave.description.trim();
+        if (updatesToSave.articleUrl)
+            updatesToSave.articleUrl = updatesToSave.articleUrl.trim();
 
         await setDoc(docRef, updatesToSave, { merge: true });
 

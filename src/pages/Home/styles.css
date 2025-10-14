@@ -18,30 +18,6 @@
     gap: 1.5rem;
 }
 
-.section-header {
-    margin-bottom: 0.5rem; /* Увеличили отступ */
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.section-title {
-    margin: 0;
-    font-size: 1.7rem; /* Увеличили размер */
-    font-weight: 700;
-    color: #2c3e50;
-}
-
-.section-subtitle {
-    color: #718096;
-    font-size: 1.2rem; /* Увеличили размер */
-    max-width: 500px;
-}
-
-.category-name {
-    margin: 0;
-}
-
 /* Responsive Design */
 @media (max-width: 1200px) {
     .home-layout {
@@ -62,40 +38,13 @@
         grid-template-columns: 1fr 1fr;
         gap: 1.5rem;
     }
-
-    .section-title {
-        font-size: 1.5rem;
-    }
 }
 
 @media (max-width: 768px) {
-    .section-header div, span {
-        display: none;
-    }
-
-    .section-header {
-        justify-content: center;
-    }
-
-    .category-name {
-        text-align: center;
-    }
-
     .sidebar {
         grid-template-columns: 1fr;
     }
-
-    .section-title {
-        font-size: 1.8rem;
-    }
-
     .container {
         padding: 0 1rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .section-title {
-        font-size: 1.6rem;
     }
 }

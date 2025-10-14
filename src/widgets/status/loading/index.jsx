@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from './LoadingWidget.module.css';
+import React from "react";
+import styles from "./LoadingWidget.module.css";
 
 const LoadingWidget = ({ message = "Загрузка..." }) => {
     return (
@@ -16,6 +16,12 @@ const LoadingWidget = ({ message = "Загрузка..." }) => {
             </div>
         </div>
     );
+};
+
+export const LoadingSpinner = () => {
+    return <div style={{display: "flex", justifyContent: "center"}}>
+        <div className={styles.spinner}></div>
+    </div>;
 };
 
 export default LoadingWidget;

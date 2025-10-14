@@ -7,3 +7,7 @@
     overflow: auto;
     margin-bottom: 6rem;
 }
+
+.cardWrapper {
+    cursor: pointer;
+}
