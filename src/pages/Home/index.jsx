@@ -7,7 +7,6 @@ import "./styles.css";
 import HomeMeta from "./HomeMeta";
 import { useSearchParams } from "react-router-dom";
 import FeedHeader from "./components/FeedHeader";
-import YandexAd from "features/AD";
 
 const HomePage = () => {
     const [searchParams] = useSearchParams();

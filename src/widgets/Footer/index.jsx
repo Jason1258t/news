@@ -13,21 +13,28 @@ const Footer = () => {
                     </div>
                     <div className="footer-section">
                         <h4>Разделы</h4>
-                        <a href="#">Главная</a>
-                        <a href="#">Политика</a>
-                        <a href="#">Экономика</a>
-                        <a href="#">Технологии</a>
+                        <Link to="/">Главная</Link>
+                        <Link to="/?category=Наука">Наука</Link>
+                        <Link to="/?category=Общество">Общество</Link>
+                        <Link to="/?category=Технологии">Технологии</Link>
+                        <Link to="/?category=Спорт">Спорт</Link>
                     </div>
                     <div className="footer-section">
                         <h4>Контакты</h4>
                         <Link to="/about" className="nav-link">
                             О проекте
                         </Link>
-                        <a href="#">Реклама</a>
+                        <Link
+                            to="https://dalink.to/vtech_news"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Поддержать проект
+                        </Link>
                     </div>
                 </div>
                 <div className="footer-bottom">
-                    <p>&copy; 2025 Новостной портал. Все права защищены.</p>
+                    <p>&copy; 2025 Новостной портал. Ваши права не защищены.</p>
                 </div>
             </div>
         </footer>
