@@ -20,19 +20,19 @@
 }
 
 .btnFilled:not(:disabled):hover {
-    background: #5a6fd8;
+    background: var(--primary-hover);
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
 }
 
 .btnOutlined {
     background: transparent;
-    color: #667eea;
-    border: 2px solid #667eea;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
 }
 
 .btnOutlined:hover {
-    background: #667eea;
+    background: var(--primary-color);
     color: white;
     transform: translateY(-3px);
 }

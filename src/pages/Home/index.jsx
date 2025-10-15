@@ -7,6 +7,7 @@ import "./styles.css";
 import HomeMeta from "./HomeMeta";
 import { useSearchParams } from "react-router-dom";
 import FeedHeader from "./components/FeedHeader";
+import ScrollToTopButton from "widgets/buttons/scroll-to-top";
 
 const HomePage = () => {
     const [searchParams] = useSearchParams();
@@ -37,6 +38,7 @@ const HomePage = () => {
                     <CTASetcion />
                 </div>
             </main>
+            <ScrollToTopButton/>
         </>
     );
 };

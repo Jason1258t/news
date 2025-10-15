@@ -20,6 +20,7 @@ a {
 /* Цветовая палитра */
 :root {
     --primary-color: #667eea;
+    --primary-hover: #5a6fd8;
     --text-dark: #2c3e50;
     --text-light: #666;
     --text-muted: #495057;
