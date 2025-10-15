@@ -1,23 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import { useCreateArticle } from "features/articles/hooks/useCreateArticle";
 import "./styles.css";
 import { prompt } from "./prompt";
+import {talkai} from "features/articles/api/talk-to-api";
 
 const CreateArticlePage = () => {
-    const [jsonInput, setJsonInput] = useState("");
+    const [textInput, setTextInput] = useState("");
     const [isValid, setIsValid] = useState(true);
     const [error, setError] = useState("");
+    const [aiLoading, setAiLoading] = useState(false);
+    const [isApproved, setIsApproved] = useState("")
+    const [articleData, setArticleData] = useState("")
+    const [isJson, setIsJson] = useState(false)
     const navigate = useNavigate();
 
     const { createArticle, loading } = useCreateArticle();
 
-    const handleJsonChange = (e) => {
+    const handleTextChange = (e) => {
         const value = e.target.value;
-        setJsonInput(value);
-
-        if (value.trim()) {
+        if(isJson){
+            if (value.trim()) {
             try {
                 JSON.parse(value);
                 setIsValid(true);
@@ -25,40 +29,50 @@ const CreateArticlePage = () => {
             } catch (err) {
                 setIsValid(false);
                 setError("Невалидный JSON: " + err.message);
-            }
+            }}
         } else {
             setIsValid(true);
             setError("");
         }
+        setTextInput(value);
     };
+
+    const handleApprove = async (e) => {
+        e.preventDefault();
+        let temp = JSON.parse(textInput)
+        temp['datePublishedISO'] = new Date().toISOString()
+        const result = await createArticle(temp);
+        
+        if (result.success) {
+            alert("Статья успешно создана!");
+            setTextInput("");
+            // Перенаправляем на страницу статьи или главную
+            navigate(`/articles/${result.slug}`);            
+        } else {
+            setError(result.error || "Ошибка при создании статьи");
+        }
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        if (!jsonInput.trim() || !isValid) {
-            setError("Введите валидный JSON");
-            return;
-        }
-
+        setAiLoading(true)
+        let temp = ""
         try {
-            const articleData = JSON.parse(jsonInput);
-            const result = await createArticle(articleData);
-
-            if (result.success) {
-                alert("Статья успешно создана!");
-                setJsonInput("");
-                // Перенаправляем на страницу статьи или главную
-                navigate(`/articles/${result.slug}`);
-            } else {
-                setError(result.error || "Ошибка при создании статьи");
-            }
+            temp = await talkai(prompt, textInput)
         } catch (err) {
+            temp = ""
             setError("Ошибка: " + err.message);
         }
+        temp = temp.data['choices'][0]['message']['content']
+        
+        setArticleData(temp)
+        setTextInput(temp)
+        setAiLoading(false)
+        setIsJson(true)
     };
 
     const handleClear = () => {
-        setJsonInput("");
+        setTextInput("");
         setError("");
         setIsValid(true);
     };
@@ -92,7 +106,7 @@ const CreateArticlePage = () => {
             ],
         };
 
-        setJsonInput(JSON.stringify(example, null, 2));
+        setTextInput(JSON.stringify(example, null, 2));
         setIsValid(true);
         setError("");
     };
@@ -113,27 +127,20 @@ const CreateArticlePage = () => {
                         <header className="page-header">
                             <h1 className="page-title">Создать статью</h1>
                             <p className="page-subtitle">
-                                Вставьте JSON с данными статьи для загрузки в
-                                базу данных
+                                Вставьте текст вашей статьи
                             </p>
                         </header>
 
                         <div className="create-article-content">
                             <div className="format-info">
-                                <h3>📋 Формат данных</h3>
+                                <h3>📋 Информация</h3>
                                 <ul>
-                                    <li>Данные должны быть в формате JSON</li>
+                                    <li>Вам необходимо вставить/написать текст в поле ниже</li>
                                     <li>
-                                        Обязательные поля: slug, title,
-                                        description, content
+                                        Далее нейросеть превратит ваш текст в нужный формат
                                     </li>
                                     <li>
-                                        Поле <code>slug</code> должно быть
-                                        уникальным
-                                    </li>
-                                    <li>
-                                        Используйте кнопку "Загрузить пример"
-                                        для просмотра формата
+                                        После этого статья будет опубликована
                                     </li>
                                 </ul>
                             </div>
@@ -145,33 +152,9 @@ const CreateArticlePage = () => {
                                         htmlFor="json-input"
                                         className="form-label"
                                     >
-                                        JSON данные статьи
+                                        Текст статьи
                                     </label>
                                     <div className="form-actions">
-                                        <button type="button"
-                                        onClick={
-                                            async () => {
-                                                try {
-                                                    await navigator.clipboard.writeText(prompt);
-                                                    console.log('Text copied to clipboard successfully!');
-                                                    alert("Шаблон успешно скопирован!");
-                                                  } catch (err) {
-                                                    console.error('Failed to copy text: ', err);
-                                                  }
-                                            }
-                                        }
-                                        className="btn btn-outline"
-                                        disabled={loading}>
-                                            Скопировать шаблон промпта
-                                        </button>
-                                        <button
-                                            type="button"
-                                            onClick={loadExample}
-                                            className="btn btn-outline"
-                                            disabled={loading}
-                                        >
-                                            📝 Загрузить пример
-                                        </button>
                                         <button
                                             type="button"
                                             onClick={handleClear}
@@ -188,9 +171,9 @@ const CreateArticlePage = () => {
                                     className={`json-input ${
                                         !isValid ? "error" : ""
                                     }`}
-                                    value={jsonInput}
-                                    onChange={handleJsonChange}
-                                    placeholder='{"slug": "my-article", "title": "Заголовок статьи", ...}'
+                                    value={textInput}
+                                    onChange={handleTextChange}
+                                    placeholder='всем привет с вами демон и андроид....'
                                     rows={20}
                                     disabled={loading}
                                 />
@@ -201,29 +184,42 @@ const CreateArticlePage = () => {
                                     </div>
                                 )}
 
-                                {isValid && jsonInput.trim() && (
-                                    <div className="success-message">
-                                        ✅ JSON валиден
-                                    </div>
-                                )}
-
                                 <div className="submit-section">
-                                    <button
-                                        type="submit"
-                                        className="btn btn-primary submit-btn"
-                                        disabled={
-                                            !jsonInput.trim() ||
-                                            !isValid ||
-                                            loading
-                                        }
-                                    >
-                                        {loading
-                                            ? "⏳ Загрузка..."
-                                            : "🚀 Создать статью"}
-                                    </button>
+                                    <div style={{
+                                        display: 'flex',
+                                        flexDirection: 'row',
+                                        gap: '2rem'
+                                    }}>
+                                        <button
+                                            type="submit"
+                                            className="btn btn-primary submit-btn"
+                                            disabled={
+                                                !isValid ||
+                                                aiLoading
+                                            }
+                                            id="submitBtn"
+                                        >
+                                            {aiLoading
+                                                ? "⏳ Загрузка..."
+                                                : "🚀 Создать статью"
+                                            }
+                                        </button>
 
+                                        <button
+                                            type="approve"
+                                            className="btn btn-primary submit-btn"
+                                            disabled={
+                                                isApproved ||
+                                                aiLoading ||
+                                                articleData==""
+                                            }
+                                            onClick={handleApprove}
+                                        >
+                                            Подтвердить
+                                        </button>
+                                    </div>
                                     <span className="char-count">
-                                        Символов: {jsonInput.length}
+                                        Символов: {textInput.length}
                                     </span>
                                 </div>
                             </form>

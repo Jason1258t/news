@@ -1,30 +1,28 @@
 import axios from 'axios'
 import {prompt} from '../../../pages/CreateArticle/prompt.js'
-import { config, configDotenv } from 'dotenv';
-configDotenv();
 
-
-const talk = (text) => { 
-    let resp = axios.post(process.env.AI_URL, {
-        'model': process.env.AI_MODEL,
+const talk = (prompt="", text) => { 
+    let resp = axios.post(process.env.REACT_APP_AI_URL, {
+        'model': process.env.REACT_APP_AI_MODEL,
         'messages': [
             {
-            'role': 'user',
-            'content': `${prompt}\n${text}`
-            }
-        ]
+                'role': 'user',
+                'content': `${prompt}\ntext:\n${text}`
+            },
+        ],
+        'response_format': {
+            'type': "json_object"
+        }
     },
         {
             headers: {
-                "Authorization": "Bearer "+process.env.AI_API_KEY
+                "Authorization": "Bearer "+process.env.REACT_APP_AI_API_KEY
             }
         }
     )
     return resp
 }
 
-const res = await talk("hello")
-console.log(res.data['choices'][0]['message']['content'])
-
-
-// testTalk()
+export {
+    talk as talkai
+}
