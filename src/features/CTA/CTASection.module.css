@@ -1,0 +1,44 @@
+/* CTA Section */
+.section {
+    background: #f7fafc;
+    padding: 4rem 2rem; /* Увеличили padding */
+    border-radius: 15px;
+    text-align: center;
+    margin-top: 3rem; /* Увеличили отступ сверху */
+}
+
+.content h3 {
+    font-size: 2.2rem; /* Увеличили размер */
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+}
+
+.content p {
+    color: #718096;
+    margin-bottom: 2.5rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.1rem; /* Увеличили размер */
+}
+
+.buttons {
+    display: flex;
+    gap: 1.5rem; /* Увеличили gap */
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {        
+    .buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .section {
+        padding: 3rem 1.5rem;
+    }
+}

@@ -1,0 +1,53 @@
+.header {
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.title {
+    margin: 0;
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.subtitle {
+    color: var(--text-light);
+    font-size: 1.2rem;
+    max-width: 500px;
+}
+
+@media (max-width: 1024px) {
+    .title {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .header:nth-child(1) {
+        display: none;
+    }
+
+    .header {
+        justify-content: center;
+    }
+
+    .categoryName {
+        text-align: center;
+    }
+
+    .categoryName span {
+        display: none;
+    }
+
+    .title {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 1.6rem;
+    }
+}
