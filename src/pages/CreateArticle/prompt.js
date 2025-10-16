@@ -63,6 +63,28 @@ export const prompt = `types:
  */
 
 /**
+ * @typedef {Object} ArticleFormulaBlock
+ * @property {"formula"} type
+ * @property {string} formula // LaTeX формула
+ * @property {"inline"|"block"=} display
+ */
+
+/**
+ * @typedef {Object} ArticleCodeBlock
+ * @property {"code"} type
+ * @property {string} code
+ * @property {string=} language
+ * @property {string=} filename
+ */
+
+/**
+ * @typedef {Object} ArticleTableBlock
+ * @property {"table"} type
+ * @property {Array<Array<string>>} data // 2D массив данных
+ * @property {boolean=} hasHeader // есть ли строка заголовка
+ */
+
+/**
  * @typedef {(
  *  ArticleHeadingBlock|
  *  ArticleParagraphBlock|
@@ -70,7 +92,10 @@ export const prompt = `types:
  *  ArticleImageBlock|
  *  ArticleBlockquoteBlock|
  *  ArticleHighlightBlock|
- *  ArticleFooterNoteBlock
+ *  ArticleFooterNoteBlock|
+ *  ArticleFormulaBlock|
+ *  ArticleCodeBlock|
+ *  ArticleTableBlock
  * )} ArticleContentBlock
  */
 
@@ -91,8 +116,11 @@ export const prompt = `types:
 
 export {}; // JSDoc-only typedefs module
 
+
 Важное уточнение, что категории хроанятся массивом, а уже потом изменяются в строку
 Доступные категории: Наука, Спорт, Общество, Технологии
+
+В hero и og использовать одинаковые title и description
 
 example:
 {
@@ -100,7 +128,7 @@ example:
     "title": "Гринд: Древняя сила, что породила человечество",
     "description": "Что, если величайшая движущая сила цивилизации — это не огонь и не колесо, а скучное монотонное действие, которое мы называем гриндом? Как игры вроде Genshin Impact, Minecraft и Dota 2 связаны с зарождением человечества.",
     "category": ["Наука", "Общество"],
-    "datePublishedISO": текущая дата в ISO формате, если явно сказано использовать другую дату, то возьми ее (например если попросят завтрашним числом оформить),
+    "datePublishedISO": поле просто не заполнять,
     "author": "ПГТУ Breaking NEWS",
     "tags": ["гринд", "игры", "психология", "эволюция", "Genshin Impact", "Minecraft", "Dota 2"],
     "hero": {

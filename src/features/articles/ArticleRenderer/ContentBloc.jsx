@@ -6,6 +6,9 @@ import {
     Blockquote,
     Highlight,
     FooterNote,
+    Formula,
+    CodeBlock,
+    Table,
 } from "entities/article/ui";
 
 export const ContentBlock = ({ block }) => {
@@ -42,11 +45,34 @@ export const ContentBlock = ({ block }) => {
                 );
             case "footer-note":
                 return <FooterNote html={block.html} />;
+            case "formula":
+                return (
+                    <Formula
+                        formula={block.formula}
+                        display={block.display}
+                    />
+                );
+            case "code":
+                return (
+                    <CodeBlock
+                        code={block.code}
+                        language={block.language}
+                        filename={block.filename}
+                    />
+                );
+            case "table":
+                return (
+                    <Table
+                        data={block.data}
+                        hasHeader={block.hasHeader}
+                    />
+                );
             default:
+                console.warn(`Unknown block type: ${block.type}`);
                 return null;
         }
     } catch (e) {
-        console.log(e);
-        console.log(`block, caused error: ${block}`);
+        console.error("Error rendering block:", e);
+        return null;
     }
 };

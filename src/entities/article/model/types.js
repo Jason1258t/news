@@ -62,6 +62,28 @@
  */
 
 /**
+ * @typedef {Object} ArticleFormulaBlock
+ * @property {"formula"} type
+ * @property {string} formula // LaTeX формула
+ * @property {"inline"|"block"=} display
+ */
+
+/**
+ * @typedef {Object} ArticleCodeBlock
+ * @property {"code"} type
+ * @property {string} code
+ * @property {string=} language
+ * @property {string=} filename
+ */
+
+/**
+ * @typedef {Object} ArticleTableBlock
+ * @property {"table"} type
+ * @property {Array<Array<string>>} data // 2D массив данных
+ * @property {boolean=} hasHeader // есть ли строка заголовка
+ */
+
+/**
  * @typedef {(
  *  ArticleHeadingBlock|
  *  ArticleParagraphBlock|
@@ -69,7 +91,10 @@
  *  ArticleImageBlock|
  *  ArticleBlockquoteBlock|
  *  ArticleHighlightBlock|
- *  ArticleFooterNoteBlock
+ *  ArticleFooterNoteBlock|
+ *  ArticleFormulaBlock|
+ *  ArticleCodeBlock|
+ *  ArticleTableBlock
  * )} ArticleContentBlock
  */
 

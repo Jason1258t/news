@@ -1,33 +1,14 @@
 import {
-    collection,
     getDocs,
     getDoc,
     doc,
-    query,
-    orderBy,
-    where,
     setDoc,
     serverTimestamp,
 } from "firebase/firestore";
 import { db } from "app/firebase";
-import { formatDate } from "shared/lib/date-utils";
-
-const mapArticleFromFirestore = (doc) => {
-    const data = doc.data();
-    return {
-        slug: doc.id,
-        title: data.title || "",
-        description: data.description || "",
-        category: (data.category || []).join(" • "),
-        dateDisplay: formatDate(data.datePublishedISO),
-        datePublishedISO: data.datePublishedISO || new Date().toISOString(),
-        author: data.author || "",
-        tags: data.tags || [],
-        hero: data.hero || { url: "", alt: "" },
-        og: data.og || {},
-        content: data.content || [],
-    };
-};
+import { mapArticleFromFirestore } from "entities/article/model/mappers";
+import { validateArticleData } from "./validators";
+import { getArticlesQuery } from "./queries";
 
 /**
  * Создает новую статью в Firestore
@@ -36,23 +17,7 @@ const mapArticleFromFirestore = (doc) => {
  */
 export const createArticle = async (articleData) => {
     try {
-        if (!articleData.slug) {
-            throw new Error("Поле 'slug' обязательно для заполнения");
-        }
-
-        if (!articleData.title) {
-            throw new Error("Поле 'title' обязательно для заполнения");
-        }
-
-        if (!articleData.description) {
-            throw new Error("Поле 'description' обязательно для заполнения");
-        }
-
-        if (!articleData.content || !Array.isArray(articleData.content)) {
-            throw new Error(
-                "Поле 'content' обязательно и должно быть массивом"
-            );
-        }
+        validateArticleData(articleData);
 
         const existingDoc = await getDoc(doc(db, "articles", articleData.slug));
         if (existingDoc.exists()) {
@@ -61,20 +26,10 @@ export const createArticle = async (articleData) => {
             );
         }
 
-        const articleToSave = {
-            ...articleData,
-            datePublishedISO:
-                articleData.datePublishedISO || new Date().toISOString(),
-            createdAt: serverTimestamp(),
-            updatedAt: serverTimestamp(),
-        };
-
-        delete articleToSave.dateDisplay;
+        const articleToSave = prepareArticleToSave(articleData);
 
         const docRef = doc(db, "articles", articleData.slug);
         await setDoc(docRef, articleToSave);
-
-        console.log(`✅ Статья "${articleData.title}" успешно создана`);
 
         return {
             success: true,
@@ -89,56 +44,17 @@ export const createArticle = async (articleData) => {
     }
 };
 
-/**
- * Обновляет существующую статью
- * @param {string} slug - Slug статьи
- * @param {Object} updates - Обновляемые поля
- * @returns {Promise<{success: boolean, error?: string}>}
- */
-export const updateArticle = async (slug, updates) => {
-    try {
-        const docRef = doc(db, "articles", slug);
-        const existingDoc = await getDoc(docRef);
+const prepareArticleToSave = (articleData) => {
+    const articleToSave = {
+        ...articleData,
+        datePublishedISO:
+            articleData.datePublishedISO || new Date().toISOString(),
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+    };
 
-        if (!existingDoc.exists()) {
-            throw new Error(`Статья с slug "${slug}" не найдена`);
-        }
-
-        // Удаляем поле dateDisplay из обновлений
-        const updatesToSave = { ...updates };
-        delete updatesToSave.dateDisplay;
-
-        await setDoc(
-            docRef,
-            {
-                ...updatesToSave,
-                updatedAt: serverTimestamp(),
-            },
-            { merge: true }
-        );
-
-        return { success: true };
-    } catch (error) {
-        console.error("❌ Ошибка при обновлении статьи:", error);
-        return {
-            success: false,
-            error: error.message,
-        };
-    }
-};
-
-const getArticlesQuery = (category) => {
-    if (category) {
-        return query(
-            collection(db, "articles"),
-            where("category", "array-contains", category),
-            orderBy("datePublishedISO", "desc")
-        );
-    }
-    return query(
-        collection(db, "articles"),
-        orderBy("datePublishedISO", "desc")
-    );
+    delete articleToSave.dateDisplay;
+    return articleToSave;
 };
 
 export const fetchArticles = async (category) => {
@@ -167,12 +83,4 @@ export const fetchArticleBySlug = async (slug) => {
         console.error(`Error fetching article ${slug}:`, error);
         throw new Error("Failed to fetch article");
     }
-};
-
-export const prefetchArticle = async (slug, queryClient) => {
-    await queryClient.prefetchQuery({
-        queryKey: ["articles", slug],
-        queryFn: () => fetchArticleBySlug(slug),
-        staleTime: 10 * 60 * 1000,
-    });
 };

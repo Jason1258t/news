@@ -179,3 +179,107 @@
         font-size: 1.5rem;
     }
 }
+
+/* Formula Styles */
+.formula-block {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: var(--background-light);
+    border-radius: 8px;
+    text-align: center;
+    overflow-x: auto;
+}
+
+.formula-inline {
+    display: inline;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+/* Code Block Styles */
+.code-block {
+    margin: 2rem 0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.code-filename {
+    background: var(--text-dark);
+    color: white;
+    padding: 0.75rem 1rem;
+    font-family: "Monaco", "Consolas", monospace;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.code-block pre {
+    margin: 0;
+    padding: 1.5rem;
+    background: #2d2d2d !important;
+    overflow-x: auto;
+    font-family: "Monaco", "Consolas", monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.code-block code {
+    background: none !important;
+    font-family: inherit;
+}
+
+/* Table Styles */
+.table-container {
+    margin: 2rem 0;
+    overflow-x: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.article-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.article-table th {
+    background: var(--background-light);
+    font-weight: 600;
+    text-align: left;
+    padding: 1rem;
+    border-bottom: 2px solid var(--border-color);
+    color: var(--text-dark);
+}
+
+.article-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: top;
+}
+
+.article-table tr:last-child td {
+    border-bottom: none;
+}
+
+.article-table tr:hover {
+    background: var(--background-light);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .formula-block {
+        padding: 0.75rem;
+        margin: 1rem 0;
+    }
+
+    .code-block pre {
+        padding: 1rem;
+        font-size: 0.8rem;
+    }
+
+    .article-table th,
+    .article-table td {
+        padding: 0.75rem 0.5rem;
+    }
+}
