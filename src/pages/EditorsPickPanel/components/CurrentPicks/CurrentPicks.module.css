@@ -1,5 +1,4 @@
 .container {
-    /* aspect-ratio: 1; */
     height: calc(100vh - 300px);
     background-color: #fff;
     box-shadow: var(--shadow);
@@ -22,6 +21,7 @@
 }
 
 .actionsContainer {
+    min-height: 120px;
     display: flex;
     flex: 1;
     flex-direction: column;
