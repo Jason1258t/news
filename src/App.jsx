@@ -1,7 +1,7 @@
 import Header from "widgets/Header";
 import Footer from "widgets/Footer";
 import HomePage from "pages/Home";
-import Article from "pages/Article";
+import ArticlePage from "pages/Article";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import ScrollToTop from "./shared/lib/ScrollToTop";
@@ -22,7 +22,7 @@ const App = () => {
                     <Routes>
                         <Route path="/" element={<HomePage />} />
                         <Route path="/about" element={<AboutPage />} />
-                        <Route path="/articles/:slug" element={<Article />} />
+                        <Route path="/articles/:slug" element={<ArticlePage />} />
                         <Route
                             path="/create-article"
                             element={<CreateArticlePage />}

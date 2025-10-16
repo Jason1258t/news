@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 
-export const ArticleMeta = ({ article, fullUrl, imageUrl }) => (
+export const ArticleMeta = ({ article }) => (
     <Helmet>
         {/* Основные мета-теги */}
         <title>{`${article.title} | ПГТУ Breaking NEWS`}</title>
@@ -18,8 +18,8 @@ export const ArticleMeta = ({ article, fullUrl, imageUrl }) => (
             content={article.og?.description || article.description}
         />
         <meta property="og:type" content="article" />
-        <meta property="og:url" content={article.og?.url || fullUrl} />
-        <meta property="og:image" content={article.og?.image || imageUrl} />
+        <meta property="og:url" content={article.og?.url} />
+        <meta property="og:image" content={article.og?.image} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:site_name" content="ПГТУ Breaking NEWS" />
@@ -35,7 +35,7 @@ export const ArticleMeta = ({ article, fullUrl, imageUrl }) => (
             name="twitter:description"
             content={article.og?.description || article.description}
         />
-        <meta name="twitter:image" content={article.og?.image || imageUrl} />
+        <meta name="twitter:image" content={article.og?.image} />
 
         {/* Article-specific OG tags */}
         <meta
@@ -49,6 +49,6 @@ export const ArticleMeta = ({ article, fullUrl, imageUrl }) => (
         ))}
 
         {/* Canonical URL */}
-        <link rel="canonical" href={article.og?.url || fullUrl} />
+        <link rel="canonical" href={article.og?.url } />
     </Helmet>
 );
