@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/news/static/css/main.c3e492ee.css",
-    "main.js": "/news/static/js/main.998da7e7.js",
+    "main.css": "/news/static/css/main.e07e036c.css",
+    "main.js": "/news/static/js/main.6c4f9a7d.js",
     "static/media/KaTeX_AMS-Regular.ttf": "/news/static/media/KaTeX_AMS-Regular.853be92419a6c3766b9a.ttf",
     "static/media/KaTeX_Main-Regular.ttf": "/news/static/media/KaTeX_Main-Regular.9eba1d77abcf2aa6e94e.ttf",
     "static/media/KaTeX_Main-Bold.ttf": "/news/static/media/KaTeX_Main-Bold.8169508bf58f8bd92ad8.ttf",
@@ -65,11 +65,11 @@
     "static/media/KaTeX_Size3-Regular.woff2": "/news/static/media/KaTeX_Size3-Regular.e1951519f6f0596f7356.woff2",
     "index.html": "/news/index.html",
     "static/media/chevron.svg": "/news/static/media/chevron.4f4d387a1b25d2236c2799ad65851b88.svg",
-    "main.c3e492ee.css.map": "/news/static/css/main.c3e492ee.css.map",
-    "main.998da7e7.js.map": "/news/static/js/main.998da7e7.js.map"
+    "main.e07e036c.css.map": "/news/static/css/main.e07e036c.css.map",
+    "main.6c4f9a7d.js.map": "/news/static/js/main.6c4f9a7d.js.map"
   },
   "entrypoints": [
-    "static/css/main.c3e492ee.css",
-    "static/js/main.998da7e7.js"
+    "static/css/main.e07e036c.css",
+    "static/js/main.6c4f9a7d.js"
   ]
 }
