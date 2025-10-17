@@ -57,23 +57,36 @@ const prepareArticleToSave = (articleData) => {
     return articleToSave;
 };
 
-export const fetchArticles = async (category) => {
+export const fetchArticles = async (category, lastId, limit = 5) => {
     try {
-        const articlesQuery = getArticlesQuery(category);
+        let doc = undefined;
+        if (lastId) {
+            doc = await fetchArticleDocBySlug(lastId);
+        }
+
+        const articlesQuery = getArticlesQuery(category, limit, doc);
         const querySnapshot = await getDocs(articlesQuery);
 
-        return querySnapshot.docs.map((doc) => mapArticleFromFirestore(doc));
+        const hasMore = querySnapshot.docs.length === limit;
+
+        return {
+            data: querySnapshot.docs.map((doc) => mapArticleFromFirestore(doc)),
+            hasMore: hasMore,
+        };
     } catch (error) {
         console.error("Error fetching articles:", error);
         throw new Error("Failed to fetch articles");
     }
 };
 
+const fetchArticleDocBySlug = async (slug) => {
+    const docRef = doc(db, "articles", slug);
+    return await getDoc(docRef);
+};
+
 export const fetchArticleBySlug = async (slug) => {
     try {
-        const docRef = doc(db, "articles", slug);
-        const docSnap = await getDoc(docRef);
-
+        const docSnap = await fetchArticleDocBySlug(slug);
         if (docSnap.exists()) {
             return mapArticleFromFirestore(docSnap);
         } else {

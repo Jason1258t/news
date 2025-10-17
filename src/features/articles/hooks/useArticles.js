@@ -1,19 +1,17 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { fetchArticles } from "../api/articles-api";
 
-export const useArticles = (category) => {
-    return useQuery({
+export const useArticles = (category, limit = 5) => {
+    return useInfiniteQuery({
         queryKey: ["articles", category],
-        queryFn: () => fetchArticles(category),
+        queryFn: ({ pageParam }) => fetchArticles(category, pageParam, limit),
+        getNextPageParam: (lastPage) => {
+            if (lastPage.hasMore) {
+                return lastPage.data[lastPage.data.length - 1].slug;
+            }
+            return undefined; 
+        },
+        initialPageParam: undefined, 
         staleTime: 10 * 60 * 1000,
     });
-};
-
-export const usePrefetchArticles = (queryClient) => {
-    return () => {
-        queryClient.prefetchQuery({
-            queryKey: ["articles"],
-            queryFn: fetchArticles,
-        });
-    };
 };

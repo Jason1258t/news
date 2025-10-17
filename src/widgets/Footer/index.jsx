@@ -21,7 +21,7 @@ const Footer = () => {
                     </div>
                     <div className="footer-section">
                         <h4>Контакты</h4>
-                        <Link to="/about" className="nav-link">
+                        <Link to="/about">
                             О проекте
                         </Link>
                         <Link

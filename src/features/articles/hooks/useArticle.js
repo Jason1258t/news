@@ -27,18 +27,3 @@ export const useArticle = (slug) => {
     },
   });
 };
-
-/**
- * Хук для предзагрузки статьи
- */
-export const usePrefetchArticle = () => {
-  const queryClient = useQueryClient();
-  
-  return (slug) => {
-    queryClient.prefetchQuery({
-      queryKey: ['articles', slug],
-      queryFn: () => fetchArticleBySlug(slug),
-      staleTime: 10 * 60 * 1000,
-    });
-  };
-};
