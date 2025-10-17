@@ -184,7 +184,7 @@
 .formula-block {
     margin: 1.5rem 0;
     padding: 1rem;
-    background: var(--background-light);
+    /* background: var(--background-light); */
     border-radius: 8px;
     text-align: center;
     overflow-x: auto;

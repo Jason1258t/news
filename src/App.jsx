@@ -4,6 +4,7 @@ import HomePage from "pages/Home";
 import Article from "pages/Article";
 import AboutPage from "pages/About";
 import LoginPage from "pages/Login";
+import AdminPage from "pages/admin";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import ScrollToTop from "./shared/lib/ScrollToTop";
@@ -12,7 +13,6 @@ import { AuthProvider } from "features/auth/ui/auth-provider";
 import ProtectedRoute from "features/auth/ui/protected-route";
 import "app/theme.css";
 import "app/layout.css";
-import AdminPage from "pages/admin";
 
 const App = () => {
     return (

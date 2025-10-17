@@ -1,44 +1,119 @@
-/* CTA Section */
+/* Compact CTA Section */
 .section {
     background: #f7fafc;
-    padding: 4rem 2rem; /* Увеличили padding */
-    border-radius: 15px;
+    padding: 2rem 1.5rem;
+    border-radius: 12px;
     text-align: center;
-    margin-top: 3rem; /* Увеличили отступ сверху */
-}
-
-.content h3 {
-    font-size: 2.2rem; /* Увеличили размер */
-    margin-bottom: 1.5rem;
-    color: #2c3e50;
+    margin-bottom: 2rem;
 }
 
 .content p {
     color: #718096;
-    margin-bottom: 2.5rem;
-    max-width: 500px;
+    margin-bottom: 1.5rem;
+    max-width: 450px;
     margin-left: auto;
     margin-right: auto;
-    font-size: 1.1rem; /* Увеличили размер */
+    font-size: 0.95rem;
+    line-height: 1.4;
 }
 
 .buttons {
     display: flex;
-    gap: 1.5rem; /* Увеличили gap */
+    gap: 1rem;
     justify-content: center;
     flex-wrap: wrap;
 }
 
-@media (max-width: 768px) {        
+/* Мобильный заголовок (скрыт на десктопе) */
+.mobileHeader {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: #2c3e50;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.mobileHeader:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.chevron {
+    transition: transform 0.3s ease;
+}
+
+.rotated {
+    transform: rotate(-180deg);
+}
+
+/* Десктопный контент (всегда видим на десктопе) */
+.desktopContent {
+    display: block;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .section {
+        padding: 0.5rem;
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+    
+    .mobileHeader {
+        display: flex;
+    }
+    
+    .desktopContent {
+        display: none;
+        opacity: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .desktopContent.expanded {
+        display: block;
+        opacity: 1;
+        max-height: 200px;
+        animation: fadeIn 0.3s ease;
+    }
+    
+    .content p {
+        font-size: 0.9rem;
+        margin-bottom: 1.25rem;
+        margin-top: 1rem;
+    }
+    
     .buttons {
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
+        gap: 0.75rem;
     }
 }
 
 @media (max-width: 480px) {
     .section {
-        padding: 3rem 1.5rem;
+        padding: 0.25rem;
+    }
+    
+    .buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

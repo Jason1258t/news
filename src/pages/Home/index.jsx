@@ -2,7 +2,6 @@ import React from "react";
 import EditorsPickWidget from "features/editors-pick/ui";
 import HomeFeed from "features/HomeFeed";
 import CTASetcion from "features/CTA";
-import HeroWidget from "widgets/Hero";
 import "./styles.css";
 import HomeMeta from "./HomeMeta";
 import { useSearchParams } from "react-router-dom";
@@ -18,13 +17,8 @@ const HomePage = () => {
             <HomeMeta />
             <main className="main">
                 <div className="container">
-                    <HeroWidget
-                        title="ПГТУ Breaking NEWS"
-                        subtitle="Самые свежие и актуальные новости из мира
-                                технологий, общества и не только. Только
-                                проверенная информация и эксклюзивные материалы."
-                    />
 
+                    <CTASetcion />
                     <div className="home-layout">
                         <div className="main-content">
                             <FeedHeader category={category} />
@@ -35,10 +29,9 @@ const HomePage = () => {
                         </aside>
                     </div>
 
-                    <CTASetcion />
                 </div>
             </main>
-            <ScrollToTopButton/>
+            <ScrollToTopButton />
         </>
     );
 };

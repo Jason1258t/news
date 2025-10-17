@@ -21,7 +21,7 @@ const LoginPage = () => {
             setError("Неверный email или пароль");
             setLoading(false);
         } else {
-            navigate("/admin");
+            navigate("/admin/create-article");
         }
     };
 

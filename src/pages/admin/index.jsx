@@ -3,6 +3,7 @@ import AdminSidebar from "./components/AdminSidebar";
 import CreateArticlePage from "pages/CreateArticle";
 import EditorsPickPanel from "pages/EditorsPickPanel";
 import styles from "./AdminLayout.module.css";
+import { Navigate } from "react-router-dom";
 
 const AdminPage = () => {
     return (
@@ -10,7 +11,10 @@ const AdminPage = () => {
             <AdminSidebar />
             <main className={styles.content}>
                 <Routes>
-                    <Route index element={<CreateArticlePage />} />
+                   <Route 
+                        index 
+                        element={<Navigate to="/admin/create-article" replace />} 
+                    />
                     <Route
                         path="create-article"
                         element={<CreateArticlePage />}
