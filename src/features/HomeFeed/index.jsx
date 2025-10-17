@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import ArticleCard from "widgets/ArticleCard";
 import { useArticles } from "features/articles/hooks/useArticles";
-import styles from './HomeFeed.module.css';
+import styles from "./HomeFeed.module.css";
 import { useSearchParams } from "react-router-dom";
 import LoadingWidget, { LoadingSpinner } from "widgets/status/loading";
 import ErrorWidget from "widgets/status/error";
@@ -19,7 +19,7 @@ const HomeFeed = () => {
         isFetchingNextPage,
         isLoading,
         isError,
-        error
+        error,
     } = useArticles(category);
 
     useEffect(() => {
@@ -29,14 +29,14 @@ const HomeFeed = () => {
         }
     }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-    const allArticles = data?.pages.flatMap(page => page.data) || [];
+    const allArticles = data?.pages.flatMap((page) => page.data) || [];
 
     if (isLoading) {
-        return <LoadingWidget/>;
+        return <LoadingWidget />;
     }
 
     if (isError) {
-        return <ErrorWidget message={error?.message}/>;
+        return <ErrorWidget message={error?.message} />;
     }
 
     if (allArticles.length === 0) {
@@ -51,8 +51,8 @@ const HomeFeed = () => {
         <div className={styles.feedContainer}>
             <div className={styles.feedGrid}>
                 {allArticles.map((article, index) => (
-                    <div 
-                        key={article.slug} 
+                    <div
+                        key={article.slug}
                         className={styles.layoutSurface}
                         ref={index === allArticles.length - 1 ? ref : null}
                     >
@@ -60,7 +60,7 @@ const HomeFeed = () => {
                             to={`/articles/${article.slug}`}
                             title={article.title}
                             excerpt={article.description}
-                            date={article.date}
+                            date={article.dateDisplay}
                             category={article.category}
                             imageUrl={article.hero.url}
                         />
@@ -68,13 +68,15 @@ const HomeFeed = () => {
                 ))}
             </div>
 
-            {isFetchingNextPage && (
-                <LoadingSpinner/>
-            )}
+            {isFetchingNextPage && <LoadingSpinner />}
 
-            {!hasNextPage && allArticles.length > 0 && (
+            {!hasNextPage && (
                 <div className={styles.endMessage}>
-                    <p>Больше ничего нет</p>
+                    <p>
+                        {allArticles.length > 0
+                            ? "Больше ничего нет"
+                            : "Здесь ничего"}
+                    </p>
                 </div>
             )}
         </div>

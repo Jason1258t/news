@@ -4,6 +4,11 @@
     padding: 3rem 0 1rem;
 }
 
+.footer-social-icon {
+    width: 40px;
+    height: 40px;
+}
+
 .footer-content {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr;

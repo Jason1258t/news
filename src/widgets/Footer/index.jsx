@@ -1,6 +1,7 @@
 import React from "react";
 import "./styles.css";
 import { Link } from "react-router-dom";
+import telegram from "./telegram.svg.webp";
 
 const Footer = () => {
     return (
@@ -10,6 +11,19 @@ const Footer = () => {
                     <div className="footer-section">
                         <h3>Медиапорт Волгатеха</h3>
                         <p>Самые свежие и актуальные новости</p>
+                        <div style={{ display: "flex", marginTop: "1rem" }}>
+                            <Link
+                                to="https://t.me/pgtu_breaking_news"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <img
+                                    className="footer-social-icon"
+                                    alt=""
+                                    src={telegram}
+                                />
+                            </Link>
+                        </div>
                     </div>
                     <div className="footer-section">
                         <h4>Разделы</h4>
@@ -21,9 +35,7 @@ const Footer = () => {
                     </div>
                     <div className="footer-section">
                         <h4>Контакты</h4>
-                        <Link to="/about">
-                            О проекте
-                        </Link>
+                        <Link to="/about">О проекте</Link>
                         <Link
                             to="https://dalink.to/vtech_news"
                             target="_blank"

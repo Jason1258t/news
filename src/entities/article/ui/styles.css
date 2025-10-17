@@ -156,10 +156,6 @@
 }
 
 @media (max-width: 768px) {
-    .article-content {
-        padding: 2rem 1.5rem;
-    }
-
     .article-title {
         font-size: 2rem;
     }

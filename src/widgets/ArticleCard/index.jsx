@@ -1,30 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./styles.css";
+import styles from "./ArticleCard.module.css";
 
 const ArticleCard = ({ to, title, excerpt, date, category, imageUrl }) => {
     return (
-        <Link to={to} className="article-card">
+        <Link to={to} className={styles.card}>
             {imageUrl ? (
-                <div className="article-card-imageWrap">
-                    <img
-                        src={imageUrl}
-                        alt={title}
-                        className="article-card-image"
-                    />
+                <div className={styles.imageWrap}>
+                    <img src={imageUrl} alt={title} className={styles.image} />
                 </div>
             ) : null}
-            <div className="layout-content">
-                <div className="article-card-meta">
+            <div className={styles.content}>
+                <div className={styles.meta}>
                     {category ? (
-                        <span className="category">{category}</span>
+                        <span className={styles.category}>{category}</span>
                     ) : null}
-                    {date ? <span className="date">{date}</span> : null}
+                    {date ? <span className={styles.date}>{date}</span> : null}
                 </div>
-                <h3 className="article-card-title">{title}</h3>
-                {excerpt ? (
-                    <p className="article-card-excerpt">{excerpt}</p>
-                ) : null}
+                <h3 className={styles.title}>{title}</h3>
+                {excerpt ? <p className={styles.excerpt}>{excerpt}</p> : null}
             </div>
         </Link>
     );
