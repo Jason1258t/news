@@ -77,12 +77,6 @@ export const prompt = `types:
  * @property {string=} filename
  */
 
-/**
- * @typedef {Object} ArticleTableBlock
- * @property {"table"} type
- * @property {Array<Array<string>>} data // 2D массив данных
- * @property {boolean=} hasHeader // есть ли строка заголовка
- */
 
 /**
  * @typedef {(
@@ -94,8 +88,7 @@ export const prompt = `types:
  *  ArticleHighlightBlock|
  *  ArticleFooterNoteBlock|
  *  ArticleFormulaBlock|
- *  ArticleCodeBlock|
- *  ArticleTableBlock
+ *  ArticleCodeBlock
  * )} ArticleContentBlock
  */
 
