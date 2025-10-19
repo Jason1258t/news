@@ -3,6 +3,7 @@ import {
     getDoc,
     doc,
     setDoc,
+    deleteDoc,
     serverTimestamp,
 } from "firebase/firestore";
 import { db } from "app/firebase";
@@ -95,5 +96,36 @@ export const fetchArticleBySlug = async (slug) => {
     } catch (error) {
         console.error(`Error fetching article ${slug}:`, error);
         throw new Error("Failed to fetch article");
+    }
+};
+
+/**
+ * Удаляет статью из Firestore
+ * @param {string} slug - Slug статьи для удаления
+ * @returns {Promise<{success: boolean, error?: string}>}
+ */
+export const deleteArticle = async (slug) => {
+    try {
+        if (!slug || typeof slug !== "string") {
+            throw new Error("Некорректный slug статьи");
+        }
+
+        const docRef = doc(db, "articles", slug);
+        const articleDoc = await getDoc(docRef);
+
+        if (!articleDoc.exists()) {
+            throw new Error(`Статья с slug "${slug}" не найдена`);
+        }
+
+        await deleteDoc(docRef);
+        return {
+            success: true,
+        };
+    } catch (error) {
+        console.error("❌ Ошибка при удалении статьи:", error);
+        return {
+            success: false,
+            error: error.message,
+        };
     }
 };

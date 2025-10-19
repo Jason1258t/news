@@ -2,6 +2,8 @@ import React from "react";
 import { useArticles } from "features/articles/hooks/useArticles";
 import EditorsPickCard from "entities/editors-pick/ui";
 import styles from "./ArticlesList.module.css";
+import { LoadingSpinner } from "widgets/status/loading";
+import ErrorWidget from "widgets/status/error";
 
 const ArticlesList = ({ onArticleSelected }) => {
     const { data, isLoading, error } = useArticles(undefined, 50);
@@ -22,8 +24,8 @@ const ArticlesList = ({ onArticleSelected }) => {
                     ))
                 ) : (
                     <>
-                        {isLoading && <div>Загрузка статей...</div>}
-                        {error && <div>Ошибка: {error.message}</div>}
+                        {isLoading && <LoadingSpinner />}
+                        {error && <ErrorWidget message={error?.message} />}
                     </>
                 )}
             </div>

@@ -1,6 +1,6 @@
 {
     "name": "news-website",
-    "homepage": "https://jason1258t.github.io/news",
+    "homepage": "https://vtech-news.ru",
     "version": "0.1.0",
     "private": true,
     "dependencies": {
@@ -11,6 +11,7 @@
         "@testing-library/user-event": "^13.5.0",
         "firebase": "^12.4.0",
         "katex": "^0.16.25",
+        "lucide-react": "^0.546.0",
         "prismjs": "^1.30.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",

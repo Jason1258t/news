@@ -31,6 +31,16 @@ const AdminSidebar = () => {
                     Создать статью
                 </NavLink>
                 <NavLink
+                    to="/admin/articles-panel"
+                    className={({ isActive }) =>
+                        isActive
+                            ? `${styles.link} ${styles.active}`
+                            : styles.link
+                    }
+                >
+                    Управление статьями
+                </NavLink>
+                <NavLink
                     to="/admin/editors-pick"
                     className={({ isActive }) =>
                         isActive
