@@ -17,7 +17,6 @@ const HomePage = () => {
             <HomeMeta />
             <main className="main">
                 <div className="container">
-
                     <CTASetcion />
                     <div className="home-layout">
                         <div className="main-content">
@@ -28,7 +27,6 @@ const HomePage = () => {
                             <EditorsPickWidget />
                         </aside>
                     </div>
-
                 </div>
             </main>
             <ScrollToTopButton />

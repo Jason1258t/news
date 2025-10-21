@@ -1,32 +1,14 @@
 import React from "react";
-import { Helmet } from "react-helmet-async";
 
 import "./styles.css";
 import HeroWidget from "widgets/Hero";
+import AboutPageMeta from "./meta";
+import TeamSectionCompact from "./sections/TeamSection";
 
 const AboutPage = () => {
     return (
         <>
-            <Helmet>
-                <title>О проекте | ПГТУ Breaking NEWS</title>
-                <meta
-                    name="description"
-                    content="ПГТУ Breaking NEWS - независимое студенческое издание. Узнайте о нашей миссии, принципах и команде."
-                />
-                <meta
-                    property="og:title"
-                    content="О проекте | ПГТУ Breaking NEWS"
-                />
-                <meta
-                    property="og:description"
-                    content="ПГТУ Breaking NEWS - независимое студенческое издание. Узнайте о нашей миссии, принципах и команде."
-                />
-                <meta property="og:type" content="website" />
-                <meta
-                    property="og:url"
-                    content="https://jason1258t.github.io/news/about"
-                />
-            </Helmet>
+            <AboutPageMeta />
 
             <main className="main">
                 <div className="container">
@@ -55,7 +37,6 @@ const AboutPage = () => {
                                 <div className="mission-icon">⚡</div>
                                 <h3>Наши принципы</h3>
                                 <ul>
-                                    <li>Только проверенная информация</li>
                                     <li>
                                         Глубокий анализ вместо поверхностных
                                         заголовков
@@ -84,38 +65,7 @@ const AboutPage = () => {
                         </div>
                     </section>
 
-                    {/* Команда */}
-                    <section className="about-team">
-                        <h2 className="section-title">Команда</h2>
-                        <div className="team-grid">
-                            <div className="team-member">
-                                <div className="member-avatar">👨‍💻</div>
-                                <h4>Редакция</h4>
-                                <p>
-                                    Студенты и выпускники ПГТУ, увлеченные
-                                    технологиями, журналистикой и исследованиями
-                                </p>
-                            </div>
-
-                            <div className="team-member">
-                                <div className="member-avatar">🎨</div>
-                                <h4>Дизайнеры</h4>
-                                <p>
-                                    Создают визуальную идентичность и
-                                    обеспечивают удобство чтения
-                                </p>
-                            </div>
-
-                            <div className="team-member">
-                                <div className="member-avatar">🔍</div>
-                                <h4>Фактчекеры</h4>
-                                <p>
-                                    Проверяют каждую цифру, цитату и утверждение
-                                    перед публикацией
-                                </p>
-                            </div>
-                        </div>
-                    </section>
+                    <TeamSectionCompact />
 
                     {/* Контакты */}
                     <section className="about-contact">
