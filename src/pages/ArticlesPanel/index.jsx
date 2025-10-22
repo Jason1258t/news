@@ -43,7 +43,6 @@ const ArticlesPanel = () => {
                 const result = await deleteArticle(selectedArticle.slug);
 
                 if (result.success) {
-                    deleteConfirmation.closeModal();
                     setArticle(null);
                     setArticles((prev) =>
                         prev.filter((a) => a.slug !== selectedArticle.slug)
@@ -66,10 +65,10 @@ const ArticlesPanel = () => {
                     <div className={styles.list}>
                         {isLoading && <LoadingSpinner />}
                         {error && <ErrorWidget message={error?.message} />}
-                        {allArticles.map((article, i) => (
+                        {allArticles.map((article) => (
                             <ArticleCardSmall
                                 onClick={() => setArticle(article)}
-                                key={i}
+                                key={article.slug}
                                 title={article.title}
                                 excerpt={article.description}
                                 imageUrl={article.hero.url}

@@ -1,3 +1,4 @@
+import Overlay from "widgets/Overlay";
 import styles from "./DeleteConfirmationModal.module.css";
 import { AlertCircle, Trash2, X } from "lucide-react";
 
@@ -12,10 +13,10 @@ export const DeleteConfirmationModal = ({
     cancelText = "Отмена",
 }) => {
     if (!isOpen) return null;
-    
+
     return (
         <>
-            <div className={styles.overlay}>
+            <Overlay>
                 <div className={styles.modal}>
                     <div className={styles.header}>
                         <div className={styles.headerContent}>
@@ -69,7 +70,7 @@ export const DeleteConfirmationModal = ({
                         </button>
                     </div>
                 </div>
-            </div>
+            </Overlay>
         </>
     );
 };

@@ -21,6 +21,7 @@ export const useDeleteConfirmation = () => {
         if (!config.onConfirm) return;
 
         setIsLoading(true);
+
         try {
             await config.onConfirm();
             closeModal();
@@ -40,9 +41,9 @@ export const useDeleteConfirmation = () => {
         modalProps: {
             isOpen,
             isLoading,
+            ...config,
             onClose: closeModal,
             onConfirm: handleConfirm,
-            ...config,
         },
     };
 };
