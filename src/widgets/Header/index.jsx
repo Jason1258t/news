@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./styles.css";
 import logo from "logo.jpg";
 
@@ -7,15 +7,16 @@ const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const toggleMenu = () => setIsMenuOpen((prev) => !prev);
+    const navigate = useNavigate();
 
     return (
         <header className="header">
             <div className="container">
                 <div className="header-content">
-                    <div className="logo">
+                    <div className="logo" onClick={() => navigate("/")}>
                         <img src={logo} alt="ПГТУ Breaking NEWS logo" />
                         <h1>
-                            <Link to="/">ПГТУ Breaking NEWS</Link>
+                            ПГТУ Breaking NEWS
                         </h1>
                     </div>
 

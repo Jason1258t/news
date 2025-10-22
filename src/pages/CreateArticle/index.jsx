@@ -5,6 +5,9 @@ import { useCreateArticle } from "features/articles/hooks/useCreateArticle";
 import "./styles.css";
 import { prompt } from "./prompt";
 import toast, { Toaster } from "react-hot-toast";
+import DatePicker from "widgets/input/date/DatePicker";
+import TextInput from "widgets/input/text/TextInput";
+import ImagePreview from "widgets/input/image/ImagePreview";
 
 const CreateArticlePage = () => {
     const [jsonInput, setJsonInput] = useState("");
@@ -13,6 +16,9 @@ const CreateArticlePage = () => {
     const navigate = useNavigate();
 
     const { createArticle, loading } = useCreateArticle();
+
+    const [imageUrl, setImageUrl] = useState(null);
+    const [date, setDate] = useState(new Date());
 
     const handleJsonChange = (e) => {
         const value = e.target.value;
@@ -64,6 +70,23 @@ const CreateArticlePage = () => {
         setIsValid(true);
     };
 
+    const copyPrompt = async () => {
+        try {
+            let fullPrompt = prompt;
+            if (date) {
+                fullPrompt += `\ndatePublished: ${date}`;
+            }
+            if (imageUrl) {
+                fullPrompt += `\nimg: ${imageUrl}`;
+            }
+
+            await navigator.clipboard.writeText(fullPrompt);
+            toast.success("Шаблон успешно скопирован!");
+        } catch (err) {
+            toast.error("Ошибка копирования");
+            console.error("Failed to copy text: ", err);
+        }
+    };
 
     return (
         <>
@@ -105,6 +128,36 @@ const CreateArticlePage = () => {
                                     </li>
                                 </ul>
                             </div>
+                            <div style={{ display: "flex", gap: "1rem" }}>
+                                <div style={{ width: 250 }}>
+                                    <DatePicker
+                                        label="Выберите дату публикации"
+                                        value={date}
+                                        onChange={(value) => {
+                                            setDate(value);
+                                            console.log(date);
+                                        }}
+                                    />
+                                </div>
+                                <div style={{ flex: 1 }}>
+                                    <TextInput
+                                        label="URL изображения"
+                                        placeholder="Введите URL изображения"
+                                        value={imageUrl}
+                                        onChange={(value) =>
+                                            setImageUrl(
+                                                value.length > 0 ? value : null
+                                            )
+                                        }
+                                    />
+                                </div>
+                            </div>
+
+                            <ImagePreview
+                                src={imageUrl}
+                                onRemove={() => setImageUrl(null)}
+                            />
+                            {imageUrl && <div style={{ height: "1rem" }}></div>}
 
                             {/* Форма ввода */}
                             <form onSubmit={handleSubmit} className="json-form">
@@ -116,21 +169,13 @@ const CreateArticlePage = () => {
                                         JSON данные статьи
                                     </label>
                                     <div className="form-actions">
-                                        <button type="button"
-                                        onClick={
-                                            async () => {
-                                                try {
-                                                    await navigator.clipboard.writeText(prompt);
-                                                    toast.success("Шаблон успешно скопирован!");
-                                                  } catch (err) {
-                                                    toast.error('Ошибка копирования');
-                                                    console.error('Failed to copy text: ', err);
-                                                  }
-                                            }
-                                        }
-                                        className="btn btn-outline"
-                                        disabled={loading}>
-                                            Скопировать шаблон промпта
+                                        <button
+                                            type="button"
+                                            onClick={copyPrompt}
+                                            className="btn btn-outline"
+                                            disabled={loading}
+                                        >
+                                            Скопировать промпт
                                         </button>
                                         <button
                                             type="button"
@@ -191,7 +236,7 @@ const CreateArticlePage = () => {
                     </div>
                 </div>
             </main>
-            <Toaster/>
+            <Toaster />
         </>
     );
 };

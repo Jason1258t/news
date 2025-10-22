@@ -1,0 +1,126 @@
+.container {
+  border: 2px solid #e1e5e9;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 16px;
+}
+
+.previewHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e1e5e9;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+}
+
+.removeButton {
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 1;
+  transition: background-color 0.2s ease;
+}
+
+.removeButton:hover {
+  background: #c82333;
+}
+
+.imageWrapper {
+  position: relative;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fafafa;
+  min-height: 150px;
+}
+
+.previewImage {
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: opacity 0.3s ease;
+}
+
+.previewImage.hidden {
+  display: none;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: #666;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: #dc3545;
+  text-align: center;
+  padding: 20px;
+}
+
+.errorIcon {
+  font-size: 24px;
+}
+
+.errorButton {
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.errorButton:hover {
+  background: #c82333;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .imageWrapper {
+    padding: 16px;
+    min-height: 120px;
+  }
+  
+  .previewHeader {
+    padding: 10px 12px;
+  }
+}
