@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useCreateArticle } from "features/articles/hooks/useCreateArticle";
 import "./styles.css";
 import { prompt } from "./prompt";
+import toast, { Toaster } from "react-hot-toast";
 
 const CreateArticlePage = () => {
     const [jsonInput, setJsonInput] = useState("");
@@ -45,7 +46,7 @@ const CreateArticlePage = () => {
             const result = await createArticle(articleData);
 
             if (result.success) {
-                alert("Статья успешно создана!");
+                toast.success("Статья успешно создана!");
                 setJsonInput("");
                 // Перенаправляем на страницу статьи или главную
                 navigate(`/articles/${result.slug}`);
@@ -63,39 +64,6 @@ const CreateArticlePage = () => {
         setIsValid(true);
     };
 
-    const loadExample = () => {
-        const example = {
-            slug: "example-article",
-            title: "Пример статьи",
-            description: "Это пример статьи для демонстрации формата",
-            category: "Технологии • Пример",
-            dateDisplay: "10 октября 2025 г.",
-            datePublishedISO: "2025-10-10T00:00:00+03:00",
-            author: "ПГТУ Breaking NEWS",
-            section: "Технологии",
-            tags: ["пример", "технологии", "тест"],
-            hero: {
-                url: "https://example.com/image.jpg",
-                alt: "Пример изображения",
-                caption: "Подпись к изображению",
-            },
-            content: [
-                {
-                    type: "paragraph",
-                    html: "Это пример параграфа статьи.",
-                },
-                {
-                    type: "heading",
-                    level: 2,
-                    text: "Пример заголовка",
-                },
-            ],
-        };
-
-        setJsonInput(JSON.stringify(example, null, 2));
-        setIsValid(true);
-        setError("");
-    };
 
     return (
         <>
@@ -153,9 +121,9 @@ const CreateArticlePage = () => {
                                             async () => {
                                                 try {
                                                     await navigator.clipboard.writeText(prompt);
-                                                    console.log('Text copied to clipboard successfully!');
-                                                    alert("Шаблон успешно скопирован!");
+                                                    toast.success("Шаблон успешно скопирован!");
                                                   } catch (err) {
+                                                    toast.error('Ошибка копирования');
                                                     console.error('Failed to copy text: ', err);
                                                   }
                                             }
@@ -163,14 +131,6 @@ const CreateArticlePage = () => {
                                         className="btn btn-outline"
                                         disabled={loading}>
                                             Скопировать шаблон промпта
-                                        </button>
-                                        <button
-                                            type="button"
-                                            onClick={loadExample}
-                                            className="btn btn-outline"
-                                            disabled={loading}
-                                        >
-                                            📝 Загрузить пример
                                         </button>
                                         <button
                                             type="button"
@@ -231,6 +191,7 @@ const CreateArticlePage = () => {
                     </div>
                 </div>
             </main>
+            <Toaster/>
         </>
     );
 };

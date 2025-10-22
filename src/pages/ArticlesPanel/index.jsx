@@ -15,6 +15,9 @@ import { Trash2, X } from "lucide-react";
 import { DeleteConfirmationModal } from "widgets/modals/delete";
 import EmptyArticleWidget from "./components/EmptyArticleWidget";
 
+import toast from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
+
 const ArticlesPanel = () => {
     const { data, isLoading, error } = useArticles(undefined, 50);
 
@@ -45,11 +48,11 @@ const ArticlesPanel = () => {
                     setArticles((prev) =>
                         prev.filter((a) => a.slug !== selectedArticle.slug)
                     );
-                    alert(
+                    toast.success(
                         `✅ Статья "${selectedArticle.title}" успешно удалена`
                     );
                 } else {
-                    alert(`❌ Ошибка: ${result.error}`);
+                    toast.error(`❌ Ошибка: ${result.error}`);
                 }
             },
         });
@@ -61,28 +64,21 @@ const ArticlesPanel = () => {
                 <div className={styles.listSection}>
                     <h2>Список статей</h2>
                     <div className={styles.list}>
-                        {allArticles ? (
-                            allArticles.map((article, i) => (
-                                <ArticleCardSmall
-                                    onClick={() => setArticle(article)}
-                                    key={i}
-                                    title={article.title}
-                                    excerpt={article.description}
-                                    imageUrl={article.hero.url}
-                                    date={article.dateDisplay}
-                                    highlight={
-                                        selectedArticle?.slug === article.slug
-                                    }
-                                />
-                            ))
-                        ) : (
-                            <>
-                                {isLoading && <LoadingSpinner />}
-                                {error && (
-                                    <ErrorWidget message={error?.message} />
-                                )}
-                            </>
-                        )}
+                        {isLoading && <LoadingSpinner />}
+                        {error && <ErrorWidget message={error?.message} />}
+                        {allArticles.map((article, i) => (
+                            <ArticleCardSmall
+                                onClick={() => setArticle(article)}
+                                key={i}
+                                title={article.title}
+                                excerpt={article.description}
+                                imageUrl={article.hero.url}
+                                date={article.dateDisplay}
+                                highlight={
+                                    selectedArticle?.slug === article.slug
+                                }
+                            />
+                        ))}
                     </div>
                 </div>
 
@@ -100,7 +96,7 @@ const ArticlesPanel = () => {
                         )}
                     </div>
 
-                    <dib className={styles.scrolled}>
+                    <div className={styles.scrolled}>
                         {!selectedArticle && <EmptyArticleWidget />}
                         {selectedArticle && (
                             <ArticleCard
@@ -123,10 +119,11 @@ const ArticlesPanel = () => {
                                 </button>
                             </div>
                         )}
-                    </dib>
+                    </div>
                 </div>
             </div>
             <DeleteConfirmationModal {...deleteConfirmation.modalProps} />
+            <Toaster />
         </>
     );
 };
