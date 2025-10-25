@@ -6,7 +6,7 @@ import { LoadingSpinner } from "widgets/status/loading";
 import ErrorWidget from "widgets/status/error";
 
 const ArticlesList = ({ onArticleSelected }) => {
-    const { data, isLoading, error } = useArticles(undefined, 50);
+    const { data, isLoading, error } = useArticles({ limit: 50 });
 
     const allArticles = data?.pages.flatMap((page) => page.data) || [];
     return (

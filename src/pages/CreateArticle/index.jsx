@@ -54,7 +54,6 @@ const CreateArticlePage = () => {
             if (result.success) {
                 toast.success("Статья успешно создана!");
                 setJsonInput("");
-                // Перенаправляем на страницу статьи или главную
                 navigate(`/articles/${result.slug}`);
             } else {
                 setError(result.error || "Ошибка при создании статьи");
@@ -123,8 +122,8 @@ const CreateArticlePage = () => {
                                         уникальным
                                     </li>
                                     <li>
-                                        Используйте кнопку "Загрузить пример"
-                                        для просмотра формата
+                                        Не забудьте выбрать дату публикации и
+                                        указать изображение
                                     </li>
                                 </ul>
                             </div>
@@ -132,7 +131,6 @@ const CreateArticlePage = () => {
                                 <div style={{ width: 250 }}>
                                     <DatePicker
                                         label="Выберите дату публикации"
-                                        value={date}
                                         onChange={(value) => {
                                             setDate(value);
                                             console.log(date);
@@ -159,7 +157,6 @@ const CreateArticlePage = () => {
                             />
                             {imageUrl && <div style={{ height: "1rem" }}></div>}
 
-                            {/* Форма ввода */}
                             <form onSubmit={handleSubmit} className="json-form">
                                 <div className="form-header">
                                     <label

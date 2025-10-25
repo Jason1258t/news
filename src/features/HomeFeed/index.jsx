@@ -6,10 +6,12 @@ import styles from "./HomeFeed.module.css";
 import { useSearchParams } from "react-router-dom";
 import LoadingWidget, { LoadingSpinner } from "widgets/status/loading";
 import ErrorWidget from "widgets/status/error";
+import { useQueryTags } from "features/tags/hooks/useQueryTags";
 
 const HomeFeed = () => {
     const [searchParams] = useSearchParams();
     const category = searchParams.get("category");
+    const { selectedTags } = useQueryTags();
     const { ref, inView } = useInView();
 
     const {
@@ -20,10 +22,9 @@ const HomeFeed = () => {
         isLoading,
         isError,
         error,
-    } = useArticles(category);
+    } = useArticles({ category, tags: selectedTags });
 
     useEffect(() => {
-        console.log(inView, hasNextPage);
         if (inView && hasNextPage && !isFetchingNextPage) {
             fetchNextPage();
         }

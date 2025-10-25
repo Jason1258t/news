@@ -1,8 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import { ContentBlock } from "./ContentBloc";
 
 const ArticleRenderer = ({ article }) => {
     const { title, description, category, dateDisplay, hero, content, tags } =
         article;
+
+    const navigate = useNavigate();
 
     return (
         <article className="news-article">
@@ -36,7 +39,13 @@ const ArticleRenderer = ({ article }) => {
                 {Array.isArray(tags) && tags.length ? (
                     <div className="article-tags">
                         {tags.map((t, i) => (
-                            <span key={i} className="tag">
+                            <span
+                                key={i}
+                                className="tag"
+                                onClick={() => {
+                                    navigate(`/?tags=${t}`);
+                                }}
+                            >
                                 {t}
                             </span>
                         ))}

@@ -58,14 +58,20 @@ const prepareArticleToSave = (articleData) => {
     return articleToSave;
 };
 
-export const fetchArticles = async (category, lastId, limit = 5) => {
+export const fetchArticles = async ({
+    category,
+    lastId,
+    limit = 5,
+    tags = undefined,
+}) => {
     try {
         let doc = undefined;
         if (lastId) {
             doc = await fetchArticleDocBySlug(lastId);
         }
 
-        const articlesQuery = getArticlesQuery(category, limit, doc);
+        const articlesQuery = getArticlesQuery(category, tags, limit, doc);
+        console.log(articlesQuery);
         const querySnapshot = await getDocs(articlesQuery);
 
         const hasMore = querySnapshot.docs.length === limit;

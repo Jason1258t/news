@@ -19,7 +19,7 @@ import toast from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
 
 const ArticlesPanel = () => {
-    const { data, isLoading, error } = useArticles(undefined, 50);
+    const { data, isLoading, error } = useArticles({limit: 50});
 
     const [allArticles, setArticles] = useState([]);
 
