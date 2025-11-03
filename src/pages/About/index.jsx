@@ -80,7 +80,7 @@ const AboutPage = () => {
                                     className="btn btn-primary"
                                     onClick={() =>
                                         window.open(
-                                            "https://t.me/kabanchik207_prime"
+                                            "https://t.me/pgtu_breaking_news?direct"
                                         )
                                     }
                                 >

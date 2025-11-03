@@ -71,7 +71,6 @@ export const fetchArticles = async ({
         }
 
         const articlesQuery = getArticlesQuery(category, tags, limit, doc);
-        console.log(articlesQuery);
         const querySnapshot = await getDocs(articlesQuery);
 
         const hasMore = querySnapshot.docs.length === limit;
