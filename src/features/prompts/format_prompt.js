@@ -237,6 +237,14 @@ export const copyFormatPrompt = async ({ date, imageUrl }) => {
 
         await navigator.clipboard.writeText(fullPrompt);
         toast.success("Шаблон успешно скопирован!");
+        if (!date || !imageUrl) {
+            toast.error(
+                `Имейте ввиду что поле date: ${
+                    date ? "defined" : "undefinded"
+                } и поле imageUrl: ${imageUrl ? "defined" : "undefinded"}`,
+
+            );
+        }
     } catch (err) {
         toast.error("Ошибка копирования");
         console.error("Failed to copy text: ", err);

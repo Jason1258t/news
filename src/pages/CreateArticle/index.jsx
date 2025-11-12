@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import { useCreateArticle } from "features/articles/hooks/useCreateArticle";
@@ -11,58 +11,34 @@ import ImagePreview from "widgets/input/image/ImagePreview";
 import { copyTelegramPrompt } from "../../features/prompts/telegram_prompt";
 import OutlinedButton from "widgets/buttons/OutlinedButton";
 import FilledButton from "widgets/buttons/FilledButton";
+import { useCreateArticleStore } from "./store";
 
 const CreateArticlePage = () => {
-    const [jsonInput, setJsonInput] = useState("");
-    const [isValid, setIsValid] = useState(true);
-    const [error, setError] = useState("");
+    const store = useCreateArticleStore();
     const navigate = useNavigate();
-
     const { createArticle, loading } = useCreateArticle();
-
-    const [imageUrl, setImageUrl] = useState(null);
-    const [date, setDate] = useState(new Date());
-
-    const handleJsonChange = (e) => {
-        const value = e.target.value;
-        setJsonInput(value);
-
-        if (value.trim()) {
-            try {
-                JSON.parse(value);
-                setIsValid(true);
-                setError("");
-            } catch (err) {
-                setIsValid(false);
-                setError("Невалидный JSON: " + err.message);
-            }
-        } else {
-            setIsValid(true);
-            setError("");
-        }
-    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!jsonInput.trim() || !isValid) {
-            setError("Введите валидный JSON");
+        if (!store.jsonInput?.trim() || !store.isValid) {
+            store.setError("Введите валидный JSON");
             return;
         }
 
         try {
-            const articleData = JSON.parse(jsonInput);
+            const articleData = JSON.parse(store.jsonInput);
             const result = await createArticle(articleData);
 
             if (result.success) {
                 toast.success("Статья успешно создана!");
-                setJsonInput("");
+                store.setJsonInput("");
                 navigate(`/articles/${result.slug}`);
             } else {
-                setError(result.error || "Ошибка при создании статьи");
+                store.setError(result.error || "Ошибка при создании статьи");
             }
         } catch (err) {
-            setError("Ошибка: " + err.message);
+            store.setError("Ошибка: " + err.message);
         }
     };
 
@@ -111,8 +87,8 @@ const CreateArticlePage = () => {
                                     <DatePicker
                                         label="Выберите дату публикации"
                                         onChange={(value) => {
-                                            setDate(value);
-                                            console.log(date);
+                                            store.setDate(value);
+                                            console.log(store.date);
                                         }}
                                     />
                                 </div>
@@ -120,27 +96,34 @@ const CreateArticlePage = () => {
                                     <TextInput
                                         label="URL изображения"
                                         placeholder="Введите URL изображения"
-                                        value={imageUrl ?? ""}
+                                        value={store.imageUrl ?? ""}
                                         onChange={(v) =>
-                                            setImageUrl(v.length > 0 ? v : null)
+                                            store.setImageUrl(
+                                                v.length > 0 ? v : null
+                                            )
                                         }
                                     />
                                 </div>
                             </div>
 
                             <ImagePreview
-                                src={imageUrl}
-                                onRemove={() => setImageUrl(null)}
+                                src={store.imageUrl}
+                                onRemove={() => store.setImageUrl(null)}
                             />
-                            {imageUrl && <div style={{ height: "1rem" }}></div>}
+                            {store.imageUrl && (
+                                <div style={{ height: "1rem" }}></div>
+                            )}
                             <div
                                 className="form-actions"
                                 style={{ marginBottom: "1rem" }}
                             >
                                 <OutlinedButton
-                                    onClick={() =>
-                                        copyFormatPrompt(date, imageUrl)
-                                    }
+                                    onClick={() => {
+                                        copyFormatPrompt({
+                                            date: store.date,
+                                            imageUrl: store.imageUrl,
+                                        });
+                                    }}
                                 >
                                     Скопировать промпт форматирония
                                 </OutlinedButton>
@@ -161,22 +144,22 @@ const CreateArticlePage = () => {
                                 <textarea
                                     id="json-input"
                                     className={`json-input ${
-                                        !isValid ? "error" : ""
+                                        !store.isValid ? "error" : ""
                                     }`}
-                                    value={jsonInput}
-                                    onChange={handleJsonChange}
+                                    value={store.jsonInput}
+                                    onChange={(e) => store.setJsonInput(e.target.value)}
                                     placeholder='{"slug": "my-article", "title": "Заголовок статьи", ...}'
                                     rows={20}
                                     disabled={loading}
                                 />
 
-                                {error && (
+                                {store.error && (
                                     <div className="error-message">
-                                        ⚠️ {error}
+                                        ⚠️ {store.error}
                                     </div>
                                 )}
 
-                                {isValid && jsonInput.trim() && (
+                                {store.isValid && store.jsonInput?.trim() && (
                                     <div className="success-message">
                                         ✅ JSON валиден
                                     </div>
@@ -186,8 +169,8 @@ const CreateArticlePage = () => {
                                     <FilledButton
                                         type="submit"
                                         active={
-                                            jsonInput.trim() &&
-                                            isValid &&
+                                            store.jsonInput?.trim() &&
+                                            store.isValid &&
                                             !loading
                                         }
                                     >
@@ -197,7 +180,7 @@ const CreateArticlePage = () => {
                                     </FilledButton>
 
                                     <span className="char-count">
-                                        Символов: {jsonInput.length}
+                                        Символов: {store.jsonInput.length}
                                     </span>
                                 </div>
                             </form>
