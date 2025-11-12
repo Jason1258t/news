@@ -6,6 +6,7 @@ const FilledButton = ({
     children,
     color = { backgroundColor: "none" },
     active = true,
+    type
 }) => {
     return (
         <button
@@ -13,6 +14,7 @@ const FilledButton = ({
             className={`${styles.btn} ${styles.btnFilled}`}
             onClick={onClick}
             style={color}
+            type={type}
         >
             {children}
         </button>

@@ -59,7 +59,7 @@
     background: #e2e8f0;
     padding: 0.2rem 0.4rem;
     border-radius: 4px;
-    font-family: 'Courier New', monospace;
+    font-family: "Courier New", monospace;
     font-size: 0.9rem;
 }
 
@@ -95,7 +95,7 @@
     padding: 1.5rem;
     border: 2px solid #e2e8f0;
     border-radius: 8px;
-    font-family: 'Courier New', monospace;
+    font-family: "Courier New", monospace;
     font-size: 0.9rem;
     line-height: 1.5;
     resize: vertical;
@@ -148,66 +148,9 @@
     border-top: 1px solid #e2e8f0;
 }
 
-.submit-btn {
-    padding: 1rem 2rem;
-    font-size: 1.1rem;
-    min-width: 200px;
-}
-
-.submit-btn:disabled {
-    background: #a0aec0;
-    cursor: not-allowed;
-    transform: none;
-}
-
-.submit-btn:disabled:hover {
-    transform: none;
-    box-shadow: none;
-}
-
 .char-count {
     color: var(--text-light);
     font-size: 0.9rem;
-}
-
-.btn {
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 0.9rem;
-}
-
-.btn-primary {
-    background: var(--primary-color);
-    color: white;
-}
-
-.btn-primary:hover:not(:disabled) {
-    background: #5a6fd8;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-}
-
-.btn-outline {
-    background: transparent;
-    color: var(--primary-color);
-    border: 2px solid var(--primary-color);
-}
-
-.btn-outline:hover:not(:disabled) {
-    background: var(--primary-color);
-    color: white;
-}
-
-.btn:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none;
 }
 
 /* Responsive Design */
@@ -215,37 +158,33 @@
     .create-article-page {
         padding: 1rem 0;
     }
-    
+
     .page-title {
         font-size: 2rem;
     }
-    
+
     .create-article-content {
         padding: 1.5rem;
     }
-    
+
     .form-header {
         flex-direction: column;
         align-items: flex-start;
     }
-    
+
     .form-actions {
         width: 100%;
         justify-content: space-between;
     }
-    
+
     .json-input {
         min-height: 300px;
         padding: 1rem;
     }
-    
+
     .submit-section {
         flex-direction: column;
         align-items: stretch;
-    }
-    
-    .submit-btn {
-        width: 100%;
     }
 }
 
@@ -253,7 +192,7 @@
     .create-article-content {
         padding: 1rem;
     }
-    
+
     .format-info {
         padding: 1rem;
     }

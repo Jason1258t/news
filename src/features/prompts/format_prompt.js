@@ -1,3 +1,5 @@
+import toast from "react-hot-toast";
+
 export const formatPrompt = `types:
 /**
  * @typedef {Object} ArticleOG
@@ -222,3 +224,21 @@ example:
 На основе этого переформатируй эту статью для хранения, чтобы все выглядело красиво, сильно не изменяй содержимое по возможности. Не сокращай
 Ниже в запросе должны быть указаны дата публикации и изображение. Если их нет предупреди пользователя
 `;
+
+export const copyFormatPrompt = async ({ date, imageUrl }) => {
+    try {
+        let fullPrompt = formatPrompt;
+        if (date) {
+            fullPrompt += `\ndatePublished: ${date}`;
+        }
+        if (imageUrl) {
+            fullPrompt += `\nimg: ${imageUrl}`;
+        }
+
+        await navigator.clipboard.writeText(fullPrompt);
+        toast.success("Шаблон успешно скопирован!");
+    } catch (err) {
+        toast.error("Ошибка копирования");
+        console.error("Failed to copy text: ", err);
+    }
+};

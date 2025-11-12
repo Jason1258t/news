@@ -3,12 +3,14 @@ import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import { useCreateArticle } from "features/articles/hooks/useCreateArticle";
 import "./styles.css";
-import { formatPrompt } from "./prompts/format_prompt";
+import { copyFormatPrompt } from "../../features/prompts/format_prompt";
 import toast, { Toaster } from "react-hot-toast";
 import DatePicker from "widgets/input/date/DatePicker";
 import TextInput from "widgets/input/text/TextInput";
 import ImagePreview from "widgets/input/image/ImagePreview";
-import { telegramPrompt } from "./prompts/telegram_prompt";
+import { copyTelegramPrompt } from "../../features/prompts/telegram_prompt";
+import OutlinedButton from "widgets/buttons/OutlinedButton";
+import FilledButton from "widgets/buttons/FilledButton";
 
 const CreateArticlePage = () => {
     const [jsonInput, setJsonInput] = useState("");
@@ -61,34 +63,6 @@ const CreateArticlePage = () => {
             }
         } catch (err) {
             setError("Ошибка: " + err.message);
-        }
-    };
-
-    const copyTelegramPrompt = async () => {
-        try {
-            await navigator.clipboard.writeText(telegramPrompt);
-            toast.success("Шаблон успешно скопирован!");
-        } catch (err) {
-            toast.error("Ошибка копирования");
-            console.error("Failed to copy text: ", err);
-        }
-    };
-
-    const copyFormatPrompt = async () => {
-        try {
-            let fullPrompt = formatPrompt;
-            if (date) {
-                fullPrompt += `\ndatePublished: ${date}`;
-            }
-            if (imageUrl) {
-                fullPrompt += `\nimg: ${imageUrl}`;
-            }
-
-            await navigator.clipboard.writeText(fullPrompt);
-            toast.success("Шаблон успешно скопирован!");
-        } catch (err) {
-            toast.error("Ошибка копирования");
-            console.error("Failed to copy text: ", err);
         }
     };
 
@@ -163,20 +137,16 @@ const CreateArticlePage = () => {
                                 className="form-actions"
                                 style={{ marginBottom: "1rem" }}
                             >
-                                <button
-                                    type="button"
-                                    onClick={copyFormatPrompt}
-                                    className="btn btn-outline"
+                                <OutlinedButton
+                                    onClick={() =>
+                                        copyFormatPrompt(date, imageUrl)
+                                    }
                                 >
                                     Скопировать промпт форматирония
-                                </button>
-                                <button
-                                    type="button"
-                                    onClick={copyTelegramPrompt}
-                                    className="btn btn-outline"
-                                >
+                                </OutlinedButton>
+                                <OutlinedButton onClick={copyTelegramPrompt}>
                                     Скопировать промпт для тг
-                                </button>
+                                </OutlinedButton>
                             </div>
                             <form onSubmit={handleSubmit} className="json-form">
                                 <div className="form-header">
@@ -213,19 +183,18 @@ const CreateArticlePage = () => {
                                 )}
 
                                 <div className="submit-section">
-                                    <button
+                                    <FilledButton
                                         type="submit"
-                                        className="btn btn-primary submit-btn"
-                                        disabled={
-                                            !jsonInput.trim() ||
-                                            !isValid ||
-                                            loading
+                                        active={
+                                            jsonInput.trim() &&
+                                            isValid &&
+                                            !loading
                                         }
                                     >
                                         {loading
                                             ? "⏳ Загрузка..."
                                             : "🚀 Создать статью"}
-                                    </button>
+                                    </FilledButton>
 
                                     <span className="char-count">
                                         Символов: {jsonInput.length}
