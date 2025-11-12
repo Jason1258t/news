@@ -18,8 +18,10 @@ import EmptyArticleWidget from "./components/EmptyArticleWidget";
 import toast from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
 
+import { Helmet } from "react-helmet-async";
+
 const ArticlesPanel = () => {
-    const { data, isLoading, error } = useArticles({limit: 50});
+    const { data, isLoading, error } = useArticles({ limit: 50 });
 
     const [allArticles, setArticles] = useState([]);
 
@@ -59,6 +61,13 @@ const ArticlesPanel = () => {
 
     return (
         <>
+            <Helmet>
+                <title>Управление статьями | ПГТУ Breaking NEWS</title>
+                <meta
+                    name="description"
+                    content="Панель для управления статьями"
+                />
+            </Helmet>
             <div className={styles.page}>
                 <div className={styles.listSection}>
                     <h2>Список статей</h2>
