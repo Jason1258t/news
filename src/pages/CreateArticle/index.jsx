@@ -3,11 +3,12 @@ import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import { useCreateArticle } from "features/articles/hooks/useCreateArticle";
 import "./styles.css";
-import { prompt } from "./prompt";
+import { formatPrompt } from "./prompts/format_prompt";
 import toast, { Toaster } from "react-hot-toast";
 import DatePicker from "widgets/input/date/DatePicker";
 import TextInput from "widgets/input/text/TextInput";
 import ImagePreview from "widgets/input/image/ImagePreview";
+import { telegramPrompt } from "./prompts/telegram_prompt";
 
 const CreateArticlePage = () => {
     const [jsonInput, setJsonInput] = useState("");
@@ -63,15 +64,19 @@ const CreateArticlePage = () => {
         }
     };
 
-    const handleClear = () => {
-        setJsonInput("");
-        setError("");
-        setIsValid(true);
+    const copyTelegramPrompt = async () => {
+        try {
+            await navigator.clipboard.writeText(telegramPrompt);
+            toast.success("Шаблон успешно скопирован!");
+        } catch (err) {
+            toast.error("Ошибка копирования");
+            console.error("Failed to copy text: ", err);
+        }
     };
 
-    const copyPrompt = async () => {
+    const copyFormatPrompt = async () => {
         try {
-            let fullPrompt = prompt;
+            let fullPrompt = formatPrompt;
             if (date) {
                 fullPrompt += `\ndatePublished: ${date}`;
             }
@@ -141,11 +146,9 @@ const CreateArticlePage = () => {
                                     <TextInput
                                         label="URL изображения"
                                         placeholder="Введите URL изображения"
-                                        value={imageUrl}
-                                        onChange={(value) =>
-                                            setImageUrl(
-                                                value.length > 0 ? value : null
-                                            )
+                                        value={imageUrl ?? ""}
+                                        onChange={(v) =>
+                                            setImageUrl(v.length > 0 ? v : null)
                                         }
                                     />
                                 </div>
@@ -156,7 +159,25 @@ const CreateArticlePage = () => {
                                 onRemove={() => setImageUrl(null)}
                             />
                             {imageUrl && <div style={{ height: "1rem" }}></div>}
-
+                            <div
+                                className="form-actions"
+                                style={{ marginBottom: "1rem" }}
+                            >
+                                <button
+                                    type="button"
+                                    onClick={copyFormatPrompt}
+                                    className="btn btn-outline"
+                                >
+                                    Скопировать промпт форматирония
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={copyTelegramPrompt}
+                                    className="btn btn-outline"
+                                >
+                                    Скопировать промпт для тг
+                                </button>
+                            </div>
                             <form onSubmit={handleSubmit} className="json-form">
                                 <div className="form-header">
                                     <label
@@ -165,24 +186,6 @@ const CreateArticlePage = () => {
                                     >
                                         JSON данные статьи
                                     </label>
-                                    <div className="form-actions">
-                                        <button
-                                            type="button"
-                                            onClick={copyPrompt}
-                                            className="btn btn-outline"
-                                            disabled={loading}
-                                        >
-                                            Скопировать промпт
-                                        </button>
-                                        <button
-                                            type="button"
-                                            onClick={handleClear}
-                                            className="btn btn-outline"
-                                            disabled={loading}
-                                        >
-                                            🗑️ Очистить
-                                        </button>
-                                    </div>
                                 </div>
 
                                 <textarea
