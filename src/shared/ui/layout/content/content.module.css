@@ -1,0 +1,29 @@
+.content {
+  padding: 2rem;
+}
+
+.small {
+  padding: 1rem;
+}
+
+.medium {
+  padding: 2rem;
+}
+
+.large {
+  padding: 3rem;
+}
+
+@media (max-width: 768px) {
+  .content {
+    padding: 2rem 1.5rem;
+  }
+  
+  .small {
+    padding: 1rem;
+  }
+  
+  .large {
+    padding: 2rem 1.5rem;
+  }
+}

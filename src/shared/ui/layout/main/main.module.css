@@ -1,0 +1,19 @@
+.main {
+  min-height: calc(100vh - 200px);
+}
+
+.none {
+  padding: 0;
+}
+
+.compact {
+  padding: 1rem 0;
+}
+
+.normal {
+  padding: 2rem 0;
+}
+
+.loose {
+  padding: 3rem 0;
+}
