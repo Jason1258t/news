@@ -70,6 +70,10 @@
     border-radius: 2px;
 }
 
+.menu-only-mobile {
+    display: none;
+}
+
 @media (max-width: 768px) {
     .header-content {
         flex-wrap: wrap;
@@ -105,6 +109,10 @@
 
     .burger-menu {
         display: flex;
+    }
+
+    .menu-only-mobile {
+        display: block;
     }
 
     .burger-menu.active span:nth-child(1) {

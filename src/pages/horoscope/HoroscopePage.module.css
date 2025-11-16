@@ -36,3 +36,19 @@
     margin: 0 auto;
     padding-bottom: 200px;
 }
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 2rem;
+    }
+
+    .predictions {
+        gap: 3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 1.75rem;
+    }
+}

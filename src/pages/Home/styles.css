@@ -52,5 +52,13 @@
 @media (max-width: 768px) {
     .sidebar {
         grid-template-columns: 1fr;
+        max-height: none;
+    }
+}
+
+
+@media (max-width: 480px) {
+    .sidebar {
+        display: none;
     }
 }

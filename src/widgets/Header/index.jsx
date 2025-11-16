@@ -15,26 +15,51 @@ const Header = () => {
                 <div className="header-content">
                     <div className="logo" onClick={() => navigate("/")}>
                         <img src={logo} alt="ПГТУ Breaking NEWS logo" />
-                        <h1>
-                            ПГТУ Breaking NEWS
-                        </h1>
+                        <h1>ПГТУ Breaking NEWS</h1>
                     </div>
 
                     <nav className={`nav${isMenuOpen ? " active" : ""}`}>
-                        <Link to="/" className="nav-link">
+                        <Link
+                            to="/"
+                            className="nav-link"
+                            onClick={() => setIsMenuOpen(false)}
+                        >
                             Главная
                         </Link>
-                        <Link to="/?category=Наука" className="nav-link">
+                        <Link
+                            to="/?category=Наука"
+                            className="nav-link"
+                            onClick={() => setIsMenuOpen(false)}
+                        >
                             Наука
                         </Link>
-                        <Link to="/?category=Общество" className="nav-link">
+                        <Link
+                            to="/?category=Общество"
+                            className="nav-link"
+                            onClick={() => setIsMenuOpen(false)}
+                        >
                             Общество
                         </Link>
-                        <Link to="/?category=Технологии" className="nav-link">
+                        <Link
+                            to="/?category=Технологии"
+                            className="nav-link"
+                            onClick={() => setIsMenuOpen(false)}
+                        >
                             Технологии
                         </Link>
-                        <Link to="/?category=Спорт" className="nav-link">
+                        <Link
+                            to="/?category=Спорт"
+                            className="nav-link"
+                            onClick={() => setIsMenuOpen(false)}
+                        >
                             Спорт
+                        </Link>
+                        <Link
+                            to="/horoscope"
+                            className="nav-link menu-only-mobile"
+                            onClick={() => setIsMenuOpen(false)}
+                        >
+                            Гороскоп
                         </Link>
                     </nav>
 

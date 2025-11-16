@@ -69,6 +69,7 @@ const HoroscopePage = () => {
                                     imageUrl={prediction.imageUrl}
                                     content={prediction.prediction}
                                     align={idx % 2 === 0 ? "left" : "right"}
+                                    key={idx}
                                 />
                             ))}{" "}
                         </div>
