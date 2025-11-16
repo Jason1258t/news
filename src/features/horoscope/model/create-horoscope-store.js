@@ -1,14 +1,13 @@
 import { create } from "zustand";
+import { validatePredictions } from "./zodiacs";
 
 const getNextWeek = () => {
     const today = new Date();
     const nextMonday = new Date(today);
 
-    // Переход к следующему понедельнику
     const daysUntilMonday = (8 - today.getDay()) % 7 || 7;
     nextMonday.setDate(today.getDate() + daysUntilMonday);
 
-    // Конец недели - воскресенье
     const nextSunday = new Date(nextMonday);
     nextSunday.setDate(nextMonday.getDate() + 6);
 
@@ -19,6 +18,8 @@ export const useCreateHoroscopeStore = create((set, get) => {
     const { startDate, endDate } = getNextWeek();
     return {
         jsonInput: "",
+        title: "",
+        description: "",
         startDate: startDate,
         endDate: endDate,
         isValid: true,
@@ -29,12 +30,14 @@ export const useCreateHoroscopeStore = create((set, get) => {
             get().validateJson();
         },
 
-        setDate: (date) => set({ date }),
+        setTitle: (v) => set({ title: v }),
+
+        setDescription: (v) => set({ description: v }),
 
         setError: (error) => set({ error }),
 
         validateJson: () => {
-            const { jsonInput } = get();
+            const { jsonInput, validateJsonValue } = get();
 
             if (!jsonInput.trim()) {
                 set({ isValid: true, error: "" });
@@ -50,6 +53,17 @@ export const useCreateHoroscopeStore = create((set, get) => {
                     error: `Невалидный JSON: ${err.message}`,
                 });
             }
+            validateJsonValue();
         },
+
+        validateJsonValue: () => {
+            const { isValid, jsonInput } = get();
+            if (!isValid) return;
+
+            const res = validatePredictions(jsonInput);
+            if (!res.isValid) {
+                set({ isValid: false, error: res.errors.join(" ") });
+            }
+        }
     };
 });

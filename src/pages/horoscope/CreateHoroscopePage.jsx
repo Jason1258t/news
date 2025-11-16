@@ -3,20 +3,40 @@ import { Helmet } from "react-helmet-async";
 import { Main, Container, Content } from "shared/ui/layout";
 import OutlinedButton from "widgets/buttons/OutlinedButton";
 import FilledButton from "widgets/buttons/FilledButton";
-import { Toaster } from "react-hot-toast";
+import TextInput from "widgets/input/text/TextInput";
+import toast, { Toaster } from "react-hot-toast";
 import { useCreateHoroscopeStore } from "features/horoscope/model/create-horoscope-store";
 import { useCreateHoroscope } from "features/horoscope/hooks";
 
 import styles from "./CreateHoroscopePage.module.css";
 import CharCounter from "shared/ui/info/char-counter";
+import { copyFormatPrompt } from "features/horoscope/model/horoscope_format_prompt";
 
 const CreateHoroscopePage = () => {
     const store = useCreateHoroscopeStore();
     const { createHoroscope, loading } = useCreateHoroscope();
-    const handleSubmit = () => {
-        // ....
-        createHoroscope();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!store.jsonInput?.trim() || !store.isValid) {
+            store.setError("Введите валидный JSON");
+            return;
+        }
+
+        try {
+            const data = JSON.parse(store.jsonInput);
+            const result = await createHoroscope(data);
+
+            if (result.success) {
+                toast.success("Гороскоп успешно создан!");
+            } else {
+                store.setError(result.error || "Ошибка при создании гороскопа");
+            }
+        } catch (err) {
+            store.setError("Ошибка: " + err.message);
+        }
     };
+
 
     return (
         <>
@@ -45,16 +65,24 @@ const CreateHoroscopePage = () => {
                                 <li>Данные должны быть в формате JSON</li>
                             </ul>
                         </div>
-
+                        <TextInput
+                            label="Заголовок гороскопа"
+                            placeholder="Введите заголовок"
+                            value={store.title ?? ""}
+                            onChange={store.setTitle}
+                        />
+                        <textarea
+                            className={styles.jsonInput}
+                            value={store.jsonInput}
+                            onChange={(e) => store.setDescription(e.target.value)}
+                            rows={5}
+                        />
                         <div
                             className={styles.actions}
                             style={{ marginBottom: "1rem" }}
                         >
-                            <OutlinedButton onClick={() => {}}>
+                            <OutlinedButton onClick={() => copyFormatPrompt({ title: store.title, description: store.description })}>
                                 Скопировать промпт форматирония
-                            </OutlinedButton>
-                            <OutlinedButton onClick={() => {}}>
-                                Скопировать промпт для тг
                             </OutlinedButton>
                         </div>
                         <form
@@ -72,9 +100,8 @@ const CreateHoroscopePage = () => {
 
                             <textarea
                                 id="json-input"
-                                className={`${styles.jsonInput} ${
-                                    !store.isValid ? "error" : ""
-                                }`}
+                                className={`${styles.jsonInput} ${!store.isValid ? "error" : ""
+                                    }`}
                                 value={store.jsonInput}
                                 onChange={(e) =>
                                     store.setJsonInput(e.target.value)

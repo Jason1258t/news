@@ -50,6 +50,17 @@ const AdminSidebar = () => {
                 >
                     Выбор редакции
                 </NavLink>
+                
+                <NavLink
+                    to="/admin/create-horoscope"
+                    className={({ isActive }) =>
+                        isActive
+                            ? `${styles.link} ${styles.active}`
+                            : styles.link
+                    }
+                >
+                    Создать гороскоп
+                </NavLink>
             </nav>
 
             <button onClick={handleLogout} className={styles.logout}>
