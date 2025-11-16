@@ -3,9 +3,9 @@ import { useParams } from "react-router-dom";
 import ArticleRenderer from "features/articles/ArticleRenderer";
 import { ArticleMeta } from "./ArticleMeta";
 import { useArticle } from "features/articles/hooks/useArticle";
-import LoadingWidget from "../../widgets/status/loading";
-import ErrorWidget from "../../widgets/status/error";
-import NotFoundWidget from "../../widgets/status/not-found";
+import LoadingWidget from "../../shared/ui/status/loading";
+import ErrorWidget from "../../shared/ui/status/error";
+import NotFoundWidget from "../../shared/ui/status/not-found";
 
 const ArticlePage = () => {
     const { slug } = useParams();

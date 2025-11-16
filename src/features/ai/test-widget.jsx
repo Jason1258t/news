@@ -1,7 +1,7 @@
 import React from "react";
 import { useAIAnswer } from "./test-api";
-import { LoadingSpinner } from "widgets/status/loading";
-import ErrorWidget from "widgets/status/error";
+import { LoadingSpinner } from "shared/ui/status/loading";
+import ErrorWidget from "shared/ui/status/error";
 import { RenderHTML } from "shared/lib/html";
 
 const TestAIWidget = () => {
@@ -11,7 +11,7 @@ const TestAIWidget = () => {
 
     if (loading) return <LoadingSpinner />;
     if (error) return <ErrorWidget message={error?.message} />;
-    return <RenderHTML html={data}/>;
+    return <RenderHTML html={data} />;
 };
 
 export default TestAIWidget;

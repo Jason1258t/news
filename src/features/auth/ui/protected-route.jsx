@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import LoadingWidget from "widgets/status/loading";
+import LoadingWidget from "shared/ui/status/loading";
 
 const ProtectedRoute = ({ children }) => {
     const { user, loading } = useAuth();

@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./CurrentPicks.module.css";
-import LoadingWidget from "widgets/status/loading";
+import LoadingWidget from "shared/ui/status/loading";
 import EditorsPickCard from "entities/editors-pick/ui";
 import FilledButton from "widgets/buttons/FilledButton";
 import OutlinedButton from "widgets/buttons/OutlinedButton";

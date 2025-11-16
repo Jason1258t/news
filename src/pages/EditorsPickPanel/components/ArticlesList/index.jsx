@@ -2,8 +2,8 @@ import React from "react";
 import { useArticles } from "features/articles/hooks/useArticles";
 import EditorsPickCard from "entities/editors-pick/ui";
 import styles from "./ArticlesList.module.css";
-import { LoadingSpinner } from "widgets/status/loading";
-import ErrorWidget from "widgets/status/error";
+import { LoadingSpinner } from "shared/ui/status/loading";
+import ErrorWidget from "shared/ui/status/error";
 
 const ArticlesList = ({ onArticleSelected }) => {
     const { data, isLoading, error } = useArticles({ limit: 50 });

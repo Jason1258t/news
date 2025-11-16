@@ -4,8 +4,8 @@ import ArticleCard from "widgets/ArticleCard";
 import { useArticles } from "features/articles/hooks/useArticles";
 import styles from "./HomeFeed.module.css";
 import { useSearchParams } from "react-router-dom";
-import LoadingWidget, { LoadingSpinner } from "widgets/status/loading";
-import ErrorWidget from "widgets/status/error";
+import LoadingWidget, { LoadingSpinner } from "shared/ui/status/loading";
+import ErrorWidget from "shared/ui/status/error";
 import { useQueryTags } from "features/tags/hooks/useQueryTags";
 
 const HomeFeed = () => {

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 
 import ArticleCardSmall from "widgets/ArticleCardSmall";
 import { useArticles } from "features/articles/hooks/useArticles";
-import { LoadingSpinner } from "widgets/status/loading";
-import ErrorWidget from "widgets/status/error";
+import { LoadingSpinner } from "shared/ui/status/loading";
+import ErrorWidget from "shared/ui/status/error";
 import { useDeleteConfirmation } from "widgets/modals/delete/useDeleteModal";
 import { deleteArticle } from "features/articles/api/articles-api";
 import { useEffect } from "react";

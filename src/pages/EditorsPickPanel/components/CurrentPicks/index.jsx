@@ -5,7 +5,7 @@ import styles from "./CurrentPicks.module.css";
 import FilledButton from "widgets/buttons/FilledButton";
 import OutlinedButton from "widgets/buttons/OutlinedButton";
 import BadgesOverlay from "../BagesOverlay";
-import ErrorWidget from "widgets/status/error";
+import ErrorWidget from "shared/ui/status/error";
 
 import PicksList from "./PicksList";
 
