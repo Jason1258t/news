@@ -1,4 +1,4 @@
-const zodiacIcons = {
+export const zodiacIcons = {
     "Aries": "",
     "Taurus": "",
     "Gemini": "",

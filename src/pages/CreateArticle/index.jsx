@@ -3,15 +3,18 @@ import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import { useCreateArticle } from "features/articles/hooks/useCreateArticle";
 import "./styles.css";
-import { copyFormatPrompt } from "../../features/prompts/format_prompt";
+import { copyFormatPrompt } from "../../features/prompts/article_format_prompt";
 import toast, { Toaster } from "react-hot-toast";
 import DatePicker from "widgets/input/date/DatePicker";
 import TextInput from "widgets/input/text/TextInput";
 import ImagePreview from "widgets/input/image/ImagePreview";
-import { copyTelegramPrompt } from "../../features/prompts/telegram_prompt";
+import { copyTelegramPrompt } from "../../features/prompts/article_telegram_prompt";
 import OutlinedButton from "widgets/buttons/OutlinedButton";
 import FilledButton from "widgets/buttons/FilledButton";
 import { useCreateArticleStore } from "./store";
+import { Main } from "shared/ui/layout/main/Main";
+import { Container } from "shared/ui/layout/container/Container";
+import CharCounter from "shared/ui/info/char-counter";
 
 const CreateArticlePage = () => {
     const store = useCreateArticleStore();
@@ -52,8 +55,8 @@ const CreateArticlePage = () => {
                 />
             </Helmet>
 
-            <main className="main">
-                <div className="container">
+            <Main>
+                <Container>
                     <div className="create-article-page">
                         <header className="page-header">
                             <h1 className="page-title">Создать статью</h1>
@@ -147,7 +150,9 @@ const CreateArticlePage = () => {
                                         !store.isValid ? "error" : ""
                                     }`}
                                     value={store.jsonInput}
-                                    onChange={(e) => store.setJsonInput(e.target.value)}
+                                    onChange={(e) =>
+                                        store.setJsonInput(e.target.value)
+                                    }
                                     placeholder='{"slug": "my-article", "title": "Заголовок статьи", ...}'
                                     rows={20}
                                     disabled={loading}
@@ -179,15 +184,15 @@ const CreateArticlePage = () => {
                                             : "🚀 Создать статью"}
                                     </FilledButton>
 
-                                    <span className="char-count">
-                                        Символов: {store.jsonInput.length}
-                                    </span>
+                                    <CharCounter
+                                        length={store.jsonInput.length}
+                                    />
                                 </div>
                             </form>
                         </div>
                     </div>
-                </div>
-            </main>
+                </Container>
+            </Main>
             <Toaster />
         </>
     );

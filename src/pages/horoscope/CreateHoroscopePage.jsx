@@ -1,9 +1,123 @@
-import React from 'react'
+import React from "react";
+import { Helmet } from "react-helmet-async";
+import { Main, Container, Content } from "shared/ui/layout";
+import OutlinedButton from "widgets/buttons/OutlinedButton";
+import FilledButton from "widgets/buttons/FilledButton";
+import { Toaster } from "react-hot-toast";
+import { useCreateHoroscopeStore } from "features/horoscope/model/create-horoscope-store";
+import { useCreateHoroscope } from "features/horoscope/hooks";
+
+import styles from "./CreateHoroscopePage.module.css";
+import CharCounter from "shared/ui/info/char-counter";
 
 const CreateHoroscopePage = () => {
-  return (
-    <div>CreateHoroscopePage</div>
-  )
-}
+    const store = useCreateHoroscopeStore();
+    const { createHoroscope, loading } = useCreateHoroscope();
+    const handleSubmit = () => {
+        // ....
+        createHoroscope();
+    };
 
-export default CreateHoroscopePage
+    return (
+        <>
+            <Helmet>
+                <title>Загрузка гороскопа | ПГТУ Breaking NEWS</title>
+                <meta
+                    name="description"
+                    content="Панель для создания и загрузки гороскопов"
+                />
+            </Helmet>
+
+            <Main>
+                <Container>
+                    <header className={styles.header}>
+                        <h1 className={styles.pageTitle}>Загрузить гороскоп</h1>
+                        <p className={styles.pageSubtitle}>
+                            Вставьте JSON с данными гороскопа для загрузки в
+                            базу данных
+                        </p>
+                    </header>
+
+                    <Content>
+                        <div className={styles.formatInfo}>
+                            <h3>📋 Формат данных</h3>
+                            <ul>
+                                <li>Данные должны быть в формате JSON</li>
+                            </ul>
+                        </div>
+
+                        <div
+                            className={styles.actions}
+                            style={{ marginBottom: "1rem" }}
+                        >
+                            <OutlinedButton onClick={() => {}}>
+                                Скопировать промпт форматирония
+                            </OutlinedButton>
+                            <OutlinedButton onClick={() => {}}>
+                                Скопировать промпт для тг
+                            </OutlinedButton>
+                        </div>
+                        <form
+                            onSubmit={handleSubmit}
+                            className={styles.jsonForm}
+                        >
+                            <div className={styles.formHeader}>
+                                <label
+                                    htmlFor="json-input"
+                                    className={styles.formLabel}
+                                >
+                                    JSON данные гороскопа
+                                </label>
+                            </div>
+
+                            <textarea
+                                id="json-input"
+                                className={`${styles.jsonInput} ${
+                                    !store.isValid ? "error" : ""
+                                }`}
+                                value={store.jsonInput}
+                                onChange={(e) =>
+                                    store.setJsonInput(e.target.value)
+                                }
+                                rows={20}
+                                disabled={loading}
+                            />
+
+                            {store.error && (
+                                <div className={styles.errorMessage}>
+                                    ⚠️ {store.error}
+                                </div>
+                            )}
+
+                            {store.isValid && store.jsonInput?.trim() && (
+                                <div className={styles.successMessage}>
+                                    ✅ JSON валиден
+                                </div>
+                            )}
+
+                            <div className={styles.submitSection}>
+                                <FilledButton
+                                    type="submit"
+                                    active={
+                                        store.jsonInput?.trim() &&
+                                        store.isValid &&
+                                        !loading
+                                    }
+                                >
+                                    {loading
+                                        ? "⏳ Загрузка..."
+                                        : "🚀 Загрузить гроскоп"}
+                                </FilledButton>
+
+                                <CharCounter length={store.jsonInput.length} />
+                            </div>
+                        </form>
+                    </Content>
+                </Container>
+            </Main>
+            <Toaster />
+        </>
+    );
+};
+
+export default CreateHoroscopePage;
