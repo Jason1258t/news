@@ -1,0 +1,18 @@
+.notFound {
+    padding: 0 1rem;
+    margin: 3rem auto;
+    text-align: center;
+    color: var(--text-light);
+}
+
+.cover {
+    width: 100%;
+    object-fit: cover;
+}
+
+.description {
+    padding: 0 8px;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+    font-weight: 600;
+}

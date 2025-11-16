@@ -6,13 +6,15 @@ import "./styles.css";
 import HomeMeta from "./meta";
 import FeedHeader from "./components/FeedHeader";
 import ScrollToTopButton from "widgets/buttons/scroll-to-top";
+import CurrentHoroscopeWidget from "features/horoscope/ui/CurrentHoroscopeWidget";
+import { Main, Container } from "shared/ui/layout";
 
 const HomePage = () => {
     return (
         <>
             <HomeMeta />
-            <main className="main">
-                <div className="container">
+            <Main>
+                <Container>
                     <CTASetcion />
                     <div className="home-layout">
                         <div className="main-content">
@@ -21,10 +23,11 @@ const HomePage = () => {
                         </div>
                         <aside className="sidebar">
                             <EditorsPickWidget />
+                            <CurrentHoroscopeWidget />
                         </aside>
                     </div>
-                </div>
-            </main>
+                </Container>
+            </Main>
             <ScrollToTopButton />
         </>
     );
