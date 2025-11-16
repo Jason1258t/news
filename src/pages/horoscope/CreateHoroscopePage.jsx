@@ -4,6 +4,7 @@ import { Main, Container, Content } from "shared/ui/layout";
 import OutlinedButton from "widgets/buttons/OutlinedButton";
 import FilledButton from "widgets/buttons/FilledButton";
 import TextInput from "widgets/input/text/TextInput";
+import TextArea from "widgets/input/text/TextArea";
 import toast, { Toaster } from "react-hot-toast";
 import { useCreateHoroscopeStore } from "features/horoscope/model/create-horoscope-store";
 import { useCreateHoroscope } from "features/horoscope/hooks";
@@ -14,7 +15,7 @@ import { copyFormatPrompt } from "features/horoscope/model/horoscope_format_prom
 
 const CreateHoroscopePage = () => {
     const store = useCreateHoroscopeStore();
-    const { createHoroscope, loading } = useCreateHoroscope();
+    const { mutate: createHoroscope, loading } = useCreateHoroscope();
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -25,18 +26,23 @@ const CreateHoroscopePage = () => {
 
         try {
             const data = JSON.parse(store.jsonInput);
-            const result = await createHoroscope(data);
-
-            if (result.success) {
-                toast.success("Гороскоп успешно создан!");
-            } else {
-                store.setError(result.error || "Ошибка при создании гороскопа");
-            }
+            const horoscopeData = {
+                ...data,
+                createdAt: new Date("2025-11-17T10:34:59.000Z"),
+                startsAt: new Date("2025-11-17T10:34:59.000Z"),
+                endsAt: new Date("2025-11-23T10:34:59.000Z"),
+            };
+            createHoroscope(horoscopeData, {
+                onSuccess: (r) => toast.success("Гороскоп успешно загружен!"),
+                onError: (err) =>
+                    toast.error(
+                        "Произошла ошибка при загрузке: " + err.message
+                    ),
+            });
         } catch (err) {
             store.setError("Ошибка: " + err.message);
         }
     };
-
 
     return (
         <>
@@ -71,17 +77,26 @@ const CreateHoroscopePage = () => {
                             value={store.title ?? ""}
                             onChange={store.setTitle}
                         />
-                        <textarea
-                            className={styles.jsonInput}
-                            value={store.jsonInput}
-                            onChange={(e) => store.setDescription(e.target.value)}
-                            rows={5}
+                        <label>Описание гороскопа</label>
+                        <TextArea
+                            value={store.description}
+                            onChange={(e) => store.setDescription(e)}
+                            placeholder="Введите описани"
                         />
                         <div
                             className={styles.actions}
                             style={{ marginBottom: "1rem" }}
                         >
-                            <OutlinedButton onClick={() => copyFormatPrompt({ title: store.title, description: store.description })}>
+                            <OutlinedButton
+                                onClick={() =>
+                                    copyFormatPrompt({
+                                        title: store.title,
+                                        description: store.description,
+                                        endsAt: store.endDate,
+                                        startsAt: store.startDate,
+                                    })
+                                }
+                            >
                                 Скопировать промпт форматирония
                             </OutlinedButton>
                         </div>
@@ -100,8 +115,9 @@ const CreateHoroscopePage = () => {
 
                             <textarea
                                 id="json-input"
-                                className={`${styles.jsonInput} ${!store.isValid ? "error" : ""
-                                    }`}
+                                className={`${styles.jsonInput} ${
+                                    !store.isValid ? "error" : ""
+                                }`}
                                 value={store.jsonInput}
                                 onChange={(e) =>
                                     store.setJsonInput(e.target.value)

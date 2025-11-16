@@ -37,7 +37,7 @@ export const useCreateHoroscopeStore = create((set, get) => {
         setError: (error) => set({ error }),
 
         validateJson: () => {
-            const { jsonInput, validateJsonValue } = get();
+            const { jsonInput } = get();
 
             if (!jsonInput.trim()) {
                 set({ isValid: true, error: "" });
@@ -53,7 +53,7 @@ export const useCreateHoroscopeStore = create((set, get) => {
                     error: `Невалидный JSON: ${err.message}`,
                 });
             }
-            validateJsonValue();
+            // validateJsonValue();
         },
 
         validateJsonValue: () => {

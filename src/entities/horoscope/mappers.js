@@ -16,6 +16,7 @@ export const horoscopeFromFirestore = (doc) => {
 }
 
 export const horoscopeToFirestore = (horoscope) => {
+    console.log(horoscope);
     return {
         imageUrl: horoscope.imageUrl,
         title: horoscope.title,

@@ -1,13 +1,14 @@
+import { collection, addDoc, getDocs, doc, getDoc } from "firebase/firestore";
+import { db } from "app/firebase";
 import {
-    collection,
-    addDoc,
-    getDocs,
-} from 'firebase/firestore';
-import { db } from './firebaseConfig';
-import { HoroscopeMapper } from './horoscopeMapper';
-import { getCurrentHoroscopeQuery } from './quries';
-
-const COLLECTION_NAME = 'horoscopes';
+    getCurrentHoroscopeQuery,
+    getAllHoroscopesQuery,
+    COLLECTION_NAME,
+} from "./quries";
+import {
+    horoscopeFromFirestore,
+    horoscopeToFirestore,
+} from "entities/horoscope/mappers";
 
 export const getCurrentHoroscope = async () => {
     try {
@@ -20,12 +21,37 @@ export const getCurrentHoroscope = async () => {
         }
 
         const doc = querySnapshot.docs[0];
-        return HoroscopeMapper.fromFirestore(doc);
+        return horoscopeFromFirestore(doc);
     } catch (error) {
-        console.error('Error getting current horoscope:', error);
+        console.error("Error getting current horoscope:", error);
         throw error;
     }
-}
+};
+
+/**
+ * Получение гороскопа по ID
+ * @param {string} id - ID гороскопа
+ * @returns {Promise<import('./types').Horoscope|null>}
+ */
+export const getHoroscopeById = async (id) => {
+    try {
+        if (!id) {
+            throw new Error("Horoscope ID is required");
+        }
+
+        const docRef = doc(db, COLLECTION_NAME, id);
+        const docSnap = await getDoc(docRef);
+
+        if (!docSnap.exists()) {
+            return null;
+        }
+
+        return horoscopeFromFirestore(docSnap);
+    } catch (error) {
+        console.error("Error getting horoscope by ID:", error);
+        throw error;
+    }
+};
 
 /**
  * Получение всех гороскопов
@@ -37,14 +63,12 @@ export const getAllHoroscopes = async () => {
 
         const querySnapshot = await getDocs(q);
 
-        return querySnapshot.docs.map(doc =>
-            HoroscopeMapper.fromFirestore(doc)
-        );
+        return querySnapshot.docs.map((doc) => horoscopeFromFirestore(doc));
     } catch (error) {
-        console.error('Error getting all horoscopes:', error);
+        console.error("Error getting all horoscopes:", error);
         throw error;
     }
-}
+};
 
 /**
  * Добавление нового гороскопа
@@ -59,7 +83,7 @@ export const getAllHoroscopes = async () => {
  */
 export const createHoroscope = async (horoscopeData) => {
     try {
-        const horoscopeForFirestore = HoroscopeMapper.toFirestore(horoscopeData);
+        const horoscopeForFirestore = horoscopeToFirestore(horoscopeData);
 
         const docRef = await addDoc(
             collection(db, COLLECTION_NAME),
@@ -68,7 +92,7 @@ export const createHoroscope = async (horoscopeData) => {
 
         return docRef.id;
     } catch (error) {
-        console.error('Error adding horoscope:', error);
+        console.error("Error adding horoscope:", error);
         throw error;
     }
-}
+};
