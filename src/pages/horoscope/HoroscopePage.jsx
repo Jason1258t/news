@@ -1,4 +1,3 @@
-import { useCurrentHoroscope } from "features/horoscope/hooks";
 import React from "react";
 import { Helmet } from "react-helmet-async";
 
@@ -11,8 +10,33 @@ import { Content } from "shared/ui/layout/content/Content";
 import LoadingWidget from "shared/ui/status/loading";
 import ErrorWidget from "shared/ui/status/error";
 
+import { useParams } from "react-router-dom";
+import { useCurrentHoroscope } from "features/horoscope/hooks";
+import { useHoroscopeById } from "features/horoscope/hooks";
+
+const Page = ({ children }) => {
+    return (
+        <Main spacing="compact">
+            <Container>
+                <Surface>
+                    <Content className={styles.content}>
+                        {children}
+                    </Content>
+                </Surface>
+            </Container>
+        </Main>
+    );
+};
+
 const HoroscopePage = () => {
-    const { data, isLoading, error } = useCurrentHoroscope();
+    const { id } = useParams();
+
+    const currentHoroscopeQuery = useCurrentHoroscope();
+    const horoscopeByIdQuery = useHoroscopeById(id);
+
+    const { data, isLoading, error } = id
+        ? horoscopeByIdQuery
+        : currentHoroscopeQuery;
 
     return (
         <>
@@ -23,19 +47,22 @@ const HoroscopePage = () => {
                     content="Самый достоверный гороскоп на неделю"
                 />
             </Helmet>
-            <Main>
-                <Container>
-                    <Surface>
-                        <Content>
-                            {isLoading && <LoadingWidget />}
-                            {error && <ErrorWidget message={error?.message} />}
-                            <img
-                                className={styles.cover}
-                                src={data.imageUrl}
-                                alt=""
-                            />
-                            <h1>{data.title}</h1>
-                            <div style={{ height: "2rem" }}></div>
+            <Page>
+                {isLoading && <LoadingWidget />}
+                {error && <ErrorWidget message={error?.message} />}
+                {data && (
+                    <>
+                        <div className={styles.header}>
+                            <h1 className={styles.title}>{data.title}</h1>
+                        </div>
+                        <img
+                            className={styles.cover}
+                            src={data.imageUrl}
+                            alt=""
+                        />
+                        <p className={styles.description}>{data.description}</p>
+                        <div style={{ height: "2rem" }}></div>
+                        <div className={styles.predictions}>
                             {data.predictions.map((prediction, idx) => (
                                 <MediaBloc
                                     title={prediction.zodiacName}
@@ -43,11 +70,11 @@ const HoroscopePage = () => {
                                     content={prediction.prediction}
                                     align={idx % 2 === 0 ? "left" : "right"}
                                 />
-                            ))}
-                        </Content>
-                    </Surface>
-                </Container>
-            </Main>
+                            ))}{" "}
+                        </div>
+                    </>
+                )}
+            </Page>
         </>
     );
 };

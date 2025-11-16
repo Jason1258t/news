@@ -5,6 +5,7 @@ import Article from "pages/Article";
 import AboutPage from "pages/About";
 import LoginPage from "pages/Login";
 import AdminPage from "pages/admin";
+import HoroscopePage from "pages/horoscope/HoroscopePage";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import ScrollToTop from "./shared/lib/ScrollToTop";
@@ -52,9 +53,27 @@ const App = () => {
                                     </>
                                 }
                             />
-
+                            <Route
+                                path="/horoscope"
+                                element={
+                                    <>
+                                        <Header />
+                                        <HoroscopePage />
+                                        <Footer />
+                                    </>
+                                }
+                            />
+                            <Route
+                                path="/horoscope/:id"
+                                element={
+                                    <>
+                                        <Header />
+                                        <HoroscopePage />
+                                        <Footer />
+                                    </>
+                                }
+                            />
                             <Route path="/login" element={<LoginPage />} />
-
                             <Route
                                 path="/admin/*"
                                 element={

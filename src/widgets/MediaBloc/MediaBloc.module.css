@@ -2,6 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: start;
+    gap: 2rem;
 }
 
 .media {
@@ -9,3 +10,4 @@
     height: 200px;
     object-fit: contain;
 }
+
