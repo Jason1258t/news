@@ -6,6 +6,8 @@ import { useArticle } from "features/articles/hooks/useArticle";
 import LoadingWidget from "../../shared/ui/status/loading";
 import ErrorWidget from "../../shared/ui/status/error";
 import NotFoundWidget from "../../shared/ui/status/not-found";
+import { Content, SurfacePage } from "shared/ui/layout";
+
 
 const ArticlePage = () => {
     const { slug } = useParams();
@@ -27,16 +29,11 @@ const ArticlePage = () => {
     return (
         <>
             <ArticleMeta article={article} />
-
-            <main className="main">
-                <div className="container">
-                    <div className="layout-surface">
-                        <div className="layout-content">
-                            <ArticleRenderer article={article} />
-                        </div>
-                    </div>
-                </div>
-            </main>
+            <SurfacePage fullWidthOnMobile>
+                <Content>
+                    <ArticleRenderer article={article} />
+                </Content>
+            </SurfacePage>
         </>
     );
 };

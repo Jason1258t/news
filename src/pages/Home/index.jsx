@@ -1,13 +1,12 @@
 import React from "react";
 import EditorsPickWidget from "features/editors-pick/ui";
-import HomeFeed from "features/HomeFeed";
+import HomeFeed from "features/home-feed/HomeFeed";
+import FeedHeader from "features/home-feed/FeedHeader";
 import CTASetcion from "features/CTA";
-import "./styles.css";
 import HomeMeta from "./meta";
-import FeedHeader from "./components/FeedHeader";
 import ScrollToTopButton from "widgets/buttons/scroll-to-top";
 import CurrentHoroscopeWidget from "features/horoscope/ui/CurrentHoroscopeWidget";
-import { Main, Container } from "shared/ui/layout";
+import { Main, Container, LayoutWithSidebar } from "shared/ui/layout";
 
 const HomePage = () => {
     return (
@@ -16,16 +15,16 @@ const HomePage = () => {
             <Main>
                 <Container>
                     <CTASetcion />
-                    <div className="home-layout">
-                        <div className="main-content">
+                    <LayoutWithSidebar>
+                        <LayoutWithSidebar.MainContent>
                             <FeedHeader />
                             <HomeFeed />
-                        </div>
-                        <aside className="sidebar">
+                        </LayoutWithSidebar.MainContent>
+                        <LayoutWithSidebar.Sidebar>
                             <EditorsPickWidget />
                             <CurrentHoroscopeWidget />
-                        </aside>
-                    </div>
+                        </LayoutWithSidebar.Sidebar>
+                    </LayoutWithSidebar>
                 </Container>
             </Main>
             <ScrollToTopButton />

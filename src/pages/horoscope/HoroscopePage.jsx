@@ -3,9 +3,6 @@ import { Helmet } from "react-helmet-async";
 
 import styles from "./HoroscopePage.module.css";
 import MediaBloc from "widgets/MediaBloc";
-import { Main } from "shared/ui/layout/main/Main";
-import { Container } from "shared/ui/layout/container/Container";
-import { Surface } from "shared/ui/layout/surface/Surface";
 import { Content } from "shared/ui/layout/content/Content";
 import LoadingWidget from "shared/ui/status/loading";
 import ErrorWidget from "shared/ui/status/error";
@@ -13,18 +10,13 @@ import ErrorWidget from "shared/ui/status/error";
 import { useParams } from "react-router-dom";
 import { useCurrentHoroscope } from "features/horoscope/hooks";
 import { useHoroscopeById } from "features/horoscope/hooks";
+import { SurfacePage } from "shared/ui/layout";
 
 const Page = ({ children }) => {
     return (
-        <Main spacing="compact">
-            <Container>
-                <Surface>
-                    <Content className={styles.content}>
-                        {children}
-                    </Content>
-                </Surface>
-            </Container>
-        </Main>
+        <SurfacePage spacing="compact">
+            <Content className={styles.content}>{children}</Content>
+        </SurfacePage>
     );
 };
 
