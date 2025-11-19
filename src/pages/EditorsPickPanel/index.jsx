@@ -3,6 +3,7 @@ import ArticlesList from "./components/ArticlesList";
 import CurrentPicks from "./components/CurrentPicks";
 import { useEditorsPickStore } from "features/editors-pick/data/useEditorsPicksStore";
 import { Helmet } from "react-helmet-async";
+import { Main } from "shared/ui/layout";
 
 const EditorsPickPanel = () => {
     const editorsPicksStore = useEditorsPickStore();
@@ -19,7 +20,7 @@ const EditorsPickPanel = () => {
                     content="Панель для настройки выбора редакции"
                 />
             </Helmet>
-            <div className="main">
+            <Main>
                 <div
                     style={{ display: "flex", gap: "3rem" }}
                     className="container"
@@ -31,7 +32,7 @@ const EditorsPickPanel = () => {
                     />
                     <CurrentPicks store={editorsPicksStore} />
                 </div>
-            </div>
+            </Main>
         </>
     );
 };

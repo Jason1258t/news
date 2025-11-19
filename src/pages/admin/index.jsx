@@ -6,6 +6,7 @@ import styles from "./AdminLayout.module.css";
 import { Navigate } from "react-router-dom";
 import ArticlesPanel from "pages/ArticlesPanel";
 import CreateHoroscopePage from "pages/horoscope/CreateHoroscopePage";
+import StudioPage from "pages/studio/StudioPage";
 
 const AdminPage = () => {
     return (
@@ -26,6 +27,7 @@ const AdminPage = () => {
                     <Route path="editors-pick" element={<EditorsPickPanel />} />
                     <Route path="articles-panel" element={<ArticlesPanel />} />
                     <Route path="create-horoscope" element={<CreateHoroscopePage />} />
+                    <Route path="studio" element={<StudioPage />} />
                 </Routes>
             </main>
         </div>
