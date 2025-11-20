@@ -5,7 +5,6 @@ import { QueryProvider } from "app/query/QueryProvider";
 import { AuthProvider } from "features/auth/ui/auth-provider";
 import AppRoutes from "app/Router";
 import "app/theme.css";
-import "app/layout.css";
 
 const App = () => {
     return (
