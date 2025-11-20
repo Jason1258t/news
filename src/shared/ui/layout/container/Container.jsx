@@ -11,7 +11,7 @@ export const Container = ({
       ${styles.container} 
       ${fullWidthOnMobile ? styles.fullWidthMobile : ''}
       ${className}
-    `.trim()} style={styles}>
+    `.trim()} style={style}>
             {children}
         </div>
     );
