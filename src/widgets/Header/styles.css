@@ -22,6 +22,16 @@
     position: relative;
 }
 
+.admin-button {
+    position: absolute;
+    right: -200px;
+    color: white;
+    text-decoration: none;
+    background-color: #adcfed;
+    border-radius: 100px;
+    padding: 4px 10px;
+}
+
 .logo {
     display: flex;
     align-items: center;
@@ -75,6 +85,10 @@
 }
 
 @media (max-width: 768px) {
+    .admin-button {
+        display: none;
+    }
+
     .header-content {
         flex-wrap: wrap;
         padding-left: 20px;
