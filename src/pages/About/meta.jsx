@@ -1,21 +1,19 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
+import { PROJECT_NAME } from "app/project";
 
 const AboutPageMeta = () => {
     return (
         <Helmet>
-            <title>О проекте | ПГТУ Breaking NEWS</title>
+            <title>{`О проекте | ${PROJECT_NAME}`}</title>
             <meta
                 name="description"
-                content="ПГТУ Breaking NEWS - независимое студенческое издание. Узнайте о нашей миссии, принципах и команде."
+                content={`${PROJECT_NAME} - независимое студенческое издание. Узнайте о нашей миссии, принципах и команде.`}
             />
-            <meta
-                property="og:title"
-                content="О проекте | ПГТУ Breaking NEWS"
-            />
+            <meta property="og:title" content={`О проекте | ${PROJECT_NAME}`} />
             <meta
                 property="og:description"
-                content="ПГТУ Breaking NEWS - независимое студенческое издание. Узнайте о нашей миссии, принципах и команде."
+                content={`${PROJECT_NAME} - независимое студенческое издание. Узнайте о нашей миссии, принципах и команде.`}
             />
             <meta property="og:type" content="website" />
             <meta

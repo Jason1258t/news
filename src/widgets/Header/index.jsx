@@ -3,6 +3,7 @@ import { useAuth } from "features/auth/hooks/useAuth";
 import { Link, useNavigate } from "react-router-dom";
 import "./styles.css";
 import logo from "logo.jpg";
+import { PROJECT_NAME } from "app/project";
 import { Container } from "shared/ui/layout";
 
 const Header = () => {
@@ -18,8 +19,8 @@ const Header = () => {
             <Container>
                 <div className="header-content">
                     <div className="logo" onClick={() => navigate("/")}>
-                        <img src={logo} alt="ПГТУ Breaking NEWS logo" />
-                        <h1>ПГТУ Breaking NEWS</h1>
+                        <img src={logo} alt={`${PROJECT_NAME} logo`} />
+                        <h1>{PROJECT_NAME}</h1>
                     </div>
 
                     <nav className={`nav${isMenuOpen ? " active" : ""}`}>

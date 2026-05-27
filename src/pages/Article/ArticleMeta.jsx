@@ -1,9 +1,10 @@
 import { Helmet } from "react-helmet-async";
+import { PROJECT_NAME } from "app/project";
 
 export const ArticleMeta = ({ article }) => (
     <Helmet>
         {/* Основные мета-теги */}
-        <title>{`${article.title} | ПГТУ Breaking NEWS`}</title>
+        <title>{`${article.title} | ${PROJECT_NAME}`}</title>
         <meta name="description" content={article.description} />
         <meta name="keywords" content={article.tags.join(", ")} />
         <meta name="author" content={article.author} />
@@ -22,7 +23,7 @@ export const ArticleMeta = ({ article }) => (
         <meta property="og:image" content={article.og?.image} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:site_name" content="ПГТУ Breaking NEWS" />
+        <meta property="og:site_name" content={PROJECT_NAME} />
         <meta property="og:locale" content="ru_RU" />
 
         {/* Twitter Card */}
@@ -49,6 +50,6 @@ export const ArticleMeta = ({ article }) => (
         ))}
 
         {/* Canonical URL */}
-        <link rel="canonical" href={article.og?.url } />
+        <link rel="canonical" href={article.og?.url} />
     </Helmet>
 );

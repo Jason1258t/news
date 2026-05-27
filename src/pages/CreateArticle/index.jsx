@@ -1,5 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
+import { PROJECT_NAME } from "app/project";
 import { useNavigate } from "react-router-dom";
 import { useCreateArticle } from "features/articles/hooks/useCreateArticle";
 import "./styles.css";
@@ -48,7 +49,7 @@ const CreateArticlePage = () => {
     return (
         <>
             <Helmet>
-                <title>Создать статью | ПГТУ Breaking NEWS</title>
+                <title>{`Создать статью | ${PROJECT_NAME}`}</title>
                 <meta
                     name="description"
                     content="Панель для создания и загрузки новых статей"
@@ -102,7 +103,7 @@ const CreateArticlePage = () => {
                                         value={store.imageUrl ?? ""}
                                         onChange={(v) =>
                                             store.setImageUrl(
-                                                v.length > 0 ? v : null
+                                                v.length > 0 ? v : null,
                                             )
                                         }
                                     />

@@ -1,11 +1,10 @@
 import { Helmet } from "react-helmet-async";
+import { PROJECT_NAME } from "app/project";
 
 const HomeMeta = () => {
     return (
         <Helmet>
-            <title>
-                ПГТУ Breaking NEWS - Самые свежие и актуальные новости
-            </title>
+            <title>{`${PROJECT_NAME} - Самые свежие и актуальные новости`}</title>
             <meta
                 name="description"
                 content="Эксклюзивные материалы о технологиях, обществе и исследованиях. Только проверенная информация и глубокий анализ событий."
@@ -14,11 +13,11 @@ const HomeMeta = () => {
                 name="keywords"
                 content="новости, технологии, общество, исследования, ПГТУ, аналитика"
             />
-            <meta name="author" content="ПГТУ Breaking NEWS" />
+            <meta name="author" content={PROJECT_NAME} />
 
             <meta
                 property="og:title"
-                content="ПГТУ Breaking NEWS - Самые свежие и актуальные новости"
+                content={`${PROJECT_NAME} - Самые свежие и актуальные новости`}
             />
             <meta
                 property="og:description"
@@ -35,13 +34,13 @@ const HomeMeta = () => {
             />
             <meta property="og:image:width" content="1200" />
             <meta property="og:image:height" content="630" />
-            <meta property="og:site_name" content="ПГТУ Breaking NEWS" />
+            <meta property="og:site_name" content={PROJECT_NAME} />
             <meta property="og:locale" content="ru_RU" />
 
             <meta name="twitter:card" content="summary_large_image" />
             <meta
                 name="twitter:title"
-                content="ПГТУ Breaking NEWS - Самые свежие и актуальные новости"
+                content={`${PROJECT_NAME} - Самые свежие и актуальные новости`}
             />
             <meta
                 name="twitter:description"

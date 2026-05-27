@@ -100,7 +100,7 @@ example:
     "description": "Что, если величайшая движущая сила цивилизации — это не огонь и не колесо, а скучное монотонное действие, которое мы называем гриндом? Как игры вроде Genshin Impact, Minecraft и Dota 2 связаны с зарождением человечества.",
     "category": "Игры • Наука • Психология",
     "datePublishedISO": "2024-12-12T00:00:00+03:00",
-    "author": "ПГТУ Breaking NEWS",
+    "author": "ПГТУ Брбрбр NEWS",
     "tags": ["гринд", "игры", "психология", "эволюция", "Genshin Impact", "Minecraft", "Dota 2"],
     "hero": {
       "url": "https://i.pinimg.com/736x/2d/05/d8/2d05d891465a82b4af821c3c6afcc09e.jpg",

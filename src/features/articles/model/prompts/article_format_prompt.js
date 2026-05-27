@@ -1,4 +1,5 @@
 import toast from "react-hot-toast";
+import { PROJECT_NAME } from "app/project";
 
 export const formatPrompt = `types:
 /**
@@ -124,7 +125,7 @@ example:
     "description": "Что, если величайшая движущая сила цивилизации — это не огонь и не колесо, а скучное монотонное действие, которое мы называем гриндом? Как игры вроде Genshin Impact, Minecraft и Dota 2 связаны с зарождением человечества.",
     "category": ["Наука", "Общество"],
     "datePublishedISO": поле просто не заполнять,
-    "author": "ПГТУ Breaking NEWS",
+    "author": "${PROJECT_NAME}",
     "tags": ["гринд", "игры", "психология", "эволюция", "Genshin Impact", "Minecraft", "Dota 2"],
     "hero": {
       "url": "https://i.pinimg.com/736x/2d/05/d8/2d05d891465a82b4af821c3c6afcc09e.jpg",
@@ -242,7 +243,6 @@ export const copyFormatPrompt = async ({ date, imageUrl }) => {
                 `Имейте ввиду что поле date: ${
                     date ? "defined" : "undefinded"
                 } и поле imageUrl: ${imageUrl ? "defined" : "undefinded"}`,
-
             );
         }
     } catch (err) {

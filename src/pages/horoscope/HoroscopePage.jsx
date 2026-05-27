@@ -8,6 +8,7 @@ import LoadingWidget from "shared/ui/status/loading";
 import ErrorWidget from "shared/ui/status/error";
 
 import { useParams } from "react-router-dom";
+import { PROJECT_NAME } from "app/project";
 import { useCurrentHoroscope } from "features/horoscope/hooks";
 import { useHoroscopeById } from "features/horoscope/hooks";
 import { SurfacePage } from "shared/ui/layout";
@@ -33,7 +34,7 @@ const HoroscopePage = () => {
     return (
         <>
             <Helmet>
-                <title>ПГТУ Breaking NEWS | Гороскоп</title>
+                <title>{`${PROJECT_NAME} | Гороскоп`}</title>
                 <meta
                     name="description"
                     content="Самый достоверный гороскоп на неделю"

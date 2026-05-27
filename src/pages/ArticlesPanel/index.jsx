@@ -19,6 +19,7 @@ import toast from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
 
 import { Helmet } from "react-helmet-async";
+import { PROJECT_NAME } from "app/project";
 
 const ArticlesPanel = () => {
     const { data, isLoading, error } = useArticles({ limit: 50 });
@@ -47,10 +48,10 @@ const ArticlesPanel = () => {
                 if (result.success) {
                     setArticle(null);
                     setArticles((prev) =>
-                        prev.filter((a) => a.slug !== selectedArticle.slug)
+                        prev.filter((a) => a.slug !== selectedArticle.slug),
                     );
                     toast.success(
-                        `✅ Статья "${selectedArticle.title}" успешно удалена`
+                        `✅ Статья "${selectedArticle.title}" успешно удалена`,
                     );
                 } else {
                     toast.error(`❌ Ошибка: ${result.error}`);
@@ -62,7 +63,7 @@ const ArticlesPanel = () => {
     return (
         <>
             <Helmet>
-                <title>Управление статьями | ПГТУ Breaking NEWS</title>
+                <title>{`Управление статьями | ${PROJECT_NAME}`}</title>
                 <meta
                     name="description"
                     content="Панель для управления статьями"

@@ -7,6 +7,7 @@ import TextInput from "widgets/input/text/TextInput";
 import TextArea from "widgets/input/text/TextArea";
 import toast, { Toaster } from "react-hot-toast";
 import { useCreateHoroscopeStore } from "features/horoscope/model/create-horoscope-store";
+import { PROJECT_NAME } from "app/project";
 import { useCreateHoroscope } from "features/horoscope/hooks";
 
 import styles from "./CreateHoroscopePage.module.css";
@@ -36,7 +37,7 @@ const CreateHoroscopePage = () => {
                 onSuccess: (r) => toast.success("Гороскоп успешно загружен!"),
                 onError: (err) =>
                     toast.error(
-                        "Произошла ошибка при загрузке: " + err.message
+                        "Произошла ошибка при загрузке: " + err.message,
                     ),
             });
         } catch (err) {
@@ -47,7 +48,7 @@ const CreateHoroscopePage = () => {
     return (
         <>
             <Helmet>
-                <title>Загрузка гороскопа | ПГТУ Breaking NEWS</title>
+                <title>{`Загрузка гороскопа | ${PROJECT_NAME}`}</title>
                 <meta
                     name="description"
                     content="Панель для создания и загрузки гороскопов"
