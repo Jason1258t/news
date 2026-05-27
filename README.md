@@ -1,70 +1,135 @@
-# Getting Started with Create React App
+# 📰 Breaking NEWS - ПГТУ News Platform
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Современный веб-сайт новостного паблика ПГТУ, разработанный с использованием React и современных подходов к архитектуре фронтенд-приложений.
 
-## Available Scripts
+**[Посетить сайт](https://vtech-news.ru)**
 
-In the project directory, you can run:
+## 🎯 О проекте
 
-### `npm start`
+Breaking NEWS — это полнофункциональная платформа для публикации и управления новостями ПГТУ. Сайт предоставляет удобное чтение новостей для пользователей и мощный административный интерфейс для редакторов и администраторов.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### ✨ Основные возможности
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+**Для читателей:**
+- 📄 Просмотр статей с поддержкой различных форматов контента (код, формулы, таблицы, изображения)
+- 🔍 Поиск по статьям
+- 📌 Редакторский выбор (Editor's Pick) — подборка лучших материалов
+- 🎰 Гороскопы
+- 📱 Адаптивный дизайн для всех устройств
+- 🎨 Оптимизированная система рендеринга контента
 
-### `npm test`
+**Для администраторов:**
+- ✏️ Создание и редактирование статей
+- 🏷️ Управление тегами
+- 🗑️ Удаление контента
+- 👑 Управление редакторским выбором
+- 📊 Админ-панель для полного контроля
+- 🔐 Аутентификация и ролевой доступ
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🏗️ Архитектура
 
-### `npm run build`
+Проект следует методологии **Feature Sliced Design (FSD)** для максимальной масштабируемости и поддерживаемости:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+src/
+├── app/              # Инициализация приложения, конфигурация
+├── entities/         # Бизнес-сущности (Article, Horoscope, Todo)
+├── features/         # Большие пользовательские функции
+├── pages/            # Страницы приложения
+├── shared/           # Переиспользуемые компоненты и утилиты
+└── widgets/          # Компоненты для отображения (Header, Footer, Cards)
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🛠️ Технологический стек
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **React 18** — современная библиотека для UI
+- **Zustand** — легкое управление состоянием
+- **TanStack React Query** — управление асинхронными данными и кэшированием
+- **Firebase** — бэкенд и аутентификация
+- **React Router DOM** — навигация
+- **Prism.js** — синтаксис для подсветки кода
+- **KaTeX** — отображение математических формул
+- **Lucide React** — иконки
+- **React Hot Toast** — уведомления
 
-### `npm run eject`
+## 📦 Установка и запуск
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Требования
+- Node.js 14+
+- npm или yarn
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Установка зависимостей
+```bash
+npm install
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Разработка
+```bash
+npm start
+```
+Откроет приложение в режиме разработки на [http://localhost:3000](http://localhost:3000).
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Сборка для продакшена
+```bash
+npm run build
+```
+Создает оптимизированную сборку в папке `build/`.
 
-## Learn More
+### Тестирование
+```bash
+npm test
+```
+Запускает тесты в интерактивном режиме наблюдения.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 📂 Структура проекта
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### `/src/entities` — Бизнес-сущности
+- `article/` — Сущность статьи с типами и утилитами для форматирования
+- `horoscope/` — Данные гороскопов
+- `editors-pick/` — Редакторский выбор
+- `todo/` — ToDo элементы
 
-### Code Splitting
+### `/src/features` — Функции
+- `articles/` — Работа со статьями (API, hooks, renderer)
+- `auth/` — Аутентификация и авторизация
+- `home-feed/` — Лента новостей на главной
+- `horoscope/` — Функционал гороскопов
+- `editors-pick/` — Управление редакторским выбором
+- `tags/` — Система тегирования
+- `todo/` — ToDo функциональность
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### `/src/pages` — Страницы
+- `Home/` — Главная страница
+- `Article/` — Страница отдельной статьи
+- `CreateArticle/` — Создание новой статьи
+- `ArticlesPanel/` — Админ-панель статей
+- `EditorsPickPanel/` — Управление редакторским выбором
+- `HoroscopePage/` — Страница гороскопов
+- `Login/` — Авторизация
+- `About/` — О паблике
 
-### Analyzing the Bundle Size
+### `/src/shared` — Общие ресурсы
+- `ui/` — Переиспользуемые UI компоненты
+- `lib/` — Утилиты и хелперы
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### `/src/widgets` — Виджеты
+- `Header/` — Заголовок сайта
+- `Footer/` — Подвал сайта
+- `ArticleCard/` — Карточка статьи
+- `Buttons/` — Кнопки различных типов
+- Другие компоненты отображения
 
-### Making a Progressive Web App
+## 🚀 Развертывание
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Сайт развертывается на GitHub Pages. Используйте команду:
+```bash
+npm run deploy
+```
 
-### Advanced Configuration
+## 📝 Лицензия
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Этот проект является собственностью ПГТУ Breaking NEWS.
 
-### Deployment
+## 👥 Контакты
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Для вопросов и предложений свяжитесь с командой разработки.
