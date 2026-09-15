@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Linkify from 'linkify-react'; // <-- Импортируем библиотеку
 import styles from './TodoItem.module.css';
 
 const TodoItem = ({ todo, onToggle, onDelete, onUpdate }) => {
@@ -52,7 +53,10 @@ const TodoItem = ({ todo, onToggle, onDelete, onUpdate }) => {
       ) : (
         <>
           <span className={todo.completed ? styles.textCompleted : styles.text}>
-            {todo.text}
+            {/* Оборачиваем текст в Linkify */}
+            <Linkify options={{ target: '_blank', rel: 'noopener noreferrer' }}>
+              {todo.text}
+            </Linkify>
           </span>
           <button
             className={`${styles.button} ${styles.editButton}`}
