@@ -1,7 +1,7 @@
 .sidebar {
     width: 280px;
-    background: #2c3e50;
-    color: white;
+    background: var(--color-inverse-bg);
+    color: var(--color-inverse-text);
     display: flex;
     flex-direction: column;
     height: 100vh;
@@ -12,12 +12,12 @@
 
 .header {
     padding: 0 2rem 2rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--color-inverse-hover);
 }
 
 .title {
     font-size: 1.5rem;
-    color: white;
+    color: var(--color-inverse-text);
 }
 
 .user {
@@ -34,31 +34,31 @@
 .link {
     display: block;
     padding: 1rem 2rem;
-    color: white;
+    color: var(--color-inverse-text);
     text-decoration: none;
-    transition: background 0.2s;
+    transition: background var(--transition-fast);
 }
 
 .link:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--color-inverse-hover);
 }
 
 .link.active {
-    background: rgba(255, 255, 255, 0.15);
-    border-left: 3px solid #3498db;
+    background: var(--color-inverse-active);
+    border-left: 3px solid var(--color-info);
 }
 
 .logout {
     margin: 2rem;
     padding: 0.75rem;
-    background: #e74c3c;
-    color: white;
+    background: var(--color-danger);
+    color: var(--color-inverse-text);
     border: none;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
     font-size: 1rem;
 }
 
 .logout:hover {
-    background: #c0392b;
+    background: var(--color-danger-hover);
 }

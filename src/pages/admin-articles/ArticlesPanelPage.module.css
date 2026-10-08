@@ -50,37 +50,37 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem 1rem;
-    background-color: #fee2e2;
-    color: #dc2626;
+    background-color: var(--color-danger-soft);
+    color: var(--color-danger);
     border: none;
-    border-radius: 0.5rem;
+    border-radius: var(--radius-md);
     cursor: pointer;
     font-weight: 500;
     font-size: 1rem;
-    transition: background-color 0.2s;
+    transition: background-color var(--transition-fast);
 }
 
 .deleteButton:hover {
-    background-color: #fecaca;
+    background-color: var(--color-danger-soft-hover);
 }
 .closeButton {
-    color: #4b5563;
+    color: var(--color-text-secondary);
     background: none;
     border: none;
     cursor: pointer;
     padding: 0.25rem;
-    transition: color 0.2s;
+    transition: color var(--transition-fast);
 }
 
 .closeButton:hover {
-    color: #6b7280;
+    color: var(--color-text-muted);
 }
 
 .selectedArticleSection {
     flex: 1;
     padding: 1rem;
-    background-color: white;
-    border-radius: 4px;
+    background-color: var(--color-surface);
+    border-radius: var(--radius-sm);
     display: flex;
     flex-direction: column;
 }

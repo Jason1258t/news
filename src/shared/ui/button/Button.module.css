@@ -4,36 +4,36 @@
     border-radius: 10px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all var(--transition-base);
     text-decoration: none;
     display: inline-block;
     font-size: 1rem;
 }
 
 .btnFilled {
-    background-color: var(--primary-color);
-    color: white;
+    background-color: var(--color-accent);
+    color: var(--color-on-accent);
 }
 
 .btnFilled:disabled {
-    background-color: var(--text-light);
+    background-color: var(--color-text-muted);
 }
 
 .btnFilled:not(:disabled):hover {
-    background: var(--primary-hover);
+    background: var(--color-accent-hover);
     transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    box-shadow: var(--shadow-accent);
 }
 
 .btnOutlined {
     background: transparent;
-    color: var(--primary-color);
-    border: 2px solid var(--primary-color);
+    color: var(--color-accent);
+    border: 2px solid var(--color-accent);
 }
 
 .btnOutlined:hover {
-    background: var(--primary-color);
-    color: white;
+    background: var(--color-accent);
+    color: var(--color-on-accent);
     transform: translateY(-3px);
 }
 

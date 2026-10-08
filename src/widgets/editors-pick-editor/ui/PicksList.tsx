@@ -42,7 +42,7 @@ export const PicksList = ({
                         <FilledButton
                             onClick={() => removeEditorsPick(e.id)}
                             color={{
-                                backgroundColor: "var(--accent-red)",
+                                backgroundColor: "var(--color-danger)",
                             }}
                         >
                             Удалить

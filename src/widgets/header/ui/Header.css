@@ -3,8 +3,8 @@
 }
 
 .header {
-    background: #fff;
-    box-shadow: var(--header-shadow);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -25,10 +25,10 @@
 .admin-button {
     position: absolute;
     right: -200px;
-    color: white;
+    color: var(--color-on-accent);
     text-decoration: none;
-    background-color: #adcfed;
-    border-radius: 100px;
+    background-color: var(--color-accent);
+    border-radius: var(--radius-pill);
     padding: 4px 10px;
 }
 
@@ -45,7 +45,7 @@
 .logo h1 {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--text-dark);
+    color: var(--color-text-strong);
 }
 
 .nav {
@@ -55,13 +55,13 @@
 
 .nav-link {
     text-decoration: none;
-    color: var(--text-light);
+    color: var(--color-text-muted);
     font-weight: 500;
-    transition: color 0.3s ease;
+    transition: color var(--transition-base);
 }
 
 .nav-link:hover {
-    color: var(--text-dark);
+    color: var(--color-text-strong);
 }
 
 .burger-menu {
@@ -74,9 +74,9 @@
 .burger-menu span {
     width: 25px;
     height: 3px;
-    background: var(--text-dark);
+    background: var(--color-text-strong);
     margin: 3px 0;
-    transition: 0.3s;
+    transition: var(--transition-base);
     border-radius: 2px;
 }
 
@@ -97,9 +97,9 @@
         flex-direction: column;
         gap: 0;
         margin-top: 1rem;
-        background: #fff;
-        border-radius: 8px;
-        box-shadow: var(--shadow);
+        background: var(--color-surface);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
         overflow: hidden;
     }
 
@@ -109,7 +109,7 @@
 
     .nav-link {
         padding: 1rem 1.5rem;
-        border-bottom: 1px solid var(--mobile-nav-border);
+        border-bottom: 1px solid var(--color-border);
         width: 100%;
     }
 

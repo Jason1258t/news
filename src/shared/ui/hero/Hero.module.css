@@ -1,6 +1,6 @@
 .heroSection {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+    background: var(--gradient-accent);
+    color: var(--color-on-accent);
     padding: 4rem 2rem;
     border-radius: 15px;
     margin-bottom: 3rem;
@@ -11,7 +11,7 @@
     font-size: 3rem;
     font-weight: 700;
     margin-bottom: 1rem;
-    color: white;
+    color: var(--color-on-accent);
 }
 
 .heroSubtitle {

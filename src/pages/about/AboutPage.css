@@ -11,12 +11,12 @@
 }
 
 .mission-card {
-    background: #fff;
+    background: var(--color-surface);
     padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
     text-align: center;
-    transition: transform 0.3s ease;
+    transition: transform var(--transition-base);
 }
 
 .mission-card:hover {
@@ -29,19 +29,19 @@
 }
 
 .mission-card h3 {
-    color: var(--text-dark);
+    color: var(--color-text-strong);
     margin-bottom: 1rem;
     font-size: 1.5rem;
 }
 
 .mission-card p {
-    color: var(--text-light);
+    color: var(--color-text-muted);
     line-height: 1.6;
 }
 
 .mission-card ul {
     text-align: left;
-    color: var(--text-light);
+    color: var(--color-text-muted);
     line-height: 1.8;
 }
 
@@ -62,7 +62,7 @@
 }
 
 .contact-content p {
-    color: var(--text-light);
+    color: var(--color-text-muted);
     margin-bottom: 2rem;
     font-size: 1.1rem;
 }
@@ -78,33 +78,33 @@
 .btn {
     padding: 0.75rem 2rem;
     border: none;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all var(--transition-base);
     text-decoration: none;
     display: inline-block;
 }
 
 .btn-primary {
-    background: var(--primary-color);
-    color: white;
+    background: var(--color-accent);
+    color: var(--color-on-accent);
 }
 
 .btn-primary:hover {
-    background: #5a6fd8;
+    background: var(--color-accent-hover);
     transform: translateY(-2px);
 }
 
 .btn-secondary {
     background: transparent;
-    color: var(--primary-color);
-    border: 2px solid var(--primary-color);
+    color: var(--color-accent);
+    border: 2px solid var(--color-accent);
 }
 
 .btn-secondary:hover {
-    background: var(--primary-color);
-    color: white;
+    background: var(--color-accent);
+    color: var(--color-on-accent);
 }
 
 /* Responsive Design */
@@ -155,22 +155,22 @@
 
 /* Минималистичный вариант */
 .disclaimer-section {
-    background: var(--background-light);
-    border-left: 4px solid var(--primary-color);
-    border-radius: 8px;
+    background: var(--color-surface-muted);
+    border-left: 4px solid var(--color-accent);
+    border-radius: var(--radius-md);
     padding: 1.5rem;
     margin-top: 2rem;
 }
 
 .disclaimer-text h3 {
-    color: var(--text-dark);
+    color: var(--color-text-strong);
     margin-bottom: 0.75rem;
     font-size: 1.2rem;
     font-weight: 600;
 }
 
 .disclaimer-text p {
-    color: var(--text-light);
+    color: var(--color-text-muted);
     line-height: 1.6;
     margin-bottom: 0.75rem;
 }

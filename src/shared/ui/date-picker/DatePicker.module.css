@@ -6,22 +6,22 @@
     display: block;
     margin-bottom: 8px;
     font-weight: 600;
-    color: #333;
+    color: var(--color-text);
     font-size: 14px;
 }
 
 .dateInput {
     width: 100%;
     padding: 12px;
-    border: 2px solid #e1e5e9;
-    border-radius: 8px;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
     font-size: 16px;
-    transition: border-color 0.2s ease;
+    transition: border-color var(--transition-fast);
     box-sizing: border-box;
 }
 
 .dateInput:focus {
     outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px var(--color-focus-ring);
 }
