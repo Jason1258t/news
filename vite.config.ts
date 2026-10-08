@@ -29,6 +29,8 @@ export default defineConfig({
             provider: "v8",
             include: ["src/**/*.{ts,tsx,js,jsx}"],
             exclude: ["src/**/*.test.*", "src/test/**", "src/main.tsx", "src/vite-env.d.ts"],
+            // API modules are covered by the emulator tests, which this report does not include.
+            thresholds: { lines: 85, branches: 80 },
         },
     },
 });

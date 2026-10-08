@@ -67,33 +67,40 @@ npm run dev            # http://localhost:5173
 
 ### Скрипты
 
-| Команда              | Что делает                                           |
-| -------------------- | ---------------------------------------------------- |
-| `npm run dev`        | dev-сервер                                           |
-| `npm run build`      | проверка типов + сборка в `dist/`                    |
-| `npm run preview`    | локальный просмотр сборки                            |
-| `npm test`           | Vitest в режиме наблюдения                           |
-| `npm run test:run`   | однократный прогон тестов                            |
-| `npm run coverage`   | тесты с отчётом покрытия                             |
-| `npm run test:rules` | тесты правил Firestore на эмуляторе (нужны Java 21+) |
-| `npm run typecheck`  | `tsc` без сборки                                     |
-| `npm run lint`       | ESLint                                               |
-| `npm run format`     | Prettier                                             |
+| Команда                 | Что делает                                                                     |
+| ----------------------- | ------------------------------------------------------------------------------ |
+| `npm run dev`           | dev-сервер на боевом Firebase из `.env`                                        |
+| `npm run dev:emulator`  | dev-сервер на локальных эмуляторах с тестовыми данными (нужна Java 21+)        |
+| `npm run build`         | проверка типов + сборка в `dist/`                                              |
+| `npm run preview`       | локальный просмотр сборки                                                      |
+| `npm test`              | Vitest в режиме наблюдения                                                     |
+| `npm run test:run`      | однократный прогон юнит- и компонентных тестов                                 |
+| `npm run coverage`      | то же с отчётом покрытия (порог в `vite.config.ts`)                            |
+| `npm run test:emulator` | правила Firestore и API на эмуляторе (нужна Java 21+)                          |
+| `npm run test:e2e`      | e2e на Playwright поверх эмуляторов (`npx playwright install chromium` разово) |
+| `npm run check`         | формат, lint, типы и юнит-тесты — перед коммитом                               |
+| `npm run typecheck`     | `tsc` без сборки                                                               |
+| `npm run lint`          | ESLint + stylelint                                                             |
+| `npm run format`        | Prettier                                                                       |
 
 ### Тесты
 
-Тесты лежат рядом с кодом (`*.test.ts(x)`). Общие хелперы — в `src/test/`:
-`renderWithProviders` / `createWrapper` (react-query без ретраев, `MemoryRouter`, Helmet) и `fakeDocSnapshot` для мапперов Firestore.
-Модуль `app/firebase` в тестах мокается через `vi.mock("app/firebase", ...)`.
+Три уровня:
 
-CI (`.github/workflows/ci.yml`) на каждый PR запускает lint, typecheck, тесты и сборку.
+- **Юнит и компонентные** (`src/**/*.test.ts(x)`, jsdom). Firebase замокан глобально в `src/test/setup.ts`, API-модули мокаются в самих тестах. Хелперы импортируются как `test/...`: `renderWithProviders` / `createWrapper` (react-query без ретраев, `MemoryRouter`, Helmet), `makeArticle`, `fakeDocSnapshot`. Из кода приложения импортировать `test/` запрещает ESLint.
+- **На эмуляторе** (`rules-tests/`, `src/**/*.emu.test.ts`): правила Firestore и настоящие запросы API против Firestore/Auth Emulator.
+- **E2E** (`e2e/`, Playwright): приложение в режиме `--mode emulator`, каждый тест начинается с заново засеянной базы.
+
+**Эмуляторы.** `.env.emulator` переключает клиент на локальные Firestore (8085) и Auth (9099) с проектом `demo-news`: такой проект не может обратиться к настоящему Firebase. Тестовые данные — `emulator/seed-data.ts`: 12 статей (одна со всеми типами блоков), выбор редакции, задачи и админ-аккаунт с claim `admin`. Тесты на эмуляторе отказываются запускаться, если клиент смотрит не на эмулятор.
+
+CI (`.github/workflows/ci.yml`) на каждый PR запускает формат, lint, типы, юнит-тесты и сборку, а отдельной задачей — тесты на эмуляторе и e2e (отчёт Playwright сохраняется при падении).
 
 ## 📂 Где что лежит
 
 - **Схема статьи** — `src/entities/article/model/schema.ts` (zod). Из неё выводятся TS-типы блоков и генерируется секция типов в промпте для LLM.
 - **Промпты для LLM** — `src/features/copy-article-prompt/prompts/*.md`, плейсхолдеры `{{name}}` подставляются при копировании. Пример статьи — `example-article.json`, тест проверяет, что он соответствует схеме.
 - **Константы проекта** (название, URL сайта и Telegram, категории) — `src/shared/config`.
-- **Firebase** — `src/shared/api/firebase.ts`, конфиг берётся из `.env`.
+- **Firebase** — `src/shared/api/firebase.ts`, конфиг берётся из `.env` (или `.env.emulator`). Таблицы в статьях хранятся строками-объектами `{ cells }`: Firestore не умеет вложенные массивы (`model/firestore-content.ts`).
 - **Тема** — токены в `src/app/styles/tokens.css`; в компонентах только `var(--…)`, сырые цвета запрещены stylelint. Общая кнопка — `shared/ui/button` (`primary` / `secondary` / `danger`).
 
 ## 🚀 Развертывание
