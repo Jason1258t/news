@@ -10,6 +10,7 @@
         "noEmit": true,
         "isolatedModules": true,
         "resolveJsonModule": true,
+        "allowImportingTsExtensions": true,
         "verbatimModuleSyntax": true,
         "skipLibCheck": true,
 

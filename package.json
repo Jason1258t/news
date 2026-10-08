@@ -34,7 +34,8 @@
         "test": "vitest",
         "test:run": "vitest run",
         "coverage": "vitest run --coverage",
-        "test:rules": "firebase emulators:exec --only firestore --project demo-news-rules \"vitest run --config vitest.rules.config.ts\"",
+        "test:emulator": "firebase emulators:exec --only firestore,auth --project demo-news \"vitest run --config vitest.emulator.config.ts --mode emulator\"",
+        "dev:emulator": "firebase emulators:exec --only firestore,auth --project demo-news \"node emulator/run-seed.ts && vite --mode emulator\"",
         "predeploy": "npm run build",
         "deploy": "gh-pages -d dist"
     },

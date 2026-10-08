@@ -8,12 +8,12 @@ import {
 import { deleteDoc, doc, getDoc, setDoc, type Firestore } from "firebase/firestore";
 import { afterAll, beforeAll, beforeEach, describe, it } from "vitest";
 
-// Runs against the Firestore emulator: npm run test:rules
+// Runs against the Firestore emulator: npm run test:emulator
 let env: RulesTestEnvironment;
 
 beforeAll(async () => {
     env = await initializeTestEnvironment({
-        projectId: "demo-news-rules",
+        projectId: "demo-news",
         firestore: { rules: readFileSync("firestore.rules", "utf8") },
     });
 });

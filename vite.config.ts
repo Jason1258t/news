@@ -1,6 +1,6 @@
 import { fileURLToPath, URL } from "node:url";
 import react from "@vitejs/plugin-react";
-import { defineConfig } from "vitest/config";
+import { configDefaults, defineConfig } from "vitest/config";
 
 // Date formatting depends on the local time zone; pin it so tests behave the same everywhere.
 process.env.TZ = "UTC";
@@ -22,11 +22,13 @@ export default defineConfig({
         environment: "jsdom",
         setupFiles: ["./src/test/setup.ts"],
         include: ["src/**/*.test.{ts,tsx}"],
+        // *.emu.test.ts need the Firebase emulators: npm run test:emulator.
+        exclude: [...configDefaults.exclude, "src/**/*.emu.test.ts"],
         restoreMocks: true,
         coverage: {
             provider: "v8",
             include: ["src/**/*.{ts,tsx,js,jsx}"],
-            exclude: ["src/**/*.test.*", "src/test/**", "src/main.tsx"],
+            exclude: ["src/**/*.test.*", "src/test/**", "src/main.tsx", "src/vite-env.d.ts"],
         },
     },
 });
