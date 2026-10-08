@@ -48,7 +48,10 @@
 ### 2.2 Безопасность
 
 - **XSS:** `RenderHtml` (`dangerouslySetInnerHTML`) рендерит HTML из Firestore без санитизации. → DOMPurify в `shared/ui/render-html`.
-- **Авторизация:** `ProtectedRoute` проверяет только «залогинен». Реальная защита — Firestore Security Rules, их **нет в репозитории**. → завести `firestore.rules` + тесты правил на эмуляторе.
+- **Авторизация.** Аккаунты есть только у админов, создаются через консоль. Клиент (`ProtectedRoute`) проверяет только факт входа, а запись защищают правила Firestore: [firestore.rules](../firestore.rules) — копия боевых правил, запись разрешена только с custom claim `admin: true`. Правила покрыты тестами на эмуляторе (`npm run test:rules`, 22 теста, отдельная задача в CI).
+    - Новому аккаунту нужно выставить claim `admin: true` через Admin SDK (в консоли его не задать). Иначе админка откроется, но любая запись упадёт с `permission-denied`.
+    - В правилах остался блок `horoscopes`. Его можно удалить вместе с данными коллекции, когда будет решено, что они не нужны.
+    - Деплой правил из репозитория: `firebase deploy --only firestore:rules --project <id>`.
 - `npm audit`: уязвимый `@grpc/grpc-js` внутри Firebase 12 (только Node, в бандл не попадает) → Firebase 13.
 
 ### 2.3 Архитектура
@@ -95,7 +98,7 @@ src/
 
 1. **Unit.** ✅ даты/склонения, маппер статьи, валидатор, запрос ленты, `useQueryTags`, `getErrorMessage`, `renderTemplate`, `printSchemaTypes`, сборка промптов (пример статьи валидируется схемой). Дальше: мапперы editors-pick и todo, сторы, `sanitizeHtml`.
 2. **Компонентные.** ✅ все блоки статьи, `ProtectedRoute`, `Header`. Дальше: `ConfirmDialog`, форма создания статьи, `ArticleFeed` с замоканным API, редактор подборки.
-3. **Интеграционные на эмуляторе.** API против Firestore Emulator: пагинация, фильтры (B15), создание с занятым slug, атомарное сохранение подборки; тесты `firestore.rules`.
+3. **Интеграционные на эмуляторе.** API против Firestore Emulator: пагинация, фильтры (B15), создание с занятым slug, атомарное сохранение подборки. ✅ Тесты `firestore.rules` (`rules-tests/`, `npm run test:rules`).
 4. **E2E (Playwright, 3–5 сценариев).** Главная → статья; фильтр по тегу; логин → создание статьи → удаление.
 
 Утилиты: `src/test/render.tsx` (`renderWithProviders`, `createWrapper`), `src/test/firestore.ts` (`fakeDocSnapshot`). Порог покрытия — не ставить сразу; 80%+ для `shared/lib` и `entities/*/model`.
@@ -107,7 +110,7 @@ src/
 - [x] CRA → Vite 8; TypeScript 6 (TS 7 пока не поддерживается typescript-eslint).
 - [x] Vitest 5 + RTL, хелперы, TZ в UTC; ESLint 10 + typescript-eslint + react-hooks + boundaries; Prettier; CI.
 - [x] `.env.example`.
-- [ ] `firestore.rules` + `firebase.json` — нужны текущие правила из Firebase Console (писать с нуля нельзя: деплой перезапишет прод).
+- [x] `firestore.rules` (копия боевых) + `firebase.json` (эмулятор на порту 8085) + тесты правил в CI.
 - [ ] Firebase 12 → 13.
 
 **Этап 3 — Перестройка слоёв** ✅ (сделан раньше этапов 1–2)
@@ -151,4 +154,3 @@ src/
 
 1. **HashRouter** — отложен. Переход на `BrowserRouter` сломает ссылки `/#/articles/...`, уже разошедшиеся в TG.
 2. **Zustand** — после переноса серверного состояния в react-query останутся только формы; возможно, зависимость не нужна.
-3. **Правило в промпте про `og`.** В исходном тексте было «в hero и og использовать одинаковые title и description», но у `hero` таких полей нет. Сейчас написано «`og.title`/`og.description` — те же, что у статьи», хотя в примере `og.description` отличается. Нужно уточнить, как задумано.
