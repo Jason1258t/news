@@ -1,4 +1,4 @@
-import styles from "./surface.module.css";
+import styles from "./Surface.module.css";
 
 export const Surface = ({ children, className = "", padding = true }) => {
     return (

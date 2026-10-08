@@ -1,0 +1,70 @@
+import { NavLink, useNavigate } from "react-router-dom";
+import { authApi } from "features/auth/api/auth-api";
+import { useAuth } from "entities/session/model/useSession";
+import styles from "./AdminSidebar.module.css";
+import OutlinedButton from "shared/ui/button/OutlinedButton";
+
+const AdminSidebar = () => {
+    const navigate = useNavigate();
+    const { user } = useAuth();
+
+    const handleLogout = async () => {
+        await authApi.logout();
+        navigate("/login");
+    };
+
+    return (
+        <aside className={styles.sidebar}>
+            <div className={styles.header}>
+                <h2 className={styles.title}>Админ-панель</h2>
+                <p className={styles.user} style={{ marginBottom: 12 }}>
+                    {user?.email}
+                </p>
+
+                <OutlinedButton onClick={() => navigate("/")}>На главную</OutlinedButton>
+            </div>
+
+            <nav className={styles.nav}>
+                <NavLink
+                    to="/admin/create-article"
+                    className={({ isActive }) =>
+                        isActive ? `${styles.link} ${styles.active}` : styles.link
+                    }
+                >
+                    Создать статью
+                </NavLink>
+                <NavLink
+                    to="/admin/articles-panel"
+                    className={({ isActive }) =>
+                        isActive ? `${styles.link} ${styles.active}` : styles.link
+                    }
+                >
+                    Управление статьями
+                </NavLink>
+                <NavLink
+                    to="/admin/editors-pick"
+                    className={({ isActive }) =>
+                        isActive ? `${styles.link} ${styles.active}` : styles.link
+                    }
+                >
+                    Выбор редакции
+                </NavLink>
+
+                <NavLink
+                    to="/admin/studio"
+                    className={({ isActive }) =>
+                        isActive ? `${styles.link} ${styles.active}` : styles.link
+                    }
+                >
+                    Студия
+                </NavLink>
+            </nav>
+
+            <button onClick={handleLogout} className={styles.logout}>
+                Выйти
+            </button>
+        </aside>
+    );
+};
+
+export default AdminSidebar;

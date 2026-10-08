@@ -1,4 +1,4 @@
-import styles from "./container.module.css";
+import styles from "./Container.module.css";
 
 export const Container = ({ children, style, className = "", fullWidthOnMobile = false }) => {
     return (

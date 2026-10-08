@@ -1,4 +1,4 @@
-import styles from "./content.module.css";
+import styles from "./Content.module.css";
 
 export const Content = ({
     children,

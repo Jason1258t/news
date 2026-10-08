@@ -1,4 +1,4 @@
-import styles from "./main.module.css";
+import styles from "./Main.module.css";
 
 export const Main = ({
     children,
