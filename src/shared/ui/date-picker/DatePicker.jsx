@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./DatePicker.module.css";
 
-const DatePicker = ({ value, onChange, label = "Выберите дату и время" }) => {
+export const DatePicker = ({ value, onChange, label = "Выберите дату и время" }) => {
     const [selectedDate, setSelectedDate] = useState(value || getCurrentDateTime());
 
     function getCurrentDateTime() {
@@ -48,5 +48,3 @@ const DatePicker = ({ value, onChange, label = "Выберите дату и в�
         </div>
     );
 };
-
-export default DatePicker;

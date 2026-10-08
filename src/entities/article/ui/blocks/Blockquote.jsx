@@ -1,17 +1,15 @@
 import React from "react";
-import { RenderHTML } from "shared/ui/render-html/RenderHtml";
+import { RenderHtml } from "shared/ui/render-html";
 
-const Blockquote = ({ html, footer, variant }) => (
+export const Blockquote = ({ html, footer, variant }) => (
     <blockquote className={`quote${variant && variant !== "default" ? ` ${variant}` : ""}`}>
         <p>
-            <RenderHTML html={html} />
+            <RenderHtml html={html} />
         </p>
         {footer ? (
             <footer>
-                <RenderHTML html={footer} />
+                <RenderHtml html={footer} />
             </footer>
         ) : null}
     </blockquote>
 );
-
-export default Blockquote;

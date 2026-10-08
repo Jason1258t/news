@@ -7,7 +7,7 @@ import {
     onSnapshot,
     serverTimestamp,
 } from "firebase/firestore";
-import { db } from "shared/api/firebase";
+import { db } from "shared/api";
 import { fromDoc } from "../model/mappers";
 
 const COLLECTION_NAME = "todos";

@@ -2,7 +2,7 @@ import React from "react";
 
 import { FileText } from "lucide-react";
 
-const EmptyArticleWidget = () => {
+export const EmptyArticleWidget = () => {
     return (
         <div
             style={{
@@ -28,5 +28,3 @@ const EmptyArticleWidget = () => {
         </div>
     );
 };
-
-export default EmptyArticleWidget;

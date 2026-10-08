@@ -1,9 +1,5 @@
 import { create } from "zustand";
-import {
-    fetchEditorsPicks,
-    createEditorsPick,
-    deleteEditorsPick,
-} from "entities/editors-pick/api/editors-pick-api";
+import { fetchEditorsPicks, createEditorsPick, deleteEditorsPick } from "entities/editors-pick";
 
 export const useEditorsPickStore = create((set, get) => ({
     editorsPicks: [],

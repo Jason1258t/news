@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./ScrollToTopButton.module.css";
 import chevron from "./chevron.svg";
 
-const ScrollToTopButton = () => {
+export const ScrollToTopButton = () => {
     const [isVisible, setIsVisible] = useState(false);
 
     const toggleVisibility = () => {
@@ -42,5 +42,3 @@ const ScrollToTopButton = () => {
         </div>
     );
 };
-
-export default ScrollToTopButton;

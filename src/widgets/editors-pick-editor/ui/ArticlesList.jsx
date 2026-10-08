@@ -1,11 +1,11 @@
 import React from "react";
-import { useArticles } from "entities/article/api/useArticles";
-import EditorsPickCard from "entities/editors-pick/ui";
+import { useArticles } from "entities/article";
+import { EditorsPickCard } from "entities/editors-pick";
 import styles from "./ArticlesList.module.css";
-import { LoadingSpinner } from "shared/ui/loading-widget/LoadingWidget";
-import ErrorWidget from "shared/ui/error-widget/ErrorWidget";
+import { LoadingSpinner } from "shared/ui/loading-widget";
+import { ErrorWidget } from "shared/ui/error-widget";
 
-const ArticlesList = ({ onArticleSelected }) => {
+export const ArticlesList = ({ onArticleSelected }) => {
     const { data, isLoading, error } = useArticles({ limit: 50 });
 
     const allArticles = data?.pages.flatMap((page) => page.data) || [];
@@ -32,5 +32,3 @@ const ArticlesList = ({ onArticleSelected }) => {
         </div>
     );
 };
-
-export default ArticlesList;

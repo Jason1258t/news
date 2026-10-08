@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { useAuth } from "entities/session/model/useSession";
+import { useSession } from "entities/session";
 import { Link, useNavigate } from "react-router-dom";
 import "./Header.css";
 import logo from "./logo.jpg";
-import { PROJECT_NAME } from "shared/config/project";
+import { PROJECT_NAME } from "shared/config";
 import { Container } from "shared/ui/layout";
 
-const Header = () => {
-    const { user } = useAuth();
+export const Header = () => {
+    const { user } = useSession();
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -87,5 +87,3 @@ const Header = () => {
         </header>
     );
 };
-
-export default Header;

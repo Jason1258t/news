@@ -1,7 +1,7 @@
 import React from "react";
-import { RenderHTML } from "shared/ui/render-html/RenderHtml";
+import { RenderHtml } from "shared/ui/render-html";
 
-const Table = ({ data, hasHeader = false }) => {
+export const Table = ({ data, hasHeader = false }) => {
     if (!data || data.length === 0) return null;
 
     const renderCell = (content, index, isHeader = false) => {
@@ -9,7 +9,7 @@ const Table = ({ data, hasHeader = false }) => {
 
         return (
             <CellTag key={index}>
-                <RenderHTML html={content} />
+                <RenderHtml html={content} />
             </CellTag>
         );
     };
@@ -34,5 +34,3 @@ const Table = ({ data, hasHeader = false }) => {
         </div>
     );
 };
-
-export default Table;

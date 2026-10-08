@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import FilledButton from "shared/ui/button/FilledButton";
+import { FilledButton, OutlinedButton } from "shared/ui/button";
 import styles from "./BadgesDialog.module.css";
-import OutlinedButton from "shared/ui/button/OutlinedButton";
 
 const bages = ["Must Read", "Deep Dive", "Trending", "Case Study", "Tutorial", "Research"];
 
-const BadgesOverlay = ({ isOpen, onClose, onConfirm }) => {
+export const BadgesDialog = ({ isOpen, onClose, onConfirm }) => {
     const [selectedCategory, setSelectedCategory] = useState(null);
 
     const handleBadgeClick = (category) => {
@@ -57,5 +56,3 @@ const BadgesOverlay = ({ isOpen, onClose, onConfirm }) => {
         </div>
     );
 };
-
-export default BadgesOverlay;

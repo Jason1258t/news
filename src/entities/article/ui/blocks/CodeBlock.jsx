@@ -11,7 +11,7 @@ import "prismjs/components/prism-java";
 import "prismjs/components/prism-css";
 import "prismjs/components/prism-markup";
 
-const CodeBlock = ({ code, language = "text", filename }) => {
+export const CodeBlock = ({ code, language = "text", filename }) => {
     const codeRef = useRef(null);
 
     useEffect(() => {
@@ -31,5 +31,3 @@ const CodeBlock = ({ code, language = "text", filename }) => {
         </div>
     );
 };
-
-export default CodeBlock;

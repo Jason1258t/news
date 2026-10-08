@@ -7,7 +7,7 @@ import styles from "./EditorsPickCard.module.css";
  */
 
 /** @type {React.FC<Props>} */
-const EditorsPickCard = ({ pick }) => {
+export const EditorsPickCard = ({ pick }) => {
     return (
         <div className={styles.pickItem}>
             <div className={styles.pickBadge}>{pick.badge}</div>
@@ -16,5 +16,3 @@ const EditorsPickCard = ({ pick }) => {
         </div>
     );
 };
-
-export default EditorsPickCard;

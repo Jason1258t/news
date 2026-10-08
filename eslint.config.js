@@ -7,6 +7,29 @@ import tseslint from "typescript-eslint";
 
 // FSD layers, top to bottom. A layer may import only from layers below it.
 const layers = ["app", "pages", "widgets", "features", "entities", "shared"];
+const slicedLayers = ["pages", "widgets", "features", "entities"];
+
+// Slices expose a public API via index.ts; reaching into their internals is not allowed.
+const deepImportPatterns = [
+    ...slicedLayers.map((layer) => `${layer}/*/*`),
+    "shared/ui/*/*",
+    "shared/lib/*/*",
+    "shared/api/*",
+    "shared/config/*",
+];
+
+const restrictImports = (extraGroups = []) => [
+    "error",
+    {
+        patterns: [
+            {
+                group: deepImportPatterns,
+                message: "Import from the slice public API (its index.ts) instead.",
+            },
+            ...extraGroups,
+        ],
+    },
+];
 
 export default tseslint.config(
     { ignores: ["dist", "coverage"] },
@@ -42,9 +65,8 @@ export default tseslint.config(
             "import/resolver": { typescript: { project: "./tsconfig.app.json" } },
         },
         rules: {
-            // Warn until the layer restructure (stage 3), then switch to "error".
             "boundaries/dependencies": [
-                "warn",
+                "error",
                 {
                     default: "allow",
                     policies: layers.slice(1).map((layer, index) => ({
@@ -57,6 +79,22 @@ export default tseslint.config(
             ],
         },
     },
+    {
+        files: ["src/**/*.{js,jsx,ts,tsx}"],
+        rules: { "no-restricted-imports": restrictImports() },
+    },
+    // Slices of the same layer must not depend on each other; inside a slice use relative imports.
+    ...slicedLayers.map((layer) => ({
+        files: [`src/${layer}/**/*.{js,jsx,ts,tsx}`],
+        rules: {
+            "no-restricted-imports": restrictImports([
+                {
+                    group: [`${layer}/*`],
+                    message: `Slices of "${layer}" must not import each other. Use relative imports inside a slice.`,
+                },
+            ]),
+        },
+    })),
     {
         files: ["*.config.{js,ts}"],
         languageOptions: { globals: globals.node },

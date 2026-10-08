@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./TodoFilter.module.css";
 
-const Filter = ({ filter, onFilterChange }) => {
+export const TodoFilter = ({ filter, onFilterChange }) => {
     const filters = [
         { value: "all", label: "Все" },
         { value: "active", label: "Активные" },
@@ -22,5 +22,3 @@ const Filter = ({ filter, onFilterChange }) => {
         </div>
     );
 };
-
-export default Filter;

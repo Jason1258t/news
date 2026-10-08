@@ -2,17 +2,17 @@ import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { User } from "firebase/auth";
 import { describe, expect, it, vi } from "vitest";
-import { AuthContext } from "entities/session/model/SessionProvider";
+import { SessionContext } from "entities/session";
 import { renderWithProviders } from "../../../test/render";
-import Header from "./Header";
+import { Header } from "./Header";
 
 vi.mock("shared/api/firebase", () => ({ auth: {} }));
 
 const renderHeader = (user: User | null) =>
     renderWithProviders(
-        <AuthContext.Provider value={{ user, loading: false }}>
+        <SessionContext.Provider value={{ user, loading: false }}>
             <Header />
-        </AuthContext.Provider>,
+        </SessionContext.Provider>,
     );
 
 describe("Header", () => {

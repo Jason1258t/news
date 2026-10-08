@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { PROJECT_NAME } from "shared/config/project";
+import { PROJECT_NAME } from "shared/config";
 
 export const ArticleMeta = ({ article }) => (
     <Helmet>

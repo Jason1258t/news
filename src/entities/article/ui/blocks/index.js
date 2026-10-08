@@ -1,12 +1,12 @@
 import "./blocks.css";
 
-export { default as Heading } from "./Heading";
-export { default as Paragraph } from "./Paragraph";
-export { default as List } from "./List";
-export { default as ImageBlock } from "./ImageBlock";
-export { default as Blockquote } from "./Blockquote";
-export { default as Highlight } from "./Highlight";
-export { default as FooterNote } from "./FooterNote";
-export { default as Formula } from "./Formula";
-export { default as CodeBlock } from "./CodeBlock";
-export { default as Table } from "./Table";
+export { Heading } from "./Heading";
+export { Paragraph } from "./Paragraph";
+export { List } from "./List";
+export { ImageBlock } from "./ImageBlock";
+export { Blockquote } from "./Blockquote";
+export { Highlight } from "./Highlight";
+export { FooterNote } from "./FooterNote";
+export { Formula } from "./Formula";
+export { CodeBlock } from "./CodeBlock";
+export { Table } from "./Table";

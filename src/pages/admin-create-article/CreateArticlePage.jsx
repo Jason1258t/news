@@ -1,23 +1,20 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
-import { PROJECT_NAME } from "shared/config/project";
+import { PROJECT_NAME } from "shared/config";
 import { useNavigate } from "react-router-dom";
-import { useCreateArticle } from "features/article-create/model/useCreateArticle";
+import { useCreateArticle } from "features/article-create";
 import "./CreateArticlePage.css";
-import { copyFormatPrompt } from "features/copy-article-prompt/model/article-format-prompt";
-import toast, { Toaster } from "react-hot-toast";
-import DatePicker from "shared/ui/date-picker/DatePicker";
-import TextInput from "shared/ui/text-input/TextInput";
-import ImagePreview from "shared/ui/image-preview/ImagePreview";
-import { copyTelegramPrompt } from "features/copy-article-prompt/model/telegram-post-prompt";
-import OutlinedButton from "shared/ui/button/OutlinedButton";
-import FilledButton from "shared/ui/button/FilledButton";
+import { copyFormatPrompt, copyTelegramPrompt } from "features/copy-article-prompt";
+import toast from "react-hot-toast";
+import { DatePicker } from "shared/ui/date-picker";
+import { TextInput } from "shared/ui/text-input";
+import { ImagePreview } from "shared/ui/image-preview";
+import { OutlinedButton, FilledButton } from "shared/ui/button";
 import { useCreateArticleStore } from "./create-article-store";
-import { Main } from "shared/ui/layout/main/Main";
-import { Container } from "shared/ui/layout/container/Container";
-import CharCounter from "shared/ui/char-counter/CharCounter";
+import { Main, Container } from "shared/ui/layout";
+import { CharCounter } from "shared/ui/char-counter";
 
-const CreateArticlePage = () => {
+export const CreateArticlePage = () => {
     const store = useCreateArticleStore();
     const navigate = useNavigate();
     const { createArticle, loading } = useCreateArticle();
@@ -159,9 +156,6 @@ const CreateArticlePage = () => {
                     </div>
                 </Container>
             </Main>
-            <Toaster />
         </>
     );
 };
-
-export default CreateArticlePage;

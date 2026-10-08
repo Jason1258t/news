@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { authApi } from "features/auth/api/auth-api";
+import { authApi } from "features/auth";
 import styles from "./LoginPage.module.css";
 
-const LoginPage = () => {
+export const LoginPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -57,5 +57,3 @@ const LoginPage = () => {
         </div>
     );
 };
-
-export default LoginPage;

@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./SubscribeCta.module.css";
-import FilledButton from "shared/ui/button/FilledButton";
-import OutlinedButton from "shared/ui/button/OutlinedButton";
+import { FilledButton, OutlinedButton } from "shared/ui/button";
 import chevronDown from "./chevron-down.svg";
 
-const CTASection = () => {
+export const SubscribeCta = () => {
     const navigate = useNavigate();
     const [isExpanded, setIsExpanded] = useState(false);
 
@@ -47,5 +46,3 @@ const CTASection = () => {
         </section>
     );
 };
-
-export default CTASection;

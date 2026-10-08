@@ -1,12 +1,12 @@
 import React from "react";
 import { useQueryTags } from "../model/useQueryTags";
-import TagsDisplay from "./TagList";
+import { TagList } from "./TagList";
 
-const TagsPannel = () => {
+export const TagsPanel = () => {
     const { selectedTags, removeTag, clearAllTags } = useQueryTags();
     return (
         selectedTags?.length > 0 && (
-            <TagsDisplay
+            <TagList
                 selectedTags={selectedTags}
                 onClearAll={clearAllTags}
                 onRemoveTag={removeTag}
@@ -14,5 +14,3 @@ const TagsPannel = () => {
         )
     );
 };
-
-export default TagsPannel;

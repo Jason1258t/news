@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
-import { PROJECT_NAME } from "shared/config/project";
+import { PROJECT_NAME } from "shared/config";
 
-const HomeMeta = () => {
+export const HomeMeta = () => {
     return (
         <Helmet>
             <title>{`${PROJECT_NAME} - Самые свежие и актуальные новости`}</title>
@@ -52,5 +52,3 @@ const HomeMeta = () => {
         </Helmet>
     );
 };
-
-export default HomeMeta;

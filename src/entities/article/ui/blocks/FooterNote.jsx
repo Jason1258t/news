@@ -1,12 +1,10 @@
 import React from "react";
-import { RenderHTML } from "shared/ui/render-html/RenderHtml";
+import { RenderHtml } from "shared/ui/render-html";
 
-const FooterNote = ({ html }) => (
+export const FooterNote = ({ html }) => (
     <div className="article-footer">
         <p>
-            <RenderHTML html={html} />
+            <RenderHtml html={html} />
         </p>
     </div>
 );
-
-export default FooterNote;

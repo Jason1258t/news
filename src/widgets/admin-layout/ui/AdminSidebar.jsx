@@ -1,12 +1,12 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { authApi } from "features/auth/api/auth-api";
-import { useAuth } from "entities/session/model/useSession";
+import { authApi } from "features/auth";
+import { useSession } from "entities/session";
 import styles from "./AdminSidebar.module.css";
-import OutlinedButton from "shared/ui/button/OutlinedButton";
+import { OutlinedButton } from "shared/ui/button";
 
-const AdminSidebar = () => {
+export const AdminSidebar = () => {
     const navigate = useNavigate();
-    const { user } = useAuth();
+    const { user } = useSession();
 
     const handleLogout = async () => {
         await authApi.logout();
@@ -66,5 +66,3 @@ const AdminSidebar = () => {
         </aside>
     );
 };
-
-export default AdminSidebar;

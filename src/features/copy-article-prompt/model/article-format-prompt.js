@@ -1,5 +1,5 @@
 import toast from "react-hot-toast";
-import { PROJECT_NAME } from "shared/config/project";
+import { PROJECT_NAME } from "shared/config";
 
 export const formatPrompt = `types:
 /**

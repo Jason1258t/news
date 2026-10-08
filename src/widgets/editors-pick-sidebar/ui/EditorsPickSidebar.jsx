@@ -1,15 +1,14 @@
 import React from "react";
-import EditorsPickCard from "entities/editors-pick/ui";
+import { EditorsPickCard, useEditorsPicks } from "entities/editors-pick";
 import { Link } from "react-router-dom";
-import HomeWidget from "shared/ui/sidebar-card/SidebarCard";
-import { useEditorsPicks } from "entities/editors-pick/api/useEditorsPicks";
-import { LoadingSpinner } from "shared/ui/loading-widget/LoadingWidget";
+import { SidebarCard } from "shared/ui/sidebar-card";
+import { LoadingSpinner } from "shared/ui/loading-widget";
 
-const EditorsPickWidget = () => {
+export const EditorsPickSidebar = () => {
     const { loading, editorsPicks } = useEditorsPicks();
 
     return (
-        <HomeWidget title="👑 Выбор редакции">
+        <SidebarCard title="👑 Выбор редакции">
             <div
                 style={{
                     display: "flex",
@@ -33,8 +32,6 @@ const EditorsPickWidget = () => {
                     ))
                 )}
             </div>
-        </HomeWidget>
+        </SidebarCard>
     );
 };
-
-export default EditorsPickWidget;

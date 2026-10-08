@@ -2,14 +2,13 @@ import React from "react";
 import { useState } from "react";
 import styles from "./CurrentPicks.module.css";
 
-import FilledButton from "shared/ui/button/FilledButton";
-import OutlinedButton from "shared/ui/button/OutlinedButton";
-import BadgesOverlay from "./BadgesDialog";
-import ErrorWidget from "shared/ui/error-widget/ErrorWidget";
+import { FilledButton, OutlinedButton } from "shared/ui/button";
+import { BadgesDialog } from "./BadgesDialog";
+import { ErrorWidget } from "shared/ui/error-widget";
 
-import PicksList from "./PicksList";
+import { PicksList } from "./PicksList";
 
-const CurrentPicks = ({ store }) => {
+export const CurrentPicks = ({ store }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const [pickToChangeBadge, setPickToChangeBadge] = useState(null);
@@ -60,7 +59,7 @@ const CurrentPicks = ({ store }) => {
                 </div>
             </div>
 
-            <BadgesOverlay
+            <BadgesDialog
                 isOpen={isOpen}
                 onClose={() => setIsOpen(false)}
                 onConfirm={(badge) => updateEditorsPickBadge(pickToChangeBadge, badge)}
@@ -68,5 +67,3 @@ const CurrentPicks = ({ store }) => {
         </>
     );
 };
-
-export default CurrentPicks;

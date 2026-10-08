@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./LoadingWidget.module.css";
 
-const LoadingWidget = ({ message = "Загрузка..." }) => {
+export const LoadingWidget = ({ message = "Загрузка..." }) => {
     return (
         <div className={styles.widget}>
             <div className={styles.icon}>
@@ -25,5 +25,3 @@ export const LoadingSpinner = () => {
         </div>
     );
 };
-
-export default LoadingWidget;

@@ -1,10 +1,8 @@
 import React from "react";
-import { RenderHTML } from "shared/ui/render-html/RenderHtml";
+import { RenderHtml } from "shared/ui/render-html";
 
-const Paragraph = ({ html }) => (
+export const Paragraph = ({ html }) => (
     <p>
-        <RenderHTML html={html} />
+        <RenderHtml html={html} />
     </p>
 );
-
-export default Paragraph;

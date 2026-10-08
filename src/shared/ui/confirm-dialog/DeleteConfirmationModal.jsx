@@ -1,4 +1,4 @@
-import Overlay from "shared/ui/overlay/Overlay";
+import { Overlay } from "shared/ui/overlay";
 import styles from "./DeleteConfirmationModal.module.css";
 import { AlertCircle, Trash2, X } from "lucide-react";
 

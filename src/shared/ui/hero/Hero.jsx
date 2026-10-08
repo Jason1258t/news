@@ -8,7 +8,7 @@ import styles from "./Hero.module.css";
  */
 
 /** @type {React.FC<Props>} */
-const HeroWidget = ({ title, subtitle }) => {
+export const Hero = ({ title, subtitle }) => {
     return (
         <section className={styles.heroSection}>
             <div className={styles.heroContent}>
@@ -18,5 +18,3 @@ const HeroWidget = ({ title, subtitle }) => {
         </section>
     );
 };
-
-export default HeroWidget;

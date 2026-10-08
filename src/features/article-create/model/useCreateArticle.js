@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createArticle, fetchArticleBySlug } from "entities/article/api/articles-api";
+import { createArticle, fetchArticleBySlug } from "entities/article";
 import { useQueryClient } from "@tanstack/react-query";
 
 /**

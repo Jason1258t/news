@@ -1,5 +1,5 @@
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { auth } from "shared/api/firebase";
+import { auth } from "shared/api";
 
 export const authApi = {
     loginWithEmail: async (email, password) => {

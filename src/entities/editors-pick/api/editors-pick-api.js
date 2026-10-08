@@ -8,7 +8,7 @@ import {
     deleteDoc,
     serverTimestamp,
 } from "firebase/firestore";
-import { db } from "shared/api/firebase";
+import { db } from "shared/api";
 
 /**
  * @typedef {"Must Read" | "Deep Dive" | "Trending" | "Case Study" | "Tutorial" | "Research"} ArticleBadge

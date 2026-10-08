@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./ArticleCard.module.css";
 
-const ArticleCard = ({ to, title, excerpt, date, category, imageUrl }) => {
+export const ArticleCard = ({ to, title, excerpt, date, category, imageUrl }) => {
     return (
         <Link to={to} className={styles.card}>
             {imageUrl ? (
@@ -21,5 +21,3 @@ const ArticleCard = ({ to, title, excerpt, date, category, imageUrl }) => {
         </Link>
     );
 };
-
-export default ArticleCard;

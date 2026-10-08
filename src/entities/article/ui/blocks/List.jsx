@@ -1,14 +1,12 @@
 import React from "react";
-import { RenderHTML } from "shared/ui/render-html/RenderHtml";
+import { RenderHtml } from "shared/ui/render-html";
 
-const List = ({ items }) => (
+export const List = ({ items }) => (
     <ul>
         {items.map((it, idx) => (
             <li key={idx}>
-                <RenderHTML html={it} />
+                <RenderHtml html={it} />
             </li>
         ))}
     </ul>
 );
-
-export default List;

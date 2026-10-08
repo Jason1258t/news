@@ -1,24 +1,24 @@
 import { HashRouter as Router } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
-import ScrollToTop from "app/router/ScrollToTop";
+import { Toaster } from "react-hot-toast";
+import { ScrollToTop } from "app/router/ScrollToTop";
 import { QueryProvider } from "app/providers/QueryProvider";
-import { AuthProvider } from "entities/session/model/SessionProvider";
-import AppRoutes from "app/router/AppRouter";
+import { SessionProvider } from "entities/session";
+import { AppRouter } from "app/router/AppRouter";
 import "app/styles/theme.css";
 
-const App = () => {
+export const App = () => {
     return (
         <QueryProvider>
             <HelmetProvider>
-                <AuthProvider>
+                <SessionProvider>
                     <Router>
                         <ScrollToTop />
-                        <AppRoutes />
+                        <AppRouter />
+                        <Toaster />
                     </Router>
-                </AuthProvider>
+                </SessionProvider>
             </HelmetProvider>
         </QueryProvider>
     );
 };
-
-export default App;

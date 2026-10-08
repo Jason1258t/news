@@ -1,5 +1,5 @@
 import { getDocs, getDoc, doc, setDoc, deleteDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "shared/api/firebase";
+import { db } from "shared/api";
 import { mapArticleFromFirestore } from "../model/mappers";
 import { validateArticleData } from "../model/validators";
 import { getArticlesQuery } from "./articles-query";

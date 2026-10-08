@@ -1,27 +1,22 @@
 import React, { useState } from "react";
 
-import ArticleCardSmall from "entities/article/ui/article-card-small/ArticleCardSmall";
-import { useArticles } from "entities/article/api/useArticles";
-import { LoadingSpinner } from "shared/ui/loading-widget/LoadingWidget";
-import ErrorWidget from "shared/ui/error-widget/ErrorWidget";
-import { useDeleteConfirmation } from "shared/ui/confirm-dialog/useDeleteConfirmation";
-import { deleteArticle } from "entities/article/api/articles-api";
+import { ArticleCardSmall, useArticles, deleteArticle, ArticleCard } from "entities/article";
+import { LoadingSpinner } from "shared/ui/loading-widget";
+import { ErrorWidget } from "shared/ui/error-widget";
+import { useDeleteConfirmation, DeleteConfirmationModal } from "shared/ui/confirm-dialog";
 import { useEffect } from "react";
 
 import styles from "./ArticlesPanelPage.module.css";
-import ArticleCard from "entities/article/ui/article-card/ArticleCard";
 
 import { Trash2, X } from "lucide-react";
-import { DeleteConfirmationModal } from "shared/ui/confirm-dialog/DeleteConfirmationModal";
-import EmptyArticleWidget from "./EmptyArticleWidget";
+import { EmptyArticleWidget } from "./EmptyArticleWidget";
 
 import toast from "react-hot-toast";
-import { Toaster } from "react-hot-toast";
 
 import { Helmet } from "react-helmet-async";
-import { PROJECT_NAME } from "shared/config/project";
+import { PROJECT_NAME } from "shared/config";
 
-const ArticlesPanel = () => {
+export const ArticlesPanelPage = () => {
     const { data, isLoading, error } = useArticles({ limit: 50 });
 
     const [allArticles, setArticles] = useState([]);
@@ -120,9 +115,6 @@ const ArticlesPanel = () => {
                 </div>
             </div>
             <DeleteConfirmationModal {...deleteConfirmation.modalProps} />
-            <Toaster />
         </>
     );
 };
-
-export default ArticlesPanel;

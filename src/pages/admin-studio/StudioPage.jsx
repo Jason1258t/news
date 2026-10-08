@@ -1,13 +1,13 @@
-import { useTodos } from "entities/todo/api/useTodos";
-import TodoList from "features/manage-todos/ui/TodoList";
+import { useTodos } from "entities/todo";
+import { TodoList } from "features/manage-todos";
 import React from "react";
 import { Helmet } from "react-helmet-async";
-import { PROJECT_NAME } from "shared/config/project";
+import { PROJECT_NAME } from "shared/config";
 import { Content, Main, Container, Surface } from "shared/ui/layout";
-import ErrorWidget from "shared/ui/error-widget/ErrorWidget";
-import LoadingWidget from "shared/ui/loading-widget/LoadingWidget";
+import { ErrorWidget } from "shared/ui/error-widget";
+import { LoadingWidget } from "shared/ui/loading-widget";
 
-const StudioPage = () => {
+export const StudioPage = () => {
     const { todos, loading, error, addTodo, toggleTodo, deleteTodo, updateTodo } = useTodos();
 
     return (
@@ -37,5 +37,3 @@ const StudioPage = () => {
         </>
     );
 };
-
-export default StudioPage;

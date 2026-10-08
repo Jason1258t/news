@@ -1,11 +1,10 @@
 import React from "react";
 import styles from "./CurrentPicks.module.css";
-import LoadingWidget from "shared/ui/loading-widget/LoadingWidget";
-import EditorsPickCard from "entities/editors-pick/ui";
-import FilledButton from "shared/ui/button/FilledButton";
-import OutlinedButton from "shared/ui/button/OutlinedButton";
+import { LoadingWidget } from "shared/ui/loading-widget";
+import { EditorsPickCard } from "entities/editors-pick";
+import { FilledButton, OutlinedButton } from "shared/ui/button";
 
-const PicksList = ({ loading, editorsPicks, removeEditorsPick, changeBadge }) => {
+export const PicksList = ({ loading, editorsPicks, removeEditorsPick, changeBadge }) => {
     if (loading)
         return (
             <div className={styles.picksList}>
@@ -47,5 +46,3 @@ const PicksList = ({ loading, editorsPicks, removeEditorsPick, changeBadge }) =>
         </div>
     );
 };
-
-export default PicksList;

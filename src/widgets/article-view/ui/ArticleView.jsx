@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { ContentBlock } from "entities/article/ui/content-block/ContentBlock";
+import { ContentBlock } from "entities/article";
 
-const ArticleRenderer = ({ article }) => {
+export const ArticleView = ({ article }) => {
     const { title, description, category, dateDisplay, hero, content, tags } = article;
 
     const navigate = useNavigate();
@@ -52,5 +52,3 @@ const ArticleRenderer = ({ article }) => {
         </article>
     );
 };
-
-export default ArticleRenderer;

@@ -1,5 +1,5 @@
 import { collection, query, orderBy, where, limit, startAfter } from "firebase/firestore";
-import { db } from "shared/api/firebase";
+import { db } from "shared/api";
 
 export const getArticlesQuery = (category, tags, itemsPerPage = 5, lastDoc = null) => {
     const baseQuery = collection(db, "articles");

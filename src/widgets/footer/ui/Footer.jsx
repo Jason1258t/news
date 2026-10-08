@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import telegram from "./telegram.webp";
 import { Container } from "shared/ui/layout";
 
-const Footer = () => {
+export const Footer = () => {
     return (
         <footer className="footer">
             <Container>
@@ -49,5 +49,3 @@ const Footer = () => {
         </footer>
     );
 };
-
-export default Footer;

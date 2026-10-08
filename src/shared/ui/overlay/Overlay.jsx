@@ -1,6 +1,6 @@
 import React from "react";
 
-const Overlay = ({ children }) => {
+export const Overlay = ({ children }) => {
     return (
         <div
             style={{
@@ -18,5 +18,3 @@ const Overlay = ({ children }) => {
         </div>
     );
 };
-
-export default Overlay;

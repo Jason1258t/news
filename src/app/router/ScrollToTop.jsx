@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
 
-const ScrollToTop = () => {
+export const ScrollToTop = () => {
     const { pathname } = useLocation();
     const [searchParams] = useSearchParams();
     const categoryChanges = searchParams.get("category");
@@ -12,5 +12,3 @@ const ScrollToTop = () => {
 
     return null;
 };
-
-export default ScrollToTop;

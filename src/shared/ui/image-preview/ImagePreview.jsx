@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./ImagePreview.module.css";
 
-const ImagePreview = ({
+export const ImagePreview = ({
     src,
     alt = "Preview",
     onLoad,
@@ -92,5 +92,3 @@ const ImagePreview = ({
         </div>
     );
 };
-
-export default ImagePreview;

@@ -1,20 +1,20 @@
 import React from "react";
-import { PROJECT_NAME } from "shared/config/project";
+import { PROJECT_NAME } from "shared/config";
 
 import "./AboutPage.css";
-import HeroWidget from "shared/ui/hero/Hero";
-import AboutPageMeta from "./AboutMeta";
-import TeamSectionCompact from "./TeamSection";
+import { Hero } from "shared/ui/hero";
+import { AboutMeta } from "./AboutMeta";
+import { TeamSection } from "./TeamSection";
 import { Main, Container } from "shared/ui/layout";
 
-const AboutPage = () => {
+export const AboutPage = () => {
     return (
         <>
-            <AboutPageMeta />
+            <AboutMeta />
 
             <Main>
                 <Container>
-                    <HeroWidget
+                    <Hero
                         title="О проекте"
                         subtitle={`${PROJECT_NAME} — это независимое студенческое издание, созданное для тех, кто хочет знать больше.`}
                     />
@@ -54,7 +54,7 @@ const AboutPage = () => {
                         </div>
                     </section>
 
-                    <TeamSectionCompact />
+                    <TeamSection />
 
                     {/* Контакты */}
                     <section className="about-contact">
@@ -108,5 +108,3 @@ const AboutPage = () => {
         </>
     );
 };
-
-export default AboutPage;

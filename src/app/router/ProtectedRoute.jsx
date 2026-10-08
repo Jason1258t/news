@@ -1,9 +1,9 @@
 import { Navigate } from "react-router-dom";
-import { useAuth } from "entities/session/model/useSession";
-import LoadingWidget from "shared/ui/loading-widget/LoadingWidget";
+import { useSession } from "entities/session";
+import { LoadingWidget } from "shared/ui/loading-widget";
 
-const ProtectedRoute = ({ children }) => {
-    const { user, loading } = useAuth();
+export const ProtectedRoute = ({ children }) => {
+    const { user, loading } = useSession();
 
     if (loading) {
         return <LoadingWidget />;
@@ -15,5 +15,3 @@ const ProtectedRoute = ({ children }) => {
 
     return children;
 };
-
-export default ProtectedRoute;

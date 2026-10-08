@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import TodoForm from "./TodoForm";
-import TodoItem from "./TodoItem";
-import Filter from "./TodoFilter";
+import { TodoForm } from "./TodoForm";
+import { TodoItem } from "./TodoItem";
+import { TodoFilter } from "./TodoFilter";
 import styles from "./TodoList.module.css";
 
-const TodoList = ({ todos, onAddTodo, onToggleTodo, onDeleteTodo, onUpdateTodo }) => {
+export const TodoList = ({ todos, onAddTodo, onToggleTodo, onDeleteTodo, onUpdateTodo }) => {
     const [filter, setFilter] = useState("all");
 
     const filteredTodos = todos.filter((todo) => {
@@ -27,7 +27,7 @@ const TodoList = ({ todos, onAddTodo, onToggleTodo, onDeleteTodo, onUpdateTodo }
 
             <TodoForm onAdd={onAddTodo} />
 
-            <Filter filter={filter} onFilterChange={setFilter} />
+            <TodoFilter filter={filter} onFilterChange={setFilter} />
 
             <div className={styles.todoList}>
                 {filteredTodos.length === 0 ? (
@@ -53,5 +53,3 @@ const TodoList = ({ todos, onAddTodo, onToggleTodo, onDeleteTodo, onUpdateTodo }
         </>
     );
 };
-
-export default TodoList;

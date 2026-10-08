@@ -1,14 +1,14 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import ArticleRenderer from "widgets/article-view/ui/ArticleView";
+import { ArticleView } from "widgets/article-view";
 import { ArticleMeta } from "./ArticleMeta";
-import { useArticle } from "entities/article/api/useArticle";
-import LoadingWidget from "shared/ui/loading-widget/LoadingWidget";
-import ErrorWidget from "shared/ui/error-widget/ErrorWidget";
-import NotFoundWidget from "shared/ui/not-found-widget/NotFoundWidget";
+import { useArticle } from "entities/article";
+import { LoadingWidget } from "shared/ui/loading-widget";
+import { ErrorWidget } from "shared/ui/error-widget";
+import { NotFoundWidget } from "shared/ui/not-found-widget";
 import { Content, SurfacePage } from "shared/ui/layout";
 
-const ArticlePage = () => {
+export const ArticlePage = () => {
     const { slug } = useParams();
 
     const { data: article, isLoading, error } = useArticle(slug);
@@ -30,11 +30,9 @@ const ArticlePage = () => {
             <ArticleMeta article={article} />
             <SurfacePage fullWidthOnMobile>
                 <Content>
-                    <ArticleRenderer article={article} />
+                    <ArticleView article={article} />
                 </Content>
             </SurfacePage>
         </>
     );
 };
-
-export default ArticlePage;

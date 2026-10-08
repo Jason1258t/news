@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Linkify from "linkify-react"; // <-- Импортируем библиотеку
 import styles from "./TodoItem.module.css";
 
-const TodoItem = ({ todo, onToggle, onDelete, onUpdate }) => {
+export const TodoItem = ({ todo, onToggle, onDelete, onUpdate }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editText, setEditText] = useState(todo.text);
 
@@ -75,5 +75,3 @@ const TodoItem = ({ todo, onToggle, onDelete, onUpdate }) => {
         </div>
     );
 };
-
-export default TodoItem;

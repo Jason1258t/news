@@ -2,7 +2,14 @@ import React from "react";
 
 import styles from "./ArticleCardSmall.module.css";
 
-const ArticleCardSmall = ({ title, excerpt, date, imageUrl, onClick, highlight = false }) => {
+export const ArticleCardSmall = ({
+    title,
+    excerpt,
+    date,
+    imageUrl,
+    onClick,
+    highlight = false,
+}) => {
     return (
         <div onClick={onClick} className={`${styles.card} ${highlight ? styles.highlight : ""}`}>
             {imageUrl && <img src={imageUrl} alt={title} className={styles.image} />}
@@ -14,5 +21,3 @@ const ArticleCardSmall = ({ title, excerpt, date, imageUrl, onClick, highlight =
         </div>
     );
 };
-
-export default ArticleCardSmall;

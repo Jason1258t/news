@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Button.module.css";
 
-const FilledButton = ({
+export const FilledButton = ({
     onClick,
     children,
     color = { backgroundColor: "none" },
@@ -20,5 +20,3 @@ const FilledButton = ({
         </button>
     );
 };
-
-export default FilledButton;

@@ -1,14 +1,13 @@
 import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import ArticleCard from "entities/article/ui/article-card/ArticleCard";
-import { useArticles } from "entities/article/api/useArticles";
+import { ArticleCard, useArticles } from "entities/article";
 import styles from "./ArticleFeed.module.css";
 import { useSearchParams } from "react-router-dom";
-import LoadingWidget, { LoadingSpinner } from "shared/ui/loading-widget/LoadingWidget";
-import ErrorWidget from "shared/ui/error-widget/ErrorWidget";
-import { useQueryTags } from "features/filter-by-tags/model/useQueryTags";
+import { LoadingWidget, LoadingSpinner } from "shared/ui/loading-widget";
+import { ErrorWidget } from "shared/ui/error-widget";
+import { useQueryTags } from "features/filter-by-tags";
 
-const HomeFeed = () => {
+export const ArticleFeed = () => {
     const [searchParams] = useSearchParams();
     const category = searchParams.get("category");
     const { selectedTags } = useQueryTags();
@@ -72,5 +71,3 @@ const HomeFeed = () => {
         </div>
     );
 };
-
-export default HomeFeed;

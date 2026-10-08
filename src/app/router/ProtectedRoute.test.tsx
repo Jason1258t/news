@@ -2,14 +2,14 @@ import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import type { User } from "firebase/auth";
 import { describe, expect, it, vi } from "vitest";
-import { AuthContext } from "entities/session/model/SessionProvider";
-import ProtectedRoute from "./ProtectedRoute";
+import { SessionContext } from "entities/session";
+import { ProtectedRoute } from "./ProtectedRoute";
 
 vi.mock("shared/api/firebase", () => ({ auth: {} }));
 
 const renderWithAuth = (value: { user: User | null; loading: boolean }) =>
     render(
-        <AuthContext.Provider value={value}>
+        <SessionContext.Provider value={value}>
             <MemoryRouter initialEntries={["/admin"]}>
                 <Routes>
                     <Route
@@ -23,7 +23,7 @@ const renderWithAuth = (value: { user: User | null; loading: boolean }) =>
                     <Route path="/login" element={<p>login page</p>} />
                 </Routes>
             </MemoryRouter>
-        </AuthContext.Provider>,
+        </SessionContext.Provider>,
     );
 
 describe("ProtectedRoute", () => {

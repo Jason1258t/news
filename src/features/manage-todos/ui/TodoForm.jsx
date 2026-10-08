@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styles from "./TodoForm.module.css";
-import FilledButton from "shared/ui/button/FilledButton";
+import { FilledButton } from "shared/ui/button";
 
-const TodoForm = ({ onAdd }) => {
+export const TodoForm = ({ onAdd }) => {
     const [text, setText] = useState("");
 
     const handleSubmit = () => {
@@ -32,5 +32,3 @@ const TodoForm = ({ onAdd }) => {
         </form>
     );
 };
-
-export default TodoForm;

@@ -1,13 +1,11 @@
 import React from "react";
-import { RenderHTML } from "shared/ui/render-html/RenderHtml";
+import { RenderHtml } from "shared/ui/render-html";
 
-const Heading = ({ level, text }) => {
+export const Heading = ({ level, text }) => {
     const Tag = `h${level}`;
     return (
         <Tag>
-            <RenderHTML html={text} />
+            <RenderHtml html={text} />
         </Tag>
     );
 };
-
-export default Heading;

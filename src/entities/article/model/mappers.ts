@@ -1,5 +1,5 @@
 import type { DocumentSnapshot } from "firebase/firestore";
-import { formatDate } from "shared/lib/date/format-date";
+import { formatDate } from "shared/lib/date";
 import type { Article, ArticleDoc } from "./types";
 
 export const mapArticleFromFirestore = (doc: DocumentSnapshot): Article => {

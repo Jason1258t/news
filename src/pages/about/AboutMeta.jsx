@@ -1,8 +1,8 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
-import { PROJECT_NAME } from "shared/config/project";
+import { PROJECT_NAME } from "shared/config";
 
-const AboutPageMeta = () => {
+export const AboutMeta = () => {
     return (
         <Helmet>
             <title>{`О проекте | ${PROJECT_NAME}`}</title>
@@ -20,5 +20,3 @@ const AboutPageMeta = () => {
         </Helmet>
     );
 };
-
-export default AboutPageMeta;

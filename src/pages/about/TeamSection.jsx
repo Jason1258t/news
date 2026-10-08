@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./TeamSection.module.css";
 
-const TeamSection = () => {
+export const TeamSection = () => {
     const teamCategories = [
         {
             role: "Разработчики",
@@ -44,5 +44,3 @@ const TeamSection = () => {
         </section>
     );
 };
-
-export default TeamSection;

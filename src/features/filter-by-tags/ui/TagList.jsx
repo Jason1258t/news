@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./TagList.module.css";
 
-const TagsDisplay = ({ selectedTags = [], onRemoveTag, onClearAll }) => {
+export const TagList = ({ selectedTags = [], onRemoveTag, onClearAll }) => {
     if (!selectedTags || selectedTags.length === 0) {
         return null;
     }
@@ -31,5 +31,3 @@ const TagsDisplay = ({ selectedTags = [], onRemoveTag, onClearAll }) => {
         </div>
     );
 };
-
-export default TagsDisplay;
