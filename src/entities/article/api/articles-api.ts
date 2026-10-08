@@ -12,7 +12,7 @@ import { getErrorMessage } from "shared/lib/error";
 import { mapArticleFromFirestore } from "../model/mappers";
 import type { Article } from "../model/types";
 import { validateArticleData } from "../model/validators";
-import { getArticlesQuery } from "./articles-query";
+import { getArticlesQuery, needsClientCategoryFilter } from "./articles-query";
 
 export type MutationResult<T = object> =
     ({ success: true } & T) | { success: false; error: string };
@@ -71,7 +71,14 @@ export interface FetchArticlesParams {
 export interface ArticlesPage {
     data: Article[];
     hasMore: boolean;
+    /** Slug of the last fetched document; it can differ from the last item of `data` when filtering on the client. */
+    nextCursor?: string;
 }
+
+const hasCategory = (snapshot: DocumentSnapshot, category: string) => {
+    const categories: unknown = snapshot.get("category");
+    return Array.isArray(categories) && categories.includes(category);
+};
 
 export const fetchArticles = async ({
     category,
@@ -88,11 +95,15 @@ export const fetchArticles = async ({
         const articlesQuery = getArticlesQuery(category, tags, limit, cursor);
         const querySnapshot = await getDocs(articlesQuery);
 
-        const hasMore = querySnapshot.docs.length === limit;
+        const docs =
+            category && needsClientCategoryFilter(category, tags)
+                ? querySnapshot.docs.filter((snapshot) => hasCategory(snapshot, category))
+                : querySnapshot.docs;
 
         return {
-            data: querySnapshot.docs.map((snapshot) => mapArticleFromFirestore(snapshot)),
-            hasMore: hasMore,
+            data: docs.map((snapshot) => mapArticleFromFirestore(snapshot)),
+            hasMore: querySnapshot.docs.length === limit,
+            nextCursor: querySnapshot.docs.at(-1)?.id,
         };
     } catch (error) {
         console.error("Error fetching articles:", error);

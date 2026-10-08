@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { getArticlesQuery } from "./articles-query";
+import { getArticlesQuery, needsClientCategoryFilter } from "./articles-query";
 
 interface FakeQuery {
     ref: unknown;
@@ -73,5 +73,24 @@ describe("getArticlesQuery", () => {
             { kind: "startAfter", cursor },
             { kind: "limit", n: 5 },
         ]);
+    });
+
+    it("leaves the category to the client when tags are set too (B15)", () => {
+        const { constraints } = buildQuery("Наука", ["a"]);
+        const wheres = constraints.filter((c) => c.kind === "where");
+        expect(wheres).toEqual([
+            { kind: "where", field: "tags", op: "array-contains-any", value: ["a"] },
+        ]);
+    });
+});
+
+describe("needsClientCategoryFilter", () => {
+    it.each([
+        ["Наука", ["a"], true],
+        ["Наука", [], false],
+        ["Наука", undefined, false],
+        [null, ["a"], false],
+    ] as const)("category %j, tags %j → %s", (category, tags, expected) => {
+        expect(needsClientCategoryFilter(category, tags ? [...tags] : undefined)).toBe(expected);
     });
 });

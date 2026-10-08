@@ -11,12 +11,7 @@ export const useArticles = ({ category, limit = 5, tags = undefined }: UseArticl
     return useInfiniteQuery({
         queryKey: ["articles", category, tags],
         queryFn: ({ pageParam }) => fetchArticles({ category, lastId: pageParam, limit, tags }),
-        getNextPageParam: (lastPage) => {
-            if (lastPage.hasMore) {
-                return lastPage.data[lastPage.data.length - 1]?.slug;
-            }
-            return undefined;
-        },
+        getNextPageParam: (lastPage) => (lastPage.hasMore ? lastPage.nextCursor : undefined),
         initialPageParam: undefined as string | undefined,
         staleTime: 10 * 60 * 1000,
     });
