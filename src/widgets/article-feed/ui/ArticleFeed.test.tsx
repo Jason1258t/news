@@ -13,7 +13,6 @@ vi.mock("entities/article/api/articles-api", async (importOriginal) => ({
 
 const fetchMock = vi.mocked(fetchArticles);
 
-
 const page = (slugs: string[], nextCursor?: string): ArticlesPage => ({
     data: slugs.map((slug) => makeArticle({ slug, title: `Статья ${slug}` })),
     hasMore: nextCursor !== undefined,
