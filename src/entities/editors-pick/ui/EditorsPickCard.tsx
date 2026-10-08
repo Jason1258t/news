@@ -9,7 +9,7 @@ interface EditorsPickCardProps {
 export const EditorsPickCard = ({ pick }: EditorsPickCardProps) => {
     return (
         <div className={styles.pickItem}>
-            <div className={styles.pickBadge}>{pick.badge}</div>
+            {pick.badge && <div className={styles.pickBadge}>{pick.badge}</div>}
             <h4 className={styles.pickTitle}>{pick.title}</h4>
         </div>
     );

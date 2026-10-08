@@ -75,3 +75,8 @@
         opacity: 1;
     }
 }
+
+.spinnerWrapper {
+    display: flex;
+    justify-content: center;
+}

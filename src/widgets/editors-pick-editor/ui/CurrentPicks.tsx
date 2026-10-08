@@ -33,8 +33,8 @@ export const CurrentPicks = ({
 
     return (
         <>
-            <div style={{ flex: 1 }}>
-                <h2 style={{ marginBottom: "1rem" }}>Текущий выбор редакции</h2>
+            <div className={styles.root}>
+                <h2 className={styles.title}>Текущий выбор редакции</h2>
                 <div className={styles.container}>
                     {error && <ErrorWidget message={error} />}
                     <PicksList
@@ -43,7 +43,7 @@ export const CurrentPicks = ({
                         changeBadge={setPickToChangeBadge}
                         removeEditorsPick={onRemove}
                     />
-                    <div style={{ display: "flex", gap: "1rem" }}>
+                    <div className={styles.footer}>
                         <Button variant="secondary" onClick={onReset}>
                             Сбросить изменения
                         </Button>

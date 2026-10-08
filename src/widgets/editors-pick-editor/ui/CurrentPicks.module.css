@@ -1,3 +1,21 @@
+.root {
+    flex: 1;
+}
+
+.title {
+    margin-bottom: 1rem;
+}
+
+.footer {
+    display: flex;
+    gap: 1rem;
+}
+
+.pick {
+    display: flex;
+    gap: 1rem;
+}
+
 .container {
     height: calc(100vh - 300px);
     background-color: var(--color-surface);

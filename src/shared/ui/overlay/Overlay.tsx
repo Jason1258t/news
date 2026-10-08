@@ -1,20 +1,6 @@
 import type { ReactNode } from "react";
+import styles from "./Overlay.module.css";
 
 export const Overlay = ({ children }: { children: ReactNode }) => {
-    return (
-        <div
-            style={{
-                position: "fixed",
-                inset: 0,
-                zIndex: 50,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "rgba(0, 0, 0, 0.5)",
-                padding: "1rem",
-            }}
-        >
-            {children}
-        </div>
-    );
+    return <div className={styles.overlay}>{children}</div>;
 };

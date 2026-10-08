@@ -1,28 +1,11 @@
 import { FileText } from "lucide-react";
+import styles from "./EmptyArticleWidget.module.css";
 
 export const EmptyArticleWidget = () => {
     return (
-        <div
-            style={{
-                width: "100%",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-            }}
-        >
-            <FileText size={48} color="#9ca3af" style={{ marginTop: "20rem" }} />
-            <p
-                style={{
-                    maxWidth: 300,
-                    textAlign: "center",
-                    fontSize: "1.25rem",
-                    color: "#9ca3af",
-                    marginTop: "1rem",
-                }}
-            >
-                Никакая статья пока не выбрана
-            </p>
+        <div className={styles.empty}>
+            <FileText size={48} className={styles.icon} />
+            <p className={styles.text}>Никакая статья пока не выбрана</p>
         </div>
     );
 };

@@ -1,7 +1,5 @@
+import styles from "./CharCounter.module.css";
+
 export const CharCounter = ({ length }: { length: number }) => {
-    return (
-        <span style={{ color: "var(--color-text-muted)", fontSize: "0.9rem" }}>
-            Символов: {length}
-        </span>
-    );
+    return <span className={styles.counter}>Символов: {length}</span>;
 };

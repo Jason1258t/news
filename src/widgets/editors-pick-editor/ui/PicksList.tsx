@@ -28,13 +28,7 @@ export const PicksList = ({
     return (
         <div className={styles.picksList}>
             {editorsPicks.map((e) => (
-                <div
-                    style={{
-                        display: "flex",
-                        gap: "1rem",
-                    }}
-                    key={e.id}
-                >
+                <div className={styles.pick} key={e.id}>
                     <div className={styles.cardContainer}>
                         <EditorsPickCard pick={e} />
                     </div>

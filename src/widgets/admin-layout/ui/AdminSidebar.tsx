@@ -20,9 +20,7 @@ export const AdminSidebar = () => {
         <aside className={styles.sidebar}>
             <div className={styles.header}>
                 <h2 className={styles.title}>Админ-панель</h2>
-                <p className={styles.user} style={{ marginBottom: 12 }}>
-                    {user?.email}
-                </p>
+                <p className={styles.user}>{user?.email}</p>
 
                 <Button variant="secondary" onClick={() => navigate("/")}>
                     На главную
