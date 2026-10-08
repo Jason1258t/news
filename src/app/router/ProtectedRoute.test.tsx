@@ -1,11 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import type { User } from "firebase/auth";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import { SessionContext } from "entities/session";
 import { ProtectedRoute } from "./ProtectedRoute";
-
-vi.mock("shared/api/firebase", () => ({ auth: {} }));
 
 const renderWithAuth = (value: { user: User | null; loading: boolean }) =>
     render(

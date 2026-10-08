@@ -1,12 +1,10 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { User } from "firebase/auth";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import { SessionContext } from "entities/session";
 import { renderWithProviders } from "../../../test/render";
 import { Header } from "./Header";
-
-vi.mock("shared/api/firebase", () => ({ auth: {} }));
 
 const renderHeader = (user: User | null) =>
     renderWithProviders(
