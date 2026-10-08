@@ -1,0 +1,43 @@
+.feedGrid {
+    display: grid;
+    gap: 20px;
+}
+
+/* HomeFeed.module.css */
+.feedContainer {
+    position: relative;
+}
+
+.endMessage {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    font-style: italic;
+}
+
+.emptyState {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+}
+
+.layoutSurface {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.layoutSurface:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+@media (max-width: 768px) {
+    .feedGrid {
+        gap: 1.5rem;
+    }
+}
