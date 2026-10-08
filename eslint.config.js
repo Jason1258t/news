@@ -26,6 +26,10 @@ const restrictImports = (extraGroups = []) => [
                 group: deepImportPatterns,
                 message: "Import from the slice public API (its index.ts) instead.",
             },
+            {
+                group: ["test/*"],
+                message: "Test helpers are for tests only.",
+            },
             ...extraGroups,
         ],
     },
@@ -97,7 +101,7 @@ export default tseslint.config(
     })),
     // Tests mock slice internals (e.g. an API module), so they may import past the public API.
     {
-        files: ["src/**/*.test.{ts,tsx}"],
+        files: ["src/**/*.test.{ts,tsx}", "src/test/**"],
         rules: { "no-restricted-imports": "off" },
     },
     {

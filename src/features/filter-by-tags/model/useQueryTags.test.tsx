@@ -1,7 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { useLocation } from "react-router-dom";
 import { describe, expect, it } from "vitest";
-import { createWrapper } from "../../../test/render";
+import { createWrapper } from "test/render";
 import { useQueryTags } from "./useQueryTags";
 
 const setup = (route: string) =>

@@ -1,6 +1,6 @@
 import { doc, getDocs, writeBatch } from "firebase/firestore";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { fakeQuerySnapshot } from "../../../test/firestore";
+import { fakeQuerySnapshot } from "test/firestore";
 import type { EditorsPickInput } from "../model/types";
 import { replaceEditorsPicks } from "./editors-pick-api";
 

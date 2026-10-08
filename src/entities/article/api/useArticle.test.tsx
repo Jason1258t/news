@@ -1,7 +1,7 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { makeArticle } from "../../../test/fixtures";
-import { createTestQueryClient, createWrapper } from "../../../test/render";
+import { makeArticle } from "test/fixtures";
+import { createTestQueryClient, createWrapper } from "test/render";
 import { articleKeys } from "./article-keys";
 import { fetchArticleBySlug, type ArticlesPage } from "./articles-api";
 import { useArticle } from "./useArticle";

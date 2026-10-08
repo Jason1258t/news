@@ -2,8 +2,8 @@ import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { fetchArticleBySlug } from "entities/article";
-import { makeArticle } from "../../test/fixtures";
-import { renderWithProviders } from "../../test/render";
+import { makeArticle } from "test/fixtures";
+import { renderWithProviders } from "test/render";
 import { ArticlePage } from "./ArticlePage";
 
 vi.mock("entities/article/api/articles-api", async (importOriginal) => ({

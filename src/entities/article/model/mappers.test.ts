@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { fakeDocSnapshot } from "../../../test/firestore";
+import { fakeDocSnapshot } from "test/firestore";
 import { mapArticleFromFirestore } from "./mappers";
 
 describe("mapArticleFromFirestore", () => {

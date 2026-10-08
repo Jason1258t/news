@@ -10,9 +10,9 @@ const layers = ["app", "pages", "widgets", "features", "entities", "shared"];
 export default defineConfig({
     plugins: [react()],
     resolve: {
-        alias: layers.map((layer) => ({
-            find: new RegExp(`^${layer}/`),
-            replacement: fileURLToPath(new URL(`./src/${layer}/`, import.meta.url)),
+        alias: [...layers, "test"].map((dir) => ({
+            find: new RegExp(`^${dir}/`),
+            replacement: fileURLToPath(new URL(`./src/${dir}/`, import.meta.url)),
         })),
     },
     build: {
