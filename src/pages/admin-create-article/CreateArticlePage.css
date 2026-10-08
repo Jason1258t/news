@@ -127,6 +127,7 @@
     border-radius: 8px;
     border-left: 4px solid #e53e3e;
     font-weight: 500;
+    white-space: pre-line;
 }
 
 .success-message {

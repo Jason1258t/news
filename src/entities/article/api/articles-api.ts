@@ -10,36 +10,30 @@ import {
 import { db } from "shared/api";
 import { getErrorMessage } from "shared/lib/error";
 import { mapArticleFromFirestore } from "../model/mappers";
-import type { Article } from "../model/types";
-import { validateArticleData } from "../model/validators";
+import type { Article, ArticleInput } from "../model/types";
+import { parseArticleInput } from "../model/validators";
 import { getArticlesQuery, needsClientCategoryFilter } from "./articles-query";
 
 export type MutationResult<T = object> =
     ({ success: true } & T) | { success: false; error: string };
 
-/** Article JSON as pasted in the admin panel; validated before saving. */
-export type ArticleCreateData = Record<string, unknown> & { slug: string };
-
-/** Создаёт новую статью в Firestore. */
+/** Создаёт статью из JSON, вставленного в админке; формат проверяется по схеме. */
 export const createArticle = async (
-    articleData: ArticleCreateData,
+    articleData: unknown,
 ): Promise<MutationResult<{ slug: string }>> => {
     try {
-        validateArticleData(articleData);
+        const article = parseArticleInput(articleData);
 
-        const existingDoc = await getDoc(doc(db, "articles", articleData.slug));
+        const existingDoc = await getDoc(doc(db, "articles", article.slug));
         if (existingDoc.exists()) {
-            throw new Error(`Статья с slug "${articleData.slug}" уже существует`);
+            throw new Error(`Статья с slug "${article.slug}" уже существует`);
         }
 
-        const articleToSave = prepareArticleToSave(articleData);
-
-        const docRef = doc(db, "articles", articleData.slug);
-        await setDoc(docRef, articleToSave);
+        await setDoc(doc(db, "articles", article.slug), prepareArticleToSave(article));
 
         return {
             success: true,
-            slug: articleData.slug,
+            slug: article.slug,
         };
     } catch (error) {
         console.error("❌ Ошибка при создании статьи:", error);
@@ -50,11 +44,10 @@ export const createArticle = async (
     }
 };
 
-const prepareArticleToSave = (articleData: ArticleCreateData) => {
-    const { dateDisplay: _dateDisplay, ...rest } = articleData;
+const prepareArticleToSave = (article: ArticleInput) => {
     return {
-        ...rest,
-        datePublishedISO: articleData.datePublishedISO || new Date().toISOString(),
+        ...article,
+        datePublishedISO: article.datePublishedISO || new Date().toISOString(),
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
     };

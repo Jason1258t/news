@@ -66,7 +66,10 @@ export const CreateArticlePage = () => {
                                 <h3>📋 Формат данных</h3>
                                 <ul>
                                     <li>Данные должны быть в формате JSON</li>
-                                    <li>Обязательные поля: slug, title, description, content</li>
+                                    <li>
+                                        Формат — как в промпте форматирования; при ошибке будет
+                                        показано, какое поле не так
+                                    </li>
                                     <li>
                                         Поле <code>slug</code> должно быть уникальным
                                     </li>
