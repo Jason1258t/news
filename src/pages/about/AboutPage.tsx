@@ -1,8 +1,9 @@
 import { PROJECT_NAME } from "shared/config";
 
-import "./AboutPage.css";
+import { Button } from "shared/ui/button";
 import { Hero } from "shared/ui/hero";
 import { AboutMeta } from "./AboutMeta";
+import styles from "./AboutPage.module.css";
 import { TeamSection } from "./TeamSection";
 import { Main, Container } from "shared/ui/layout";
 
@@ -19,10 +20,10 @@ export const AboutPage = () => {
                     />
 
                     {/* Миссия и ценности */}
-                    <section className="about-mission">
-                        <div className="mission-grid">
-                            <div className="mission-card">
-                                <div className="mission-icon">🎯</div>
+                    <section className={styles.mission}>
+                        <div className={styles.missionGrid}>
+                            <div className={styles.missionCard}>
+                                <div className={styles.missionIcon}>🎯</div>
                                 <h3>Наша миссия</h3>
                                 <p>
                                     Создавать качественный контент, который расширяет горизонты,
@@ -31,8 +32,8 @@ export const AboutPage = () => {
                                 </p>
                             </div>
 
-                            <div className="mission-card">
-                                <div className="mission-icon">⚡</div>
+                            <div className={styles.missionCard}>
+                                <div className={styles.missionIcon}>⚡</div>
                                 <h3>Наши принципы</h3>
                                 <ul>
                                     <li>Глубокий анализ вместо поверхностных заголовков</li>
@@ -41,8 +42,8 @@ export const AboutPage = () => {
                                 </ul>
                             </div>
 
-                            <div className="mission-card">
-                                <div className="mission-icon">🚀</div>
+                            <div className={styles.missionCard}>
+                                <div className={styles.missionIcon}>🚀</div>
                                 <h3>Наше видение</h3>
                                 <p>
                                     Стать платформой, где студенты и молодые специалисты могут
@@ -56,36 +57,35 @@ export const AboutPage = () => {
                     <TeamSection />
 
                     {/* Контакты */}
-                    <section className="about-contact">
-                        <h2 className="section-title">Свяжитесь с нами</h2>
-                        <div className="contact-content">
+                    <section className={styles.contact}>
+                        <h2>Свяжитесь с нами</h2>
+                        <div className={styles.contactContent}>
                             <p>
                                 Есть идеи для статей? Хотите присоединиться к команде? Нашли ошибку
                                 в материале?
                             </p>
-                            <div className="contact-actions">
-                                <button
-                                    className="btn btn-primary"
+                            <div className={styles.contactActions}>
+                                <Button
                                     onClick={() =>
                                         window.open("https://t.me/pgtu_breaking_news?direct")
                                     }
                                 >
                                     Написать редакции
-                                </button>
-                                <button
-                                    className="btn btn-secondary"
+                                </Button>
+                                <Button
+                                    variant="secondary"
                                     onClick={() => window.open("https://t.me/+L7dQmwJ8nSBjMmIy")}
                                 >
                                     Предложить тему
-                                </button>
+                                </Button>
                             </div>
                         </div>
                     </section>
 
-                    <section className="disclaimer-section">
-                        <div className="disclaimer-content">
-                            <div className="disclaimer-icon">⚠️</div>
-                            <div className="disclaimer-text">
+                    <section className={styles.disclaimer}>
+                        <div className={styles.disclaimerContent}>
+                            <div className={styles.disclaimerIcon}>⚠️</div>
+                            <div className={styles.disclaimerText}>
                                 <h3>Важная информация</h3>
                                 <p>
                                     <strong>
@@ -96,7 +96,7 @@ export const AboutPage = () => {
                                     целях, чтобы развивать навыки написания статей и работы с
                                     современными веб-технологиями.
                                 </p>
-                                <p className="disclaimer-note">
+                                <p className={styles.disclaimerNote}>
                                     Все совпадения с реальными событиями и лицами случайны.
                                 </p>
                             </div>
