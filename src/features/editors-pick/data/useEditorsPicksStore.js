@@ -1,9 +1,5 @@
 import { create } from "zustand";
-import {
-    fetchEditorsPicks,
-    createEditorsPick,
-    deleteEditorsPick,
-} from "../api/editors-pick-api";
+import { fetchEditorsPicks, createEditorsPick, deleteEditorsPick } from "../api/editors-pick-api";
 
 export const useEditorsPickStore = create((set, get) => ({
     editorsPicks: [],
@@ -32,9 +28,7 @@ export const useEditorsPickStore = create((set, get) => ({
         const { editorsPicks } = get();
 
         const newPick = {
-            id: `local_${Date.now()}_${Math.random()
-                .toString(36)
-                .substr(2, 9)}`,
+            id: `local_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
             title: articleOG.title || "",
             description: articleOG.description || "",
             badge: articleOG.badge || "Must Read",
@@ -70,7 +64,7 @@ export const useEditorsPickStore = create((set, get) => ({
                       badge: newBadge,
                       updatedAt: new Date(),
                   }
-                : pick
+                : pick,
         );
 
         set({
@@ -87,9 +81,7 @@ export const useEditorsPickStore = create((set, get) => ({
         try {
             const currentPicks = await fetchEditorsPicks();
 
-            const deletePromises = currentPicks.map((pick) =>
-                deleteEditorsPick(pick.id)
-            );
+            const deletePromises = currentPicks.map((pick) => deleteEditorsPick(pick.id));
             await Promise.all(deletePromises);
 
             const createPromises = editorsPicks.map((pick) => {

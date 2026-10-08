@@ -64,11 +64,11 @@
         margin-bottom: 0;
         margin-top: 0;
     }
-    
+
     .mobileHeader {
         display: flex;
     }
-    
+
     .desktopContent {
         display: none;
         opacity: 0;
@@ -76,20 +76,20 @@
         overflow: hidden;
         transition: all 0.3s ease;
     }
-    
+
     .desktopContent.expanded {
         display: block;
         opacity: 1;
         max-height: 200px;
         animation: fadeIn 0.3s ease;
     }
-    
+
     .content p {
         font-size: 0.9rem;
         margin-bottom: 1.25rem;
         margin-top: 1rem;
     }
-    
+
     .buttons {
         gap: 0.75rem;
     }
@@ -99,7 +99,7 @@
     .section {
         padding: 0.25rem;
     }
-    
+
     .buttons {
         flex-direction: column;
         align-items: center;

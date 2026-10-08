@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./ScrollToTopButton.module.css";
-import chevron from './chevron.svg';
+import chevron from "./chevron.svg";
 
 const ScrollToTopButton = () => {
     const [isVisible, setIsVisible] = useState(false);
@@ -36,7 +36,7 @@ const ScrollToTopButton = () => {
                     className={styles.scrollButton}
                     aria-label="Scroll to top"
                 >
-                    <img src={chevron} alt="chevron-up"/>
+                    <img src={chevron} alt="chevron-up" />
                 </button>
             )}
         </div>

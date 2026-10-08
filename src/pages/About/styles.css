@@ -49,7 +49,6 @@
     margin-bottom: 0.5rem;
 }
 
-
 /* Contact Section */
 .about-contact {
     margin-top: 4rem;
@@ -113,25 +112,25 @@
     .about-title {
         font-size: 2rem;
     }
-    
+
     .about-subtitle {
         font-size: 1.1rem;
     }
-    
+
     .mission-grid,
     .team-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .contact-actions {
         flex-direction: column;
         align-items: center;
     }
-    
+
     .btn {
         width: 200px;
     }
-    
+
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -183,11 +182,11 @@
         text-align: center;
         gap: 1rem;
     }
-    
+
     .disclaimer-icon {
         align-self: center;
     }
-    
+
     .disclaimer-section {
         padding: 1.5rem;
     }

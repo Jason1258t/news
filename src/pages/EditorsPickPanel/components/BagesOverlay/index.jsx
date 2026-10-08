@@ -3,14 +3,7 @@ import FilledButton from "widgets/buttons/FilledButton";
 import styles from "./Overlay.module.css";
 import OutlinedButton from "widgets/buttons/OutlinedButton";
 
-const bages = [
-    "Must Read",
-    "Deep Dive",
-    "Trending",
-    "Case Study",
-    "Tutorial",
-    "Research",
-];
+const bages = ["Must Read", "Deep Dive", "Trending", "Case Study", "Tutorial", "Research"];
 
 const BadgesOverlay = ({ isOpen, onClose, onConfirm }) => {
     const [selectedCategory, setSelectedCategory] = useState(null);
@@ -44,9 +37,7 @@ const BadgesOverlay = ({ isOpen, onClose, onConfirm }) => {
                         <button
                             key={bage}
                             className={`${styles.badge} ${
-                                selectedCategory === bage
-                                    ? styles.badgeSelected
-                                    : ""
+                                selectedCategory === bage ? styles.badgeSelected : ""
                             }`}
                             onClick={() => handleBadgeClick(bage)}
                             type="button"
@@ -57,13 +48,8 @@ const BadgesOverlay = ({ isOpen, onClose, onConfirm }) => {
                 </div>
 
                 <div className={styles.overlayActions}>
-                    <OutlinedButton onClick={handleCancel}>
-                        Отмена
-                    </OutlinedButton>
-                    <FilledButton
-                        onClick={handleConfirm}
-                        active={selectedCategory}
-                    >
+                    <OutlinedButton onClick={handleCancel}>Отмена</OutlinedButton>
+                    <FilledButton onClick={handleConfirm} active={selectedCategory}>
                         Подтвердить
                     </FilledButton>
                 </div>

@@ -10,14 +10,8 @@ export const ArticleMeta = ({ article }) => (
         <meta name="author" content={article.author} />
 
         {/* Open Graph */}
-        <meta
-            property="og:title"
-            content={article.og?.title || article.title}
-        />
-        <meta
-            property="og:description"
-            content={article.og?.description || article.description}
-        />
+        <meta property="og:title" content={article.og?.title || article.title} />
+        <meta property="og:description" content={article.og?.description || article.description} />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={article.og?.url} />
         <meta property="og:image" content={article.og?.image} />
@@ -28,21 +22,12 @@ export const ArticleMeta = ({ article }) => (
 
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta
-            name="twitter:title"
-            content={article.og?.title || article.title}
-        />
-        <meta
-            name="twitter:description"
-            content={article.og?.description || article.description}
-        />
+        <meta name="twitter:title" content={article.og?.title || article.title} />
+        <meta name="twitter:description" content={article.og?.description || article.description} />
         <meta name="twitter:image" content={article.og?.image} />
 
         {/* Article-specific OG tags */}
-        <meta
-            property="article:published_time"
-            content={article.datePublishedISO}
-        />
+        <meta property="article:published_time" content={article.datePublishedISO} />
         <meta property="article:author" content={article.author} />
         <meta property="article:section" content={article.section} />
         {article.tags.map((tag) => (

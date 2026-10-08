@@ -14,15 +14,8 @@ const HomeFeed = () => {
     const { selectedTags } = useQueryTags();
     const { ref, inView } = useInView();
 
-    const {
-        data,
-        fetchNextPage,
-        hasNextPage,
-        isFetchingNextPage,
-        isLoading,
-        isError,
-        error,
-    } = useArticles({ category, tags: selectedTags });
+    const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError, error } =
+        useArticles({ category, tags: selectedTags });
 
     useEffect(() => {
         if (inView && hasNextPage && !isFetchingNextPage) {
@@ -73,11 +66,7 @@ const HomeFeed = () => {
 
             {!hasNextPage && (
                 <div className={styles.endMessage}>
-                    <p>
-                        {allArticles.length > 0
-                            ? "Больше ничего нет"
-                            : "Здесь ничего"}
-                    </p>
+                    <p>{allArticles.length > 0 ? "Больше ничего нет" : "Здесь ничего"}</p>
                 </div>
             )}
         </div>

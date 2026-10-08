@@ -16,10 +16,7 @@ const EditorsPickPanel = () => {
         <>
             <Helmet>
                 <title>{`Выбор редакции | ${PROJECT_NAME}`}</title>
-                <meta
-                    name="description"
-                    content="Панель для настройки выбора редакции"
-                />
+                <meta name="description" content="Панель для настройки выбора редакции" />
             </Helmet>
             <Main>
                 <Container style={{ display: "flex", gap: "3rem" }}>

@@ -15,9 +15,7 @@ const NotFoundWidget = ({ message = "Страница не найдена" }) =>
                 <Link to="/" className={styles.homeButton}>
                     На главную
                 </Link>
-                <OutlinedButton onClick={() => window.history.back()}>
-                    Назад
-                </OutlinedButton>
+                <OutlinedButton onClick={() => window.history.back()}>Назад</OutlinedButton>
             </div>
         </div>
     );

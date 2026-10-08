@@ -16,7 +16,7 @@ const LoginPage = () => {
         setLoading(true);
 
         const { error } = await authApi.loginWithEmail(email, password);
-        
+
         if (error) {
             setError("Неверный email или пароль");
             setLoading(false);
@@ -29,9 +29,9 @@ const LoginPage = () => {
         <div className={styles.page}>
             <div className={styles.card}>
                 <h1 className={styles.title}>Вход в админ-панель</h1>
-                
+
                 {error && <div className={styles.error}>{error}</div>}
-                
+
                 <form onSubmit={handleSubmit} className={styles.form}>
                     <input
                         type="email"
@@ -49,11 +49,7 @@ const LoginPage = () => {
                         required
                         className={styles.input}
                     />
-                    <button 
-                        type="submit" 
-                        disabled={loading}
-                        className={styles.button}
-                    >
+                    <button type="submit" disabled={loading} className={styles.button}>
                         {loading ? "Загрузка..." : "Войти"}
                     </button>
                 </form>

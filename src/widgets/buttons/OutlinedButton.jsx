@@ -3,10 +3,7 @@ import styles from "./Buttons.module.css";
 
 const OutlinedButton = ({ onClick, children }) => {
     return (
-        <button
-            className={`${styles.btn} ${styles.btnOutlined}`}
-            onClick={onClick}
-        >
+        <button className={`${styles.btn} ${styles.btnOutlined}`} onClick={onClick}>
             {children}
         </button>
     );

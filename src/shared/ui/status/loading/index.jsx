@@ -19,9 +19,11 @@ const LoadingWidget = ({ message = "Загрузка..." }) => {
 };
 
 export const LoadingSpinner = () => {
-    return <div style={{display: "flex", justifyContent: "center"}}>
-        <div className={styles.spinner}></div>
-    </div>;
+    return (
+        <div style={{ display: "flex", justifyContent: "center" }}>
+            <div className={styles.spinner}></div>
+        </div>
+    );
 };
 
 export default LoadingWidget;

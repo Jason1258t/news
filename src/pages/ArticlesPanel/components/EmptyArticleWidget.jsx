@@ -4,14 +4,16 @@ import { FileText } from "lucide-react";
 
 const EmptyArticleWidget = () => {
     return (
-        <div style={{
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center"
-        }}>
-            <FileText size={48} color="#9ca3af" style={{marginTop: "20rem"}} />
+        <div
+            style={{
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+            }}
+        >
+            <FileText size={48} color="#9ca3af" style={{ marginTop: "20rem" }} />
             <p
                 style={{
                     maxWidth: 300,

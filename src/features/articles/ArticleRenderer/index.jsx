@@ -2,8 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { ContentBlock } from "./ContentBloc";
 
 const ArticleRenderer = ({ article }) => {
-    const { title, description, category, dateDisplay, hero, content, tags } =
-        article;
+    const { title, description, category, dateDisplay, hero, content, tags } = article;
 
     const navigate = useNavigate();
 
@@ -25,9 +24,7 @@ const ArticleRenderer = ({ article }) => {
             {hero ? (
                 <div className="article-image">
                     <img src={hero.url} alt={hero.alt} />
-                    {hero.caption ? (
-                        <span className="image-caption">{hero.caption}</span>
-                    ) : null}
+                    {hero.caption ? <span className="image-caption">{hero.caption}</span> : null}
                 </div>
             ) : null}
 

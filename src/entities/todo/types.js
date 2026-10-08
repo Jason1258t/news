@@ -1,4 +1,3 @@
-
 /**
  * @typedef {Object} Todo
  * @property {string} id

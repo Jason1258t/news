@@ -1,5 +1,5 @@
-import React from 'react';
-import { RenderHTML } from 'shared/lib/html';
+import React from "react";
+import { RenderHTML } from "shared/lib/html";
 
 const FooterNote = ({ html }) => (
     <div className="article-footer">

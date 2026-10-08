@@ -10,13 +10,13 @@
 
 **Функциональность:**
 
-| Зона | Что делает | Где живёт |
-|---|---|---|
-| Лента | Бесконечная лента статей, фильтр по `?category=` и `?tags=` | `features/home-feed`, `features/articles`, `features/tags` |
-| Статья | Рендер блочного контента (heading/paragraph/list/image/quote/highlight/formula/code/table) | `features/articles/ArticleRenderer`, `entities/article/ui` |
-| Сайдбар главной | Выбор редакции, CTA | `features/editors-pick`, `features/CTA` |
-| Админка | Создание статьи из JSON, список + удаление, редактор «выбора редакции», «студия» (todo-лист в Firestore) | `pages/admin`, `pages/CreateArticle`, `pages/ArticlesPanel`, `pages/EditorsPickPanel`, `pages/studio` |
-| Промпты | Шаблоны для LLM (формат статьи, пост в TG), копирование в буфер | `features/*/model/*prompt*.js` |
+| Зона            | Что делает                                                                                               | Где живёт                                                                                             |
+| --------------- | -------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| Лента           | Бесконечная лента статей, фильтр по `?category=` и `?tags=`                                              | `features/home-feed`, `features/articles`, `features/tags`                                            |
+| Статья          | Рендер блочного контента (heading/paragraph/list/image/quote/highlight/formula/code/table)               | `features/articles/ArticleRenderer`, `entities/article/ui`                                            |
+| Сайдбар главной | Выбор редакции, CTA                                                                                      | `features/editors-pick`, `features/CTA`                                                               |
+| Админка         | Создание статьи из JSON, список + удаление, редактор «выбора редакции», «студия» (todo-лист в Firestore) | `pages/admin`, `pages/CreateArticle`, `pages/ArticlesPanel`, `pages/EditorsPickPanel`, `pages/studio` |
+| Промпты         | Шаблоны для LLM (формат статьи, пост в TG), копирование в буфер                                          | `features/*/model/*prompt*.js`                                                                        |
 
 **Мёртвый / тестовый код (удалён вместе с гороскопами):** `features/ai/*` (тестовый Gemini-виджет), `features/YandexAd`, `features/editors-pick/ui/picks.js`, `features/articles/hooks/useDeleteArticle.js`, `useAllHoroscopes`, `fetchEditorsPickById`, `updateEditorsPick`, `validatePredictions` / `validateJsonValue`, `resetForm` в сторе статьи, `propmt.txt` в корне, `initArticles` в `jsconfig.json`.
 
@@ -26,17 +26,17 @@
 
 Баги гороскопов (бывшие B1–B3, B12, B13) ушли вместе с фичей.
 
-| # | Где | Что не так |
-|---|---|---|
-| B4 | [query-client.js:7](../src/app/query/query-client.js#L7) | `cacheTime` в v5 переименован в `gcTime` — опция молча игнорируется |
-| B5 | [articles-api.js:99](../src/features/articles/api/articles-api.js#L99) | «Не найдено» превращается в `throw` → страница показывает ошибку вместо `NotFoundWidget`, плюс react-query делает 3 ретрая |
-| B6 | [useArticle.js:17](../src/features/articles/hooks/useArticle.js#L17) | `initialData` читает ключ `['articles']`, которого не существует (лента лежит под `['articles', category, tags]` в infinite-формате) — мёртвая логика; ключи статьи и ленты делят одно пространство |
-| B7 | [useEditorsPicksStore.js:91](../src/features/editors-pick/data/useEditorsPicksStore.js#L91) | Сохранение = «удалить всё, потом создать заново» без транзакции: если создание упадёт, подборка потеряна. Нужен `writeBatch` |
-| B8 | `ErrorWidget message={error?.message}` в CurrentPicks, ArticlesPanel и др. | В zustand-сторе `error` — строка, `.message` → `undefined`, показывается дефолтный текст |
-| B9 | [ArticlesList/index.jsx:16](../src/pages/EditorsPickPanel/components/ArticlesList/index.jsx#L16) | `allArticles ? …` всегда truthy → лоадер и ошибка никогда не показываются; `key` висит не на том элементе |
-| B10 | [Article/index.jsx:22](../src/pages/Article/index.jsx#L22) | `onRetry={() => {}}` — кнопка «Попробовать снова» ничего не делает |
-| B11 | `ArticlesPanel` | Копирует данные query в локальный state, удаляет через API напрямую без инвалидации кэша → лента на главной показывает удалённую статью до перезагрузки. `limit: 50` без пагинации — старые статьи недоступны (то же в EditorsPickPanel) |
-| ~~B14~~ | `package.json` | ~~`linkify-react`/`linkifyjs` не установлены~~ — исправлено переустановкой зависимостей на этапе 0 |
+| #       | Где                                                                                              | Что не так                                                                                                                                                                                                                               |
+| ------- | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| B4      | [query-client.js:7](../src/app/query/query-client.js#L7)                                         | `cacheTime` в v5 переименован в `gcTime` — опция молча игнорируется                                                                                                                                                                      |
+| B5      | [articles-api.js:99](../src/features/articles/api/articles-api.js#L99)                           | «Не найдено» превращается в `throw` → страница показывает ошибку вместо `NotFoundWidget`, плюс react-query делает 3 ретрая                                                                                                               |
+| B6      | [useArticle.js:17](../src/features/articles/hooks/useArticle.js#L17)                             | `initialData` читает ключ `['articles']`, которого не существует (лента лежит под `['articles', category, tags]` в infinite-формате) — мёртвая логика; ключи статьи и ленты делят одно пространство                                      |
+| B7      | [useEditorsPicksStore.js:91](../src/features/editors-pick/data/useEditorsPicksStore.js#L91)      | Сохранение = «удалить всё, потом создать заново» без транзакции: если создание упадёт, подборка потеряна. Нужен `writeBatch`                                                                                                             |
+| B8      | `ErrorWidget message={error?.message}` в CurrentPicks, ArticlesPanel и др.                       | В zustand-сторе `error` — строка, `.message` → `undefined`, показывается дефолтный текст                                                                                                                                                 |
+| B9      | [ArticlesList/index.jsx:16](../src/pages/EditorsPickPanel/components/ArticlesList/index.jsx#L16) | `allArticles ? …` всегда truthy → лоадер и ошибка никогда не показываются; `key` висит не на том элементе                                                                                                                                |
+| B10     | [Article/index.jsx:22](../src/pages/Article/index.jsx#L22)                                       | `onRetry={() => {}}` — кнопка «Попробовать снова» ничего не делает                                                                                                                                                                       |
+| B11     | `ArticlesPanel`                                                                                  | Копирует данные query в локальный state, удаляет через API напрямую без инвалидации кэша → лента на главной показывает удалённую статью до перезагрузки. `limit: 50` без пагинации — старые статьи недоступны (то же в EditorsPickPanel) |
+| ~~B14~~ | `package.json`                                                                                   | ~~`linkify-react`/`linkifyjs` не установлены~~ — исправлено переустановкой зависимостей на этапе 0                                                                                                                                       |
 
 ### 2.2 Безопасность
 
@@ -124,12 +124,12 @@ src/
 **Пирамида:**
 
 1. **Unit (быстрые, основная масса).** Чистые функции — их уже много и они почти не покрыты логикой UI:
-   - `formatDate` / относительное время / склонения (`shared/lib/date`) — граничные случаи, `vi.useFakeTimers`.
-   - мапперы Firestore ↔ модель (article, editors-pick, todo) — на фейковых `doc`-объектах.
-   - `validateArticleData`.
-   - построение запросов (`getArticlesQuery`) — через `vi.mock('firebase/firestore')`, проверка набора constraints.
-   - `useQueryTags` — через `renderHook` с `MemoryRouter`.
-   - `sanitizeHtml` — набор XSS-векторов.
+    - `formatDate` / относительное время / склонения (`shared/lib/date`) — граничные случаи, `vi.useFakeTimers`.
+    - мапперы Firestore ↔ модель (article, editors-pick, todo) — на фейковых `doc`-объектах.
+    - `validateArticleData`.
+    - построение запросов (`getArticlesQuery`) — через `vi.mock('firebase/firestore')`, проверка набора constraints.
+    - `useQueryTags` — через `renderHook` с `MemoryRouter`.
+    - `sanitizeHtml` — набор XSS-векторов.
 2. **Компонентные.** Рендер каждого типа блока статьи и `ContentBlock` (включая неизвестный тип и вложенный highlight); `ProtectedRoute` (loading / guest / user); `ConfirmDialog`; JSON-форма импорта; `Header` (Войти/Админка). API-слой мокается на границе модуля (`vi.mock('entities/article/api')`), поэтому выделение API в отдельные модули — предусловие.
 3. **Интеграционные на эмуляторе.** `entities/*/api` против Firestore Emulator: пагинация ленты, фильтр по тегам/категории, создание статьи с занятым slug, атомарное сохранение выбора редакции. Отдельно — тесты `firestore.rules`: аноним читает статьи, но не пишет; не-админ не пишет.
 4. **E2E (Playwright, 3–5 сценариев).** Главная → статья; фильтр по тегу; логин → создание статьи → она в ленте → удаление. Запуск против `vite preview` + эмулятор.
@@ -143,11 +143,12 @@ src/
 Принцип: сначала страховочная сетка, потом перестановки, каждый шаг — отдельный PR, который собирается и проходит тесты.
 
 **Этап 0 — Инфраструктура**
+
 - [x] Миграция CRA → Vite 8 (alias'ы слоёв, `REACT_APP_*` → `VITE_*`, корневой `index.html`, сборка в `dist/`).
 - [x] TypeScript 6.0 (`allowJs`, `strict`, `noUncheckedIndexedAccess`). TS 7 пока не поддерживается typescript-eslint. На TS переведены: `main`, `App`, `app/firebase`, `shared/lib/date-utils`, типы/маппер статьи, валидатор, `auth-provider`.
 - [x] Vitest 5 + RTL + jsdom, `src/test/render.tsx`, `src/test/firestore.ts`, скрипты `test`, `test:run`, `coverage`. TZ зафиксирован в UTC.
 - [x] ESLint 10 (flat config) + typescript-eslint + react-hooks 7 + `eslint-plugin-boundaries` (warn: 23 нарушения слоёв — база для этапа 3). Отложенные `set-state-in-effect` помечены `TODO(stage N)`.
-- [x] Конфиг Prettier. **Прогон форматирования — отдельным коммитом**, после него добавить `format:check` в CI.
+- [x] Prettier: конфиг, прогон форматирования отдельным коммитом, `format:check` в CI.
 - [x] `.env.example`.
 - [ ] `firestore.rules` + `firebase.json` — нужны текущие правила из Firebase Console (в репозитории их нет, писать с нуля нельзя: деплой перезапишет прод).
 - [x] GitHub Actions: lint → typecheck → test → build.
@@ -155,12 +156,14 @@ src/
 - [ ] Firebase 12 → 13 (`npm audit`: уязвимый `@grpc/grpc-js` внутри Firestore; в браузерный бандл не попадает).
 
 **Этап 1 — Баги и чистка**
+
 - [ ] Оставшиеся баги из таблицы, каждый с тестом.
 - [ ] DOMPurify в `RenderHTML`.
 - [x] Мёртвый код из раздела 1 и `propmt.txt` удалены.
 - [ ] Убрать `console.log`.
 
 **Этап 2 — Слой данных**
+
 - [ ] Фабрики ключей запросов (`articleKeys`, `editorsPickKeys`, `todoKeys`).
 - [ ] Единый контракт API: функции кидают исключения, без `{success, error}`.
 - [ ] Выбор редакции: чтение через `useQuery`, сохранение через `useMutation` + `writeBatch`; локальный черновик в `useState`/маленьком сторе.
@@ -169,6 +172,7 @@ src/
 - [ ] Админский список статей — бесконечная прокрутка вместо `limit: 50`.
 
 **Этап 3 — Перестройка слоёв** (механические переносы, тесты должны остаться зелёными)
+
 - [ ] `widgets/{buttons,input,modals,Overlay,HomeWidget,tags}` → `shared/ui`.
 - [ ] `app/firebase`, `app/project` → `shared/api`, `shared/config`.
 - [ ] Карточки и блоки статьи → `entities/article/ui`; `ArticleRenderer` → `widgets/article-view`.
@@ -177,6 +181,7 @@ src/
 - [ ] Переименования по конвенциям (раздел 3) + `index.js` у каждого слайса; правила boundaries → error.
 
 **Этап 4 — Тема и UI-kit**
+
 - [ ] `tokens.css`: палитра (primitive → semantic: `--color-bg`, `--color-surface`, `--color-text`, `--color-text-muted`, `--color-accent`, `--color-danger`…), отступы, радиусы, тени, типографика, z-index; брейкпоинты зафиксировать (480 / 768 / 1024).
 - [ ] Заменить 128 hex-цветов на токены (найти через stylelint `color-no-hex` в режиме отчёта).
 - [ ] Все глобальные стили компонентов → CSS Modules; убрать инлайн-стили.
@@ -185,6 +190,7 @@ src/
 - [ ] (опционально) тёмная тема — после токенов это почти бесплатно.
 
 **Этап 5 — Тесты дальше и полировка**
+
 - [ ] Компонентные тесты из п. 4.2, интеграция на эмуляторе, тесты правил, e2e.
 - [ ] Мета-теги/canonical → `vtech-news.ru`, обновить README (архитектура, тесты, env).
 

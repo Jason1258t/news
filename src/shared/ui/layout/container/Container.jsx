@@ -1,17 +1,15 @@
-import styles from './container.module.css';
+import styles from "./container.module.css";
 
-export const Container = ({
-    children,
-    style,
-    className = '',
-    fullWidthOnMobile = false
-}) => {
+export const Container = ({ children, style, className = "", fullWidthOnMobile = false }) => {
     return (
-        <div className={`
+        <div
+            className={`
       ${styles.container} 
-      ${fullWidthOnMobile ? styles.fullWidthMobile : ''}
+      ${fullWidthOnMobile ? styles.fullWidthMobile : ""}
       ${className}
-    `.trim()} style={style}>
+    `.trim()}
+            style={style}
+        >
             {children}
         </div>
     );

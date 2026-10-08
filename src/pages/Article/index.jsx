@@ -8,7 +8,6 @@ import ErrorWidget from "../../shared/ui/status/error";
 import NotFoundWidget from "../../shared/ui/status/not-found";
 import { Content, SurfacePage } from "shared/ui/layout";
 
-
 const ArticlePage = () => {
     const { slug } = useParams();
 

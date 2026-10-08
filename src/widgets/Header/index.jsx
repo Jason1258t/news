@@ -24,11 +24,7 @@ const Header = () => {
                     </div>
 
                     <nav className={`nav${isMenuOpen ? " active" : ""}`}>
-                        <Link
-                            to="/"
-                            className="nav-link"
-                            onClick={() => setIsMenuOpen(false)}
-                        >
+                        <Link to="/" className="nav-link" onClick={() => setIsMenuOpen(false)}>
                             Главная
                         </Link>
                         <Link

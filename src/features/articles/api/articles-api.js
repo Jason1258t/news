@@ -1,11 +1,4 @@
-import {
-    getDocs,
-    getDoc,
-    doc,
-    setDoc,
-    deleteDoc,
-    serverTimestamp,
-} from "firebase/firestore";
+import { getDocs, getDoc, doc, setDoc, deleteDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "app/firebase";
 import { mapArticleFromFirestore } from "entities/article/model/mappers";
 import { validateArticleData } from "./validators";
@@ -22,9 +15,7 @@ export const createArticle = async (articleData) => {
 
         const existingDoc = await getDoc(doc(db, "articles", articleData.slug));
         if (existingDoc.exists()) {
-            throw new Error(
-                `Статья с slug "${articleData.slug}" уже существует`
-            );
+            throw new Error(`Статья с slug "${articleData.slug}" уже существует`);
         }
 
         const articleToSave = prepareArticleToSave(articleData);
@@ -48,8 +39,7 @@ export const createArticle = async (articleData) => {
 const prepareArticleToSave = (articleData) => {
     const articleToSave = {
         ...articleData,
-        datePublishedISO:
-            articleData.datePublishedISO || new Date().toISOString(),
+        datePublishedISO: articleData.datePublishedISO || new Date().toISOString(),
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
     };
@@ -58,12 +48,7 @@ const prepareArticleToSave = (articleData) => {
     return articleToSave;
 };
 
-export const fetchArticles = async ({
-    category,
-    lastId,
-    limit = 5,
-    tags = undefined,
-}) => {
+export const fetchArticles = async ({ category, lastId, limit = 5, tags = undefined }) => {
     try {
         let doc = undefined;
         if (lastId) {

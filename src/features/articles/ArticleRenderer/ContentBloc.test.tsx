@@ -25,7 +25,10 @@ describe("ContentBlock", () => {
 
     it("renders an image with caption", () => {
         renderBlock({ type: "image", url: "https://img/1.png", alt: "Alt", caption: "Caption" });
-        expect(screen.getByRole("img", { name: "Alt" })).toHaveAttribute("src", "https://img/1.png");
+        expect(screen.getByRole("img", { name: "Alt" })).toHaveAttribute(
+            "src",
+            "https://img/1.png",
+        );
         expect(screen.getByText("Caption")).toBeInTheDocument();
     });
 
@@ -35,7 +38,12 @@ describe("ContentBlock", () => {
         ["warning", "quote warning"],
         ["critical", "quote critical"],
     ] as const)("renders a %s blockquote with class %j", (variant, className) => {
-        const { container } = renderBlock({ type: "blockquote", html: "text", footer: "src", variant });
+        const { container } = renderBlock({
+            type: "blockquote",
+            html: "text",
+            footer: "src",
+            variant,
+        });
         const quote = container.querySelector("blockquote");
         expect(quote).toHaveAttribute("class", className);
         expect(quote?.querySelector("footer")).toHaveTextContent("src");
@@ -81,9 +89,9 @@ describe("ContentBlock", () => {
             filename: "a.js",
         });
         expect(screen.getByText("a.js")).toBeInTheDocument();
-        expect(container.querySelector("code.language-javascript .token.keyword")).toHaveTextContent(
-            "const",
-        );
+        expect(
+            container.querySelector("code.language-javascript .token.keyword"),
+        ).toHaveTextContent("const");
     });
 
     it("renders a table with a header row", () => {
@@ -95,7 +103,10 @@ describe("ContentBlock", () => {
                 ["a", "<b>b</b>"],
             ],
         });
-        expect(screen.getAllByRole("columnheader").map((th) => th.textContent)).toEqual(["H1", "H2"]);
+        expect(screen.getAllByRole("columnheader").map((th) => th.textContent)).toEqual([
+            "H1",
+            "H2",
+        ]);
         expect(screen.getAllByRole("cell").map((td) => td.textContent)).toEqual(["a", "b"]);
     });
 

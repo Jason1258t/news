@@ -7,9 +7,7 @@ export const useQueryTags = () => {
     const selectedTags = useMemo(() => {
         const tagsParam = searchParams.get("tags");
         console.log(`tagsParams: ${tagsParam}`);
-        return tagsParam
-            ? tagsParam.split(",").filter((tag) => tag.trim() !== "")
-            : [];
+        return tagsParam ? tagsParam.split(",").filter((tag) => tag.trim() !== "") : [];
     }, [searchParams]);
 
     const updateTagsInQuery = (tags) => {

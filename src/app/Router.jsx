@@ -10,37 +10,37 @@ import Header from "widgets/Header";
 import Footer from "widgets/Footer";
 
 const Layout = () => {
-  return (
-    <>
-      <Header />
-      <Outlet />
-      <Footer />
-    </>
-  );
+    return (
+        <>
+            <Header />
+            <Outlet />
+            <Footer />
+        </>
+    );
 };
 
 const AppRoutes = () => {
-  return (
-    <Routes>
-      {/* Все публичные страницы с общим лейаутом */}
-      <Route element={<Layout />}>
-        <Route index element={<HomePage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/articles/:slug" element={<Article />} />
-      </Route>
+    return (
+        <Routes>
+            {/* Все публичные страницы с общим лейаутом */}
+            <Route element={<Layout />}>
+                <Route index element={<HomePage />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/articles/:slug" element={<Article />} />
+            </Route>
 
-      {/* Страницы без лейаута */}
-      <Route path="/login" element={<LoginPage />} />
-      <Route
-        path="/admin/*"
-        element={
-          <ProtectedRoute>
-            <AdminPage />
-          </ProtectedRoute>
-        }
-      />
-    </Routes>
-  );
+            {/* Страницы без лейаута */}
+            <Route path="/login" element={<LoginPage />} />
+            <Route
+                path="/admin/*"
+                element={
+                    <ProtectedRoute>
+                        <AdminPage />
+                    </ProtectedRoute>
+                }
+            />
+        </Routes>
+    );
 };
 
 export default AppRoutes;

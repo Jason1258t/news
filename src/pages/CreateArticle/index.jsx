@@ -50,10 +50,7 @@ const CreateArticlePage = () => {
         <>
             <Helmet>
                 <title>{`Создать статью | ${PROJECT_NAME}`}</title>
-                <meta
-                    name="description"
-                    content="Панель для создания и загрузки новых статей"
-                />
+                <meta name="description" content="Панель для создания и загрузки новых статей" />
             </Helmet>
 
             <Main>
@@ -62,8 +59,7 @@ const CreateArticlePage = () => {
                         <header className="page-header">
                             <h1 className="page-title">Создать статью</h1>
                             <p className="page-subtitle">
-                                Вставьте JSON с данными статьи для загрузки в
-                                базу данных
+                                Вставьте JSON с данными статьи для загрузки в базу данных
                             </p>
                         </header>
 
@@ -72,17 +68,12 @@ const CreateArticlePage = () => {
                                 <h3>📋 Формат данных</h3>
                                 <ul>
                                     <li>Данные должны быть в формате JSON</li>
+                                    <li>Обязательные поля: slug, title, description, content</li>
                                     <li>
-                                        Обязательные поля: slug, title,
-                                        description, content
+                                        Поле <code>slug</code> должно быть уникальным
                                     </li>
                                     <li>
-                                        Поле <code>slug</code> должно быть
-                                        уникальным
-                                    </li>
-                                    <li>
-                                        Не забудьте выбрать дату публикации и
-                                        указать изображение
+                                        Не забудьте выбрать дату публикации и указать изображение
                                     </li>
                                 </ul>
                             </div>
@@ -101,11 +92,7 @@ const CreateArticlePage = () => {
                                         label="URL изображения"
                                         placeholder="Введите URL изображения"
                                         value={store.imageUrl ?? ""}
-                                        onChange={(v) =>
-                                            store.setImageUrl(
-                                                v.length > 0 ? v : null,
-                                            )
-                                        }
+                                        onChange={(v) => store.setImageUrl(v.length > 0 ? v : null)}
                                     />
                                 </div>
                             </div>
@@ -114,13 +101,8 @@ const CreateArticlePage = () => {
                                 src={store.imageUrl}
                                 onRemove={() => store.setImageUrl(null)}
                             />
-                            {store.imageUrl && (
-                                <div style={{ height: "1rem" }}></div>
-                            )}
-                            <div
-                                className="form-actions"
-                                style={{ marginBottom: "1rem" }}
-                            >
+                            {store.imageUrl && <div style={{ height: "1rem" }}></div>}
+                            <div className="form-actions" style={{ marginBottom: "1rem" }}>
                                 <OutlinedButton
                                     onClick={() => {
                                         copyFormatPrompt({
@@ -137,57 +119,40 @@ const CreateArticlePage = () => {
                             </div>
                             <form onSubmit={handleSubmit} className="json-form">
                                 <div className="form-header">
-                                    <label
-                                        htmlFor="json-input"
-                                        className="form-label"
-                                    >
+                                    <label htmlFor="json-input" className="form-label">
                                         JSON данные статьи
                                     </label>
                                 </div>
 
                                 <textarea
                                     id="json-input"
-                                    className={`json-input ${
-                                        !store.isValid ? "error" : ""
-                                    }`}
+                                    className={`json-input ${!store.isValid ? "error" : ""}`}
                                     value={store.jsonInput}
-                                    onChange={(e) =>
-                                        store.setJsonInput(e.target.value)
-                                    }
+                                    onChange={(e) => store.setJsonInput(e.target.value)}
                                     placeholder='{"slug": "my-article", "title": "Заголовок статьи", ...}'
                                     rows={20}
                                     disabled={loading}
                                 />
 
                                 {store.error && (
-                                    <div className="error-message">
-                                        ⚠️ {store.error}
-                                    </div>
+                                    <div className="error-message">⚠️ {store.error}</div>
                                 )}
 
                                 {store.isValid && store.jsonInput?.trim() && (
-                                    <div className="success-message">
-                                        ✅ JSON валиден
-                                    </div>
+                                    <div className="success-message">✅ JSON валиден</div>
                                 )}
 
                                 <div className="submit-section">
                                     <FilledButton
                                         type="submit"
                                         active={
-                                            store.jsonInput?.trim() &&
-                                            store.isValid &&
-                                            !loading
+                                            store.jsonInput?.trim() && store.isValid && !loading
                                         }
                                     >
-                                        {loading
-                                            ? "⏳ Загрузка..."
-                                            : "🚀 Создать статью"}
+                                        {loading ? "⏳ Загрузка..." : "🚀 Создать статью"}
                                     </FilledButton>
 
-                                    <CharCounter
-                                        length={store.jsonInput.length}
-                                    />
+                                    <CharCounter length={store.jsonInput.length} />
                                 </div>
                             </form>
                         </div>

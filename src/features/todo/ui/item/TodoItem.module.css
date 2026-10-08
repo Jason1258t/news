@@ -7,7 +7,9 @@
     border-radius: var(--border-radius);
     margin-bottom: 10px;
     box-shadow: var(--shadow-light);
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
 }
 
 .item:hover {
@@ -60,14 +62,12 @@
 
 .editButton {
     background-color: white;
-    
+
     border-color: var(--border-color);
     color: var(--text-dark);
 }
 
-
 .editButton:hover {
-    
     border-color: var(--primary-color);
     color: var(--primary-color);
 }

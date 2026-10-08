@@ -41,19 +41,14 @@ const ArticlesPanel = () => {
         if (!selectedArticle) return;
         deleteConfirmation.openModal({
             title: "Удалить статью?",
-            description:
-                "Это действие нельзя будет отменить. Статья будет удалена безвозвратно.",
+            description: "Это действие нельзя будет отменить. Статья будет удалена безвозвратно.",
             onConfirm: async () => {
                 const result = await deleteArticle(selectedArticle.slug);
 
                 if (result.success) {
                     setArticle(null);
-                    setArticles((prev) =>
-                        prev.filter((a) => a.slug !== selectedArticle.slug),
-                    );
-                    toast.success(
-                        `✅ Статья "${selectedArticle.title}" успешно удалена`,
-                    );
+                    setArticles((prev) => prev.filter((a) => a.slug !== selectedArticle.slug));
+                    toast.success(`✅ Статья "${selectedArticle.title}" успешно удалена`);
                 } else {
                     toast.error(`❌ Ошибка: ${result.error}`);
                 }
@@ -65,10 +60,7 @@ const ArticlesPanel = () => {
         <>
             <Helmet>
                 <title>{`Управление статьями | ${PROJECT_NAME}`}</title>
-                <meta
-                    name="description"
-                    content="Панель для управления статьями"
-                />
+                <meta name="description" content="Панель для управления статьями" />
             </Helmet>
             <div className={styles.page}>
                 <div className={styles.listSection}>
@@ -84,9 +76,7 @@ const ArticlesPanel = () => {
                                 excerpt={article.description}
                                 imageUrl={article.hero.url}
                                 date={article.dateDisplay}
-                                highlight={
-                                    selectedArticle?.slug === article.slug
-                                }
+                                highlight={selectedArticle?.slug === article.slug}
                             />
                         ))}
                     </div>
@@ -120,10 +110,7 @@ const ArticlesPanel = () => {
 
                         {selectedArticle && (
                             <div className={styles.selectedArticleActions}>
-                                <button
-                                    onClick={onDeleteArticle}
-                                    className={styles.deleteButton}
-                                >
+                                <button onClick={onDeleteArticle} className={styles.deleteButton}>
                                     <Trash2 size="1.25rem" />
                                     Удалить
                                 </button>

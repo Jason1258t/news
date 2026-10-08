@@ -56,9 +56,7 @@ export const fetchEditorsPicks = async () => {
         articlesQuery = query(articlesQuery);
         const querySnapshot = await getDocs(articlesQuery);
 
-        return querySnapshot.docs.map((doc) =>
-            mapEditorsPickFromFirestore(doc)
-        );
+        return querySnapshot.docs.map((doc) => mapEditorsPickFromFirestore(doc));
     } catch (error) {
         console.error("❌ Ошибка при получении редакционной подборки:", error);
         throw new Error("Не удалось загрузить редакционную подборку", { cause: error });
@@ -85,9 +83,7 @@ export const createEditorsPick = async (pickData) => {
         }
 
         // Генерируем ID автоматически
-        const pickId = `pick_${Date.now()}_${Math.random()
-            .toString(36)
-            .substr(2, 9)}`;
+        const pickId = `pick_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
         const pickToSave = {
             title: pickData.title.trim(),

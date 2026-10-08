@@ -22,27 +22,19 @@ const CTASection = () => {
                     <img
                         src={chevronDown}
                         alt=""
-                        className={`${styles.chevron} ${
-                            isExpanded ? styles.rotated : ""
-                        }`}
+                        className={`${styles.chevron} ${isExpanded ? styles.rotated : ""}`}
                     />
                 </div>
 
                 {/* Контент для десктопа и раскрытый для мобилки */}
-                <div
-                    className={`${styles.desktopContent} ${
-                        isExpanded ? styles.expanded : ""
-                    }`}
-                >
+                <div className={`${styles.desktopContent} ${isExpanded ? styles.expanded : ""}`}>
                     <p>
-                        Подпишитесь на наши обновления, чтобы первыми получать
-                        самые важные и интересные новости
+                        Подпишитесь на наши обновления, чтобы первыми получать самые важные и
+                        интересные новости
                     </p>
                     <div className={styles.buttons}>
                         <FilledButton
-                            onClick={() =>
-                                window.open("https://t.me/pgtu_breaking_news")
-                            }
+                            onClick={() => window.open("https://t.me/pgtu_breaking_news")}
                         >
                             Подписаться
                         </FilledButton>

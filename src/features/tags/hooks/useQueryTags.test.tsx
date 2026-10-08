@@ -5,10 +5,9 @@ import { createWrapper } from "../../../test/render";
 import { useQueryTags } from "./useQueryTags";
 
 const setup = (route: string) =>
-    renderHook(
-        () => ({ tags: useQueryTags(), search: useLocation().search }),
-        { wrapper: createWrapper({ route }) },
-    );
+    renderHook(() => ({ tags: useQueryTags(), search: useLocation().search }), {
+        wrapper: createWrapper({ route }),
+    });
 
 describe("useQueryTags", () => {
     vi.spyOn(console, "log").mockImplementation(() => {});

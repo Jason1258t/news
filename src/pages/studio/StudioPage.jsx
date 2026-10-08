@@ -8,15 +8,7 @@ import ErrorWidget from "shared/ui/status/error";
 import LoadingWidget from "shared/ui/status/loading";
 
 const StudioPage = () => {
-    const {
-        todos,
-        loading,
-        error,
-        addTodo,
-        toggleTodo,
-        deleteTodo,
-        updateTodo,
-    } = useTodos();
+    const { todos, loading, error, addTodo, toggleTodo, deleteTodo, updateTodo } = useTodos();
 
     return (
         <>

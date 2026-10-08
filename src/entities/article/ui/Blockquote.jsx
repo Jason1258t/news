@@ -1,12 +1,8 @@
-import React from 'react';
-import { RenderHTML } from 'shared/lib/html';
+import React from "react";
+import { RenderHTML } from "shared/lib/html";
 
 const Blockquote = ({ html, footer, variant }) => (
-    <blockquote
-        className={`quote${
-            variant && variant !== "default" ? ` ${variant}` : ""
-        }`}
-    >
+    <blockquote className={`quote${variant && variant !== "default" ? ` ${variant}` : ""}`}>
         <p>
             <RenderHTML html={html} />
         </p>

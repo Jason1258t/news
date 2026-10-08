@@ -5,12 +5,7 @@ import EditorsPickCard from "entities/editors-pick/ui";
 import FilledButton from "widgets/buttons/FilledButton";
 import OutlinedButton from "widgets/buttons/OutlinedButton";
 
-const PicksList = ({
-    loading,
-    editorsPicks,
-    removeEditorsPick,
-    changeBadge,
-}) => {
+const PicksList = ({ loading, editorsPicks, removeEditorsPick, changeBadge }) => {
     if (loading)
         return (
             <div className={styles.picksList}>

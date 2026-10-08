@@ -1,17 +1,19 @@
-import styles from './content.module.css';
+import styles from "./content.module.css";
 
-export const Content = ({ 
-  children, 
-  className = '',
-  size = 'medium' // 'small' | 'medium' | 'large'
+export const Content = ({
+    children,
+    className = "",
+    size = "medium", // 'small' | 'medium' | 'large'
 }) => {
-  return (
-    <div className={`
+    return (
+        <div
+            className={`
       ${styles.content} 
       ${styles[size]}
       ${className}
-    `.trim()}>
-      {children}
-    </div>
-  );
+    `.trim()}
+        >
+            {children}
+        </div>
+    );
 };

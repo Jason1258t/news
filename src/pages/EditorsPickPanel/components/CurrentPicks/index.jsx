@@ -63,9 +63,7 @@ const CurrentPicks = ({ store }) => {
             <BadgesOverlay
                 isOpen={isOpen}
                 onClose={() => setIsOpen(false)}
-                onConfirm={(badge) =>
-                    updateEditorsPickBadge(pickToChangeBadge, badge)
-                }
+                onConfirm={(badge) => updateEditorsPickBadge(pickToChangeBadge, badge)}
             />
         </>
     );

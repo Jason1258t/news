@@ -6,7 +6,7 @@ const FilledButton = ({
     children,
     color = { backgroundColor: "none" },
     active = true,
-    type
+    type,
 }) => {
     return (
         <button

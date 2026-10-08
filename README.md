@@ -65,17 +65,17 @@ npm run dev            # http://localhost:5173
 
 ### Скрипты
 
-| Команда | Что делает |
-|---|---|
-| `npm run dev` | dev-сервер |
-| `npm run build` | проверка типов + сборка в `dist/` |
-| `npm run preview` | локальный просмотр сборки |
-| `npm test` | Vitest в режиме наблюдения |
-| `npm run test:run` | однократный прогон тестов |
-| `npm run coverage` | тесты с отчётом покрытия |
-| `npm run typecheck` | `tsc` без сборки |
-| `npm run lint` | ESLint |
-| `npm run format` | Prettier |
+| Команда             | Что делает                        |
+| ------------------- | --------------------------------- |
+| `npm run dev`       | dev-сервер                        |
+| `npm run build`     | проверка типов + сборка в `dist/` |
+| `npm run preview`   | локальный просмотр сборки         |
+| `npm test`          | Vitest в режиме наблюдения        |
+| `npm run test:run`  | однократный прогон тестов         |
+| `npm run coverage`  | тесты с отчётом покрытия          |
+| `npm run typecheck` | `tsc` без сборки                  |
+| `npm run lint`      | ESLint                            |
+| `npm run format`    | Prettier                          |
 
 ### Тесты
 

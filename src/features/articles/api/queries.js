@@ -1,11 +1,4 @@
-import {
-    collection,
-    query,
-    orderBy,
-    where,
-    limit,
-    startAfter,
-} from "firebase/firestore";
+import { collection, query, orderBy, where, limit, startAfter } from "firebase/firestore";
 import { db } from "app/firebase";
 
 export const getArticlesQuery = (category, tags, itemsPerPage = 5, lastDoc = null) => {
@@ -18,7 +11,7 @@ export const getArticlesQuery = (category, tags, itemsPerPage = 5, lastDoc = nul
     }
 
     if (tags?.length > 0) {
-        constraints.push(where('tags', 'array-contains-any', tags));
+        constraints.push(where("tags", "array-contains-any", tags));
     }
 
     if (lastDoc) {

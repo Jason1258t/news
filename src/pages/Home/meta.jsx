@@ -24,10 +24,7 @@ const HomeMeta = () => {
                 content="Эксклюзивные материалы о технологиях, обществе и исследованиях. Только проверенная информация и глубокий анализ событий."
             />
             <meta property="og:type" content="website" />
-            <meta
-                property="og:url"
-                content="https://jason1258t.github.io/news"
-            />
+            <meta property="og:url" content="https://jason1258t.github.io/news" />
             <meta
                 property="og:image"
                 content="https://i.ibb.co/rfF9d2CD/Screenshot-2025-10-08-at-14-59-13.png"

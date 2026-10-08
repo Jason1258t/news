@@ -30,8 +30,7 @@ export const useCreateArticle = () => {
 
             return result;
         } catch (err) {
-            const errorMessage =
-                err.message || "Неизвестная ошибка при создании статьи";
+            const errorMessage = err.message || "Неизвестная ошибка при создании статьи";
             setError(errorMessage);
             return {
                 success: false,

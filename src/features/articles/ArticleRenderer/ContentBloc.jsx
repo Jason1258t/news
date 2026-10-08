@@ -20,52 +20,28 @@ export const ContentBlock = ({ block }) => {
         case "list":
             return <List items={block.items} />;
         case "image":
-            return (
-                <ImageBlock
-                    url={block.url}
-                    alt={block.alt}
-                    caption={block.caption}
-                />
-            );
+            return <ImageBlock url={block.url} alt={block.alt} caption={block.caption} />;
         case "blockquote":
-            return (
-                <Blockquote
-                    html={block.html}
-                    footer={block.footer}
-                    variant={block.variant}
-                />
-            );
+            return <Blockquote html={block.html} footer={block.footer} variant={block.variant} />;
         case "highlight":
             return (
                 <Highlight
                     title={block.title}
-                    content={(block.content ?? []).map((e, idx) => <ContentBlock key={idx} block={e} />)}
+                    content={(block.content ?? []).map((e, idx) => (
+                        <ContentBlock key={idx} block={e} />
+                    ))}
                 />
             );
         case "footer-note":
             return <FooterNote html={block.html} />;
         case "formula":
-            return (
-                <Formula
-                    formula={block.formula}
-                    display={block.display}
-                />
-            );
+            return <Formula formula={block.formula} display={block.display} />;
         case "code":
             return (
-                <CodeBlock
-                    code={block.code}
-                    language={block.language}
-                    filename={block.filename}
-                />
+                <CodeBlock code={block.code} language={block.language} filename={block.filename} />
             );
         case "table":
-            return (
-                <Table
-                    data={block.data}
-                    hasHeader={block.hasHeader}
-                />
-            );
+            return <Table data={block.data} hasHeader={block.hasHeader} />;
         default:
             console.warn(`Unknown block type: ${block.type}`);
             return null;

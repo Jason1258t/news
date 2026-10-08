@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const ImageBlock = ({ url, alt, caption }) => (
     <div className="article-image">

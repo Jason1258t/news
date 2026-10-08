@@ -17,7 +17,12 @@ vi.mock("firebase/firestore", () => ({
     collection: vi.fn((db: unknown, path: string) => ({ kind: "collection", db, path })),
     query: vi.fn((ref: unknown, ...constraints: unknown[]) => ({ ref, constraints })),
     orderBy: vi.fn((field: string, dir: string) => ({ kind: "orderBy", field, dir })),
-    where: vi.fn((field: string, op: string, value: unknown) => ({ kind: "where", field, op, value })),
+    where: vi.fn((field: string, op: string, value: unknown) => ({
+        kind: "where",
+        field,
+        op,
+        value,
+    })),
     limit: vi.fn((n: number) => ({ kind: "limit", n })),
     startAfter: vi.fn((cursor: unknown) => ({ kind: "startAfter", cursor })),
 }));

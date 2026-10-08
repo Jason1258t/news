@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const Highlight = ({ title, content }) => (
     <div className="highlight-box">

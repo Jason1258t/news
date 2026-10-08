@@ -12,9 +12,7 @@ const ArticleCard = ({ to, title, excerpt, date, category, imageUrl }) => {
             ) : null}
             <div className={styles.content}>
                 <div className={styles.meta}>
-                    {category ? (
-                        <span className={styles.category}>{category}</span>
-                    ) : null}
+                    {category ? <span className={styles.category}>{category}</span> : null}
                     {date ? <span className={styles.date}>{date}</span> : null}
                 </div>
                 <h3 className={styles.title}>{title}</h3>

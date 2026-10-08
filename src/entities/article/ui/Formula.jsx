@@ -1,15 +1,15 @@
-import React from 'react';
-import katex from 'katex';
-import 'katex/dist/katex.min.css';
+import React from "react";
+import katex from "katex";
+import "katex/dist/katex.min.css";
 
-const Formula = ({ formula, display = 'inline' }) => {
+const Formula = ({ formula, display = "inline" }) => {
     const html = katex.renderToString(formula, {
-        displayMode: display === 'block',
+        displayMode: display === "block",
         throwOnError: false,
-        output: 'html'
+        output: "html",
     });
 
-    if (display === 'block') {
+    if (display === "block") {
         return (
             <div className="formula-block">
                 <div dangerouslySetInnerHTML={{ __html: html }} />
@@ -17,12 +17,7 @@ const Formula = ({ formula, display = 'inline' }) => {
         );
     }
 
-    return (
-        <span 
-            className="formula-inline"
-            dangerouslySetInnerHTML={{ __html: html }} 
-        />
-    );
+    return <span className="formula-inline" dangerouslySetInnerHTML={{ __html: html }} />;
 };
 
 export default Formula;

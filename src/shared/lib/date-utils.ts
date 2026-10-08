@@ -38,7 +38,10 @@ const DAY_MS = 24 * HOUR_MS;
  * Форматирует ISO-дату в русский формат.
  * Для пустой или невалидной даты возвращает пустую строку.
  */
-export const formatDate = (dateISO: string | null | undefined, format: DateFormat = "full"): string => {
+export const formatDate = (
+    dateISO: string | null | undefined,
+    format: DateFormat = "full",
+): string => {
     if (!dateISO) return "";
 
     const date = new Date(dateISO);

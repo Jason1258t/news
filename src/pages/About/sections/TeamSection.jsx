@@ -35,7 +35,7 @@ const TeamSection = () => {
                         <h3 className={styles.roleTitle}>{category.role}</h3>
                         <div className={styles.cards}>
                             {category.steamIds.map((steamId, index) =>
-                                renderSteamCard(steamId, index)
+                                renderSteamCard(steamId, index),
                             )}
                         </div>
                     </div>

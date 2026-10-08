@@ -23,11 +23,7 @@ const TagsDisplay = ({ selectedTags = [], onRemoveTag, onClearAll }) => {
                     </div>
                 ))}
                 {selectedTags.length > 0 && (
-                    <button
-                        className={styles.clearButton}
-                        onClick={onClearAll}
-                        type="button"
-                    >
+                    <button className={styles.clearButton} onClick={onClearAll} type="button">
                         Очистить все
                     </button>
                 )}

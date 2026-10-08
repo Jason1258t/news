@@ -13,16 +13,8 @@ const AdminPage = () => {
             <AdminSidebar />
             <main className={styles.content}>
                 <Routes>
-                    <Route
-                        index
-                        element={
-                            <Navigate to="/admin/create-article" replace />
-                        }
-                    />
-                    <Route
-                        path="create-article"
-                        element={<CreateArticlePage />}
-                    />
+                    <Route index element={<Navigate to="/admin/create-article" replace />} />
+                    <Route path="create-article" element={<CreateArticlePage />} />
                     <Route path="editors-pick" element={<EditorsPickPanel />} />
                     <Route path="articles-panel" element={<ArticlesPanel />} />
                     <Route path="studio" element={<StudioPage />} />

@@ -1,39 +1,39 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 export const useCreateArticleStore = create((set, get) => ({
-  jsonInput: '',
-  imageUrl: null,
-  date: new Date(),
-  isValid: true,
-  error: '',
+    jsonInput: "",
+    imageUrl: null,
+    date: new Date(),
+    isValid: true,
+    error: "",
 
-  setJsonInput: (jsonInput) => {
-    set({ jsonInput });
-    get().validateJson();
-  },
+    setJsonInput: (jsonInput) => {
+        set({ jsonInput });
+        get().validateJson();
+    },
 
-  setImageUrl: (imageUrl) => set({ imageUrl }),
+    setImageUrl: (imageUrl) => set({ imageUrl }),
 
-  setDate: (date) => set({ date }),
+    setDate: (date) => set({ date }),
 
-  setError: (error) => set({ error }),
+    setError: (error) => set({ error }),
 
-  validateJson: () => {
-    const { jsonInput } = get();
-    
-    if (!jsonInput.trim()) {
-      set({ isValid: true, error: '' });
-      return;
-    }
+    validateJson: () => {
+        const { jsonInput } = get();
 
-    try {
-      JSON.parse(jsonInput);
-      set({ isValid: true, error: '' });
-    } catch (err) {
-      set({ 
-        isValid: false, 
-        error: `Невалидный JSON: ${err.message}` 
-      });
-    }
-  }
+        if (!jsonInput.trim()) {
+            set({ isValid: true, error: "" });
+            return;
+        }
+
+        try {
+            JSON.parse(jsonInput);
+            set({ isValid: true, error: "" });
+        } catch (err) {
+            set({
+                isValid: false,
+                error: `Невалидный JSON: ${err.message}`,
+            });
+        }
+    },
 }));

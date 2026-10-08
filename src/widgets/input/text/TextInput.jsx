@@ -1,12 +1,6 @@
 import styles from "./TextInput.module.css";
 
-const TextInput = ({
-    value,
-    onChange,
-    label,
-    placeholder = "",
-    type = "text",
-}) => {
+const TextInput = ({ value, onChange, label, placeholder = "", type = "text" }) => {
     const handleChange = (e) => {
         const newValue = e.target.value;
 

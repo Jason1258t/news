@@ -16,10 +16,7 @@ const AboutPageMeta = () => {
                 content={`${PROJECT_NAME} - независимое студенческое издание. Узнайте о нашей миссии, принципах и команде.`}
             />
             <meta property="og:type" content="website" />
-            <meta
-                property="og:url"
-                content="https://jason1258t.github.io/news/about"
-            />
+            <meta property="og:url" content="https://jason1258t.github.io/news/about" />
         </Helmet>
     );
 };
