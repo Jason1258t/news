@@ -13,8 +13,7 @@
 - Ответ — только JSON, без пояснений.
 - `category` — одна или несколько категорий из списка: {{categories}}.
 - `author` — «{{projectName}}».
-- `og.title` и `og.description` — те же, что `title` и `description` статьи.
-- `og.url` — `{{siteUrl}}/#/articles/<slug>`.
+- `og` не заполняй: превью ссылки для браузера и соцсетей собирается автоматически из `title`, `description` и `hero.url`.
 
 ## Данные публикации
 

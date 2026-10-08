@@ -32,7 +32,7 @@ const buildPublicationSection = ({ publishDate, imageUrl }: PublicationInfo) => 
             ? `- Дата публикации: ${iso} — запиши её в \`datePublishedISO\`.`
             : "- Дата публикации не указана — предупреди меня об этом и не заполняй `datePublishedISO`: при загрузке подставится текущее время.",
         imageUrl
-            ? `- Изображение: ${imageUrl} — используй его в \`hero.url\` и \`og.image\`.`
+            ? `- Изображение: ${imageUrl} — используй его в \`hero.url\`.`
             : "- Изображение не указано — предупреди меня об этом.",
     ].join("\n");
 };

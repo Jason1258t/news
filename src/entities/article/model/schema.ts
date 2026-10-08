@@ -141,7 +141,11 @@ export const articleInputSchema = z
         author: z.string(),
         tags: z.array(z.string()),
         hero: articleHeroSchema,
-        og: articleOgSchema.optional(),
+        og: articleOgSchema
+            .optional()
+            .describe(
+                "Не заполнять: превью ссылки собирается из title, description и hero.url. Поле осталось для старых статей",
+            ),
         content: z.array(contentBlockSchema),
     })
     .meta({ id: "Article", description: "Статья в формате для загрузки" });

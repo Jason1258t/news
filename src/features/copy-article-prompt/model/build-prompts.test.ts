@@ -48,7 +48,12 @@ describe("buildArticleFormatPrompt", () => {
     it("includes project settings", () => {
         expect(prompt).toContain(ARTICLE_CATEGORIES.join(", "));
         expect(prompt).toContain(`«${PROJECT_NAME}»`);
-        expect(prompt).toContain(`${SITE_URL}/#/articles/<slug>`);
+        expect(prompt).toContain(SITE_URL);
+    });
+
+    it("asks not to duplicate the article into og", () => {
+        expect(prompt).toContain("`og` не заполняй");
+        expect(exampleArticle).not.toHaveProperty("og");
     });
 
     it("embeds the example with the current project name as author", () => {

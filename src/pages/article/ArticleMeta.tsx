@@ -1,41 +1,45 @@
 import { Helmet } from "react-helmet-async";
-import type { Article } from "entities/article";
+import { getArticlePreview, type Article } from "entities/article";
 import { PROJECT_NAME } from "shared/config";
 
-export const ArticleMeta = ({ article }: { article: Article }) => (
-    <Helmet>
-        {/* Основные мета-теги */}
-        <title>{`${article.title} | ${PROJECT_NAME}`}</title>
-        <meta name="description" content={article.description} />
-        <meta name="keywords" content={article.tags.join(", ")} />
-        <meta name="author" content={article.author} />
+export const ArticleMeta = ({ article }: { article: Article }) => {
+    const preview = getArticlePreview(article);
 
-        {/* Open Graph */}
-        <meta property="og:title" content={article.og?.title || article.title} />
-        <meta property="og:description" content={article.og?.description || article.description} />
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content={article.og?.url} />
-        <meta property="og:image" content={article.og?.image} />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:site_name" content={PROJECT_NAME} />
-        <meta property="og:locale" content="ru_RU" />
+    return (
+        <Helmet>
+            {/* Основные мета-теги */}
+            <title>{`${article.title} | ${PROJECT_NAME}`}</title>
+            <meta name="description" content={article.description} />
+            <meta name="keywords" content={article.tags.join(", ")} />
+            <meta name="author" content={article.author} />
 
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={article.og?.title || article.title} />
-        <meta name="twitter:description" content={article.og?.description || article.description} />
-        <meta name="twitter:image" content={article.og?.image} />
+            {/* Open Graph */}
+            <meta property="og:title" content={preview.title} />
+            <meta property="og:description" content={preview.description} />
+            <meta property="og:type" content="article" />
+            <meta property="og:url" content={preview.url} />
+            <meta property="og:image" content={preview.image} />
+            <meta property="og:image:width" content="1200" />
+            <meta property="og:image:height" content="630" />
+            <meta property="og:site_name" content={PROJECT_NAME} />
+            <meta property="og:locale" content="ru_RU" />
 
-        {/* Article-specific OG tags */}
-        <meta property="article:published_time" content={article.datePublishedISO} />
-        <meta property="article:author" content={article.author} />
-        <meta property="article:section" content={article.category} />
-        {article.tags.map((tag) => (
-            <meta key={tag} property="article:tag" content={tag} />
-        ))}
+            {/* Twitter Card */}
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" content={preview.title} />
+            <meta name="twitter:description" content={preview.description} />
+            <meta name="twitter:image" content={preview.image} />
 
-        {/* Canonical URL */}
-        <link rel="canonical" href={article.og?.url} />
-    </Helmet>
-);
+            {/* Article-specific OG tags */}
+            <meta property="article:published_time" content={article.datePublishedISO} />
+            <meta property="article:author" content={article.author} />
+            <meta property="article:section" content={article.category} />
+            {article.tags.map((tag) => (
+                <meta key={tag} property="article:tag" content={tag} />
+            ))}
+
+            {/* Canonical URL */}
+            <link rel="canonical" href={preview.url} />
+        </Helmet>
+    );
+};
