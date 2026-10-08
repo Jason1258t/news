@@ -105,14 +105,11 @@ const fetchArticleDocBySlug = async (slug: string) => {
     return await getDoc(docRef);
 };
 
-export const fetchArticleBySlug = async (slug: string): Promise<Article> => {
+/** Статья по slug; null, если её нет. */
+export const fetchArticleBySlug = async (slug: string): Promise<Article | null> => {
     try {
         const docSnap = await fetchArticleDocBySlug(slug);
-        if (docSnap.exists()) {
-            return mapArticleFromFirestore(docSnap);
-        } else {
-            throw new Error("Article not found");
-        }
+        return docSnap.exists() ? mapArticleFromFirestore(docSnap) : null;
     } catch (error) {
         console.error(`Error fetching article ${slug}:`, error);
         throw new Error("Failed to fetch article", { cause: error });
