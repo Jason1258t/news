@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styles from "./NotFoundWidget.module.css";
-import { OutlinedButton } from "shared/ui/button";
+import { Button } from "shared/ui/button";
 
 export const NotFoundWidget = ({ message = "Страница не найдена" }: { message?: string }) => {
     return (
@@ -14,7 +14,9 @@ export const NotFoundWidget = ({ message = "Страница не найдена
                 <Link to="/" className={styles.homeButton}>
                     На главную
                 </Link>
-                <OutlinedButton onClick={() => window.history.back()}>Назад</OutlinedButton>
+                <Button variant="secondary" onClick={() => window.history.back()}>
+                    Назад
+                </Button>
             </div>
         </div>
     );

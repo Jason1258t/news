@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TELEGRAM_CHANNEL_URL } from "shared/config";
-import { FilledButton, OutlinedButton } from "shared/ui/button";
+import { Button } from "shared/ui/button";
 import chevronDown from "./chevron-down.svg";
 import styles from "./SubscribeCta.module.css";
 
@@ -33,12 +33,12 @@ export const SubscribeCta = () => {
                         интересные новости
                     </p>
                     <div className={styles.buttons}>
-                        <FilledButton onClick={() => window.open(TELEGRAM_CHANNEL_URL)}>
+                        <Button onClick={() => window.open(TELEGRAM_CHANNEL_URL)}>
                             Подписаться
-                        </FilledButton>
-                        <OutlinedButton onClick={() => navigate("/about")}>
+                        </Button>
+                        <Button variant="secondary" onClick={() => navigate("/about")}>
                             О проекте
-                        </OutlinedButton>
+                        </Button>
                     </div>
                 </div>
             </div>

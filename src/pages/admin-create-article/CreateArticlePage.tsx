@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 import { DatePicker } from "shared/ui/date-picker";
 import { TextInput } from "shared/ui/text-input";
 import { ImagePreview } from "shared/ui/image-preview";
-import { FilledButton } from "shared/ui/button";
+import { Button } from "shared/ui/button";
 import { useCreateArticleStore } from "./create-article-store";
 import { Main, Container } from "shared/ui/layout";
 import { CharCounter } from "shared/ui/char-counter";
@@ -126,14 +126,14 @@ export const CreateArticlePage = () => {
                                 )}
 
                                 <div className="submit-section">
-                                    <FilledButton
+                                    <Button
                                         type="submit"
-                                        active={Boolean(
-                                            store.jsonInput.trim() && store.isValid && !loading,
-                                        )}
+                                        disabled={
+                                            !store.jsonInput.trim() || !store.isValid || loading
+                                        }
                                     >
                                         {loading ? "⏳ Загрузка..." : "🚀 Создать статью"}
-                                    </FilledButton>
+                                    </Button>
 
                                     <CharCounter length={store.jsonInput.length} />
                                 </div>

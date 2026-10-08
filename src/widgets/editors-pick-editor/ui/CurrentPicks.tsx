@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { EditorsPick, EditorsPickBadge } from "entities/editors-pick";
-import { FilledButton, OutlinedButton } from "shared/ui/button";
+import { Button } from "shared/ui/button";
 import { ErrorWidget } from "shared/ui/error-widget";
 import { BadgesDialog } from "./BadgesDialog";
 import styles from "./CurrentPicks.module.css";
@@ -44,10 +44,12 @@ export const CurrentPicks = ({
                         removeEditorsPick={onRemove}
                     />
                     <div style={{ display: "flex", gap: "1rem" }}>
-                        <OutlinedButton onClick={onReset}>Сбросить изменения</OutlinedButton>
-                        <FilledButton active={hasChanges && !saving} onClick={onSave}>
+                        <Button variant="secondary" onClick={onReset}>
+                            Сбросить изменения
+                        </Button>
+                        <Button disabled={!hasChanges || saving} onClick={onSave}>
                             {saving ? "Ожидаем..." : "Подтвердить"}
-                        </FilledButton>
+                        </Button>
                     </div>
                 </div>
             </div>

@@ -6,7 +6,7 @@ import { ArticleCard, ArticleCardSmall, useArticles } from "entities/article";
 import { useDeleteArticle } from "features/article-delete";
 import { PROJECT_NAME } from "shared/config";
 import { getErrorMessage } from "shared/lib/error";
-import { OutlinedButton } from "shared/ui/button";
+import { Button } from "shared/ui/button";
 import { DeleteConfirmationModal, useDeleteConfirmation } from "shared/ui/confirm-dialog";
 import { ErrorWidget } from "shared/ui/error-widget";
 import { LoadingSpinner } from "shared/ui/loading-widget";
@@ -69,9 +69,9 @@ export const ArticlesPanelPage = () => {
                         ))}
                         {isFetchingNextPage && <LoadingSpinner />}
                         {hasNextPage && !isFetchingNextPage && (
-                            <OutlinedButton onClick={() => fetchNextPage()}>
+                            <Button variant="secondary" onClick={() => fetchNextPage()}>
                                 Показать ещё
-                            </OutlinedButton>
+                            </Button>
                         )}
                     </div>
                 </div>

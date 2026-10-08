@@ -1,44 +1,66 @@
-.btn {
+.button {
+    display: inline-block;
     padding: 0.75rem 2rem;
     border: none;
     border-radius: 10px;
+    font-family: inherit;
+    line-height: normal;
+    font-size: 1rem;
     font-weight: 600;
+    text-decoration: none;
     cursor: pointer;
     transition: all var(--transition-base);
-    text-decoration: none;
-    display: inline-block;
-    font-size: 1rem;
 }
 
-.btnFilled {
+.button:disabled {
+    cursor: not-allowed;
+}
+
+.button:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--color-focus-ring);
+}
+
+.primary {
     background-color: var(--color-accent);
     color: var(--color-on-accent);
 }
 
-.btnFilled:disabled {
-    background-color: var(--color-text-muted);
-}
-
-.btnFilled:not(:disabled):hover {
-    background: var(--color-accent-hover);
+.primary:not(:disabled):hover {
+    background-color: var(--color-accent-hover);
     transform: translateY(-3px);
     box-shadow: var(--shadow-accent);
 }
 
-.btnOutlined {
+.secondary {
     background: transparent;
     color: var(--color-accent);
     border: 2px solid var(--color-accent);
 }
 
-.btnOutlined:hover {
+.secondary:not(:disabled):hover {
     background: var(--color-accent);
     color: var(--color-on-accent);
     transform: translateY(-3px);
 }
 
+.danger {
+    background-color: var(--color-danger);
+    color: var(--color-on-accent);
+}
+
+.danger:not(:disabled):hover {
+    background-color: var(--color-danger-hover);
+    transform: translateY(-3px);
+}
+
+.primary:disabled,
+.danger:disabled {
+    background-color: var(--color-text-muted);
+}
+
 @media (max-width: 768px) {
-    .btn {
+    .button {
         width: 220px;
         padding: 0.5rem 1.5rem;
     }

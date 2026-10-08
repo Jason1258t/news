@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { EDITORS_PICK_BADGES, type EditorsPickBadge } from "entities/editors-pick";
-import { FilledButton, OutlinedButton } from "shared/ui/button";
+import { Button } from "shared/ui/button";
 import styles from "./BadgesDialog.module.css";
 
 interface BadgesDialogProps {
@@ -52,10 +52,12 @@ export const BadgesDialog = ({ isOpen, onClose, onConfirm }: BadgesDialogProps) 
                 </div>
 
                 <div className={styles.overlayActions}>
-                    <OutlinedButton onClick={handleCancel}>Отмена</OutlinedButton>
-                    <FilledButton onClick={handleConfirm} active={selectedCategory !== null}>
+                    <Button variant="secondary" onClick={handleCancel}>
+                        Отмена
+                    </Button>
+                    <Button onClick={handleConfirm} disabled={selectedCategory === null}>
                         Подтвердить
-                    </FilledButton>
+                    </Button>
                 </div>
             </div>
         </div>

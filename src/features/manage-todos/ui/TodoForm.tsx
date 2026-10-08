@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FilledButton } from "shared/ui/button";
+import { Button } from "shared/ui/button";
 import styles from "./TodoForm.module.css";
 
 export const TodoForm = ({ onAdd }: { onAdd: (text: string) => void }) => {
@@ -27,7 +27,7 @@ export const TodoForm = ({ onAdd }: { onAdd: (text: string) => void }) => {
                     onChange={(e) => setText(e.target.value)}
                     placeholder="Добавить новую задачу..."
                 />
-                <FilledButton onClick={handleSubmit}>Добавить</FilledButton>
+                <Button type="submit">Добавить</Button>
             </div>
         </form>
     );

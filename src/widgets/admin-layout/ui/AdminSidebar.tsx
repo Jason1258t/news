@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useSession } from "entities/session";
 import { authApi } from "features/auth";
-import { OutlinedButton } from "shared/ui/button";
+import { Button } from "shared/ui/button";
 import styles from "./AdminSidebar.module.css";
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
@@ -24,7 +24,9 @@ export const AdminSidebar = () => {
                     {user?.email}
                 </p>
 
-                <OutlinedButton onClick={() => navigate("/")}>На главную</OutlinedButton>
+                <Button variant="secondary" onClick={() => navigate("/")}>
+                    На главную
+                </Button>
             </div>
 
             <nav className={styles.nav}>
