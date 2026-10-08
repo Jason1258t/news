@@ -20,6 +20,8 @@
         "eslint.config.js",
         "stylelint.config.js",
         "rules-tests",
-        "emulator"
+        "emulator",
+        "e2e",
+        "playwright.config.ts"
     ]
 }

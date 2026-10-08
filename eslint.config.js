@@ -105,7 +105,12 @@ export default tseslint.config(
         rules: { "no-restricted-imports": "off" },
     },
     {
-        files: ["*.config.{js,ts}"],
+        files: ["*.config.{js,ts}", "emulator/**", "e2e/**", "rules-tests/**"],
         languageOptions: { globals: globals.node },
+    },
+    // Playwright fixtures must destructure their first argument, even when it is empty.
+    {
+        files: ["e2e/**"],
+        rules: { "no-empty-pattern": "off" },
     },
 );
