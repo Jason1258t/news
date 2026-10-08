@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { ContentBlock } from "entities/article";
+import { ContentBlock, type Article } from "entities/article";
 
-export const ArticleView = ({ article }) => {
+export const ArticleView = ({ article }: { article: Article }) => {
     const { title, description, category, dateDisplay, hero, content, tags } = article;
 
     const navigate = useNavigate();

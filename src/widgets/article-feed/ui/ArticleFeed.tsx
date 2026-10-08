@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { ArticleCard, useArticles } from "entities/article";
 import styles from "./ArticleFeed.module.css";

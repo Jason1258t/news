@@ -1,11 +1,26 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import type { Todo } from "entities/todo";
+import { TodoFilter, type TodoFilterValue } from "./TodoFilter";
 import { TodoForm } from "./TodoForm";
 import { TodoItem } from "./TodoItem";
-import { TodoFilter } from "./TodoFilter";
 import styles from "./TodoList.module.css";
 
-export const TodoList = ({ todos, onAddTodo, onToggleTodo, onDeleteTodo, onUpdateTodo }) => {
-    const [filter, setFilter] = useState("all");
+interface TodoListProps {
+    todos: Todo[];
+    onAddTodo: (text: string) => void;
+    onToggleTodo: (id: string, completed: boolean) => void;
+    onDeleteTodo: (id: string) => void;
+    onUpdateTodo: (id: string, text: string) => void;
+}
+
+export const TodoList = ({
+    todos,
+    onAddTodo,
+    onToggleTodo,
+    onDeleteTodo,
+    onUpdateTodo,
+}: TodoListProps) => {
+    const [filter, setFilter] = useState<TodoFilterValue>("all");
 
     const filteredTodos = todos.filter((todo) => {
         if (filter === "active") return !todo.completed;

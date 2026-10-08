@@ -1,8 +1,8 @@
-import React from "react";
-import "./Footer.css";
 import { Link } from "react-router-dom";
-import telegram from "./telegram.webp";
+import { ARTICLE_CATEGORIES, TELEGRAM_CHANNEL_URL } from "shared/config";
 import { Container } from "shared/ui/layout";
+import "./Footer.css";
+import telegram from "./telegram.webp";
 
 export const Footer = () => {
     return (
@@ -14,7 +14,7 @@ export const Footer = () => {
                         <p>Самые свежие и актуальные новости</p>
                         <div style={{ display: "flex", marginTop: "1rem" }}>
                             <Link
-                                to="https://t.me/pgtu_breaking_news"
+                                to={TELEGRAM_CHANNEL_URL}
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
@@ -25,10 +25,11 @@ export const Footer = () => {
                     <div className="footer-section">
                         <h4>Разделы</h4>
                         <Link to="/">Главная</Link>
-                        <Link to="/?category=Наука">Наука</Link>
-                        <Link to="/?category=Общество">Общество</Link>
-                        <Link to="/?category=Технологии">Технологии</Link>
-                        <Link to="/?category=Спорт">Спорт</Link>
+                        {ARTICLE_CATEGORIES.map((category) => (
+                            <Link key={category} to={`/?category=${category}`}>
+                                {category}
+                            </Link>
+                        ))}
                     </div>
                     <div className="footer-section">
                         <h4>Контакты</h4>

@@ -1,18 +1,16 @@
-import React from "react";
 import { useState } from "react";
-import styles from "./CurrentPicks.module.css";
-
 import { FilledButton, OutlinedButton } from "shared/ui/button";
-import { BadgesDialog } from "./BadgesDialog";
 import { ErrorWidget } from "shared/ui/error-widget";
-
+import type { EditorsPickStore } from "../model/useEditorsPickStore";
+import { BadgesDialog } from "./BadgesDialog";
+import styles from "./CurrentPicks.module.css";
 import { PicksList } from "./PicksList";
 
-export const CurrentPicks = ({ store }) => {
+export const CurrentPicks = ({ store }: { store: EditorsPickStore }) => {
     const [isOpen, setIsOpen] = useState(false);
 
-    const [pickToChangeBadge, setPickToChangeBadge] = useState(null);
-    const changeBadge = (pickId) => {
+    const [pickToChangeBadge, setPickToChangeBadge] = useState<string | null>(null);
+    const changeBadge = (pickId: string) => {
         setPickToChangeBadge(pickId);
         setIsOpen(true);
     };
@@ -34,7 +32,7 @@ export const CurrentPicks = ({ store }) => {
                 <h2 style={{ marginBottom: "1rem" }}>Текущий выбор редакции</h2>
                 <div className={styles.container}>
                     {error ? (
-                        <ErrorWidget message={error?.message} />
+                        <ErrorWidget message={error} />
                     ) : (
                         <>
                             <PicksList
@@ -62,7 +60,9 @@ export const CurrentPicks = ({ store }) => {
             <BadgesDialog
                 isOpen={isOpen}
                 onClose={() => setIsOpen(false)}
-                onConfirm={(badge) => updateEditorsPickBadge(pickToChangeBadge, badge)}
+                onConfirm={(badge) => {
+                    if (pickToChangeBadge) updateEditorsPickBadge(pickToChangeBadge, badge);
+                }}
             />
         </>
     );

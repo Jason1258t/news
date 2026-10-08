@@ -1,8 +1,13 @@
-import React from "react";
 import styles from "./TagList.module.css";
 
-export const TagList = ({ selectedTags = [], onRemoveTag, onClearAll }) => {
-    if (!selectedTags || selectedTags.length === 0) {
+interface TagListProps {
+    selectedTags?: string[];
+    onRemoveTag: (tag: string) => void;
+    onClearAll: () => void;
+}
+
+export const TagList = ({ selectedTags = [], onRemoveTag, onClearAll }: TagListProps) => {
+    if (selectedTags.length === 0) {
         return null;
     }
 
@@ -22,11 +27,9 @@ export const TagList = ({ selectedTags = [], onRemoveTag, onClearAll }) => {
                         </button>
                     </div>
                 ))}
-                {selectedTags.length > 0 && (
-                    <button className={styles.clearButton} onClick={onClearAll} type="button">
-                        Очистить все
-                    </button>
-                )}
+                <button className={styles.clearButton} onClick={onClearAll} type="button">
+                    Очистить все
+                </button>
             </div>
         </div>
     );

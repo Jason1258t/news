@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import styles from "./TodoForm.module.css";
+import { useState } from "react";
 import { FilledButton } from "shared/ui/button";
+import styles from "./TodoForm.module.css";
 
-export const TodoForm = ({ onAdd }) => {
+export const TodoForm = ({ onAdd }: { onAdd: (text: string) => void }) => {
     const [text, setText] = useState("");
 
     const handleSubmit = () => {

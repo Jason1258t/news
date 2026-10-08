@@ -1,4 +1,3 @@
-import React from "react";
 import { EditorsPickCard, useEditorsPicks } from "entities/editors-pick";
 import { Link } from "react-router-dom";
 import { SidebarCard } from "shared/ui/sidebar-card";

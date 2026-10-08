@@ -1,8 +1,15 @@
-import React, { useState } from "react";
-import Linkify from "linkify-react"; // <-- Импортируем библиотеку
+import Linkify from "linkify-react";
+import { useState } from "react";
+import type { Todo } from "entities/todo";
 import styles from "./TodoItem.module.css";
 
-export const TodoItem = ({ todo, onToggle, onDelete, onUpdate }) => {
+export interface TodoActions {
+    onToggle: (id: string, completed: boolean) => void;
+    onDelete: (id: string) => void;
+    onUpdate: (id: string, text: string) => void;
+}
+
+export const TodoItem = ({ todo, onToggle, onDelete, onUpdate }: { todo: Todo } & TodoActions) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editText, setEditText] = useState(todo.text);
 
@@ -34,7 +41,7 @@ export const TodoItem = ({ todo, onToggle, onDelete, onUpdate }) => {
                         type="text"
                         value={editText}
                         onChange={(e) => setEditText(e.target.value)}
-                        onKeyPress={(e) => e.key === "Enter" && handleSave()}
+                        onKeyDown={(e) => e.key === "Enter" && handleSave()}
                         autoFocus
                     />
                     <button
@@ -53,7 +60,6 @@ export const TodoItem = ({ todo, onToggle, onDelete, onUpdate }) => {
             ) : (
                 <>
                     <span className={todo.completed ? styles.textCompleted : styles.text}>
-                        {/* Оборачиваем текст в Linkify */}
                         <Linkify options={{ target: "_blank", rel: "noopener noreferrer" }}>
                             {todo.text}
                         </Linkify>

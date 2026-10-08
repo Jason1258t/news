@@ -1,13 +1,14 @@
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth } from "shared/api";
+import { getErrorMessage } from "shared/lib/error";
 
 export const authApi = {
-    loginWithEmail: async (email, password) => {
+    loginWithEmail: async (email: string, password: string) => {
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             return { user: userCredential.user, error: null };
         } catch (error) {
-            return { user: null, error: error.message };
+            return { user: null, error: getErrorMessage(error) };
         }
     },
 
@@ -16,7 +17,7 @@ export const authApi = {
             await signOut(auth);
             return { error: null };
         } catch (error) {
-            return { error: error.message };
+            return { error: getErrorMessage(error) };
         }
     },
 };

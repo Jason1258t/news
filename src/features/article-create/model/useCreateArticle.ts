@@ -1,16 +1,22 @@
-import { useState } from "react";
-import { createArticle, fetchArticleBySlug } from "entities/article";
 import { useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+import {
+    createArticle,
+    fetchArticleBySlug,
+    type ArticleCreateData,
+    type MutationResult,
+} from "entities/article";
+import { getErrorMessage } from "shared/lib/error";
 
-/**
- * Хук для создания и управления статьями
- */
+/** Создание статьи с обновлением кеша react-query. */
 export const useCreateArticle = () => {
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<string | null>(null);
     const queryClient = useQueryClient();
 
-    const createArticleHandler = async (articleData) => {
+    const createArticleHandler = async (
+        articleData: ArticleCreateData,
+    ): Promise<MutationResult<{ slug: string }>> => {
         setLoading(true);
         setError(null);
 
@@ -30,7 +36,7 @@ export const useCreateArticle = () => {
 
             return result;
         } catch (err) {
-            const errorMessage = err.message || "Неизвестная ошибка при создании статьи";
+            const errorMessage = getErrorMessage(err) || "Неизвестная ошибка при создании статьи";
             setError(errorMessage);
             return {
                 success: false,

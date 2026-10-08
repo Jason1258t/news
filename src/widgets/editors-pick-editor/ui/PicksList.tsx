@@ -1,10 +1,21 @@
-import React from "react";
-import styles from "./CurrentPicks.module.css";
-import { LoadingWidget } from "shared/ui/loading-widget";
-import { EditorsPickCard } from "entities/editors-pick";
+import { EditorsPickCard, type EditorsPick } from "entities/editors-pick";
 import { FilledButton, OutlinedButton } from "shared/ui/button";
+import { LoadingWidget } from "shared/ui/loading-widget";
+import styles from "./CurrentPicks.module.css";
 
-export const PicksList = ({ loading, editorsPicks, removeEditorsPick, changeBadge }) => {
+interface PicksListProps {
+    loading: boolean;
+    editorsPicks: EditorsPick[];
+    removeEditorsPick: (id: string) => void;
+    changeBadge: (id: string) => void;
+}
+
+export const PicksList = ({
+    loading,
+    editorsPicks,
+    removeEditorsPick,
+    changeBadge,
+}: PicksListProps) => {
     if (loading)
         return (
             <div className={styles.picksList}>

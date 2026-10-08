@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { EDITORS_PICK_BADGES, type EditorsPickBadge } from "entities/editors-pick";
 import { FilledButton, OutlinedButton } from "shared/ui/button";
 import styles from "./BadgesDialog.module.css";
 
-const bages = ["Must Read", "Deep Dive", "Trending", "Case Study", "Tutorial", "Research"];
+interface BadgesDialogProps {
+    isOpen: boolean;
+    onClose: () => void;
+    onConfirm: (badge: EditorsPickBadge) => void;
+}
 
-export const BadgesDialog = ({ isOpen, onClose, onConfirm }) => {
-    const [selectedCategory, setSelectedCategory] = useState(null);
+export const BadgesDialog = ({ isOpen, onClose, onConfirm }: BadgesDialogProps) => {
+    const [selectedCategory, setSelectedCategory] = useState<EditorsPickBadge | null>(null);
 
-    const handleBadgeClick = (category) => {
+    const handleBadgeClick = (category: EditorsPickBadge) => {
         setSelectedCategory(category);
     };
 
@@ -32,7 +37,7 @@ export const BadgesDialog = ({ isOpen, onClose, onConfirm }) => {
                 <h3>Выберите бейдж</h3>
 
                 <div className={styles.badgesContainer}>
-                    {bages.map((bage) => (
+                    {EDITORS_PICK_BADGES.map((bage) => (
                         <button
                             key={bage}
                             className={`${styles.badge} ${
@@ -48,7 +53,7 @@ export const BadgesDialog = ({ isOpen, onClose, onConfirm }) => {
 
                 <div className={styles.overlayActions}>
                     <OutlinedButton onClick={handleCancel}>Отмена</OutlinedButton>
-                    <FilledButton onClick={handleConfirm} active={selectedCategory}>
+                    <FilledButton onClick={handleConfirm} active={selectedCategory !== null}>
                         Подтвердить
                     </FilledButton>
                 </div>

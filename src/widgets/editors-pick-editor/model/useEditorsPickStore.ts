@@ -1,16 +1,39 @@
 import { create } from "zustand";
-import { fetchEditorsPicks, createEditorsPick, deleteEditorsPick } from "entities/editors-pick";
+import type { ArticleOG } from "entities/article";
+import {
+    createEditorsPick,
+    deleteEditorsPick,
+    fetchEditorsPicks,
+    type EditorsPick,
+    type EditorsPickBadge,
+} from "entities/editors-pick";
+import { getErrorMessage } from "shared/lib/error";
 
-export const useEditorsPickStore = create((set, get) => ({
+interface EditorsPickState {
+    editorsPicks: EditorsPick[];
+    loading: boolean;
+    error: string | null;
+    hasChanges: boolean;
+    loadEditorsPicks: () => Promise<void>;
+    addEditorsPick: (articleOG: Partial<ArticleOG>) => EditorsPick;
+    removeEditorsPick: (id: string) => void;
+    updateEditorsPickBadge: (id: string, badge: EditorsPickBadge) => void;
+    saveAllChanges: () => Promise<{ success: boolean; error?: string }>;
+    resetChanges: () => Promise<void>;
+    clearError: () => void;
+}
+
+/** Local draft of the editors' pick; nothing is written to Firestore until saveAllChanges. */
+export const useEditorsPickStore = create<EditorsPickState>()((set, get) => ({
     editorsPicks: [],
     loading: false,
     error: null,
     hasChanges: false,
 
-    loadEditorsPicks: async (badge = null) => {
+    loadEditorsPicks: async () => {
         set({ loading: true, error: null });
         try {
-            const picks = await fetchEditorsPicks(badge);
+            const picks = await fetchEditorsPicks();
             set({
                 editorsPicks: picks,
                 loading: false,
@@ -18,7 +41,7 @@ export const useEditorsPickStore = create((set, get) => ({
             });
         } catch (error) {
             set({
-                error: error.message,
+                error: getErrorMessage(error),
                 loading: false,
             });
         }
@@ -27,11 +50,11 @@ export const useEditorsPickStore = create((set, get) => ({
     addEditorsPick: (articleOG) => {
         const { editorsPicks } = get();
 
-        const newPick = {
-            id: `local_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        const newPick: EditorsPick = {
+            id: `local_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`,
             title: articleOG.title || "",
             description: articleOG.description || "",
-            badge: articleOG.badge || "Must Read",
+            badge: "Must Read",
             articleUrl: articleOG.url || "",
             createdAt: new Date(),
             updatedAt: new Date(),
@@ -47,10 +70,9 @@ export const useEditorsPickStore = create((set, get) => ({
 
     removeEditorsPick: (id) => {
         const { editorsPicks } = get();
-        const updatedPicks = editorsPicks.filter((pick) => pick.id !== id);
 
         set({
-            editorsPicks: updatedPicks,
+            editorsPicks: editorsPicks.filter((pick) => pick.id !== id),
             hasChanges: true,
         });
     },
@@ -58,13 +80,7 @@ export const useEditorsPickStore = create((set, get) => ({
     updateEditorsPickBadge: (id, newBadge) => {
         const { editorsPicks } = get();
         const updatedPicks = editorsPicks.map((pick) =>
-            pick.id === id
-                ? {
-                      ...pick,
-                      badge: newBadge,
-                      updatedAt: new Date(),
-                  }
-                : pick,
+            pick.id === id ? { ...pick, badge: newBadge, updatedAt: new Date() } : pick,
         );
 
         set({
@@ -73,6 +89,7 @@ export const useEditorsPickStore = create((set, get) => ({
         });
     },
 
+    // TODO(stage 2): not atomic — delete-all then create-all loses the pick on failure (B7).
     saveAllChanges: async () => {
         const { editorsPicks, loadEditorsPicks } = get();
 
@@ -81,19 +98,15 @@ export const useEditorsPickStore = create((set, get) => ({
         try {
             const currentPicks = await fetchEditorsPicks();
 
-            const deletePromises = currentPicks.map((pick) => deleteEditorsPick(pick.id));
-            await Promise.all(deletePromises);
+            await Promise.all(currentPicks.map((pick) => deleteEditorsPick(pick.id)));
 
-            const createPromises = editorsPicks.map((pick) => {
-                const { id, ...pickData } = pick;
+            const results = await Promise.all(
+                editorsPicks.map(({ title, description, badge, articleUrl }) =>
+                    createEditorsPick({ title, description, badge, articleUrl }),
+                ),
+            );
 
-                return createEditorsPick(pickData);
-            });
-
-            const results = await Promise.all(createPromises);
-
-            const hasErrors = results.some((result) => !result.success);
-            if (hasErrors) {
+            if (results.some((result) => !result.success)) {
                 throw new Error("Некоторые записи не удалось сохранить");
             }
 
@@ -106,13 +119,14 @@ export const useEditorsPickStore = create((set, get) => ({
 
             return { success: true };
         } catch (error) {
+            const message = getErrorMessage(error);
             set({
-                error: error.message,
+                error: message,
                 loading: false,
             });
             return {
                 success: false,
-                error: error.message,
+                error: message,
             };
         }
     },
@@ -122,6 +136,7 @@ export const useEditorsPickStore = create((set, get) => ({
         await get().loadEditorsPicks();
     },
 
-    // Очистка ошибок
     clearError: () => set({ error: null }),
 }));
+
+export type EditorsPickStore = ReturnType<typeof useEditorsPickStore.getState>;

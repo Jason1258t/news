@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./FeedHeader.module.css";
 import { TagsPanel } from "features/filter-by-tags";
 import { useSearchParams } from "react-router-dom";

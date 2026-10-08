@@ -1,8 +1,11 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { authApi } from "features/auth";
 import { useSession } from "entities/session";
-import styles from "./AdminSidebar.module.css";
+import { authApi } from "features/auth";
 import { OutlinedButton } from "shared/ui/button";
+import styles from "./AdminSidebar.module.css";
+
+const navLinkClass = ({ isActive }: { isActive: boolean }) =>
+    isActive ? `${styles.link} ${styles.active}` : styles.link;
 
 export const AdminSidebar = () => {
     const navigate = useNavigate();
@@ -25,37 +28,17 @@ export const AdminSidebar = () => {
             </div>
 
             <nav className={styles.nav}>
-                <NavLink
-                    to="/admin/create-article"
-                    className={({ isActive }) =>
-                        isActive ? `${styles.link} ${styles.active}` : styles.link
-                    }
-                >
+                <NavLink to="/admin/create-article" className={navLinkClass}>
                     Создать статью
                 </NavLink>
-                <NavLink
-                    to="/admin/articles-panel"
-                    className={({ isActive }) =>
-                        isActive ? `${styles.link} ${styles.active}` : styles.link
-                    }
-                >
+                <NavLink to="/admin/articles-panel" className={navLinkClass}>
                     Управление статьями
                 </NavLink>
-                <NavLink
-                    to="/admin/editors-pick"
-                    className={({ isActive }) =>
-                        isActive ? `${styles.link} ${styles.active}` : styles.link
-                    }
-                >
+                <NavLink to="/admin/editors-pick" className={navLinkClass}>
                     Выбор редакции
                 </NavLink>
 
-                <NavLink
-                    to="/admin/studio"
-                    className={({ isActive }) =>
-                        isActive ? `${styles.link} ${styles.active}` : styles.link
-                    }
-                >
+                <NavLink to="/admin/studio" className={navLinkClass}>
                     Студия
                 </NavLink>
             </nav>

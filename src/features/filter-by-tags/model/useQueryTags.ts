@@ -1,16 +1,16 @@
-import { useSearchParams } from "react-router-dom";
 import { useMemo } from "react";
+import { useSearchParams } from "react-router-dom";
 
+/** Selected tags, stored in the `?tags=a,b` query param. */
 export const useQueryTags = () => {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const selectedTags = useMemo(() => {
         const tagsParam = searchParams.get("tags");
-        console.log(`tagsParams: ${tagsParam}`);
         return tagsParam ? tagsParam.split(",").filter((tag) => tag.trim() !== "") : [];
     }, [searchParams]);
 
-    const updateTagsInQuery = (tags) => {
+    const updateTagsInQuery = (tags: string[]) => {
         const newSearchParams = new URLSearchParams(searchParams);
 
         if (tags.length > 0) {
@@ -22,18 +22,16 @@ export const useQueryTags = () => {
         setSearchParams(newSearchParams);
     };
 
-    const addTag = (tag) => {
+    const addTag = (tag: string) => {
         const normalizedTag = tag.trim().toLowerCase();
 
         if (normalizedTag && !selectedTags.includes(normalizedTag)) {
-            const newTags = [...selectedTags, normalizedTag];
-            updateTagsInQuery(newTags);
+            updateTagsInQuery([...selectedTags, normalizedTag]);
         }
     };
 
-    const removeTag = (tagToRemove) => {
-        const newTags = selectedTags.filter((tag) => tag !== tagToRemove);
-        updateTagsInQuery(newTags);
+    const removeTag = (tagToRemove: string) => {
+        updateTagsInQuery(selectedTags.filter((tag) => tag !== tagToRemove));
     };
 
     const clearAllTags = () => {
@@ -41,7 +39,7 @@ export const useQueryTags = () => {
     };
 
     return {
-        selectedTags, // Теперь всегда актуальный
+        selectedTags,
         addTag,
         removeTag,
         clearAllTags,
