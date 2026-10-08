@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./TeamSection.module.css";
 
 export const TeamSection = () => {
@@ -13,7 +12,7 @@ export const TeamSection = () => {
         },
     ];
 
-    const renderSteamCard = (steamId, index) => (
+    const renderSteamCard = (steamId: string, index: number) => (
         <div key={steamId} className={styles.steamCard}>
             <iframe
                 src={`https://gamer2810.github.io/steam-miniprofile/?accountId=${steamId}`}

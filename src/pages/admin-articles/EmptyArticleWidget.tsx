@@ -1,5 +1,3 @@
-import React from "react";
-
 import { FileText } from "lucide-react";
 
 export const EmptyArticleWidget = () => {

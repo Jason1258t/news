@@ -1,6 +1,5 @@
 import { useTodos } from "entities/todo";
 import { TodoList } from "features/manage-todos";
-import React from "react";
 import { Helmet } from "react-helmet-async";
 import { PROJECT_NAME } from "shared/config";
 import { Content, Main, Container, Surface } from "shared/ui/layout";
@@ -22,7 +21,7 @@ export const StudioPage = () => {
                         <Content>
                             <h2>Студия</h2>
                             {loading && <LoadingWidget />}
-                            {error && <ErrorWidget message={error?.message} />}
+                            {error && <ErrorWidget message={error} />}
                             <TodoList
                                 todos={todos}
                                 onAddTodo={addTodo}

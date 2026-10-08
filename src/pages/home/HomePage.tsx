@@ -1,4 +1,3 @@
-import React from "react";
 import { EditorsPickSidebar } from "widgets/editors-pick-sidebar";
 import { ArticleFeed, FeedHeader } from "widgets/article-feed";
 import { SubscribeCta } from "widgets/subscribe-cta";

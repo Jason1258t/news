@@ -1,7 +1,8 @@
 import { Helmet } from "react-helmet-async";
+import type { Article } from "entities/article";
 import { PROJECT_NAME } from "shared/config";
 
-export const ArticleMeta = ({ article }) => (
+export const ArticleMeta = ({ article }: { article: Article }) => (
     <Helmet>
         {/* Основные мета-теги */}
         <title>{`${article.title} | ${PROJECT_NAME}`}</title>
@@ -29,7 +30,7 @@ export const ArticleMeta = ({ article }) => (
         {/* Article-specific OG tags */}
         <meta property="article:published_time" content={article.datePublishedISO} />
         <meta property="article:author" content={article.author} />
-        <meta property="article:section" content={article.section} />
+        <meta property="article:section" content={article.category} />
         {article.tags.map((tag) => (
             <meta key={tag} property="article:tag" content={tag} />
         ))}

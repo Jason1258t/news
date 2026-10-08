@@ -1,6 +1,21 @@
 import { create } from "zustand";
+import { getErrorMessage } from "shared/lib/error";
 
-export const useCreateArticleStore = create((set, get) => ({
+interface CreateArticleState {
+    jsonInput: string;
+    imageUrl: string | null;
+    /** Publication date: Date initially, datetime-local string after the user picks one. */
+    date: Date | string;
+    isValid: boolean;
+    error: string;
+    setJsonInput: (jsonInput: string) => void;
+    setImageUrl: (imageUrl: string | null) => void;
+    setDate: (date: Date | string) => void;
+    setError: (error: string) => void;
+    validateJson: () => void;
+}
+
+export const useCreateArticleStore = create<CreateArticleState>()((set, get) => ({
     jsonInput: "",
     imageUrl: null,
     date: new Date(),
@@ -32,7 +47,7 @@ export const useCreateArticleStore = create((set, get) => ({
         } catch (err) {
             set({
                 isValid: false,
-                error: `Невалидный JSON: ${err.message}`,
+                error: `Невалидный JSON: ${getErrorMessage(err)}`,
             });
         }
     },

@@ -1,4 +1,3 @@
-import React from "react";
 import { PROJECT_NAME } from "shared/config";
 
 import "./AboutPage.css";

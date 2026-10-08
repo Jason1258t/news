@@ -1,8 +1,9 @@
+import type { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 import { useSession } from "entities/session";
 import { LoadingWidget } from "shared/ui/loading-widget";
 
-export const ProtectedRoute = ({ children }) => {
+export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
     const { user, loading } = useSession();
 
     if (loading) {
@@ -13,5 +14,5 @@ export const ProtectedRoute = ({ children }) => {
         return <Navigate to="/login" replace />;
     }
 
-    return children;
+    return <>{children}</>;
 };

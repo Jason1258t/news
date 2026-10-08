@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import { ArticleView } from "widgets/article-view";
 import { ArticleMeta } from "./ArticleMeta";
@@ -9,7 +8,7 @@ import { NotFoundWidget } from "shared/ui/not-found-widget";
 import { Content, SurfacePage } from "shared/ui/layout";
 
 export const ArticlePage = () => {
-    const { slug } = useParams();
+    const { slug = "" } = useParams();
 
     const { data: article, isLoading, error } = useArticle(slug);
 
@@ -18,7 +17,7 @@ export const ArticlePage = () => {
     }
 
     if (error) {
-        return <ErrorWidget message={error?.message} onRetry={() => {}} />;
+        return <ErrorWidget message={error.message} onRetry={() => {}} />;
     }
 
     if (!article) {

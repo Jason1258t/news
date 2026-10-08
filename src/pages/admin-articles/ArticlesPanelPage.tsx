@@ -1,10 +1,14 @@
-import React, { useState } from "react";
-
-import { ArticleCardSmall, useArticles, deleteArticle, ArticleCard } from "entities/article";
+import { useEffect, useState } from "react";
+import {
+    ArticleCard,
+    ArticleCardSmall,
+    deleteArticle,
+    useArticles,
+    type Article,
+} from "entities/article";
 import { LoadingSpinner } from "shared/ui/loading-widget";
 import { ErrorWidget } from "shared/ui/error-widget";
 import { useDeleteConfirmation, DeleteConfirmationModal } from "shared/ui/confirm-dialog";
-import { useEffect } from "react";
 
 import styles from "./ArticlesPanelPage.module.css";
 
@@ -19,7 +23,7 @@ import { PROJECT_NAME } from "shared/config";
 export const ArticlesPanelPage = () => {
     const { data, isLoading, error } = useArticles({ limit: 50 });
 
-    const [allArticles, setArticles] = useState([]);
+    const [allArticles, setArticles] = useState<Article[]>([]);
 
     useEffect(() => {
         if (data?.pages) {
@@ -28,7 +32,7 @@ export const ArticlesPanelPage = () => {
         }
     }, [data]);
 
-    const [selectedArticle, setArticle] = useState(null);
+    const [selectedArticle, setArticle] = useState<Article | null>(null);
 
     const deleteConfirmation = useDeleteConfirmation();
 

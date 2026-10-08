@@ -1,4 +1,4 @@
-import React from "react";
+import type { FormEvent } from "react";
 import { Helmet } from "react-helmet-async";
 import { PROJECT_NAME } from "shared/config";
 import { useNavigate } from "react-router-dom";
@@ -13,13 +13,14 @@ import { FilledButton } from "shared/ui/button";
 import { useCreateArticleStore } from "./create-article-store";
 import { Main, Container } from "shared/ui/layout";
 import { CharCounter } from "shared/ui/char-counter";
+import { getErrorMessage } from "shared/lib/error";
 
 export const CreateArticlePage = () => {
     const store = useCreateArticleStore();
     const navigate = useNavigate();
     const { createArticle, loading } = useCreateArticle();
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (!store.jsonInput?.trim() || !store.isValid) {
@@ -39,7 +40,7 @@ export const CreateArticlePage = () => {
                 store.setError(result.error || "Ошибка при создании статьи");
             }
         } catch (err) {
-            store.setError("Ошибка: " + err.message);
+            store.setError("Ошибка: " + getErrorMessage(err));
         }
     };
 
@@ -78,10 +79,7 @@ export const CreateArticlePage = () => {
                                 <div style={{ width: 250 }}>
                                     <DatePicker
                                         label="Выберите дату публикации"
-                                        onChange={(value) => {
-                                            store.setDate(value);
-                                            console.log(store.date);
-                                        }}
+                                        onChange={store.setDate}
                                     />
                                 </div>
                                 <div style={{ flex: 1 }}>
@@ -133,9 +131,9 @@ export const CreateArticlePage = () => {
                                 <div className="submit-section">
                                     <FilledButton
                                         type="submit"
-                                        active={
-                                            store.jsonInput?.trim() && store.isValid && !loading
-                                        }
+                                        active={Boolean(
+                                            store.jsonInput.trim() && store.isValid && !loading,
+                                        )}
                                     >
                                         {loading ? "⏳ Загрузка..." : "🚀 Создать статью"}
                                     </FilledButton>

@@ -1,4 +1,4 @@
-import { lazy } from "react";
+import { lazy, type ComponentType } from "react";
 import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 import { AboutPage } from "pages/about";
 import { ArticlePage } from "pages/article";
@@ -10,7 +10,10 @@ import { Header } from "widgets/header";
 import { ProtectedRoute } from "./ProtectedRoute";
 
 /** React.lazy для модулей с именованным экспортом. */
-const lazyNamed = (load, name) => lazy(() => load().then((module) => ({ default: module[name] })));
+const lazyNamed = <M extends Record<K, ComponentType>, K extends keyof M & string>(
+    load: () => Promise<M>,
+    name: K,
+) => lazy(() => load().then((module) => ({ default: module[name] })));
 
 // Админка грузится отдельным чанком: читателям она не нужна.
 const CreateArticlePage = lazyNamed(
