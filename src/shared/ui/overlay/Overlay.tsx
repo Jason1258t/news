@@ -1,6 +1,6 @@
-import React from "react";
+import type { ReactNode } from "react";
 
-export const Overlay = ({ children }) => {
+export const Overlay = ({ children }: { children: ReactNode }) => {
     return (
         <div
             style={{

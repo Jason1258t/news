@@ -1,6 +1,17 @@
+import { AlertCircle, Trash2, X } from "lucide-react";
 import { Overlay } from "shared/ui/overlay";
 import styles from "./DeleteConfirmationModal.module.css";
-import { AlertCircle, Trash2, X } from "lucide-react";
+
+export interface DeleteConfirmationModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    onConfirm: () => void;
+    title?: string;
+    description?: string;
+    isLoading?: boolean;
+    confirmText?: string;
+    cancelText?: string;
+}
 
 export const DeleteConfirmationModal = ({
     isOpen,
@@ -11,7 +22,7 @@ export const DeleteConfirmationModal = ({
     isLoading = false,
     confirmText = "Удалить",
     cancelText = "Отмена",
-}) => {
+}: DeleteConfirmationModalProps) => {
     if (!isOpen) return null;
 
     return (

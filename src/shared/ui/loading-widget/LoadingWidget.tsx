@@ -1,7 +1,6 @@
-import React from "react";
 import styles from "./LoadingWidget.module.css";
 
-export const LoadingWidget = ({ message = "Загрузка..." }) => {
+export const LoadingWidget = ({ message = "Загрузка..." }: { message?: string }) => {
     return (
         <div className={styles.widget}>
             <div className={styles.icon}>

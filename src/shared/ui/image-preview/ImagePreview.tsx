@@ -1,5 +1,18 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styles from "./ImagePreview.module.css";
+
+interface ImagePreviewProps {
+    src?: string | null;
+    alt?: string;
+    onLoad?: (src: string) => void;
+    onError?: (src: string) => void;
+    onRemove?: (src: string) => void;
+    showRemoveButton?: boolean;
+    className?: string;
+    width?: string;
+    height?: string;
+    maxHeight?: string;
+}
 
 export const ImagePreview = ({
     src,
@@ -12,7 +25,7 @@ export const ImagePreview = ({
     width = "100%",
     height = "auto",
     maxHeight = "400px",
-}) => {
+}: ImagePreviewProps) => {
     const [hasError, setHasError] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -20,7 +33,7 @@ export const ImagePreview = ({
         setIsLoading(false);
         setHasError(false);
         if (onLoad) {
-            onLoad(src);
+            onLoad(src!);
         }
     };
 
@@ -28,13 +41,13 @@ export const ImagePreview = ({
         setIsLoading(false);
         setHasError(true);
         if (onError) {
-            onError(src);
+            onError(src!);
         }
     };
 
     const handleRemove = () => {
         if (onRemove) {
-            onRemove(src);
+            onRemove(src!);
         }
     };
 

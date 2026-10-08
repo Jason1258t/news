@@ -1,8 +1,12 @@
-import React from "react";
-import styles from "./ErrorWidget.module.css";
 import { FilledButton } from "shared/ui/button";
+import styles from "./ErrorWidget.module.css";
 
-export const ErrorWidget = ({ message = "Произошла ошибка", onRetry }) => {
+interface ErrorWidgetProps {
+    message?: string;
+    onRetry?: () => void;
+}
+
+export const ErrorWidget = ({ message = "Произошла ошибка", onRetry }: ErrorWidgetProps) => {
     return (
         <div className={styles.widget}>
             <div className={styles.icon}>⚠️</div>

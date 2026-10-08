@@ -1,7 +1,18 @@
-import React, { useState, useEffect } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 import styles from "./DatePicker.module.css";
 
-export const DatePicker = ({ value, onChange, label = "Выберите дату и время" }) => {
+interface DatePickerProps {
+    /** Value in datetime-local format: YYYY-MM-DDTHH:mm. */
+    value?: string;
+    onChange?: (value: string) => void;
+    label?: string;
+}
+
+export const DatePicker = ({
+    value,
+    onChange,
+    label = "Выберите дату и время",
+}: DatePickerProps) => {
     const [selectedDate, setSelectedDate] = useState(value || getCurrentDateTime());
 
     function getCurrentDateTime() {
@@ -16,7 +27,7 @@ export const DatePicker = ({ value, onChange, label = "Выберите дату
         return `${year}-${month}-${day}T${hours}:${minutes}`;
     }
 
-    const handleDateChange = (e) => {
+    const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => {
         const newDate = e.target.value ?? getCurrentDateTime();
 
         setSelectedDate(newDate);

@@ -1,11 +1,19 @@
 import { useState } from "react";
 
+export interface DeleteConfirmationConfig {
+    title?: string;
+    description?: string;
+    confirmText?: string;
+    cancelText?: string;
+    onConfirm?: () => unknown;
+}
+
 export const useDeleteConfirmation = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [config, setConfig] = useState({});
+    const [config, setConfig] = useState<DeleteConfirmationConfig>({});
 
-    const openModal = (modalConfig) => {
+    const openModal = (modalConfig: DeleteConfirmationConfig) => {
         setConfig(modalConfig);
         setIsOpen(true);
     };

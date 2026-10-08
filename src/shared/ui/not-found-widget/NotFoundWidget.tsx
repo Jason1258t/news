@@ -1,9 +1,8 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./NotFoundWidget.module.css";
 import { OutlinedButton } from "shared/ui/button";
 
-export const NotFoundWidget = ({ message = "Страница не найдена" }) => {
+export const NotFoundWidget = ({ message = "Страница не найдена" }: { message?: string }) => {
     return (
         <div className={styles.widget}>
             <div className={styles.icon}>🔍</div>

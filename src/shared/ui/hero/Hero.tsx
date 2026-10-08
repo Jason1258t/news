@@ -1,14 +1,11 @@
-import React from "react";
 import styles from "./Hero.module.css";
 
-/**
- * @typedef {Object} Props
- * @property {string} title
- * @property {string} subtitle
- */
+interface HeroProps {
+    title: string;
+    subtitle: string;
+}
 
-/** @type {React.FC<Props>} */
-export const Hero = ({ title, subtitle }) => {
+export const Hero = ({ title, subtitle }: HeroProps) => {
     return (
         <section className={styles.heroSection}>
             <div className={styles.heroContent}>
