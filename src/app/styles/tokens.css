@@ -3,7 +3,7 @@
  * never raw colors, so a theme (e.g. dark) is a single block of overrides.
  *
  * Breakpoints (CSS variables can't be used in media queries, keep these in sync):
- *   mobile ≤ 480px · tablet ≤ 768px · desktop-narrow ≤ 1024px
+ *   mobile ≤ 480px · tablet ≤ 768px · laptop ≤ 1024px · desktop-narrow ≤ 1200px
  */
 :root {
     /* ---- Palette (primitives, do not use in components) ---- */
