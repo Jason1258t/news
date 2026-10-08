@@ -33,20 +33,22 @@ describe("ContentBlock", () => {
     });
 
     it.each([
-        [undefined, "quote"],
-        ["default", "quote"],
-        ["warning", "quote warning"],
-        ["critical", "quote critical"],
-    ] as const)("renders a %s blockquote with class %j", (variant, className) => {
+        [undefined, null],
+        ["default", null],
+        ["warning", "quoteWarning"],
+        ["critical", "quoteCritical"],
+    ] as const)("renders a %s blockquote", (variant, variantClass) => {
         const { container } = renderBlock({
             type: "blockquote",
             html: "text",
             footer: "src",
             variant,
         });
-        const quote = container.querySelector("blockquote");
-        expect(quote).toHaveAttribute("class", className);
-        expect(quote?.querySelector("footer")).toHaveTextContent("src");
+        const quote = container.querySelector("blockquote")!;
+        expect(quote.className).toMatch(/quote/);
+        if (variantClass) expect(quote.className).toContain(variantClass);
+        else expect(quote.className).not.toMatch(/quoteWarning|quoteCritical/);
+        expect(quote.querySelector("footer")).toHaveTextContent("src");
     });
 
     it("renders nested blocks inside a highlight", () => {
@@ -70,12 +72,12 @@ describe("ContentBlock", () => {
 
     it("renders a footer note", () => {
         const { container } = renderBlock({ type: "footer-note", html: "note" });
-        expect(container.querySelector(".article-footer")).toHaveTextContent("note");
+        expect(container.querySelector("[class*=footerNote]")).toHaveTextContent("note");
     });
 
     it.each([
-        ["inline", ".formula-inline"],
-        ["block", ".formula-block"],
+        ["inline", "[class*=formulaInline]"],
+        ["block", "[class*=formulaBlock]"],
     ] as const)("renders a %s formula with KaTeX", (display, selector) => {
         const { container } = renderBlock({ type: "formula", formula: "x^2", display });
         expect(container.querySelector(`${selector} .katex`)).not.toBeNull();

@@ -1,50 +1,42 @@
-import { useNavigate } from "react-router-dom";
-import { ContentBlock, type Article } from "entities/article";
+import { Link } from "react-router-dom";
+import { ContentBlock, ImageBlock, type Article } from "entities/article";
+import styles from "./ArticleView.module.css";
 
 export const ArticleView = ({ article }: { article: Article }) => {
     const { title, description, category, dateDisplay, hero, content, tags } = article;
 
-    const navigate = useNavigate();
-
     return (
-        <article className="news-article">
-            <div className="article-header">
-                <div className="article-meta">
-                    <span className="category">{category}</span>
-                    <span className="date">{dateDisplay}</span>
+        <article className={styles.article}>
+            <div className={styles.header}>
+                <div className={styles.meta}>
+                    <span className={styles.category}>{category}</span>
+                    <span>{dateDisplay}</span>
                 </div>
-                <h1 className="article-title">{title}</h1>
+                <h1 className={styles.title}>{title}</h1>
                 {description ? (
-                    <div className="article-excerpt">
+                    <div className={styles.excerpt}>
                         <p>{description}</p>
                     </div>
                 ) : null}
             </div>
 
-            {hero ? (
-                <div className="article-image">
-                    <img src={hero.url} alt={hero.alt} />
-                    {hero.caption ? <span className="image-caption">{hero.caption}</span> : null}
-                </div>
-            ) : null}
+            {hero.url ? <ImageBlock url={hero.url} alt={hero.alt} caption={hero.caption} /> : null}
 
-            <div className="article-content">
-                {content?.map((block, idx) => (
+            <div className={styles.content}>
+                {content.map((block, idx) => (
                     <ContentBlock key={idx} block={block} />
                 ))}
 
-                {Array.isArray(tags) && tags.length ? (
-                    <div className="article-tags">
-                        {tags.map((t, i) => (
-                            <span
-                                key={i}
-                                className="tag"
-                                onClick={() => {
-                                    navigate(`/?tags=${t}`);
-                                }}
+                {tags.length > 0 ? (
+                    <div className={styles.tags}>
+                        {tags.map((tag) => (
+                            <Link
+                                key={tag}
+                                to={`/?tags=${encodeURIComponent(tag)}`}
+                                className={styles.tag}
                             >
-                                {t}
-                            </span>
+                                {tag}
+                            </Link>
                         ))}
                     </div>
                 ) : null}

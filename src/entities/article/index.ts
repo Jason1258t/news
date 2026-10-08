@@ -9,3 +9,4 @@ export { ArticleCardSmall } from "./ui/article-card-small/ArticleCardSmall";
 export { ArticleCard } from "./ui/article-card/ArticleCard";
 export { ContentBlock } from "./ui/content-block/ContentBlock";
 export { getArticlePreview, getArticleUrl, type ArticlePreview } from "./model/preview";
+export { ImageBlock } from "./ui/blocks";

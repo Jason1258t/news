@@ -11,6 +11,7 @@ import "prismjs/components/prism-java";
 import "prismjs/components/prism-css";
 import "prismjs/components/prism-markup";
 import type { ArticleCodeBlock } from "../../model/types";
+import styles from "./Blocks.module.css";
 
 export const CodeBlock = ({
     code,
@@ -26,8 +27,8 @@ export const CodeBlock = ({
     }, [code, language]);
 
     return (
-        <div className="code-block">
-            {filename && <div className="code-filename">{filename}</div>}
+        <div className={styles.code}>
+            {filename && <div className={styles.codeFilename}>{filename}</div>}
             <pre className={language !== "text" ? `language-${language}` : ""}>
                 <code ref={codeRef} className={language !== "text" ? `language-${language}` : ""}>
                     {code}
