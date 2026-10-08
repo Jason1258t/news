@@ -1,16 +1,17 @@
 import { create } from "zustand";
+import { toDateTimeLocal } from "shared/lib/date";
 import { getErrorMessage } from "shared/lib/error";
 
 interface CreateArticleState {
     jsonInput: string;
     imageUrl: string | null;
-    /** Publication date: Date initially, datetime-local string after the user picks one. */
-    date: Date | string;
+    /** Publication date in datetime-local format, local time. */
+    date: string;
     isValid: boolean;
     error: string;
     setJsonInput: (jsonInput: string) => void;
     setImageUrl: (imageUrl: string | null) => void;
-    setDate: (date: Date | string) => void;
+    setDate: (date: string) => void;
     setError: (error: string) => void;
     validateJson: () => void;
 }
@@ -18,7 +19,7 @@ interface CreateArticleState {
 export const useCreateArticleStore = create<CreateArticleState>()((set, get) => ({
     jsonInput: "",
     imageUrl: null,
-    date: new Date(),
+    date: toDateTimeLocal(new Date()),
     isValid: true,
     error: "",
 

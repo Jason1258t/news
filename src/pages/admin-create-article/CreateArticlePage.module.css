@@ -1,22 +1,22 @@
-.create-article-page {
+.page {
     max-width: 1000px;
     margin: 0 auto;
     padding: 2rem 0;
 }
 
-.page-header {
+.header {
     text-align: center;
     margin-bottom: 3rem;
 }
 
-.page-title {
+.title {
     font-size: 2.5rem;
     font-weight: 700;
     color: var(--color-text-strong);
     margin-bottom: 1rem;
 }
 
-.page-subtitle {
+.subtitle {
     font-size: 1.2rem;
     color: var(--color-text-muted);
     max-width: 600px;
@@ -24,14 +24,14 @@
     line-height: 1.6;
 }
 
-.create-article-content {
+.content {
     background: var(--color-surface);
     border-radius: var(--radius-lg);
     padding: 2rem;
     box-shadow: var(--shadow-md);
 }
 
-.format-info {
+.formatInfo {
     background: var(--color-surface-muted);
     border-radius: var(--radius-md);
     padding: 1.5rem;
@@ -39,37 +39,37 @@
     border-left: 4px solid var(--color-accent);
 }
 
-.format-info h3 {
+.formatInfo h3 {
     color: var(--color-text-strong);
     margin-bottom: 1rem;
     font-size: 1.2rem;
 }
 
-.format-info ul {
+.formatInfo ul {
     color: var(--color-text-secondary);
     line-height: 1.6;
     padding-left: 1.5rem;
 }
 
-.format-info li {
+.formatInfo li {
     margin-bottom: 0.5rem;
 }
 
-.format-info code {
+.formatInfo code {
     background: var(--color-border);
     padding: 0.2rem 0.4rem;
     border-radius: var(--radius-sm);
-    font-family: "Courier New", monospace;
+    font-family: var(--font-mono);
     font-size: 0.9rem;
 }
 
-.json-form {
+.form {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
 }
 
-.form-header {
+.formHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -77,25 +77,25 @@
     gap: 1rem;
 }
 
-.form-label {
+.formLabel {
     font-weight: 600;
     color: var(--color-text-strong);
     font-size: 1.1rem;
 }
 
-.form-actions {
+.actions {
     display: flex;
     gap: 0.75rem;
     flex-wrap: wrap;
 }
 
-.json-input {
+.jsonInput {
     width: 100%;
     min-height: 400px;
     padding: 1.5rem;
     border: 2px solid var(--color-border);
     border-radius: var(--radius-md);
-    font-family: "Courier New", monospace;
+    font-family: var(--font-mono);
     font-size: 0.9rem;
     line-height: 1.5;
     resize: vertical;
@@ -103,24 +103,24 @@
     background: var(--color-surface-muted);
 }
 
-.json-input:focus {
+.jsonInput:focus {
     outline: none;
     border-color: var(--color-accent);
     background: var(--color-surface);
 }
 
-.json-input.error {
+.jsonInputInvalid {
     border-color: var(--color-danger);
     background: var(--color-danger-soft);
 }
 
-.json-input:disabled {
+.jsonInput:disabled {
     background: var(--color-surface-muted);
     color: var(--color-text-subtle);
     cursor: not-allowed;
 }
 
-.error-message {
+.errorMessage {
     background: var(--color-danger-soft);
     color: var(--color-danger-text);
     padding: 1rem;
@@ -130,7 +130,7 @@
     white-space: pre-line;
 }
 
-.success-message {
+.successMessage {
     background: var(--color-success-soft);
     color: var(--color-success-text);
     padding: 1rem;
@@ -139,7 +139,7 @@
     font-weight: 500;
 }
 
-.submit-section {
+.submitSection {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -149,52 +149,74 @@
     border-top: 1px solid var(--color-border);
 }
 
-.char-count {
-    color: var(--color-text-muted);
-    font-size: 0.9rem;
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
-    .create-article-page {
+    .page {
         padding: 1rem 0;
     }
 
-    .page-title {
+    .title {
         font-size: 2rem;
     }
 
-    .create-article-content {
+    .content {
         padding: 1.5rem;
     }
 
-    .form-header {
+    .formHeader {
         flex-direction: column;
         align-items: flex-start;
     }
 
-    .form-actions {
+    .actions {
         width: 100%;
         justify-content: space-between;
     }
 
-    .json-input {
+    .jsonInput {
         min-height: 300px;
         padding: 1rem;
     }
 
-    .submit-section {
+    .submitSection {
         flex-direction: column;
         align-items: stretch;
     }
 }
 
 @media (max-width: 480px) {
-    .create-article-content {
+    .content {
         padding: 1rem;
     }
 
-    .format-info {
+    .formatInfo {
         padding: 1rem;
+    }
+}
+
+.publication {
+    display: flex;
+    gap: 1rem;
+}
+
+.datePicker {
+    width: 250px;
+}
+
+.imageUrl {
+    flex: 1;
+}
+
+.actions {
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+    .publication {
+        flex-direction: column;
+    }
+
+    .datePicker {
+        width: 100%;
     }
 }

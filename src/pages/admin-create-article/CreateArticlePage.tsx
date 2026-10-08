@@ -3,13 +3,13 @@ import { Helmet } from "react-helmet-async";
 import { PROJECT_NAME } from "shared/config";
 import { useNavigate } from "react-router-dom";
 import { useCreateArticle } from "features/article-create";
-import "./CreateArticlePage.css";
 import { CopyPromptButtons } from "features/copy-article-prompt";
 import toast from "react-hot-toast";
 import { DatePicker } from "shared/ui/date-picker";
 import { TextInput } from "shared/ui/text-input";
 import { ImagePreview } from "shared/ui/image-preview";
 import { Button } from "shared/ui/button";
+import styles from "./CreateArticlePage.module.css";
 import { useCreateArticleStore } from "./create-article-store";
 import { Main, Container } from "shared/ui/layout";
 import { CharCounter } from "shared/ui/char-counter";
@@ -47,16 +47,16 @@ export const CreateArticlePage = () => {
 
             <Main>
                 <Container>
-                    <div className="create-article-page">
-                        <header className="page-header">
-                            <h1 className="page-title">Создать статью</h1>
-                            <p className="page-subtitle">
+                    <div className={styles.page}>
+                        <header className={styles.header}>
+                            <h1 className={styles.title}>Создать статью</h1>
+                            <p className={styles.subtitle}>
                                 Вставьте JSON с данными статьи для загрузки в базу данных
                             </p>
                         </header>
 
-                        <div className="create-article-content">
-                            <div className="format-info">
+                        <div className={styles.content}>
+                            <div className={styles.formatInfo}>
                                 <h3>📋 Формат данных</h3>
                                 <ul>
                                     <li>Данные должны быть в формате JSON</li>
@@ -72,14 +72,15 @@ export const CreateArticlePage = () => {
                                     </li>
                                 </ul>
                             </div>
-                            <div style={{ display: "flex", gap: "1rem" }}>
-                                <div style={{ width: 250 }}>
+                            <div className={styles.publication}>
+                                <div className={styles.datePicker}>
                                     <DatePicker
                                         label="Выберите дату публикации"
+                                        value={store.date}
                                         onChange={store.setDate}
                                     />
                                 </div>
-                                <div style={{ flex: 1 }}>
+                                <div className={styles.imageUrl}>
                                     <TextInput
                                         label="URL изображения"
                                         placeholder="Введите URL изображения"
@@ -93,23 +94,22 @@ export const CreateArticlePage = () => {
                                 src={store.imageUrl}
                                 onRemove={() => store.setImageUrl(null)}
                             />
-                            {store.imageUrl && <div style={{ height: "1rem" }}></div>}
-                            <div className="form-actions" style={{ marginBottom: "1rem" }}>
+                            <div className={styles.actions}>
                                 <CopyPromptButtons
                                     publishDate={store.date}
                                     imageUrl={store.imageUrl}
                                 />
                             </div>
-                            <form onSubmit={handleSubmit} className="json-form">
-                                <div className="form-header">
-                                    <label htmlFor="json-input" className="form-label">
+                            <form onSubmit={handleSubmit} className={styles.form}>
+                                <div className={styles.formHeader}>
+                                    <label htmlFor="json-input" className={styles.formLabel}>
                                         JSON данные статьи
                                     </label>
                                 </div>
 
                                 <textarea
                                     id="json-input"
-                                    className={`json-input ${!store.isValid ? "error" : ""}`}
+                                    className={`${styles.jsonInput} ${!store.isValid ? styles.jsonInputInvalid : ""}`}
                                     value={store.jsonInput}
                                     onChange={(e) => store.setJsonInput(e.target.value)}
                                     placeholder='{"slug": "my-article", "title": "Заголовок статьи", ...}'
@@ -118,14 +118,14 @@ export const CreateArticlePage = () => {
                                 />
 
                                 {store.error && (
-                                    <div className="error-message">⚠️ {store.error}</div>
+                                    <div className={styles.errorMessage}>⚠️ {store.error}</div>
                                 )}
 
                                 {store.isValid && store.jsonInput?.trim() && (
-                                    <div className="success-message">✅ JSON валиден</div>
+                                    <div className={styles.successMessage}>✅ JSON валиден</div>
                                 )}
 
-                                <div className="submit-section">
+                                <div className={styles.submitSection}>
                                     <Button
                                         type="submit"
                                         disabled={
