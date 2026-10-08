@@ -5,17 +5,17 @@
 
 .clearButton {
     background: none;
-    border: 1px solid var(--accent-red);
-    color: var(--accent-red);
+    border: 1px solid var(--color-danger);
+    color: var(--color-danger);
     padding: 6px 12px;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     cursor: pointer;
     font-size: 14px;
-    transition: all 0.2s ease;
+    transition: all var(--transition-fast);
 }
 
 .clearButton:hover {
-    background-color: color-mix(in srgb, var(--accent-red) 10%, transparent);
+    background-color: color-mix(in srgb, var(--color-danger) 10%, transparent);
 }
 
 .tagsList {
@@ -27,20 +27,20 @@
 .tagItem {
     display: flex;
     align-items: center;
-    background-color: var(--primary-color);
-    color: white;
+    background-color: var(--color-accent);
+    color: var(--color-on-accent);
     padding: 6px 12px;
     border-radius: 20px;
     font-size: 14px;
     font-weight: 500;
-    box-shadow: var(--shadow);
-    transition: all 0.2s ease;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-fast);
 }
 
 .tagItem:hover {
-    background-color: var(--primary-hover);
+    background-color: var(--color-accent-hover);
     transform: translateY(-1px);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-sm);
 }
 
 .tagText {
@@ -50,7 +50,7 @@
 .removeButton {
     background: none;
     border: none;
-    color: white;
+    color: var(--color-on-accent);
     cursor: pointer;
     font-size: 18px;
     line-height: 1;
@@ -60,8 +60,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
-    transition: background-color 0.2s ease;
+    border-radius: var(--radius-round);
+    transition: background-color var(--transition-fast);
 }
 
 .removeButton:hover {

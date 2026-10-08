@@ -9,11 +9,7 @@ interface SidebarCardProps {
 
 export const SidebarCard = ({ children, title, onClick }: SidebarCardProps) => {
     return (
-        <div
-            className={styles.widget}
-            onClick={onClick}
-            style={onClick ? { cursor: "pointer" } : undefined}
-        >
+        <div className={`${styles.widget} ${onClick ? styles.clickable : ""}`} onClick={onClick}>
             {title && <h3 className={styles.title}>{title}</h3>}
             {children}
         </div>

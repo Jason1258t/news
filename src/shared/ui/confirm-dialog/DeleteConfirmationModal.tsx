@@ -69,12 +69,7 @@ export const DeleteConfirmationModal = ({
                                 </>
                             ) : (
                                 <>
-                                    <Trash2
-                                        style={{
-                                            width: "1rem",
-                                            height: "1rem",
-                                        }}
-                                    />
+                                    <Trash2 size="1rem" />
                                     <span>{confirmText}</span>
                                 </>
                             )}

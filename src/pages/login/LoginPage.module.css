@@ -3,14 +3,14 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--gradient-accent);
 }
 
 .card {
-    background: white;
+    background: var(--color-surface);
     padding: 3rem;
-    border-radius: 12px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
     width: 100%;
     max-width: 600px;
 }
@@ -18,7 +18,7 @@
 .title {
     margin: 0 0 2rem;
     text-align: center;
-    color: #2c3e50;
+    color: var(--color-text-strong);
 }
 
 .form {
@@ -29,29 +29,29 @@
 
 .input {
     padding: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
     font-size: 1rem;
 }
 
 .input:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: var(--color-accent);
 }
 
 .button {
     padding: 1rem;
-    background: #667eea;
-    color: white;
+    background: var(--color-accent);
+    color: var(--color-on-accent);
     border: none;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     font-size: 1rem;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: background var(--transition-fast);
 }
 
 .button:hover:not(:disabled) {
-    background: #5568d3;
+    background: var(--color-accent-hover);
 }
 
 .button:disabled {
@@ -61,8 +61,8 @@
 
 .error {
     padding: 1rem;
-    background: #fee;
-    color: #c33;
-    border-radius: 8px;
+    background: var(--color-danger-soft);
+    color: var(--color-danger-text);
+    border-radius: var(--radius-md);
     margin-bottom: 1rem;
 }

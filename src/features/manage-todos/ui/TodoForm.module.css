@@ -8,12 +8,12 @@
     flex: 1;
     padding: 12px 16px;
     font-size: 16px;
-    border: 2px solid var(--border-color);
-    border-radius: var(--border-radius);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
     outline: none;
-    transition: border-color 0.3s;
+    transition: border-color var(--transition-base);
 }
 
 .input:focus {
-    border-color: var(--primary-color);
+    border-color: var(--color-accent);
 }

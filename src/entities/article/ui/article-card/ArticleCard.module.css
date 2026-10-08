@@ -1,8 +1,8 @@
 .card {
     display: block;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: var(--shadow);
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
     overflow: hidden;
     width: 100%;
     padding-top: 1rem;
@@ -21,7 +21,7 @@
     width: 100%;
     aspect-ratio: 16 / 9;
     object-fit: contain;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
 }
 
 .content {
@@ -29,8 +29,8 @@
 }
 
 .category {
-    background: var(--primary-color);
-    color: white;
+    background: var(--color-accent);
+    color: var(--color-on-accent);
     padding: 0.3rem 0.8rem;
     border-radius: 20px;
     font-weight: 500;
@@ -42,19 +42,19 @@
     align-items: center;
     margin-bottom: 0.75rem;
     font-size: 0.9rem;
-    color: var(--text-light);
+    color: var(--color-text-muted);
 }
 
 .date {
     font-size: 1rem;
-    color: var(--text-muted);
+    color: var(--color-text-secondary);
     font-weight: 300;
 }
 
 .title {
     font-size: 1.25rem;
     margin: 0 0 0.5rem 0;
-    color: var(--text-dark);
+    color: var(--color-text-strong);
 }
 
 .title a {
@@ -63,7 +63,7 @@
 }
 
 .excerpt {
-    color: var(--text-light);
+    color: var(--color-text-muted);
     margin-bottom: 1rem;
 }
 

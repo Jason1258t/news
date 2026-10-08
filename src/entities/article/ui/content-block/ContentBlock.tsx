@@ -1,16 +1,19 @@
+import { lazy, Suspense } from "react";
 import {
-    Heading,
-    Paragraph,
-    List,
-    ImageBlock,
     Blockquote,
-    Highlight,
     FooterNote,
-    Formula,
-    CodeBlock,
+    Heading,
+    Highlight,
+    ImageBlock,
+    List,
+    Paragraph,
     Table,
 } from "../blocks";
 import type { ArticleContentBlock } from "../../model/types";
+
+// KaTeX and Prism are only needed by articles with formulas or code, so they load on demand.
+const Formula = lazy(() => import("../blocks/Formula").then((m) => ({ default: m.Formula })));
+const CodeBlock = lazy(() => import("../blocks/CodeBlock").then((m) => ({ default: m.CodeBlock })));
 
 export const ContentBlock = ({ block }: { block: ArticleContentBlock }) => {
     switch (block.type) {
@@ -37,10 +40,26 @@ export const ContentBlock = ({ block }: { block: ArticleContentBlock }) => {
         case "footer-note":
             return <FooterNote html={block.html} />;
         case "formula":
-            return <Formula formula={block.formula} display={block.display} />;
+            return (
+                <Suspense fallback={<code>{block.formula}</code>}>
+                    <Formula formula={block.formula} display={block.display} />
+                </Suspense>
+            );
         case "code":
             return (
-                <CodeBlock code={block.code} language={block.language} filename={block.filename} />
+                <Suspense
+                    fallback={
+                        <pre>
+                            <code>{block.code}</code>
+                        </pre>
+                    }
+                >
+                    <CodeBlock
+                        code={block.code}
+                        language={block.language}
+                        filename={block.filename}
+                    />
+                </Suspense>
             );
         case "table":
             return <Table data={block.data} hasHeader={block.hasHeader} />;

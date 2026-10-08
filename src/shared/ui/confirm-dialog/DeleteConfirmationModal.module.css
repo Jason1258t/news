@@ -1,6 +1,6 @@
 .modal {
-    background-color: white;
-    border-radius: 0.5rem;
+    background-color: var(--color-surface);
+    border-radius: var(--radius-md);
     max-width: 28rem;
     overflow: hidden;
 }
@@ -9,7 +9,7 @@
     display: flex;
     justify-content: space-between;
     padding: 0.5rem;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--color-border);
 }
 
 .headerContent {
@@ -20,34 +20,34 @@
 
 .iconWrapper {
     padding: 0.5rem;
-    background-color: #fee2e2;
-    border-radius: 9999px;
+    background-color: var(--color-danger-soft);
+    border-radius: var(--radius-pill);
 }
 
 .icon {
     width: 1.25rem;
     height: 1.25rem;
-    color: #dc2626;
+    color: var(--color-danger);
     display: block;
 }
 
 .title {
     font-size: 1.125rem;
     font-weight: 600;
-    color: var(--text-dark);
+    color: var(--color-text-strong);
 }
 
 .closeButton {
-    color: #9ca3af;
+    color: var(--color-text-subtle);
     background: none;
     border: none;
     cursor: pointer;
     padding: 0.25rem;
-    transition: color 0.2s;
+    transition: color var(--transition-fast);
 }
 
 .closeButton:hover {
-    color: #6b7280;
+    color: var(--color-text-muted);
 }
 
 .content {
@@ -55,7 +55,7 @@
 }
 
 .description {
-    color: var(--text-dark);
+    color: var(--color-text-strong);
     margin-bottom: 0.5rem;
 }
 
@@ -68,10 +68,10 @@
 .button {
     flex: 1;
     padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
+    border-radius: var(--radius-md);
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all var(--transition-fast);
     border: none;
     font-size: 0.875rem;
     display: flex;
@@ -81,30 +81,30 @@
 }
 
 .cancelButton {
-    background-color: white;
-    border: 1px solid #d1d5db;
-    color: #374151;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border-strong);
+    color: var(--color-text-secondary);
 }
 
 .cancelButton:hover {
-    background-color: #f9fafb;
+    background-color: var(--color-surface-muted);
 }
 
 .confirmButton {
-    color: white;
-    background-color: #dc2626;
+    color: var(--color-on-accent);
+    background-color: var(--color-danger);
 }
 
 .confirmButton:hover {
-    background-color: #b91c1c;
+    background-color: var(--color-danger-hover);
 }
 
 .spinner {
     width: 1rem;
     height: 1rem;
-    border: 2px solid white;
+    border: 2px solid var(--color-on-accent);
     border-top-color: transparent;
-    border-radius: 9999px;
+    border-radius: var(--radius-pill);
     animation: spin 0.6s linear infinite;
 }
 

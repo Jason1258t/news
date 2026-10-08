@@ -3,10 +3,10 @@
     align-items: center;
     gap: 12px;
     padding: 16px;
-    background-color: white;
-    border-radius: var(--border-radius);
+    background-color: var(--color-surface);
+    border-radius: var(--radius-md);
     margin-bottom: 10px;
-    box-shadow: var(--shadow-light);
+    box-shadow: var(--shadow-sm);
     transition:
         transform 0.2s,
         box-shadow 0.2s;
@@ -14,7 +14,7 @@
 
 .item:hover {
     transform: translateY(-2px);
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow-md);
 }
 
 .checkbox {
@@ -26,13 +26,13 @@
 .text {
     flex: 1;
     font-size: 16px;
-    color: var(--text-dark);
+    color: var(--color-text-strong);
 }
 
 .textCompleted {
     flex: 1;
     font-size: 16px;
-    color: var(--text-muted);
+    color: var(--color-text-secondary);
     text-decoration: line-through;
 }
 
@@ -40,8 +40,8 @@
     flex: 1;
     padding: 8px;
     font-size: 16px;
-    border: 2px solid var(--primary-color);
-    border-radius: 4px;
+    border: 2px solid var(--color-accent);
+    border-radius: var(--radius-sm);
     outline: none;
 }
 
@@ -53,7 +53,7 @@
     cursor: pointer;
     font-weight: 500;
     border: 1px solid;
-    transition: opacity 0.2s;
+    transition: opacity var(--transition-fast);
 }
 
 .button:hover {
@@ -61,27 +61,27 @@
 }
 
 .editButton {
-    background-color: white;
+    background-color: var(--color-surface);
 
-    border-color: var(--border-color);
-    color: var(--text-dark);
+    border-color: var(--color-border);
+    color: var(--color-text-strong);
 }
 
 .editButton:hover {
-    border-color: var(--primary-color);
-    color: var(--primary-color);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
 }
 .deleteButton {
-    background-color: var(--danger);
-    color: white;
+    background-color: var(--color-danger);
+    color: var(--color-on-accent);
 }
 
 .saveButton {
-    background-color: var(--primary-color);
-    color: white;
+    background-color: var(--color-accent);
+    color: var(--color-on-accent);
 }
 
 .cancelButton {
-    background-color: var(--gray);
-    color: white;
+    background-color: var(--color-text-subtle);
+    color: var(--color-on-accent);
 }

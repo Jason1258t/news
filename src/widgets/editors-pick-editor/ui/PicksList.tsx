@@ -1,5 +1,5 @@
 import { EditorsPickCard, type EditorsPick } from "entities/editors-pick";
-import { FilledButton, OutlinedButton } from "shared/ui/button";
+import { Button } from "shared/ui/button";
 import { LoadingWidget } from "shared/ui/loading-widget";
 import styles from "./CurrentPicks.module.css";
 
@@ -28,29 +28,18 @@ export const PicksList = ({
     return (
         <div className={styles.picksList}>
             {editorsPicks.map((e) => (
-                <div
-                    style={{
-                        display: "flex",
-                        gap: "1rem",
-                    }}
-                    key={e.id}
-                >
+                <div className={styles.pick} key={e.id}>
                     <div className={styles.cardContainer}>
                         <EditorsPickCard pick={e} />
                     </div>
                     <div className={styles.actionsContainer}>
-                        <FilledButton
-                            onClick={() => removeEditorsPick(e.id)}
-                            color={{
-                                backgroundColor: "var(--accent-red)",
-                            }}
-                        >
+                        <Button variant="danger" onClick={() => removeEditorsPick(e.id)}>
                             Удалить
-                        </FilledButton>
+                        </Button>
 
-                        <OutlinedButton onClick={() => changeBadge(e.id)}>
+                        <Button variant="secondary" onClick={() => changeBadge(e.id)}>
                             Изменить бейдж
-                        </OutlinedButton>
+                        </Button>
                     </div>
                 </div>
             ))}

@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useSession } from "entities/session";
 import { authApi } from "features/auth";
-import { OutlinedButton } from "shared/ui/button";
+import { Button } from "shared/ui/button";
 import styles from "./AdminSidebar.module.css";
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
@@ -20,11 +20,11 @@ export const AdminSidebar = () => {
         <aside className={styles.sidebar}>
             <div className={styles.header}>
                 <h2 className={styles.title}>Админ-панель</h2>
-                <p className={styles.user} style={{ marginBottom: 12 }}>
-                    {user?.email}
-                </p>
+                <p className={styles.user}>{user?.email}</p>
 
-                <OutlinedButton onClick={() => navigate("/")}>На главную</OutlinedButton>
+                <Button variant="secondary" onClick={() => navigate("/")}>
+                    На главную
+                </Button>
             </div>
 
             <nav className={styles.nav}>

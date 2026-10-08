@@ -36,11 +36,11 @@
 
 .homeButton {
     padding: 0.75rem 2rem;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     font-size: 1rem;
     font-weight: 500;
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: all var(--transition-base);
     backdrop-filter: blur(10px);
 }
 

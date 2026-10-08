@@ -1,2 +1,1 @@
-export { FilledButton } from "./FilledButton";
-export { OutlinedButton } from "./OutlinedButton";
+export { Button, type ButtonVariant } from "./Button";

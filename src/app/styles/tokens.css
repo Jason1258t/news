@@ -1,0 +1,135 @@
+/*
+ * Design tokens. Components use only the semantic tokens below (role-based names),
+ * never raw colors, so a theme (e.g. dark) is a single block of overrides.
+ *
+ * Breakpoints (CSS variables can't be used in media queries, keep these in sync):
+ *   mobile ≤ 480px · tablet ≤ 768px · laptop ≤ 1024px · desktop-narrow ≤ 1200px
+ */
+:root {
+    /* ---- Palette (primitives, do not use in components) ---- */
+    --palette-white: #fff;
+    --palette-gray-50: #f8f9fa;
+    --palette-gray-100: #f5f5f5;
+    --palette-gray-200: #e9ecef;
+    --palette-gray-300: #d1d5db;
+    --palette-gray-400: #9ca3af;
+    --palette-gray-600: #666;
+    --palette-gray-700: #495057;
+    --palette-gray-800: #333;
+    --palette-slate-700: #34495e;
+    --palette-slate-800: #2c3e50;
+    --palette-slate-900: #1a202c;
+    --palette-slate-300: #bdc3c7;
+    --palette-code: #2d2d2d;
+    --palette-indigo-500: #667eea;
+    --palette-indigo-600: #5a6fd8;
+    --palette-violet-600: #764ba2;
+    --palette-blue-500: #3498db;
+    --palette-red-500: #e74c3c;
+    --palette-red-600: #c0392b;
+    --palette-red-700: #c53030;
+    --palette-red-100: #fee2e2;
+    --palette-red-200: #fecaca;
+    --palette-green-600: #38a169;
+    --palette-green-800: #276749;
+    --palette-green-100: #c6f6d5;
+    --palette-amber-500: #ff9800;
+    --palette-amber-100: #fff3cd;
+    --palette-amber-200: #ffeaa7;
+
+    /* ---- Surfaces ---- */
+    --color-bg: var(--palette-white);
+    --color-surface: var(--palette-white);
+    --color-surface-muted: var(--palette-gray-50);
+    --color-surface-sunken: var(--palette-gray-100);
+    --color-overlay: rgba(0, 0, 0, 0.5);
+
+    /* ---- Text ---- */
+    --color-text: var(--palette-gray-800);
+    --color-text-strong: var(--palette-slate-800);
+    --color-text-secondary: var(--palette-gray-700);
+    --color-text-muted: var(--palette-gray-600);
+    --color-text-subtle: var(--palette-gray-400);
+
+    /* ---- Borders ---- */
+    --color-border: var(--palette-gray-200);
+    --color-border-strong: var(--palette-gray-300);
+
+    /* ---- Accent ---- */
+    --color-accent: var(--palette-indigo-500);
+    --color-accent-hover: var(--palette-indigo-600);
+    --color-accent-soft: rgba(102, 126, 234, 0.1);
+    --color-on-accent: var(--palette-white);
+    --gradient-accent: linear-gradient(
+        135deg,
+        var(--palette-indigo-500) 0%,
+        var(--palette-violet-600) 100%
+    );
+    --color-focus-ring: rgba(102, 126, 234, 0.2);
+
+    /* ---- Status ---- */
+    --color-info: var(--palette-blue-500);
+    --color-danger: var(--palette-red-500);
+    --color-danger-hover: var(--palette-red-600);
+    --color-danger-text: var(--palette-red-700);
+    --color-danger-soft: var(--palette-red-100);
+    --color-danger-soft-hover: var(--palette-red-200);
+    --color-success: var(--palette-green-600);
+    --color-success-text: var(--palette-green-800);
+    --color-success-soft: var(--palette-green-100);
+    --color-warning: var(--palette-amber-500);
+    --color-warning-soft: var(--palette-amber-100);
+    --color-warning-border: var(--palette-amber-200);
+
+    /* ---- Inverse (dark footer, admin sidebar) ---- */
+    --color-inverse-bg: var(--palette-slate-800);
+    --color-inverse-bg-deep: var(--palette-slate-900);
+    --color-inverse-border: var(--palette-slate-700);
+    --color-inverse-text: var(--palette-white);
+    --color-inverse-text-muted: var(--palette-slate-300);
+    --color-inverse-hover: rgba(255, 255, 255, 0.1);
+    --color-inverse-active: rgba(255, 255, 255, 0.15);
+
+    --color-code-bg: var(--palette-code);
+
+    /* ---- Elevation ---- */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+    --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.3);
+    --shadow-accent: 0 6px 20px rgba(102, 126, 234, 0.4);
+
+    /* ---- Shape ---- */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-pill: 9999px;
+    --radius-round: 50%;
+
+    /* ---- Spacing ---- */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.5rem;
+    --space-6: 2rem;
+    --space-7: 3rem;
+
+    /* ---- Typography ---- */
+    --font-sans: "Inter", sans-serif;
+    --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-md: 1rem;
+    --font-size-lg: 1.25rem;
+    --font-size-xl: 1.5rem;
+    --line-height-base: 1.6;
+    --line-height-tight: 1.2;
+
+    /* ---- Motion & layering ---- */
+    --transition-fast: 0.2s ease;
+    --transition-base: 0.3s ease;
+    --z-sticky: 100;
+    --z-overlay: 1000;
+}

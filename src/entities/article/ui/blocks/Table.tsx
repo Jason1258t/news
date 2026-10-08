@@ -1,5 +1,6 @@
 import { RenderHtml } from "shared/ui/render-html";
 import type { ArticleTableBlock } from "../../model/types";
+import styles from "./Blocks.module.css";
 
 export const Table = ({ data, hasHeader = false }: Omit<ArticleTableBlock, "type">) => {
     if (!data || data.length === 0) return null;
@@ -24,8 +25,8 @@ export const Table = ({ data, hasHeader = false }: Omit<ArticleTableBlock, "type
     const bodyRows = hasHeader ? data.slice(1) : data;
 
     return (
-        <div className="table-container">
-            <table className="article-table">
+        <div className={styles.tableContainer}>
+            <table className={styles.table}>
                 {hasHeader && headerRow && <thead>{renderRow(headerRow, 0, true)}</thead>}
                 <tbody>
                     {bodyRows.map((row, index) => renderRow(row, hasHeader ? index + 1 : index))}

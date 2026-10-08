@@ -1,7 +1,7 @@
 .card {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: var(--shadow);
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
     cursor: pointer;
     padding: 1rem;
     display: flex;
@@ -9,8 +9,8 @@
 }
 
 .card.highlight {
-    background-color: var(--background-light);
-    border: 2px solid var(--primary-color);
+    background-color: var(--color-surface-muted);
+    border: 2px solid var(--color-accent);
 }
 
 .image {
@@ -18,7 +18,7 @@
     width: 150px;
     height: 150px;
     object-fit: cover;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     flex-shrink: 0;
 }
 
@@ -31,7 +31,7 @@
 
 .title {
     font-size: 1rem;
-    color: var(--text-dark);
+    color: var(--color-text-strong);
     margin-bottom: 0.25rem;
     max-height: 3rem;
     overflow: hidden;
@@ -39,7 +39,7 @@
 }
 
 .excerpt {
-    color: var(--text-light);
+    color: var(--color-text-muted);
     overflow: hidden;
     max-height: 3rem;
 }

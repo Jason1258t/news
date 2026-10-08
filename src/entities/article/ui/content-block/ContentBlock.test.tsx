@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import type { ArticleContentBlock } from "../..";
 import { ContentBlock } from "./ContentBlock";
@@ -33,20 +33,22 @@ describe("ContentBlock", () => {
     });
 
     it.each([
-        [undefined, "quote"],
-        ["default", "quote"],
-        ["warning", "quote warning"],
-        ["critical", "quote critical"],
-    ] as const)("renders a %s blockquote with class %j", (variant, className) => {
+        [undefined, null],
+        ["default", null],
+        ["warning", "quoteWarning"],
+        ["critical", "quoteCritical"],
+    ] as const)("renders a %s blockquote", (variant, variantClass) => {
         const { container } = renderBlock({
             type: "blockquote",
             html: "text",
             footer: "src",
             variant,
         });
-        const quote = container.querySelector("blockquote");
-        expect(quote).toHaveAttribute("class", className);
-        expect(quote?.querySelector("footer")).toHaveTextContent("src");
+        const quote = container.querySelector("blockquote")!;
+        expect(quote.className).toMatch(/quote/);
+        if (variantClass) expect(quote.className).toContain(variantClass);
+        else expect(quote.className).not.toMatch(/quoteWarning|quoteCritical/);
+        expect(quote.querySelector("footer")).toHaveTextContent("src");
     });
 
     it("renders nested blocks inside a highlight", () => {
@@ -70,25 +72,25 @@ describe("ContentBlock", () => {
 
     it("renders a footer note", () => {
         const { container } = renderBlock({ type: "footer-note", html: "note" });
-        expect(container.querySelector(".article-footer")).toHaveTextContent("note");
+        expect(container.querySelector("[class*=footerNote]")).toHaveTextContent("note");
     });
 
     it.each([
-        ["inline", ".formula-inline"],
-        ["block", ".formula-block"],
-    ] as const)("renders a %s formula with KaTeX", (display, selector) => {
+        ["inline", "[class*=formulaInline]"],
+        ["block", "[class*=formulaBlock]"],
+    ] as const)("renders a %s formula with KaTeX (loaded lazily)", async (display, selector) => {
         const { container } = renderBlock({ type: "formula", formula: "x^2", display });
-        expect(container.querySelector(`${selector} .katex`)).not.toBeNull();
+        await waitFor(() => expect(container.querySelector(`${selector} .katex`)).not.toBeNull());
     });
 
-    it("renders code with filename and syntax highlighting", () => {
+    it("renders code with filename and syntax highlighting (loaded lazily)", async () => {
         const { container } = renderBlock({
             type: "code",
             code: "const x = 1;",
             language: "javascript",
             filename: "a.js",
         });
-        expect(screen.getByText("a.js")).toBeInTheDocument();
+        expect(await screen.findByText("a.js")).toBeInTheDocument();
         expect(
             container.querySelector("code.language-javascript .token.keyword"),
         ).toHaveTextContent("const");
@@ -119,6 +121,11 @@ describe("ContentBlock", () => {
     it("renders nothing for an empty table", () => {
         const { container } = renderBlock({ type: "table", data: [] });
         expect(container).toBeEmptyDOMElement();
+    });
+
+    it("shows the raw source while the heavy renderers load", () => {
+        renderBlock({ type: "code", code: "let a = 1;" });
+        expect(screen.getByText("let a = 1;")).toBeInTheDocument();
     });
 
     it("renders nothing and warns for an unknown block type", () => {

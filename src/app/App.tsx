@@ -5,7 +5,8 @@ import { ScrollToTop } from "app/router/ScrollToTop";
 import { QueryProvider } from "app/providers/QueryProvider";
 import { SessionProvider } from "entities/session";
 import { AppRouter } from "app/router/AppRouter";
-import "app/styles/theme.css";
+import "app/styles/tokens.css";
+import "app/styles/global.css";
 
 export const App = () => {
     return (

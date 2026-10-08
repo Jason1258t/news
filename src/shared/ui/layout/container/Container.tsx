@@ -1,16 +1,14 @@
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
 import styles from "./Container.module.css";
 
 interface ContainerProps {
     children: ReactNode;
-    style?: CSSProperties;
     className?: string;
     fullWidthOnMobile?: boolean;
 }
 
 export const Container = ({
     children,
-    style,
     className = "",
     fullWidthOnMobile = false,
 }: ContainerProps) => {
@@ -21,7 +19,6 @@ export const Container = ({
       ${fullWidthOnMobile ? styles.fullWidthMobile : ""}
       ${className}
     `.trim()}
-            style={style}
         >
             {children}
         </div>

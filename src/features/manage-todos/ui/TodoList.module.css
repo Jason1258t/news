@@ -1,13 +1,13 @@
 .stats {
     text-align: center;
-    color: var(--text-muted);
+    color: var(--color-text-secondary);
     font-size: 14px;
     margin-bottom: 20px;
 }
 
 .empty {
     text-align: center;
-    color: var(--text-muted);
+    color: var(--color-text-secondary);
     font-size: 16px;
     margin-top: 40px;
     font-style: italic;
