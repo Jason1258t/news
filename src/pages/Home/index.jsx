@@ -5,7 +5,6 @@ import FeedHeader from "features/home-feed/FeedHeader";
 import CTASetcion from "features/CTA";
 import HomeMeta from "./meta";
 import ScrollToTopButton from "widgets/buttons/scroll-to-top";
-import CurrentHoroscopeWidget from "features/horoscope/ui/CurrentHoroscopeWidget";
 import { Main, Container, LayoutWithSidebar } from "shared/ui/layout";
 
 const HomePage = () => {
@@ -22,7 +21,6 @@ const HomePage = () => {
                         </LayoutWithSidebar.MainContent>
                         <LayoutWithSidebar.Sidebar>
                             <EditorsPickWidget />
-                            <CurrentHoroscopeWidget />
                         </LayoutWithSidebar.Sidebar>
                     </LayoutWithSidebar>
                 </Container>

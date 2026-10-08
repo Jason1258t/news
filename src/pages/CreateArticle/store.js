@@ -18,14 +18,6 @@ export const useCreateArticleStore = create((set, get) => ({
 
   setError: (error) => set({ error }),
 
-  resetForm: () => set({
-    jsonInput: '',
-    imageUrl: null,
-    date: new Date(),
-    isValid: true,
-    error: ''
-  }),
-
   validateJson: () => {
     const { jsonInput } = get();
     

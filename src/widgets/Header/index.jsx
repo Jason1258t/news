@@ -59,13 +59,6 @@ const Header = () => {
                         >
                             Спорт
                         </Link>
-                        <Link
-                            to="/horoscope"
-                            className="nav-link menu-only-mobile"
-                            onClick={() => setIsMenuOpen(false)}
-                        >
-                            Гороскоп
-                        </Link>
                     </nav>
                     {user ? (
                         <Link

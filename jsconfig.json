@@ -8,5 +8,5 @@
             "shared/*": ["shared/*"]
         }
     },
-    "include": ["src", "initArticles"]
+    "include": ["src"]
 }

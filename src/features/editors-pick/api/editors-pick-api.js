@@ -115,45 +115,6 @@ export const createEditorsPick = async (pickData) => {
 };
 
 /**
- * Обновляет существующую запись в редакционной подборке
- * @param {string} id - ID записи
- * @param {Partial<Omit<EditorsPick, 'id' | 'createdAt' | 'updatedAt'>>} updates - Обновляемые поля
- * @returns {Promise<{success: boolean, error?: string}>}
- */
-export const updateEditorsPick = async (id, updates) => {
-    try {
-        const docRef = doc(db, "editors-pick", id);
-        const existingDoc = await getDoc(docRef);
-
-        if (!existingDoc.exists()) {
-            throw new Error(`Запись с ID "${id}" не найдена`);
-        }
-
-        const updatesToSave = {
-            ...updates,
-            updatedAt: serverTimestamp(),
-        };
-
-        if (updatesToSave.title)
-            updatesToSave.title = updatesToSave.title.trim();
-        if (updatesToSave.description)
-            updatesToSave.description = updatesToSave.description.trim();
-        if (updatesToSave.articleUrl)
-            updatesToSave.articleUrl = updatesToSave.articleUrl.trim();
-
-        await setDoc(docRef, updatesToSave, { merge: true });
-
-        return { success: true };
-    } catch (error) {
-        console.error("❌ Ошибка при обновлении записи:", error);
-        return {
-            success: false,
-            error: error.message,
-        };
-    }
-};
-
-/**
  * Удаляет запись из редакционной подборки
  * @param {string} id - ID записи
  * @returns {Promise<{success: boolean, error?: string}>}
@@ -176,26 +137,5 @@ export const deleteEditorsPick = async (id) => {
             success: false,
             error: error.message,
         };
-    }
-};
-
-/**
- * Получает конкретную запись по ID
- * @param {string} id - ID записи
- * @returns {Promise<EditorsPick>}
- */
-export const fetchEditorsPickById = async (id) => {
-    try {
-        const docRef = doc(db, "editors-pick", id);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-            return mapEditorsPickFromFirestore(docSnap);
-        } else {
-            throw new Error("Запись не найдена");
-        }
-    } catch (error) {
-        console.error(`❌ Ошибка при получении записи ${id}:`, error);
-        throw new Error("Не удалось загрузить запись");
     }
 };

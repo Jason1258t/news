@@ -4,7 +4,6 @@ import Article from "pages/Article";
 import AboutPage from "pages/About";
 import LoginPage from "pages/Login";
 import AdminPage from "pages/admin";
-import HoroscopePage from "pages/horoscope/HoroscopePage";
 import ProtectedRoute from "features/auth/ui/protected-route";
 
 import Header from "widgets/Header";
@@ -28,8 +27,6 @@ const AppRoutes = () => {
         <Route index element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/articles/:slug" element={<Article />} />
-        <Route path="/horoscope" element={<HoroscopePage />} />
-        <Route path="/horoscope/:id" element={<HoroscopePage />} />
       </Route>
 
       {/* Страницы без лейаута */}
