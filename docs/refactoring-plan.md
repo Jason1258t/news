@@ -31,19 +31,19 @@
 
 Баги гороскопов (B1–B3, B12, B13) ушли вместе с фичей. В коде открытые баги помечены `TODO(stage N)`.
 
-| #   | Где                                                                                              | Что не так                                                                                                                                                                                          | Статус                                          |
-| --- | ------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
-| B4  | `app/providers/query-client.ts`                                                                  | `cacheTime` в react-query v5 молча игнорировался                                                                                                                                                    | ✅ исправлено (типы)                            |
-| B5  | [articles-api.ts:114](../src/entities/article/api/articles-api.ts#L114)                          | «Не найдено» превращается в `throw` → вместо `NotFoundWidget` показывается ошибка, плюс 3 ретрая                                                                                                    | ✅ этап 1                                       |
-| B6  | [useArticle.ts:19](../src/entities/article/api/useArticle.ts#L19)                                | `initialData` читает несуществующий ключ `['articles']` — мёртвая логика; ключи статьи и ленты делят одно пространство                                                                              | открыт (этап 2)                                 |
-| B7  | [useEditorsPickStore.ts:93](../src/widgets/editors-pick-editor/model/useEditorsPickStore.ts#L93) | Сохранение = «удалить всё, потом создать» без транзакции: при сбое подборка теряется. Нужен `writeBatch`                                                                                            | открыт (этап 2)                                 |
-| B8  | `CurrentPicks`, `StudioPage`                                                                     | `error.message` у строки → всегда `undefined`, реальная ошибка не показывалась                                                                                                                      | ✅ исправлено (типы)                            |
-| B9  | [ArticlesList.tsx:20](../src/widgets/editors-pick-editor/ui/ArticlesList.tsx#L20)                | `allArticles ? …` всегда truthy → лоадер и ошибка не показываются; `key` не на том элементе                                                                                                         | ✅ этап 1                                       |
-| B10 | [ArticlePage.tsx:20](../src/pages/article/ArticlePage.tsx#L20)                                   | `onRetry={() => {}}` — «Попробовать снова» ничего не делает                                                                                                                                         | ✅ этап 1                                       |
-| B11 | `ArticlesPanelPage`, `ArticlesList`                                                              | Копия query-данных в локальном state, удаление без инвалидации кэша → лента показывает удалённую статью. `limit: 50` без пагинации                                                                  | открыт (этап 2)                                 |
-| B14 | `package.json`                                                                                   | `linkify-react`/`linkifyjs` не были установлены                                                                                                                                                     | ✅ исправлено на этапе 0                        |
-| B15 | [articles-query.ts:28](../src/entities/article/api/articles-query.ts#L28)                        | Категория + теги одновременно → Firestore: «A maximum of 1 'ARRAY_CONTAINS' filter is allowed per disjunction». Лента падает с ошибкой. Нужно фильтровать одно из двух на клиенте или менять модель | ✅ этап 1: теги в запросе, категория на клиенте |
-| B16 | `ArticleMeta`                                                                                    | `article:section` брался из несуществующего поля и всегда был пустым                                                                                                                                | ✅ исправлено (типы)                            |
+| #   | Где                                                                                              | Что не так                                                                                                                                                                                          | Статус                                                  |
+| --- | ------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| B4  | `app/providers/query-client.ts`                                                                  | `cacheTime` в react-query v5 молча игнорировался                                                                                                                                                    | ✅ исправлено (типы)                                    |
+| B5  | [articles-api.ts:114](../src/entities/article/api/articles-api.ts#L114)                          | «Не найдено» превращается в `throw` → вместо `NotFoundWidget` показывается ошибка, плюс 3 ретрая                                                                                                    | ✅ этап 1                                               |
+| B6  | [useArticle.ts:19](../src/entities/article/api/useArticle.ts#L19)                                | `initialData` читает несуществующий ключ `['articles']` — мёртвая логика; ключи статьи и ленты делят одно пространство                                                                              | ✅ этап 2: `articleKeys`, статья берётся из кеша ленты  |
+| B7  | [useEditorsPickStore.ts:93](../src/widgets/editors-pick-editor/model/useEditorsPickStore.ts#L93) | Сохранение = «удалить всё, потом создать» без транзакции: при сбое подборка теряется. Нужен `writeBatch`                                                                                            | ✅ этап 2: `replaceEditorsPicks` одним `writeBatch`     |
+| B8  | `CurrentPicks`, `StudioPage`                                                                     | `error.message` у строки → всегда `undefined`, реальная ошибка не показывалась                                                                                                                      | ✅ исправлено (типы)                                    |
+| B9  | [ArticlesList.tsx:20](../src/widgets/editors-pick-editor/ui/ArticlesList.tsx#L20)                | `allArticles ? …` всегда truthy → лоадер и ошибка не показываются; `key` не на том элементе                                                                                                         | ✅ этап 1                                               |
+| B10 | [ArticlePage.tsx:20](../src/pages/article/ArticlePage.tsx#L20)                                   | `onRetry={() => {}}` — «Попробовать снова» ничего не делает                                                                                                                                         | ✅ этап 1                                               |
+| B11 | `ArticlesPanelPage`, `ArticlesList`                                                              | Копия query-данных в локальном state, удаление без инвалидации кэша → лента показывает удалённую статью. `limit: 50` без пагинации                                                                  | ✅ этап 2: список читает query напрямую, «Показать ещё» |
+| B14 | `package.json`                                                                                   | `linkify-react`/`linkifyjs` не были установлены                                                                                                                                                     | ✅ исправлено на этапе 0                                |
+| B15 | [articles-query.ts:28](../src/entities/article/api/articles-query.ts#L28)                        | Категория + теги одновременно → Firestore: «A maximum of 1 'ARRAY_CONTAINS' filter is allowed per disjunction». Лента падает с ошибкой. Нужно фильтровать одно из двух на клиенте или менять модель | ✅ этап 1: теги в запросе, категория на клиенте         |
+| B16 | `ArticleMeta`                                                                                    | `article:section` брался из несуществующего поля и всегда был пустым                                                                                                                                | ✅ исправлено (типы)                                    |
 
 ### 2.2 Безопасность
 
@@ -60,8 +60,8 @@
 
 Осталось (этап 2):
 
-1. **Несколько способов работы с данными:** react-query (статьи), `useState + useEffect` (`useEditorsPicks`), zustand с API внутри (`useEditorsPickStore`), `onSnapshot` (todo). → серверное состояние только через react-query.
-2. **Разные контракты ошибок в API:** часть функций кидает исключения, часть возвращает `MutationResult` `{success, error}`. → везде throw, обработка в `useMutation`.
+1. ✅ **Серверное состояние только через react-query** (этап 2): статьи, подборка и todo; ключи — `articleKeys`, `editorsPickKeys`, `todoKeys`. Подписка на todo пишет снапшоты в кеш.
+2. ✅ **Единый контракт ошибок** (этап 2): API кидает исключения, записи — через `useMutation`, ошибки показываются пользователю (в том числе отказ правил при записи todo).
 3. ✅ **Валидация по схеме:** создание статьи проверяет JSON по `articleInputSchema`, ошибки на русском с путём до поля, `null` считается отсутствием поля.
 
 ### 2.4 Тема и стили (этап 4)
@@ -131,13 +131,14 @@ src/
 - [x] Редактор подборки берёт заголовок и ссылку из `getArticlePreview` (у новых статей нет `og`).
 - [x] Юнит-тесты не зависят от `.env`: Firebase замокан глобально в `src/test/setup.ts`.
 
-**Этап 2 — Слой данных**
+**Этап 2 — Слой данных** ✅
 
-- [ ] Фабрики ключей запросов (`articleKeys`, `editorsPickKeys`, `todoKeys`) — закрывает B6.
-- [ ] API кидает исключения; мутации через `useMutation` с инвалидацией — закрывает B11.
-- [ ] Выбор редакции: `useQuery` + `useMutation` с `writeBatch` — закрывает B7; убрать `set-state-in-effect`.
-- [ ] Todo: `onSnapshot` → `queryClient.setQueryData`.
-- [ ] Админский список статей — бесконечная прокрутка вместо `limit: 50`.
+- [x] Фабрики ключей запросов (`articleKeys`, `editorsPickKeys`, `todoKeys`) — закрывает B6.
+- [x] API кидает исключения; мутации через `useMutation` с инвалидацией — закрывает B11 (новая фича `features/article-delete`).
+- [x] Выбор редакции: `useQuery` + атомарный `writeBatch` — закрывает B7. Черновик — хук `useEditorsPickDraft` вместо zustand-стора; ID документов кодируют позицию, порядок в сайдбаре совпадает с редактором.
+- [x] Todo: `onSnapshot` → `queryClient.setQueryData`, мутации с тостами об ошибках.
+- [x] Админские списки статей — кнопка «Показать ещё» вместо `limit: 50`.
+- [x] `set-state-in-effect` больше нигде не подавляется, кроме `DatePicker` (этап 4).
 
 **Этап 4 — Тема и UI-kit**
 
@@ -155,4 +156,4 @@ src/
 ## 6. Открытые вопросы
 
 1. **HashRouter** — отложен. Переход на `BrowserRouter` сломает ссылки `/#/articles/...`, уже разошедшиеся в TG.
-2. **Zustand** — после переноса серверного состояния в react-query останутся только формы; возможно, зависимость не нужна.
+2. **Zustand** — остался только в сторе формы создания статьи (черновик JSON переживает уход со страницы). Можно оставить или заменить на `useState` + `sessionStorage`.
