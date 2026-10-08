@@ -4,12 +4,12 @@ import { PROJECT_NAME } from "shared/config";
 import { useNavigate } from "react-router-dom";
 import { useCreateArticle } from "features/article-create";
 import "./CreateArticlePage.css";
-import { copyFormatPrompt, copyTelegramPrompt } from "features/copy-article-prompt";
+import { CopyPromptButtons } from "features/copy-article-prompt";
 import toast from "react-hot-toast";
 import { DatePicker } from "shared/ui/date-picker";
 import { TextInput } from "shared/ui/text-input";
 import { ImagePreview } from "shared/ui/image-preview";
-import { OutlinedButton, FilledButton } from "shared/ui/button";
+import { FilledButton } from "shared/ui/button";
 import { useCreateArticleStore } from "./create-article-store";
 import { Main, Container } from "shared/ui/layout";
 import { CharCounter } from "shared/ui/char-counter";
@@ -100,19 +100,10 @@ export const CreateArticlePage = () => {
                             />
                             {store.imageUrl && <div style={{ height: "1rem" }}></div>}
                             <div className="form-actions" style={{ marginBottom: "1rem" }}>
-                                <OutlinedButton
-                                    onClick={() => {
-                                        copyFormatPrompt({
-                                            date: store.date,
-                                            imageUrl: store.imageUrl,
-                                        });
-                                    }}
-                                >
-                                    Скопировать промпт форматирония
-                                </OutlinedButton>
-                                <OutlinedButton onClick={copyTelegramPrompt}>
-                                    Скопировать промпт для тг
-                                </OutlinedButton>
+                                <CopyPromptButtons
+                                    publishDate={store.date}
+                                    imageUrl={store.imageUrl}
+                                />
                             </div>
                             <form onSubmit={handleSubmit} className="json-form">
                                 <div className="form-header">

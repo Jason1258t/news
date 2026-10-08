@@ -1,4 +1,5 @@
 export type * from "./model/types";
+export { articleInputSchema } from "./model/schema";
 export { createArticle, deleteArticle, fetchArticleBySlug } from "./api/articles-api";
 export { useArticle } from "./api/useArticle";
 export { useArticles } from "./api/useArticles";

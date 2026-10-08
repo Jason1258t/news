@@ -1,2 +1,2 @@
-export { copyFormatPrompt } from "./model/article-format-prompt";
-export { copyTelegramPrompt } from "./model/telegram-post-prompt";
+export { CopyPromptButtons } from "./ui/CopyPromptButtons";
+export { buildArticleFormatPrompt, buildTelegramPostPrompt } from "./model/build-prompts";

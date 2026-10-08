@@ -3,3 +3,5 @@ coverage
 node_modules
 package-lock.json
 public
+# LLM prompt templates: formatting embedded code would break {{placeholders}}
+src/**/prompts/*.md
