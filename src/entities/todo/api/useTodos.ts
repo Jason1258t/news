@@ -1,34 +1,44 @@
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import type { Todo } from "../model/types";
-import { addTodo, deleteTodo, onChange, toggleTodo, updateTodo } from "./todo-api";
+import { onChange } from "./todo-api";
+import { todoKeys } from "./todo-keys";
 
 /** Active first, newest first within each group. */
-const sortTodos = (todos: Todo[]) =>
+export const sortTodos = (todos: Todo[]) =>
     [...todos]
         .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
         .sort((a, b) => Number(a.completed) - Number(b.completed));
 
+/**
+ * Live list of studio todos. A Firestore subscription writes every snapshot into the
+ * react-query cache; the query itself never fetches.
+ */
 export const useTodos = () => {
-    const [todos, setTodos] = useState<Todo[]>([]);
-    const [loading, setLoading] = useState(true);
+    const queryClient = useQueryClient();
     const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        const unsubscribe = onChange(
-            (todosData) => {
-                setTodos(sortTodos(todosData));
-                setLoading(false);
-                setError(null);
-            },
-            (error) => {
-                console.error("Error fetching todos:", error);
-                setError(error.message);
-                setLoading(false);
-            },
-        );
+    useEffect(
+        () =>
+            onChange(
+                (todos) => {
+                    queryClient.setQueryData(todoKeys.all, sortTodos(todos));
+                    setError(null);
+                },
+                (subscriptionError) => {
+                    console.error("Error fetching todos:", subscriptionError);
+                    setError(subscriptionError.message);
+                },
+            ),
+        [queryClient],
+    );
 
-        return () => unsubscribe();
-    }, []);
+    const { data: todos } = useQuery<Todo[]>({
+        queryKey: todoKeys.all,
+        queryFn: () => Promise.reject(new Error("todos are filled by the subscription")),
+        enabled: false,
+        staleTime: Infinity,
+    });
 
-    return { todos, loading, error, addTodo, toggleTodo, deleteTodo, updateTodo };
+    return { todos: todos ?? [], loading: todos === undefined && !error, error };
 };

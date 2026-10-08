@@ -1,32 +1,36 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+    useQuery,
+    useQueryClient,
+    type InfiniteData,
+    type QueryClient,
+} from "@tanstack/react-query";
 import type { Article } from "../model/types";
-import { fetchArticleBySlug } from "./articles-api";
+import { articleKeys } from "./article-keys";
+import { fetchArticleBySlug, type ArticlesPage } from "./articles-api";
 
-/**
- * Хук для получения конкретной статьи.
- * Сначала проверяет кеш, потом загружает из API.
- */
+/** The article from any cached feed page, with the time that page was fetched. */
+const findInCachedLists = (queryClient: QueryClient, slug: string) => {
+    const lists = queryClient.getQueriesData<InfiniteData<ArticlesPage>>({
+        queryKey: articleKeys.lists(),
+    });
+    for (const [queryKey, data] of lists) {
+        const article = data?.pages.flatMap((page) => page.data).find((item) => item.slug === slug);
+        if (article) {
+            return { article, updatedAt: queryClient.getQueryState(queryKey)?.dataUpdatedAt };
+        }
+    }
+    return undefined;
+};
+
+/** Статья по slug. Если она уже есть в загруженной ленте, показывается сразу, без запроса. */
 export const useArticle = (slug: string) => {
     const queryClient = useQueryClient();
 
-    return useQuery({
-        queryKey: ["articles", slug],
+    return useQuery<Article | null>({
+        queryKey: articleKeys.detail(slug),
         queryFn: () => fetchArticleBySlug(slug),
         staleTime: 10 * 60 * 1000,
-
-        // TODO(stage 1): the feed is cached under ["articles", category, tags] as infinite
-        // pages, so this lookup never finds anything (bug B6 in docs/refactoring-plan.md).
-        initialData: () => {
-            const cachedArticles = queryClient.getQueryData<Article[]>(["articles"]);
-            if (cachedArticles) {
-                return cachedArticles.find((article) => article.slug === slug);
-            }
-            return undefined;
-        },
-
-        initialDataUpdatedAt: () => {
-            const cachedArticles = queryClient.getQueryData<Article[]>(["articles"]);
-            return cachedArticles ? queryClient.getQueryState(["articles"])?.dataUpdatedAt : 0;
-        },
+        initialData: () => findInCachedLists(queryClient, slug)?.article,
+        initialDataUpdatedAt: () => findInCachedLists(queryClient, slug)?.updatedAt,
     });
 };

@@ -1,67 +1,62 @@
 import { useState } from "react";
+import type { EditorsPick, EditorsPickBadge } from "entities/editors-pick";
 import { FilledButton, OutlinedButton } from "shared/ui/button";
 import { ErrorWidget } from "shared/ui/error-widget";
-import type { EditorsPickStore } from "../model/useEditorsPickStore";
 import { BadgesDialog } from "./BadgesDialog";
 import styles from "./CurrentPicks.module.css";
 import { PicksList } from "./PicksList";
 
-export const CurrentPicks = ({ store }: { store: EditorsPickStore }) => {
-    const [isOpen, setIsOpen] = useState(false);
+interface CurrentPicksProps {
+    picks: EditorsPick[];
+    loading: boolean;
+    saving: boolean;
+    error: string | null;
+    hasChanges: boolean;
+    onRemove: (id: string) => void;
+    onChangeBadge: (id: string, badge: EditorsPickBadge) => void;
+    onSave: () => void;
+    onReset: () => void;
+}
 
+export const CurrentPicks = ({
+    picks,
+    loading,
+    saving,
+    error,
+    hasChanges,
+    onRemove,
+    onChangeBadge,
+    onSave,
+    onReset,
+}: CurrentPicksProps) => {
     const [pickToChangeBadge, setPickToChangeBadge] = useState<string | null>(null);
-    const changeBadge = (pickId: string) => {
-        setPickToChangeBadge(pickId);
-        setIsOpen(true);
-    };
-
-    const {
-        editorsPicks,
-        loading,
-        error,
-        hasChanges,
-        removeEditorsPick,
-        updateEditorsPickBadge,
-        saveAllChanges,
-        resetChanges,
-    } = store;
 
     return (
         <>
             <div style={{ flex: 1 }}>
                 <h2 style={{ marginBottom: "1rem" }}>Текущий выбор редакции</h2>
                 <div className={styles.container}>
-                    {error ? (
-                        <ErrorWidget message={error} />
-                    ) : (
-                        <>
-                            <PicksList
-                                editorsPicks={editorsPicks}
-                                loading={loading}
-                                changeBadge={changeBadge}
-                                removeEditorsPick={removeEditorsPick}
-                            />
-                            <div style={{ display: "flex", gap: "1rem" }}>
-                                <OutlinedButton onClick={resetChanges}>
-                                    Сбросить изменения
-                                </OutlinedButton>
-                                <FilledButton
-                                    active={hasChanges && !loading}
-                                    onClick={saveAllChanges}
-                                >
-                                    {loading ? "Ожидаем..." : "Подтвердить"}
-                                </FilledButton>
-                            </div>
-                        </>
-                    )}
+                    {error && <ErrorWidget message={error} />}
+                    <PicksList
+                        editorsPicks={picks}
+                        loading={loading}
+                        changeBadge={setPickToChangeBadge}
+                        removeEditorsPick={onRemove}
+                    />
+                    <div style={{ display: "flex", gap: "1rem" }}>
+                        <OutlinedButton onClick={onReset}>Сбросить изменения</OutlinedButton>
+                        <FilledButton active={hasChanges && !saving} onClick={onSave}>
+                            {saving ? "Ожидаем..." : "Подтвердить"}
+                        </FilledButton>
+                    </div>
                 </div>
             </div>
 
             <BadgesDialog
-                isOpen={isOpen}
-                onClose={() => setIsOpen(false)}
+                isOpen={pickToChangeBadge !== null}
+                onClose={() => setPickToChangeBadge(null)}
                 onConfirm={(badge) => {
-                    if (pickToChangeBadge) updateEditorsPickBadge(pickToChangeBadge, badge);
+                    if (pickToChangeBadge) onChangeBadge(pickToChangeBadge, badge);
                 }}
             />
         </>

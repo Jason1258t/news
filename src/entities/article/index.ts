@@ -1,7 +1,8 @@
 export type * from "./model/types";
 export { articleInputSchema } from "./model/schema";
 export { createArticle, deleteArticle, fetchArticleBySlug } from "./api/articles-api";
-export type { MutationResult } from "./api/articles-api";
+export { articleKeys, type ArticleListParams } from "./api/article-keys";
+export type { ArticlesPage } from "./api/articles-api";
 export { useArticle } from "./api/useArticle";
 export { useArticles } from "./api/useArticles";
 export { ArticleCardSmall } from "./ui/article-card-small/ArticleCardSmall";

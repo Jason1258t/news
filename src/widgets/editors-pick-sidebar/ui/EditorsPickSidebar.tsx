@@ -1,10 +1,10 @@
-import { EditorsPickCard, useEditorsPicks } from "entities/editors-pick";
 import { Link } from "react-router-dom";
-import { SidebarCard } from "shared/ui/sidebar-card";
+import { EditorsPickCard, useEditorsPicks } from "entities/editors-pick";
 import { LoadingSpinner } from "shared/ui/loading-widget";
+import { SidebarCard } from "shared/ui/sidebar-card";
 
 export const EditorsPickSidebar = () => {
-    const { loading, editorsPicks } = useEditorsPicks();
+    const { data: editorsPicks = [], isLoading } = useEditorsPicks();
 
     return (
         <SidebarCard title="👑 Выбор редакции">
@@ -15,18 +15,18 @@ export const EditorsPickSidebar = () => {
                     gap: "1rem",
                 }}
             >
-                {loading ? (
+                {isLoading ? (
                     <LoadingSpinner />
                 ) : (
-                    editorsPicks.map((pick, index) => (
+                    editorsPicks.map((pick) => (
                         <Link
-                            key={index}
+                            key={pick.id}
                             to={pick.articleUrl}
                             style={{ textDecoration: "none" }}
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            <EditorsPickCard key={index} pick={pick} />
+                            <EditorsPickCard pick={pick} />
                         </Link>
                     ))
                 )}

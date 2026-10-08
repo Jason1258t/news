@@ -29,45 +29,25 @@ export const onChange = (
 };
 
 export const addTodo = async (text: string) => {
-    try {
-        await addDoc(collection(db, COLLECTION_NAME), {
-            text,
-            completed: false,
-            createdAt: serverTimestamp(),
-        });
-    } catch (error) {
-        console.error("Error adding todo:", error);
-        throw error;
-    }
+    await addDoc(collection(db, COLLECTION_NAME), {
+        text,
+        completed: false,
+        createdAt: serverTimestamp(),
+    });
 };
 
 export const toggleTodo = async (id: string, completed: boolean) => {
-    try {
-        await updateDoc(doc(db, COLLECTION_NAME, id), {
-            completed: !completed,
-        });
-    } catch (error) {
-        console.error("Error toggling todo:", error);
-        throw error;
-    }
+    await updateDoc(doc(db, COLLECTION_NAME, id), {
+        completed: !completed,
+    });
 };
 
 export const deleteTodo = async (id: string) => {
-    try {
-        await deleteDoc(doc(db, COLLECTION_NAME, id));
-    } catch (error) {
-        console.error("Error deleting todo:", error);
-        throw error;
-    }
+    await deleteDoc(doc(db, COLLECTION_NAME, id));
 };
 
 export const updateTodo = async (id: string, text: string) => {
-    try {
-        await updateDoc(doc(db, COLLECTION_NAME, id), {
-            text,
-        });
-    } catch (error) {
-        console.error("Error updating todo:", error);
-        throw error;
-    }
+    await updateDoc(doc(db, COLLECTION_NAME, id), {
+        text,
+    });
 };

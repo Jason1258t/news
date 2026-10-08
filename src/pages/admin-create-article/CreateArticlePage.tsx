@@ -18,7 +18,7 @@ import { getErrorMessage } from "shared/lib/error";
 export const CreateArticlePage = () => {
     const store = useCreateArticleStore();
     const navigate = useNavigate();
-    const { createArticle, loading } = useCreateArticle();
+    const { mutateAsync: createArticle, isPending: loading } = useCreateArticle();
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -29,16 +29,10 @@ export const CreateArticlePage = () => {
         }
 
         try {
-            const articleData = JSON.parse(store.jsonInput);
-            const result = await createArticle(articleData);
-
-            if (result.success) {
-                toast.success("Статья успешно создана!");
-                store.setJsonInput("");
-                navigate(`/articles/${result.slug}`);
-            } else {
-                store.setError(result.error || "Ошибка при создании статьи");
-            }
+            const { slug } = await createArticle(JSON.parse(store.jsonInput));
+            toast.success("Статья успешно создана!");
+            store.setJsonInput("");
+            navigate(`/articles/${slug}`);
         } catch (err) {
             store.setError("Ошибка: " + getErrorMessage(err));
         }

@@ -1,4 +1,5 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { articleKeys } from "./article-keys";
 import { fetchArticles } from "./articles-api";
 
 interface UseArticlesParams {
@@ -7,9 +8,9 @@ interface UseArticlesParams {
     tags?: string[];
 }
 
-export const useArticles = ({ category, limit = 5, tags = undefined }: UseArticlesParams) => {
+export const useArticles = ({ category = null, limit = 5, tags = [] }: UseArticlesParams = {}) => {
     return useInfiniteQuery({
-        queryKey: ["articles", category, tags],
+        queryKey: articleKeys.list({ category, tags, limit }),
         queryFn: ({ pageParam }) => fetchArticles({ category, lastId: pageParam, limit, tags }),
         getNextPageParam: (lastPage) => (lastPage.hasMore ? lastPage.nextCursor : undefined),
         initialPageParam: undefined as string | undefined,

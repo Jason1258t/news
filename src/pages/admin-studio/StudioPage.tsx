@@ -1,5 +1,5 @@
 import { useTodos } from "entities/todo";
-import { TodoList } from "features/manage-todos";
+import { TodoList, useTodoActions } from "features/manage-todos";
 import { Helmet } from "react-helmet-async";
 import { PROJECT_NAME } from "shared/config";
 import { Content, Main, Container, Surface } from "shared/ui/layout";
@@ -7,7 +7,8 @@ import { ErrorWidget } from "shared/ui/error-widget";
 import { LoadingWidget } from "shared/ui/loading-widget";
 
 export const StudioPage = () => {
-    const { todos, loading, error, addTodo, toggleTodo, deleteTodo, updateTodo } = useTodos();
+    const { todos, loading, error } = useTodos();
+    const { addTodo, toggleTodo, deleteTodo, updateTodo } = useTodoActions();
 
     return (
         <>
