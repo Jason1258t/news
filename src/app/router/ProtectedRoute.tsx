@@ -1,17 +1,19 @@
 import type { ReactNode } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { useSession } from "entities/session";
 import { LoadingWidget } from "shared/ui/loading-widget";
 
 export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
     const { user, loading } = useSession();
+    const location = useLocation();
 
     if (loading) {
         return <LoadingWidget />;
     }
 
     if (!user) {
-        return <Navigate to="/login" replace />;
+        // The login page sends the user back here afterwards.
+        return <Navigate to="/login" replace state={{ from: location.pathname }} />;
     }
 
     return <>{children}</>;

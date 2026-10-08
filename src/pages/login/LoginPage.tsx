@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { authApi } from "features/auth";
 import styles from "./LoginPage.module.css";
 
@@ -9,6 +9,8 @@ export const LoginPage = () => {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    // Set by ProtectedRoute when it redirected here.
+    const from = (useLocation().state as { from?: string } | null)?.from;
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -21,7 +23,7 @@ export const LoginPage = () => {
             setError("Неверный email или пароль");
             setLoading(false);
         } else {
-            navigate("/admin/create-article");
+            navigate(from ?? "/admin/create-article", { replace: true });
         }
     };
 
@@ -30,12 +32,18 @@ export const LoginPage = () => {
             <div className={styles.card}>
                 <h1 className={styles.title}>Вход в админ-панель</h1>
 
-                {error && <div className={styles.error}>{error}</div>}
+                {error && (
+                    <div className={styles.error} role="alert">
+                        {error}
+                    </div>
+                )}
 
                 <form onSubmit={handleSubmit} className={styles.form}>
                     <input
                         type="email"
                         placeholder="Email"
+                        aria-label="Email"
+                        autoComplete="username"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
@@ -44,6 +52,8 @@ export const LoginPage = () => {
                     <input
                         type="password"
                         placeholder="Пароль"
+                        aria-label="Пароль"
+                        autoComplete="current-password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required

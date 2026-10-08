@@ -2,11 +2,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, type RenderOptions } from "@testing-library/react";
 import type { ReactElement, ReactNode } from "react";
 import { HelmetProvider } from "react-helmet-async";
-import { MemoryRouter, Route, Routes } from "react-router-dom";
+import { MemoryRouter, Route, Routes, type InitialEntry } from "react-router-dom";
 
 interface ProvidersOptions {
-    /** Начальный URL, например "/articles/foo?tags=a". */
-    route?: string;
+    /** Начальный URL, например "/articles/foo?tags=a", или { pathname, state }. */
+    route?: InitialEntry;
     /** Шаблон маршрута, если компоненту нужны useParams. */
     path?: string;
     queryClient?: QueryClient;
