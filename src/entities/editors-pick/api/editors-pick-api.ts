@@ -1,19 +1,16 @@
 import {
     collection,
-    getDocs,
-    getDoc,
     doc,
+    getDocs,
     query,
-    setDoc,
-    deleteDoc,
     serverTimestamp,
+    writeBatch,
     type DocumentSnapshot,
 } from "firebase/firestore";
 import { db } from "shared/api";
-import { getErrorMessage } from "shared/lib/error";
 import type { EditorsPick, EditorsPickBadge, EditorsPickInput } from "../model/types";
 
-type MutationResult<T = object> = ({ success: true } & T) | { success: false; error: string };
+const COLLECTION = "editors-pick";
 
 const mapEditorsPickFromFirestore = (snapshot: DocumentSnapshot): EditorsPick => {
     const data = snapshot.data() ?? {};
@@ -28,11 +25,10 @@ const mapEditorsPickFromFirestore = (snapshot: DocumentSnapshot): EditorsPick =>
     };
 };
 
-/** Получает все записи редакционной подборки. */
+/** Все записи подборки. Firestore отдаёт их по ID документа, а ID кодируют позицию. */
 export const fetchEditorsPicks = async (): Promise<EditorsPick[]> => {
     try {
-        const querySnapshot = await getDocs(query(collection(db, "editors-pick")));
-
+        const querySnapshot = await getDocs(query(collection(db, COLLECTION)));
         return querySnapshot.docs.map((snapshot) => mapEditorsPickFromFirestore(snapshot));
     } catch (error) {
         console.error("❌ Ошибка при получении редакционной подборки:", error);
@@ -40,69 +36,42 @@ export const fetchEditorsPicks = async (): Promise<EditorsPick[]> => {
     }
 };
 
-/** Создаёт новую запись в редакционной подборке. */
-export const createEditorsPick = async (
-    pickData: EditorsPickInput,
-): Promise<MutationResult<{ id: string }>> => {
-    try {
-        if (!pickData.title?.trim()) {
-            throw new Error("Поле 'title' обязательно для заполнения");
-        }
-
-        if (!pickData.articleUrl?.trim()) {
-            throw new Error("Поле 'articleUrl' обязательно для заполнения");
-        }
-
-        if (!pickData.badge) {
-            throw new Error("Поле 'badge' обязательно для заполнения");
-        }
-
-        // Генерируем ID автоматически
-        const pickId = `pick_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`;
-
-        const pickToSave = {
-            title: pickData.title.trim(),
-            description: pickData.description?.trim() || "",
-            badge: pickData.badge,
-            articleUrl: pickData.articleUrl.trim(),
-            createdAt: serverTimestamp(),
-            updatedAt: serverTimestamp(),
-        };
-
-        const docRef = doc(db, "editors-pick", pickId);
-        await setDoc(docRef, pickToSave);
-
-        return {
-            success: true,
-            id: pickId,
-        };
-    } catch (error) {
-        console.error("❌ Ошибка при создании записи:", error);
-        return {
-            success: false,
-            error: getErrorMessage(error),
-        };
-    }
+const validatePick = (pick: EditorsPickInput, index: number) => {
+    const position = `Запись ${index + 1}`;
+    if (!pick.title.trim()) throw new Error(`${position}: поле 'title' обязательно`);
+    if (!pick.articleUrl.trim()) throw new Error(`${position}: поле 'articleUrl' обязательно`);
+    if (!pick.badge) throw new Error(`${position}: поле 'badge' обязательно`);
 };
 
-/** Удаляет запись из редакционной подборки. */
-export const deleteEditorsPick = async (id: string): Promise<MutationResult> => {
-    try {
-        const docRef = doc(db, "editors-pick", id);
-        const existingDoc = await getDoc(docRef);
+/**
+ * Document IDs sort lexicographically, so `pick_<timestamp>_<position>` keeps the order
+ * the editor arranged.
+ */
+const pickId = (timestamp: number, index: number) =>
+    `pick_${timestamp}_${String(index).padStart(3, "0")}`;
 
-        if (!existingDoc.exists()) {
-            throw new Error(`Запись с ID "${id}" не найдена`);
-        }
+/**
+ * Заменяет всю подборку одной транзакционной записью: старые записи удаляются, новые
+ * создаются в одном batch, поэтому при ошибке подборка остаётся прежней.
+ */
+export const replaceEditorsPicks = async (picks: EditorsPickInput[]): Promise<void> => {
+    picks.forEach(validatePick);
 
-        await deleteDoc(docRef);
+    const current = await getDocs(query(collection(db, COLLECTION)));
+    const batch = writeBatch(db);
+    current.docs.forEach((snapshot) => batch.delete(snapshot.ref));
 
-        return { success: true };
-    } catch (error) {
-        console.error("❌ Ошибка при удалении записи:", error);
-        return {
-            success: false,
-            error: getErrorMessage(error),
-        };
-    }
+    const timestamp = Date.now();
+    picks.forEach((pick, index) => {
+        batch.set(doc(db, COLLECTION, pickId(timestamp, index)), {
+            title: pick.title.trim(),
+            description: pick.description?.trim() || "",
+            badge: pick.badge,
+            articleUrl: pick.articleUrl.trim(),
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp(),
+        });
+    });
+
+    await batch.commit();
 };
