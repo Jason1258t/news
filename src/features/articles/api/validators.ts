@@ -1,5 +1,5 @@
-
-export const validateArticleData = (articleData) => {
+/** Проверяет обязательные поля статьи перед сохранением. Бросает Error с текстом для пользователя. */
+export const validateArticleData = (articleData: Record<string, unknown>): void => {
     if (!articleData.slug) {
         throw new Error("Поле 'slug' обязательно для заполнения");
     }

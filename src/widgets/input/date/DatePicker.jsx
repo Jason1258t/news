@@ -30,6 +30,7 @@ const DatePicker = ({ value, onChange, label = "Выберите дату и в�
 
     useEffect(() => {
         if (value !== undefined) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect -- TODO(stage 4): make the input fully controlled
             setSelectedDate(value);
         }
     }, [value]);

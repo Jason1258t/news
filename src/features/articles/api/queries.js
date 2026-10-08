@@ -9,7 +9,7 @@ import {
 import { db } from "app/firebase";
 
 export const getArticlesQuery = (category, tags, itemsPerPage = 5, lastDoc = null) => {
-    let baseQuery = collection(db, "articles");
+    const baseQuery = collection(db, "articles");
 
     const constraints = [orderBy("datePublishedISO", "desc")];
 

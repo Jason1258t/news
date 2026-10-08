@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { useAuth } from "features/auth/hooks/useAuth";
 import { Link, useNavigate } from "react-router-dom";
 import "./styles.css";
-import logo from "logo.jpg";
+import logo from "../../logo.jpg";
 import { PROJECT_NAME } from "app/project";
 import { Container } from "shared/ui/layout";
 
 const Header = () => {
-    const { user, loading } = useAuth();
+    const { user } = useAuth();
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 

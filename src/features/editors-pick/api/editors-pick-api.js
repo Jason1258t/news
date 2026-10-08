@@ -61,7 +61,7 @@ export const fetchEditorsPicks = async () => {
         );
     } catch (error) {
         console.error("❌ Ошибка при получении редакционной подборки:", error);
-        throw new Error("Не удалось загрузить редакционную подборку");
+        throw new Error("Не удалось загрузить редакционную подборку", { cause: error });
     }
 };
 

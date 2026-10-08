@@ -43,52 +43,47 @@ src/
 
 ## 🛠️ Технологический стек
 
-- **React 18** — современная библиотека для UI
-- **Zustand** — легкое управление состоянием
-- **TanStack React Query** — управление асинхронными данными и кэшированием
-- **Firebase** — бэкенд и аутентификация
-- **React Router DOM** — навигация
-- **Prism.js** — синтаксис для подсветки кода
-- **KaTeX** — отображение математических формул
-- **Lucide React** — иконки
-- **React Hot Toast** — уведомления
+- **React 18** + **TypeScript** (миграция постепенная: `allowJs`, новые файлы — `.ts/.tsx`)
+- **Vite** — сборка и dev-сервер
+- **TanStack React Query** — серверное состояние и кэширование
+- **Zustand** — локальное состояние форм
+- **Firebase** — Firestore и аутентификация
+- **React Router DOM** — навигация (`HashRouter` для GitHub Pages)
+- **Prism.js**, **KaTeX** — подсветка кода и формулы
+- **Vitest** + **Testing Library** — тесты
+- **ESLint** (с `eslint-plugin-boundaries` для слоёв FSD) + **Prettier**
 
 ## 📦 Установка и запуск
 
-### Требования
-
-- Node.js 14+
-- npm или yarn
-
-### Установка зависимостей
+Требуется Node.js 22+.
 
 ```bash
 npm install
+cp .env.example .env   # заполнить конфигом Firebase
+npm run dev            # http://localhost:5173
 ```
 
-### Разработка
+### Скрипты
 
-```bash
-npm start
-```
+| Команда | Что делает |
+|---|---|
+| `npm run dev` | dev-сервер |
+| `npm run build` | проверка типов + сборка в `dist/` |
+| `npm run preview` | локальный просмотр сборки |
+| `npm test` | Vitest в режиме наблюдения |
+| `npm run test:run` | однократный прогон тестов |
+| `npm run coverage` | тесты с отчётом покрытия |
+| `npm run typecheck` | `tsc` без сборки |
+| `npm run lint` | ESLint |
+| `npm run format` | Prettier |
 
-Откроет приложение в режиме разработки на [http://localhost:3000](http://localhost:3000).
+### Тесты
 
-### Сборка для продакшена
+Тесты лежат рядом с кодом (`*.test.ts(x)`). Общие хелперы — в `src/test/`:
+`renderWithProviders` / `createWrapper` (react-query без ретраев, `MemoryRouter`, Helmet) и `fakeDocSnapshot` для мапперов Firestore.
+Модуль `app/firebase` в тестах мокается через `vi.mock("app/firebase", ...)`.
 
-```bash
-npm run build
-```
-
-Создает оптимизированную сборку в папке `build/`.
-
-### Тестирование
-
-```bash
-npm test
-```
-
-Запускает тесты в интерактивном режиме наблюдения.
+CI (`.github/workflows/ci.yml`) на каждый PR запускает lint, typecheck, тесты и сборку.
 
 ## 📂 Структура проекта
 
@@ -132,7 +127,7 @@ npm test
 
 ## 🚀 Развертывание
 
-Сайт развертывается на GitHub Pages. Используйте команду:
+Сайт развёртывается на GitHub Pages (`dist/` → ветка `gh-pages`):
 
 ```bash
 npm run deploy

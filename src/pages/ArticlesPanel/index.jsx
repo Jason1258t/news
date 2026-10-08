@@ -28,6 +28,7 @@ const ArticlesPanel = () => {
 
     useEffect(() => {
         if (data?.pages) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect -- TODO(stage 2): move to react-query
             setArticles(data.pages.flatMap((page) => page.data));
         }
     }, [data]);

@@ -81,7 +81,7 @@ export const fetchArticles = async ({
         };
     } catch (error) {
         console.error("Error fetching articles:", error);
-        throw new Error("Failed to fetch articles");
+        throw new Error("Failed to fetch articles", { cause: error });
     }
 };
 
@@ -100,7 +100,7 @@ export const fetchArticleBySlug = async (slug) => {
         }
     } catch (error) {
         console.error(`Error fetching article ${slug}:`, error);
-        throw new Error("Failed to fetch article");
+        throw new Error("Failed to fetch article", { cause: error });
     }
 };
 

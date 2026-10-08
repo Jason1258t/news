@@ -31,6 +31,7 @@ export const useEditorsPicks = () => {
     };
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- TODO(stage 2): move to react-query
         loadPicks();
     }, []);
 

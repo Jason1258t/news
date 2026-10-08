@@ -16,7 +16,7 @@ const ImagePreview = ({
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  const handleLoad = (e) => {
+  const handleLoad = () => {
     setIsLoading(false);
     setHasError(false);
     if (onLoad) {
@@ -24,7 +24,7 @@ const ImagePreview = ({
     }
   };
 
-  const handleError = (e) => {
+  const handleError = () => {
     setIsLoading(false);
     setHasError(true);
     if (onError) {
