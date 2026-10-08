@@ -1,10 +1,6 @@
 import { act, screen, waitFor } from "@testing-library/react";
-import {
-    mockAllIsIntersecting,
-    resetIntersectionMocking,
-    setupIntersectionMocking,
-} from "react-intersection-observer/test-utils";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { mockAllIsIntersecting } from "react-intersection-observer/test-utils";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { fetchArticles, type ArticlesPage } from "entities/article/api/articles-api";
 import { makeArticle } from "test/fixtures";
 import { renderWithProviders } from "test/render";
@@ -17,11 +13,6 @@ vi.mock("entities/article/api/articles-api", async (importOriginal) => ({
 
 const fetchMock = vi.mocked(fetchArticles);
 
-// The library mocks IntersectionObserver with vi.fn(arrowFn), which Vitest 4+ cannot `new`.
-const constructibleFn = ((impl: (...args: unknown[]) => unknown) =>
-    vi.fn(function (...args: unknown[]) {
-        return impl(...args);
-    })) as unknown as typeof vi.fn;
 
 const page = (slugs: string[], nextCursor?: string): ArticlesPage => ({
     data: slugs.map((slug) => makeArticle({ slug, title: `Статья ${slug}` })),
@@ -33,12 +24,7 @@ const titles = () => screen.queryAllByRole("heading").map((heading) => heading.t
 
 describe("ArticleFeed", () => {
     beforeEach(() => {
-        setupIntersectionMocking(constructibleFn);
         fetchMock.mockReset();
-    });
-
-    afterEach(() => {
-        resetIntersectionMocking();
     });
 
     it("passes category and tags from the URL to the query", async () => {
