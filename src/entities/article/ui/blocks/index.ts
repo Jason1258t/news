@@ -5,6 +5,5 @@ export { ImageBlock } from "./ImageBlock";
 export { Blockquote } from "./Blockquote";
 export { Highlight } from "./Highlight";
 export { FooterNote } from "./FooterNote";
-export { Formula } from "./Formula";
-export { CodeBlock } from "./CodeBlock";
 export { Table } from "./Table";
+// Formula (KaTeX) and CodeBlock (Prism) are heavy and loaded lazily by ContentBlock.
