@@ -1,4 +1,8 @@
-/** Renders trusted HTML as-is. TODO(stage 1): sanitize (DOMPurify) — content comes from Firestore. */
-export const RenderHtml = ({ html }: { html: string }) => (
-    <span dangerouslySetInnerHTML={{ __html: html }} />
-);
+import { useMemo } from "react";
+import { sanitizeHtml } from "shared/lib/sanitize-html";
+
+/** Renders HTML from Firestore after sanitizing it. */
+export const RenderHtml = ({ html }: { html: string }) => {
+    const safeHtml = useMemo(() => sanitizeHtml(html), [html]);
+    return <span dangerouslySetInnerHTML={{ __html: safeHtml }} />;
+};

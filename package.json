@@ -5,6 +5,7 @@
     "private": true,
     "dependencies": {
         "@tanstack/react-query": "^5.90.2",
+        "dompurify": "^3.4.16",
         "firebase": "^12.19.0",
         "katex": "^0.19.0",
         "linkify-react": "^4.3.3",
