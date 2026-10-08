@@ -1,39 +1,30 @@
-import { useEffect, useState } from "react";
-import {
-    ArticleCard,
-    ArticleCardSmall,
-    deleteArticle,
-    useArticles,
-    type Article,
-} from "entities/article";
-import { LoadingSpinner } from "shared/ui/loading-widget";
-import { ErrorWidget } from "shared/ui/error-widget";
-import { useDeleteConfirmation, DeleteConfirmationModal } from "shared/ui/confirm-dialog";
-
-import styles from "./ArticlesPanelPage.module.css";
-
 import { Trash2, X } from "lucide-react";
+import { useState } from "react";
+import { Helmet } from "react-helmet-async";
+import toast from "react-hot-toast";
+import { ArticleCard, ArticleCardSmall, useArticles } from "entities/article";
+import { useDeleteArticle } from "features/article-delete";
+import { PROJECT_NAME } from "shared/config";
+import { getErrorMessage } from "shared/lib/error";
+import { OutlinedButton } from "shared/ui/button";
+import { DeleteConfirmationModal, useDeleteConfirmation } from "shared/ui/confirm-dialog";
+import { ErrorWidget } from "shared/ui/error-widget";
+import { LoadingSpinner } from "shared/ui/loading-widget";
+import styles from "./ArticlesPanelPage.module.css";
 import { EmptyArticleWidget } from "./EmptyArticleWidget";
 
-import toast from "react-hot-toast";
-
-import { Helmet } from "react-helmet-async";
-import { PROJECT_NAME } from "shared/config";
+const PAGE_SIZE = 20;
 
 export const ArticlesPanelPage = () => {
-    const { data, isLoading, error } = useArticles({ limit: 50 });
+    const { data, isLoading, error, hasNextPage, fetchNextPage, isFetchingNextPage } = useArticles({
+        limit: PAGE_SIZE,
+    });
+    const articles = data?.pages.flatMap((page) => page.data) ?? [];
 
-    const [allArticles, setArticles] = useState<Article[]>([]);
+    const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
+    const selectedArticle = articles.find((article) => article.slug === selectedSlug) ?? null;
 
-    useEffect(() => {
-        if (data?.pages) {
-            // eslint-disable-next-line react-hooks/set-state-in-effect -- TODO(stage 2): move to react-query
-            setArticles(data.pages.flatMap((page) => page.data));
-        }
-    }, [data]);
-
-    const [selectedArticle, setArticle] = useState<Article | null>(null);
-
+    const { mutateAsync: deleteArticle } = useDeleteArticle();
     const deleteConfirmation = useDeleteConfirmation();
 
     const onDeleteArticle = () => {
@@ -42,14 +33,12 @@ export const ArticlesPanelPage = () => {
             title: "Удалить статью?",
             description: "Это действие нельзя будет отменить. Статья будет удалена безвозвратно.",
             onConfirm: async () => {
-                const result = await deleteArticle(selectedArticle.slug);
-
-                if (result.success) {
-                    setArticle(null);
-                    setArticles((prev) => prev.filter((a) => a.slug !== selectedArticle.slug));
+                try {
+                    await deleteArticle(selectedArticle.slug);
+                    setSelectedSlug(null);
                     toast.success(`✅ Статья "${selectedArticle.title}" успешно удалена`);
-                } else {
-                    toast.error(`❌ Ошибка: ${result.error}`);
+                } catch (deleteError) {
+                    toast.error(`❌ Ошибка: ${getErrorMessage(deleteError)}`);
                 }
             },
         });
@@ -66,18 +55,24 @@ export const ArticlesPanelPage = () => {
                     <h2>Список статей</h2>
                     <div className={styles.list}>
                         {isLoading && <LoadingSpinner />}
-                        {error && <ErrorWidget message={error?.message} />}
-                        {allArticles.map((article) => (
+                        {error && <ErrorWidget message={error.message} />}
+                        {articles.map((article) => (
                             <ArticleCardSmall
-                                onClick={() => setArticle(article)}
+                                onClick={() => setSelectedSlug(article.slug)}
                                 key={article.slug}
                                 title={article.title}
                                 excerpt={article.description}
                                 imageUrl={article.hero.url}
                                 date={article.dateDisplay}
-                                highlight={selectedArticle?.slug === article.slug}
+                                highlight={selectedSlug === article.slug}
                             />
                         ))}
+                        {isFetchingNextPage && <LoadingSpinner />}
+                        {hasNextPage && !isFetchingNextPage && (
+                            <OutlinedButton onClick={() => fetchNextPage()}>
+                                Показать ещё
+                            </OutlinedButton>
+                        )}
                     </div>
                 </div>
 
@@ -86,7 +81,7 @@ export const ArticlesPanelPage = () => {
                         <h2>Выбранная статья</h2>
                         {selectedArticle && (
                             <button
-                                onClick={() => setArticle(null)}
+                                onClick={() => setSelectedSlug(null)}
                                 className={styles.closeButton}
                                 aria-label="Закрыть"
                             >
@@ -98,22 +93,25 @@ export const ArticlesPanelPage = () => {
                     <div className={styles.scrolled}>
                         {!selectedArticle && <EmptyArticleWidget />}
                         {selectedArticle && (
-                            <ArticleCard
-                                title={selectedArticle.title}
-                                excerpt={selectedArticle.description}
-                                date={selectedArticle.dateDisplay}
-                                imageUrl={selectedArticle.hero.url}
-                                category={selectedArticle.category}
-                            />
-                        )}
-
-                        {selectedArticle && (
-                            <div className={styles.selectedArticleActions}>
-                                <button onClick={onDeleteArticle} className={styles.deleteButton}>
-                                    <Trash2 size="1.25rem" />
-                                    Удалить
-                                </button>
-                            </div>
+                            <>
+                                <ArticleCard
+                                    to={`/articles/${selectedArticle.slug}`}
+                                    title={selectedArticle.title}
+                                    excerpt={selectedArticle.description}
+                                    date={selectedArticle.dateDisplay}
+                                    imageUrl={selectedArticle.hero.url}
+                                    category={selectedArticle.category}
+                                />
+                                <div className={styles.selectedArticleActions}>
+                                    <button
+                                        onClick={onDeleteArticle}
+                                        className={styles.deleteButton}
+                                    >
+                                        <Trash2 size="1.25rem" />
+                                        Удалить
+                                    </button>
+                                </div>
+                            </>
                         )}
                     </div>
                 </div>

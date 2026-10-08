@@ -8,40 +8,22 @@ import {
     type DocumentSnapshot,
 } from "firebase/firestore";
 import { db } from "shared/api";
-import { getErrorMessage } from "shared/lib/error";
 import { mapArticleFromFirestore } from "../model/mappers";
 import type { Article, ArticleInput } from "../model/types";
 import { parseArticleInput } from "../model/validators";
 import { getArticlesQuery, needsClientCategoryFilter } from "./articles-query";
 
-export type MutationResult<T = object> =
-    ({ success: true } & T) | { success: false; error: string };
-
 /** Создаёт статью из JSON, вставленного в админке; формат проверяется по схеме. */
-export const createArticle = async (
-    articleData: unknown,
-): Promise<MutationResult<{ slug: string }>> => {
-    try {
-        const article = parseArticleInput(articleData);
+export const createArticle = async (articleData: unknown): Promise<{ slug: string }> => {
+    const article = parseArticleInput(articleData);
 
-        const existingDoc = await getDoc(doc(db, "articles", article.slug));
-        if (existingDoc.exists()) {
-            throw new Error(`Статья с slug "${article.slug}" уже существует`);
-        }
-
-        await setDoc(doc(db, "articles", article.slug), prepareArticleToSave(article));
-
-        return {
-            success: true,
-            slug: article.slug,
-        };
-    } catch (error) {
-        console.error("❌ Ошибка при создании статьи:", error);
-        return {
-            success: false,
-            error: getErrorMessage(error),
-        };
+    const existingDoc = await getDoc(doc(db, "articles", article.slug));
+    if (existingDoc.exists()) {
+        throw new Error(`Статья с slug "${article.slug}" уже существует`);
     }
+
+    await setDoc(doc(db, "articles", article.slug), prepareArticleToSave(article));
+    return { slug: article.slug };
 };
 
 const prepareArticleToSave = (article: ArticleInput) => {
@@ -121,28 +103,16 @@ export const fetchArticleBySlug = async (slug: string): Promise<Article | null> 
 };
 
 /** Удаляет статью из Firestore. */
-export const deleteArticle = async (slug: string): Promise<MutationResult> => {
-    try {
-        if (!slug || typeof slug !== "string") {
-            throw new Error("Некорректный slug статьи");
-        }
-
-        const docRef = doc(db, "articles", slug);
-        const articleDoc = await getDoc(docRef);
-
-        if (!articleDoc.exists()) {
-            throw new Error(`Статья с slug "${slug}" не найдена`);
-        }
-
-        await deleteDoc(docRef);
-        return {
-            success: true,
-        };
-    } catch (error) {
-        console.error("❌ Ошибка при удалении статьи:", error);
-        return {
-            success: false,
-            error: getErrorMessage(error),
-        };
+export const deleteArticle = async (slug: string): Promise<void> => {
+    if (!slug) {
+        throw new Error("Некорректный slug статьи");
     }
+
+    const docRef = doc(db, "articles", slug);
+    const articleDoc = await getDoc(docRef);
+    if (!articleDoc.exists()) {
+        throw new Error(`Статья с slug "${slug}" не найдена`);
+    }
+
+    await deleteDoc(docRef);
 };
