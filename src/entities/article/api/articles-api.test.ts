@@ -3,7 +3,6 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { fakeDocSnapshot, fakeQuerySnapshot } from "../../../test/firestore";
 import { fetchArticleBySlug, fetchArticles } from "./articles-api";
 
-vi.mock("shared/api/firebase", () => ({ db: {} }));
 vi.mock("firebase/firestore", async (importOriginal) => ({
     ...(await importOriginal<object>()),
     doc: vi.fn((_db: unknown, collection: string, id: string) => ({ collection, id })),

@@ -6,7 +6,6 @@ import { makeArticle } from "../../test/fixtures";
 import { renderWithProviders } from "../../test/render";
 import { ArticlePage } from "./ArticlePage";
 
-vi.mock("shared/api/firebase", () => ({ db: {}, auth: {} }));
 vi.mock("entities/article/api/articles-api", async (importOriginal) => ({
     ...(await importOriginal<object>()),
     fetchArticleBySlug: vi.fn(),

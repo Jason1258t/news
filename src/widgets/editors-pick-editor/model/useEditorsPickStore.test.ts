@@ -1,9 +1,7 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import { getArticlePreview } from "entities/article";
 import { makeArticle } from "../../../test/fixtures";
 import { useEditorsPickStore } from "./useEditorsPickStore";
-
-vi.mock("shared/api/firebase", () => ({ db: {}, auth: {} }));
 
 describe("useEditorsPickStore draft", () => {
     beforeEach(() => {
