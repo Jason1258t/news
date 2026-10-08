@@ -33,17 +33,21 @@ describe("Header", () => {
         );
     });
 
-    it("toggles the mobile menu", async () => {
+    it("toggles the mobile menu and closes it after navigation", async () => {
         const user = userEvent.setup();
-        const { container } = renderHeader(null);
-        const nav = container.querySelector("nav.nav");
-        const burger = container.querySelector(".burger-menu");
-        expect(nav).not.toHaveClass("active");
+        renderHeader(null);
+        const burger = screen.getByRole("button", { name: "Меню" });
+        expect(burger).toHaveAttribute("aria-expanded", "false");
 
-        await user.click(burger!);
-        expect(nav).toHaveClass("active");
+        await user.click(burger);
+        expect(burger).toHaveAttribute("aria-expanded", "true");
 
         await user.click(screen.getByRole("link", { name: "Наука" }));
-        expect(nav).not.toHaveClass("active");
+        expect(burger).toHaveAttribute("aria-expanded", "false");
+    });
+
+    it("links the logo to the home page", () => {
+        renderHeader(null);
+        expect(screen.getByRole("link", { name: /logo/ })).toHaveAttribute("href", "/");
     });
 });
