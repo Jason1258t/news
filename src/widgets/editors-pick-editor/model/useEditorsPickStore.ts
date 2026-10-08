@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { ArticleOG } from "entities/article";
+import type { ArticlePreview } from "entities/article";
 import {
     createEditorsPick,
     deleteEditorsPick,
@@ -15,7 +15,7 @@ interface EditorsPickState {
     error: string | null;
     hasChanges: boolean;
     loadEditorsPicks: () => Promise<void>;
-    addEditorsPick: (articleOG: Partial<ArticleOG>) => EditorsPick;
+    addEditorsPick: (preview: Pick<ArticlePreview, "title" | "description" | "url">) => EditorsPick;
     removeEditorsPick: (id: string) => void;
     updateEditorsPickBadge: (id: string, badge: EditorsPickBadge) => void;
     saveAllChanges: () => Promise<{ success: boolean; error?: string }>;
@@ -47,15 +47,15 @@ export const useEditorsPickStore = create<EditorsPickState>()((set, get) => ({
         }
     },
 
-    addEditorsPick: (articleOG) => {
+    addEditorsPick: (preview) => {
         const { editorsPicks } = get();
 
         const newPick: EditorsPick = {
             id: `local_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`,
-            title: articleOG.title || "",
-            description: articleOG.description || "",
+            title: preview.title,
+            description: preview.description,
             badge: "Must Read",
-            articleUrl: articleOG.url || "",
+            articleUrl: preview.url,
             createdAt: new Date(),
             updatedAt: new Date(),
         };

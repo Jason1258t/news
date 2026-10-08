@@ -95,6 +95,11 @@ export default tseslint.config(
             ]),
         },
     })),
+    // Tests mock slice internals (e.g. an API module), so they may import past the public API.
+    {
+        files: ["src/**/*.test.{ts,tsx}"],
+        rules: { "no-restricted-imports": "off" },
+    },
     {
         files: ["*.config.{js,ts}"],
         languageOptions: { globals: globals.node },

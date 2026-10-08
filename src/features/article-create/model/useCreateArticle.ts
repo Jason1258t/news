@@ -1,11 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import {
-    createArticle,
-    fetchArticleBySlug,
-    type ArticleCreateData,
-    type MutationResult,
-} from "entities/article";
+import { createArticle, fetchArticleBySlug, type MutationResult } from "entities/article";
 import { getErrorMessage } from "shared/lib/error";
 
 /** Создание статьи с обновлением кеша react-query. */
@@ -15,7 +10,7 @@ export const useCreateArticle = () => {
     const queryClient = useQueryClient();
 
     const createArticleHandler = async (
-        articleData: ArticleCreateData,
+        articleData: unknown,
     ): Promise<MutationResult<{ slug: string }>> => {
         setLoading(true);
         setError(null);

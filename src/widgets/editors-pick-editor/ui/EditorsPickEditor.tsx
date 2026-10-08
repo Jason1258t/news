@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { getArticlePreview } from "entities/article";
 import { useEditorsPickStore } from "../model/useEditorsPickStore";
 import { ArticlesList } from "./ArticlesList";
 import { CurrentPicks } from "./CurrentPicks";
@@ -14,7 +15,9 @@ export const EditorsPickEditor = () => {
     return (
         <div className={styles.editor}>
             <ArticlesList
-                onArticleSelected={(article) => editorsPicksStore.addEditorsPick(article.og)}
+                onArticleSelected={(article) =>
+                    editorsPicksStore.addEditorsPick(getArticlePreview(article))
+                }
             />
             <CurrentPicks store={editorsPicksStore} />
         </div>

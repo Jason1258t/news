@@ -19,7 +19,11 @@ export const LoadingWidget = ({ message = "Загрузка..." }: { message?: s
 
 export const LoadingSpinner = () => {
     return (
-        <div style={{ display: "flex", justifyContent: "center" }}>
+        <div
+            role="status"
+            aria-label="Загрузка"
+            style={{ display: "flex", justifyContent: "center" }}
+        >
             <div className={styles.spinner}></div>
         </div>
     );
