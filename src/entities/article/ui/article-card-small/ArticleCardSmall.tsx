@@ -1,6 +1,13 @@
-import React from "react";
-
 import styles from "./ArticleCardSmall.module.css";
+
+interface ArticleCardSmallProps {
+    title: string;
+    excerpt?: string;
+    date?: string;
+    imageUrl?: string;
+    onClick?: () => void;
+    highlight?: boolean;
+}
 
 export const ArticleCardSmall = ({
     title,
@@ -9,7 +16,7 @@ export const ArticleCardSmall = ({
     imageUrl,
     onClick,
     highlight = false,
-}) => {
+}: ArticleCardSmallProps) => {
     return (
         <div onClick={onClick} className={`${styles.card} ${highlight ? styles.highlight : ""}`}>
             {imageUrl && <img src={imageUrl} alt={title} className={styles.image} />}

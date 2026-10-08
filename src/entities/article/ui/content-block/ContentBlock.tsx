@@ -10,8 +10,9 @@ import {
     CodeBlock,
     Table,
 } from "../blocks";
+import type { ArticleContentBlock } from "../../model/types";
 
-export const ContentBlock = ({ block }) => {
+export const ContentBlock = ({ block }: { block: ArticleContentBlock }) => {
     switch (block.type) {
         case "heading":
             return <Heading level={block.level} text={block.text} />;
@@ -27,6 +28,7 @@ export const ContentBlock = ({ block }) => {
             return (
                 <Highlight
                     title={block.title}
+                    // Old documents may lack `content`, despite the type.
                     content={(block.content ?? []).map((e, idx) => (
                         <ContentBlock key={idx} block={e} />
                     ))}
@@ -43,7 +45,7 @@ export const ContentBlock = ({ block }) => {
         case "table":
             return <Table data={block.data} hasHeader={block.hasHeader} />;
         default:
-            console.warn(`Unknown block type: ${block.type}`);
+            console.warn(`Unknown block type: ${(block as { type: string }).type}`);
             return null;
     }
 };

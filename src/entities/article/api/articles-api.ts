@@ -1,15 +1,29 @@
-import { getDocs, getDoc, doc, setDoc, deleteDoc, serverTimestamp } from "firebase/firestore";
+import {
+    deleteDoc,
+    doc,
+    getDoc,
+    getDocs,
+    serverTimestamp,
+    setDoc,
+    type DocumentSnapshot,
+} from "firebase/firestore";
 import { db } from "shared/api";
+import { getErrorMessage } from "shared/lib/error";
 import { mapArticleFromFirestore } from "../model/mappers";
+import type { Article } from "../model/types";
 import { validateArticleData } from "../model/validators";
 import { getArticlesQuery } from "./articles-query";
 
-/**
- * Создает новую статью в Firestore
- * @param {Object} articleData - Данные статьи
- * @returns {Promise<{success: boolean, slug?: string, error?: string}>}
- */
-export const createArticle = async (articleData) => {
+export type MutationResult<T = object> =
+    ({ success: true } & T) | { success: false; error: string };
+
+/** Article JSON as pasted in the admin panel; validated before saving. */
+export type ArticleCreateData = Record<string, unknown> & { slug: string };
+
+/** Создаёт новую статью в Firestore. */
+export const createArticle = async (
+    articleData: ArticleCreateData,
+): Promise<MutationResult<{ slug: string }>> => {
     try {
         validateArticleData(articleData);
 
@@ -31,37 +45,53 @@ export const createArticle = async (articleData) => {
         console.error("❌ Ошибка при создании статьи:", error);
         return {
             success: false,
-            error: error.message,
+            error: getErrorMessage(error),
         };
     }
 };
 
-const prepareArticleToSave = (articleData) => {
-    const articleToSave = {
-        ...articleData,
+const prepareArticleToSave = (articleData: ArticleCreateData) => {
+    const { dateDisplay: _dateDisplay, ...rest } = articleData;
+    return {
+        ...rest,
         datePublishedISO: articleData.datePublishedISO || new Date().toISOString(),
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
     };
-
-    delete articleToSave.dateDisplay;
-    return articleToSave;
 };
 
-export const fetchArticles = async ({ category, lastId, limit = 5, tags = undefined }) => {
+export interface FetchArticlesParams {
+    category?: string | null;
+    /** Slug of the last article of the previous page. */
+    lastId?: string;
+    limit?: number;
+    tags?: string[];
+}
+
+export interface ArticlesPage {
+    data: Article[];
+    hasMore: boolean;
+}
+
+export const fetchArticles = async ({
+    category,
+    lastId,
+    limit = 5,
+    tags = undefined,
+}: FetchArticlesParams): Promise<ArticlesPage> => {
     try {
-        let doc = undefined;
+        let cursor: DocumentSnapshot | undefined = undefined;
         if (lastId) {
-            doc = await fetchArticleDocBySlug(lastId);
+            cursor = await fetchArticleDocBySlug(lastId);
         }
 
-        const articlesQuery = getArticlesQuery(category, tags, limit, doc);
+        const articlesQuery = getArticlesQuery(category, tags, limit, cursor);
         const querySnapshot = await getDocs(articlesQuery);
 
         const hasMore = querySnapshot.docs.length === limit;
 
         return {
-            data: querySnapshot.docs.map((doc) => mapArticleFromFirestore(doc)),
+            data: querySnapshot.docs.map((snapshot) => mapArticleFromFirestore(snapshot)),
             hasMore: hasMore,
         };
     } catch (error) {
@@ -70,12 +100,12 @@ export const fetchArticles = async ({ category, lastId, limit = 5, tags = undefi
     }
 };
 
-const fetchArticleDocBySlug = async (slug) => {
+const fetchArticleDocBySlug = async (slug: string) => {
     const docRef = doc(db, "articles", slug);
     return await getDoc(docRef);
 };
 
-export const fetchArticleBySlug = async (slug) => {
+export const fetchArticleBySlug = async (slug: string): Promise<Article> => {
     try {
         const docSnap = await fetchArticleDocBySlug(slug);
         if (docSnap.exists()) {
@@ -89,12 +119,8 @@ export const fetchArticleBySlug = async (slug) => {
     }
 };
 
-/**
- * Удаляет статью из Firestore
- * @param {string} slug - Slug статьи для удаления
- * @returns {Promise<{success: boolean, error?: string}>}
- */
-export const deleteArticle = async (slug) => {
+/** Удаляет статью из Firestore. */
+export const deleteArticle = async (slug: string): Promise<MutationResult> => {
     try {
         if (!slug || typeof slug !== "string") {
             throw new Error("Некорректный slug статьи");
@@ -115,7 +141,7 @@ export const deleteArticle = async (slug) => {
         console.error("❌ Ошибка при удалении статьи:", error);
         return {
             success: false,
-            error: error.message,
+            error: getErrorMessage(error),
         };
     }
 };

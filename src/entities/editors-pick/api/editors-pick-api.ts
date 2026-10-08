@@ -7,68 +7,43 @@ import {
     setDoc,
     deleteDoc,
     serverTimestamp,
+    type DocumentSnapshot,
 } from "firebase/firestore";
 import { db } from "shared/api";
+import { getErrorMessage } from "shared/lib/error";
+import type { EditorsPick, EditorsPickBadge, EditorsPickInput } from "../model/types";
 
-/**
- * @typedef {"Must Read" | "Deep Dive" | "Trending" | "Case Study" | "Tutorial" | "Research"} ArticleBadge
- */
+type MutationResult<T = object> = ({ success: true } & T) | { success: false; error: string };
 
-/**
- * @typedef {Object} EditorsPick
- * @property {string} title - Заголовок статьи
- * @property {string} description - Описание статьи
- * @property {ArticleBadge} badge - Метка/категория статьи
- * @property {string} articleUrl - Ссылка на статью
- * @property {string} id - ID документа (автоматически генерируется)
- * @property {Date} createdAt - Дата создания
- * @property {Date} updatedAt - Дата обновления
- */
-
-/**
- * Маппинг данных из Firestore
- * @param {Object} doc - Документ Firestore
- * @returns {EditorsPick}
- */
-const mapEditorsPickFromFirestore = (doc) => {
-    const data = doc.data();
+const mapEditorsPickFromFirestore = (snapshot: DocumentSnapshot): EditorsPick => {
+    const data = snapshot.data() ?? {};
     return {
-        id: doc.id,
+        id: snapshot.id,
         title: data.title || "",
         description: data.description || "",
-        badge: data.badge || "Must Read",
+        badge: (data.badge as EditorsPickBadge) || "Must Read",
         articleUrl: data.articleUrl || "",
         createdAt: data.createdAt?.toDate() || new Date(),
         updatedAt: data.updatedAt?.toDate() || new Date(),
     };
 };
 
-/**
- * Получает все записи редакционной подборки
- * @param {Object} options - Опции фильтрации
- * @param {boolean} options.activeOnly - Только активные записи
- * @param {ArticleBadge} options.badge - Фильтр по метке
- * @returns {Promise<EditorsPick[]>}
- */
-export const fetchEditorsPicks = async () => {
+/** Получает все записи редакционной подборки. */
+export const fetchEditorsPicks = async (): Promise<EditorsPick[]> => {
     try {
-        let articlesQuery = collection(db, "editors-pick");
-        articlesQuery = query(articlesQuery);
-        const querySnapshot = await getDocs(articlesQuery);
+        const querySnapshot = await getDocs(query(collection(db, "editors-pick")));
 
-        return querySnapshot.docs.map((doc) => mapEditorsPickFromFirestore(doc));
+        return querySnapshot.docs.map((snapshot) => mapEditorsPickFromFirestore(snapshot));
     } catch (error) {
         console.error("❌ Ошибка при получении редакционной подборки:", error);
         throw new Error("Не удалось загрузить редакционную подборку", { cause: error });
     }
 };
 
-/**
- * Создает новую запись в редакционной подборке
- * @param {Omit<EditorsPick, 'id' | 'createdAt' | 'updatedAt'>} pickData - Данные для редакционной подборки
- * @returns {Promise<{success: boolean, id?: string, error?: string}>}
- */
-export const createEditorsPick = async (pickData) => {
+/** Создаёт новую запись в редакционной подборке. */
+export const createEditorsPick = async (
+    pickData: EditorsPickInput,
+): Promise<MutationResult<{ id: string }>> => {
     try {
         if (!pickData.title?.trim()) {
             throw new Error("Поле 'title' обязательно для заполнения");
@@ -83,7 +58,7 @@ export const createEditorsPick = async (pickData) => {
         }
 
         // Генерируем ID автоматически
-        const pickId = `pick_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        const pickId = `pick_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`;
 
         const pickToSave = {
             title: pickData.title.trim(),
@@ -105,17 +80,13 @@ export const createEditorsPick = async (pickData) => {
         console.error("❌ Ошибка при создании записи:", error);
         return {
             success: false,
-            error: error.message,
+            error: getErrorMessage(error),
         };
     }
 };
 
-/**
- * Удаляет запись из редакционной подборки
- * @param {string} id - ID записи
- * @returns {Promise<{success: boolean, error?: string}>}
- */
-export const deleteEditorsPick = async (id) => {
+/** Удаляет запись из редакционной подборки. */
+export const deleteEditorsPick = async (id: string): Promise<MutationResult> => {
     try {
         const docRef = doc(db, "editors-pick", id);
         const existingDoc = await getDoc(docRef);
@@ -131,7 +102,7 @@ export const deleteEditorsPick = async (id) => {
         console.error("❌ Ошибка при удалении записи:", error);
         return {
             success: false,
-            error: error.message,
+            error: getErrorMessage(error),
         };
     }
 };

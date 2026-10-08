@@ -1,8 +1,8 @@
-import React from "react";
 import katex from "katex";
 import "katex/dist/katex.min.css";
+import type { ArticleFormulaBlock } from "../../model/types";
 
-export const Formula = ({ formula, display = "inline" }) => {
+export const Formula = ({ formula, display = "inline" }: Omit<ArticleFormulaBlock, "type">) => {
     const html = katex.renderToString(formula, {
         displayMode: display === "block",
         throwOnError: false,

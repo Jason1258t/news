@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from "react";
 import Prism from "prismjs";
+import { useEffect, useRef } from "react";
 import "prismjs/themes/prism-tomorrow.css";
 
 import "prismjs/components/prism-javascript";
@@ -10,9 +10,14 @@ import "prismjs/components/prism-python";
 import "prismjs/components/prism-java";
 import "prismjs/components/prism-css";
 import "prismjs/components/prism-markup";
+import type { ArticleCodeBlock } from "../../model/types";
 
-export const CodeBlock = ({ code, language = "text", filename }) => {
-    const codeRef = useRef(null);
+export const CodeBlock = ({
+    code,
+    language = "text",
+    filename,
+}: Omit<ArticleCodeBlock, "type">) => {
+    const codeRef = useRef<HTMLElement>(null);
 
     useEffect(() => {
         if (codeRef.current) {

@@ -1,19 +1,13 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { getErrorMessage } from "shared/lib/error";
+import type { EditorsPick } from "../model/types";
 import { fetchEditorsPicks } from "./editors-pick-api";
 
-/**
- * Хук для получения редакционной подборки (только чтение)
- * @returns {{
- *   editorsPicks: EditorsPick[],
- *   loading: boolean,
- *   error: string | null,
- *   refetch: () => Promise<void>
- * }}
- */
+/** Редакционная подборка (только чтение). */
 export const useEditorsPicks = () => {
-    const [editorsPicks, setEditorsPicks] = useState([]);
+    const [editorsPicks, setEditorsPicks] = useState<EditorsPick[]>([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<string | null>(null);
 
     const loadPicks = async () => {
         setLoading(true);
@@ -23,7 +17,7 @@ export const useEditorsPicks = () => {
             const picks = await fetchEditorsPicks();
             setEditorsPicks(picks);
         } catch (err) {
-            setError(err.message);
+            setError(getErrorMessage(err));
             console.error("Ошибка загрузки редакционной подборки:", err);
         } finally {
             setLoading(false);

@@ -1,8 +1,24 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./ArticleCard.module.css";
 
-export const ArticleCard = ({ to, title, excerpt, date, category, imageUrl }) => {
+interface ArticleCardProps {
+    /** Link target; without it the card renders as a link to the current page. */
+    to?: string;
+    title: string;
+    excerpt?: string;
+    date?: string;
+    category?: string;
+    imageUrl?: string;
+}
+
+export const ArticleCard = ({
+    to = "",
+    title,
+    excerpt,
+    date,
+    category,
+    imageUrl,
+}: ArticleCardProps) => {
     return (
         <Link to={to} className={styles.card}>
             {imageUrl ? (

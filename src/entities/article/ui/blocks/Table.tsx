@@ -1,10 +1,10 @@
-import React from "react";
 import { RenderHtml } from "shared/ui/render-html";
+import type { ArticleTableBlock } from "../../model/types";
 
-export const Table = ({ data, hasHeader = false }) => {
+export const Table = ({ data, hasHeader = false }: Omit<ArticleTableBlock, "type">) => {
     if (!data || data.length === 0) return null;
 
-    const renderCell = (content, index, isHeader = false) => {
+    const renderCell = (content: string, index: number, isHeader = false) => {
         const CellTag = isHeader ? "th" : "td";
 
         return (
@@ -14,7 +14,7 @@ export const Table = ({ data, hasHeader = false }) => {
         );
     };
 
-    const renderRow = (row, rowIndex, isHeader = false) => (
+    const renderRow = (row: string[], rowIndex: number, isHeader = false) => (
         <tr key={rowIndex}>
             {row.map((cell, cellIndex) => renderCell(cell, cellIndex, isHeader))}
         </tr>
