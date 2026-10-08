@@ -118,7 +118,9 @@ export const CreateArticlePage = () => {
                                 />
 
                                 {store.error && (
-                                    <div className={styles.errorMessage}>⚠️ {store.error}</div>
+                                    <div className={styles.errorMessage} role="alert">
+                                        ⚠️ {store.error}
+                                    </div>
                                 )}
 
                                 {store.isValid && store.jsonInput?.trim() && (

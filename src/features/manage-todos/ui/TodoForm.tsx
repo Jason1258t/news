@@ -26,6 +26,7 @@ export const TodoForm = ({ onAdd }: { onAdd: (text: string) => void }) => {
                     value={text}
                     onChange={(e) => setText(e.target.value)}
                     placeholder="Добавить новую задачу..."
+                    aria-label="Новая задача"
                 />
                 <Button type="submit">Добавить</Button>
             </div>

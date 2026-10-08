@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import { EDITORS_PICK_BADGES, type EditorsPickBadge } from "entities/editors-pick";
 import { Button } from "shared/ui/button";
+import { Dialog } from "shared/ui/dialog";
 import styles from "./BadgesDialog.module.css";
 
 interface BadgesDialogProps {
@@ -10,56 +11,52 @@ interface BadgesDialogProps {
 }
 
 export const BadgesDialog = ({ isOpen, onClose, onConfirm }: BadgesDialogProps) => {
-    const [selectedCategory, setSelectedCategory] = useState<EditorsPickBadge | null>(null);
-
-    const handleBadgeClick = (category: EditorsPickBadge) => {
-        setSelectedCategory(category);
-    };
+    const [selectedBadge, setSelectedBadge] = useState<EditorsPickBadge | null>(null);
+    const titleId = useId();
 
     const handleConfirm = () => {
-        if (selectedCategory) {
-            onConfirm(selectedCategory);
-            setSelectedCategory(null);
+        if (selectedBadge) {
+            onConfirm(selectedBadge);
+            setSelectedBadge(null);
             onClose();
         }
     };
 
     const handleCancel = () => {
-        setSelectedCategory(null);
+        setSelectedBadge(null);
         onClose();
     };
 
     if (!isOpen) return null;
 
     return (
-        <div className={styles.overlay}>
-            <div className={styles.overlayContent}>
-                <h3>Выберите бейдж</h3>
+        <Dialog labelledBy={titleId} onClose={handleCancel} className={styles.dialog}>
+            <h3 id={titleId}>Выберите бейдж</h3>
 
-                <div className={styles.badgesContainer}>
-                    {EDITORS_PICK_BADGES.map((bage) => (
-                        <button
-                            key={bage}
-                            className={`${styles.badge} ${
-                                selectedCategory === bage ? styles.badgeSelected : ""
-                            }`}
-                            onClick={() => handleBadgeClick(bage)}
-                            type="button"
-                        >
-                            {bage}
-                        </button>
-                    ))}
-                </div>
-
-                <div className={styles.overlayActions}>
-                    <Button variant="secondary" onClick={handleCancel}>
-                        Отмена
-                    </Button>
-                    <Button onClick={handleConfirm} disabled={selectedCategory === null}>
-                        Подтвердить
-                    </Button>
-                </div>
+            <div className={styles.badgesContainer}>
+                {EDITORS_PICK_BADGES.map((badge) => (
+                    <button
+                        key={badge}
+                        className={`${styles.badge} ${
+                            selectedBadge === badge ? styles.badgeSelected : ""
+                        }`}
+                        onClick={() => setSelectedBadge(badge)}
+                        aria-pressed={selectedBadge === badge}
+                        type="button"
+                    >
+                        {badge}
+                    </button>
+                ))}
             </div>
-        </div>
+
+            <div className={styles.actions}>
+                <Button variant="secondary" onClick={handleCancel}>
+                    Отмена
+                </Button>
+                <Button onClick={handleConfirm} disabled={selectedBadge === null}>
+                    Подтвердить
+                </Button>
+            </div>
+        </Dialog>
     );
 };

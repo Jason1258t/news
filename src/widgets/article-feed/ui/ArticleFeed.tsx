@@ -44,7 +44,7 @@ export const ArticleFeed = () => {
     }
 
     return (
-        <div className={styles.feedContainer}>
+        <section className={styles.feedContainer} aria-label="Лента статей">
             <div className={styles.feedGrid}>
                 {allArticles.map((article, index) => (
                     <div
@@ -71,6 +71,6 @@ export const ArticleFeed = () => {
                     <p>Больше ничего нет</p>
                 </div>
             )}
-        </div>
+        </section>
     );
 };

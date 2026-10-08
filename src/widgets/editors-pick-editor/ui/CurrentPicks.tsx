@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import type { EditorsPick, EditorsPickBadge } from "entities/editors-pick";
 import { Button } from "shared/ui/button";
 import { ErrorWidget } from "shared/ui/error-widget";
@@ -30,11 +30,14 @@ export const CurrentPicks = ({
     onReset,
 }: CurrentPicksProps) => {
     const [pickToChangeBadge, setPickToChangeBadge] = useState<string | null>(null);
+    const titleId = useId();
 
     return (
         <>
-            <div className={styles.root}>
-                <h2 className={styles.title}>Текущий выбор редакции</h2>
+            <section className={styles.root} aria-labelledby={titleId}>
+                <h2 id={titleId} className={styles.title}>
+                    Текущий выбор редакции
+                </h2>
                 <div className={styles.container}>
                     {error && <ErrorWidget message={error} />}
                     <PicksList
@@ -52,7 +55,7 @@ export const CurrentPicks = ({
                         </Button>
                     </div>
                 </div>
-            </div>
+            </section>
 
             <BadgesDialog
                 isOpen={pickToChangeBadge !== null}
