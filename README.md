@@ -94,6 +94,7 @@ CI (`.github/workflows/ci.yml`) на каждый PR запускает lint, ty
 - **Промпты для LLM** — `src/features/copy-article-prompt/prompts/*.md`, плейсхолдеры `{{name}}` подставляются при копировании. Пример статьи — `example-article.json`, тест проверяет, что он соответствует схеме.
 - **Константы проекта** (название, URL сайта и Telegram, категории) — `src/shared/config`.
 - **Firebase** — `src/shared/api/firebase.ts`, конфиг берётся из `.env`.
+- **Тема** — токены в `src/app/styles/tokens.css`; в компонентах только `var(--…)`, сырые цвета запрещены stylelint. Общая кнопка — `shared/ui/button` (`primary` / `secondary` / `danger`).
 
 ## 🚀 Развертывание
 
