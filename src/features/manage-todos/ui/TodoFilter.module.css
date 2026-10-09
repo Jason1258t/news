@@ -1,0 +1,35 @@
+.container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.button {
+    padding: 10px 20px;
+    font-size: 14px;
+    border: 2px solid var(--color-border);
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: var(--color-surface);
+    color: var(--color-text-strong);
+    font-weight: 500;
+    transition: all var(--transition-base);
+}
+
+.button:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+.buttonActive {
+    background-color: var(--color-accent);
+    color: var(--color-on-accent);
+    border: 2px solid var(--color-accent);
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all var(--transition-base);
+}

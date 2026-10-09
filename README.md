@@ -15,7 +15,6 @@ Breaking NEWS — это полнофункциональная платформ
 - 📄 Просмотр статей с поддержкой различных форматов контента (код, формулы, таблицы, изображения)
 - 🔍 Поиск по статьям
 - 📌 Редакторский выбор (Editor's Pick) — подборка лучших материалов
-- 🎰 Гороскопы
 - 📱 Адаптивный дизайн для всех устройств
 - 🎨 Оптимизированная система рендеринга контента
 
@@ -30,117 +29,85 @@ Breaking NEWS — это полнофункциональная платформ
 
 ## 🏗️ Архитектура
 
-Проект следует методологии **Feature Sliced Design (FSD)** для максимальной масштабируемости и поддерживаемости:
+Проект построен по **Feature Sliced Design (FSD)**. Слой может импортировать только нижележащие слои, слайсы одного слоя друг друга не импортируют, а снаружи слайс доступен только через свой `index.ts`. Эти правила проверяет ESLint.
 
 ```
 src/
-├── app/              # Инициализация приложения, конфигурация
-├── entities/         # Бизнес-сущности (Article, Horoscope, Todo)
-├── features/         # Большие пользовательские функции
-├── pages/            # Страницы приложения
-├── shared/           # Переиспользуемые компоненты и утилиты
-└── widgets/          # Компоненты для отображения (Header, Footer, Cards)
+├── app/        # провайдеры, роутинг, глобальные стили
+├── pages/      # страницы: home, article, about, login, admin-*
+├── widgets/    # крупные блоки: header, footer, лента, просмотр статьи, админ-лейаут, редактор подборки
+├── features/   # действия пользователя: вход, создание статьи, фильтр по тегам, промпты для LLM, todo
+├── entities/   # сущности: article, editors-pick, todo, session — API, модель, UI
+└── shared/     # UI-kit, firebase, конфиг, утилиты
 ```
+
+Конвенции и план дальнейших работ — в [docs/refactoring-plan.md](docs/refactoring-plan.md).
 
 ## 🛠️ Технологический стек
 
-- **React 18** — современная библиотека для UI
-- **Zustand** — легкое управление состоянием
-- **TanStack React Query** — управление асинхронными данными и кэшированием
-- **Firebase** — бэкенд и аутентификация
-- **React Router DOM** — навигация
-- **Prism.js** — синтаксис для подсветки кода
-- **KaTeX** — отображение математических формул
-- **Lucide React** — иконки
-- **React Hot Toast** — уведомления
+- **React 18** + **TypeScript** (миграция постепенная: `allowJs`, новые файлы — `.ts/.tsx`)
+- **Vite** — сборка и dev-сервер
+- **TanStack React Query** — серверное состояние и кэширование
+- **Zustand** — локальное состояние форм
+- **Firebase** — Firestore и аутентификация
+- **React Router DOM** — навигация (`HashRouter` для GitHub Pages)
+- **Prism.js**, **KaTeX** — подсветка кода и формулы
+- **Vitest** + **Testing Library** — тесты
+- **ESLint** (с `eslint-plugin-boundaries` для слоёв FSD) + **Prettier**
 
 ## 📦 Установка и запуск
 
-### Требования
-
-- Node.js 14+
-- npm или yarn
-
-### Установка зависимостей
+Требуется Node.js 22+.
 
 ```bash
 npm install
+cp .env.example .env   # заполнить конфигом Firebase
+npm run dev            # http://localhost:5173
 ```
 
-### Разработка
+### Скрипты
 
-```bash
-npm start
-```
+| Команда                 | Что делает                                                                     |
+| ----------------------- | ------------------------------------------------------------------------------ |
+| `npm run dev`           | dev-сервер на боевом Firebase из `.env`                                        |
+| `npm run dev:emulator`  | dev-сервер на локальных эмуляторах с тестовыми данными (нужна Java 21+)        |
+| `npm run build`         | проверка типов + сборка в `dist/`                                              |
+| `npm run preview`       | локальный просмотр сборки                                                      |
+| `npm test`              | Vitest в режиме наблюдения                                                     |
+| `npm run test:run`      | однократный прогон юнит- и компонентных тестов                                 |
+| `npm run coverage`      | то же с отчётом покрытия (порог в `vite.config.ts`)                            |
+| `npm run test:emulator` | правила Firestore и API на эмуляторе (нужна Java 21+)                          |
+| `npm run test:e2e`      | e2e на Playwright поверх эмуляторов (`npx playwright install chromium` разово) |
+| `npm run check`         | формат, lint, типы и юнит-тесты — перед коммитом                               |
+| `npm run typecheck`     | `tsc` без сборки                                                               |
+| `npm run lint`          | ESLint + stylelint                                                             |
+| `npm run format`        | Prettier                                                                       |
 
-Откроет приложение в режиме разработки на [http://localhost:3000](http://localhost:3000).
+### Тесты
 
-### Сборка для продакшена
+Три уровня:
 
-```bash
-npm run build
-```
+- **Юнит и компонентные** (`src/**/*.test.ts(x)`, jsdom). Firebase замокан глобально в `src/test/setup.ts`, API-модули мокаются в самих тестах. Хелперы импортируются как `test/...`: `renderWithProviders` / `createWrapper` (react-query без ретраев, `MemoryRouter`, Helmet), `makeArticle`, `fakeDocSnapshot`. Из кода приложения импортировать `test/` запрещает ESLint.
+- **На эмуляторе** (`rules-tests/`, `src/**/*.emu.test.ts`): правила Firestore и настоящие запросы API против Firestore/Auth Emulator.
+- **E2E** (`e2e/`, Playwright): приложение в режиме `--mode emulator`, каждый тест начинается с заново засеянной базы.
 
-Создает оптимизированную сборку в папке `build/`.
+**Эмуляторы.** `.env.emulator` переключает клиент на локальные Firestore (8085) и Auth (9099) с проектом `demo-news`: такой проект не может обратиться к настоящему Firebase. Тестовые данные — `emulator/seed-data.ts`: 12 статей (одна со всеми типами блоков), выбор редакции, задачи и админ-аккаунт с claim `admin`. Тесты на эмуляторе отказываются запускаться, если клиент смотрит не на эмулятор.
 
-### Тестирование
+CI (`.github/workflows/ci.yml`) на каждый PR запускает формат, lint, типы, юнит-тесты и сборку, а отдельной задачей — тесты на эмуляторе и e2e (отчёт Playwright сохраняется при падении).
 
-```bash
-npm test
-```
+## 📂 Где что лежит
 
-Запускает тесты в интерактивном режиме наблюдения.
-
-## 📂 Структура проекта
-
-### `/src/entities` — Бизнес-сущности
-
-- `article/` — Сущность статьи с типами и утилитами для форматирования
-- `horoscope/` — Данные гороскопов
-- `editors-pick/` — Редакторский выбор
-- `todo/` — ToDo элементы
-
-### `/src/features` — Функции
-
-- `articles/` — Работа со статьями (API, hooks, renderer)
-- `auth/` — Аутентификация и авторизация
-- `home-feed/` — Лента новостей на главной
-- `horoscope/` — Функционал гороскопов
-- `editors-pick/` — Управление редакторским выбором
-- `tags/` — Система тегирования
-- `todo/` — ToDo функциональность
-
-### `/src/pages` — Страницы
-
-- `Home/` — Главная страница
-- `Article/` — Страница отдельной статьи
-- `CreateArticle/` — Создание новой статьи
-- `ArticlesPanel/` — Админ-панель статей
-- `EditorsPickPanel/` — Управление редакторским выбором
-- `HoroscopePage/` — Страница гороскопов
-- `Login/` — Авторизация
-- `About/` — О паблике
-
-### `/src/shared` — Общие ресурсы
-
-- `ui/` — Переиспользуемые UI компоненты
-- `lib/` — Утилиты и хелперы
-
-### `/src/widgets` — Виджеты
-
-- `Header/` — Заголовок сайта
-- `Footer/` — Подвал сайта
-- `ArticleCard/` — Карточка статьи
-- `Buttons/` — Кнопки различных типов
-- Другие компоненты отображения
+- **Схема статьи** — `src/entities/article/model/schema.ts` (zod). Из неё выводятся TS-типы блоков и генерируется секция типов в промпте для LLM.
+- **Промпты для LLM** — `src/features/copy-article-prompt/prompts/*.md`, плейсхолдеры `{{name}}` подставляются при копировании. Пример статьи — `example-article.json`, тест проверяет, что он соответствует схеме.
+- **Константы проекта** (название, URL сайта и Telegram, категории) — `src/shared/config`.
+- **Firebase** — `src/shared/api/firebase.ts`, конфиг берётся из `.env` (или `.env.emulator`). Таблицы в статьях хранятся строками-объектами `{ cells }`: Firestore не умеет вложенные массивы (`model/firestore-content.ts`).
+- **Тема** — токены в `src/app/styles/tokens.css`; в компонентах только `var(--…)`, сырые цвета запрещены stylelint. Общая кнопка — `shared/ui/button` (`primary` / `secondary` / `danger`).
 
 ## 🚀 Развертывание
 
-Сайт развертывается на GitHub Pages. Используйте команду:
+Каждый пуш в `main` собирает сайт и кладёт `dist/` в ветку `gh-pages`, которую раздаёт GitHub Pages (`.github/workflows/deploy.yml`; можно запустить и вручную из вкладки Actions). Домен `vtech-news.ru` задан в настройках Pages и файлом `public/CNAME`.
 
-```bash
-npm run deploy
-```
+Конфиг Firebase берётся из переменных окружения `github-pages` (**Settings → Environments → github-pages → Environment variables**): `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_PROJECT_ID`, `VITE_FIREBASE_STORAGE_BUCKET`, `VITE_FIREBASE_MESSAGING_SENDER_ID`, `VITE_FIREBASE_APP_ID`, `VITE_FIREBASE_MEASUREMENT_ID`. Это публичный веб-конфиг (он всё равно попадает в бандл), доступ к данным защищают правила Firestore. Без обязательных переменных деплой останавливается до сборки.
 
 ## 📝 Лицензия
 

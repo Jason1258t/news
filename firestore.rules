@@ -1,0 +1,21 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /articles/{article} {
+      allow read: if true; // Все могут читать статьи
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+    match /editors-pick/{pick} {
+    	allow read: if true;
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+    match /horoscopes/{horoscope} {
+    	allow read: if true;
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+    match /todos/{todo} {
+    	allow read, write: if request.auth != null && request.auth.token.admin == true;
+    }
+  }
+
+}

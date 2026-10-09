@@ -1,0 +1,130 @@
+.mission {
+    margin-bottom: 4rem;
+}
+
+.missionGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.missionCard {
+    background: var(--color-surface);
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+    transition: transform var(--transition-base);
+}
+
+.missionCard:hover {
+    transform: translateY(-5px);
+}
+
+.missionIcon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.missionCard h3 {
+    color: var(--color-text-strong);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.missionCard p {
+    color: var(--color-text-muted);
+}
+
+.missionCard ul {
+    text-align: left;
+    color: var(--color-text-muted);
+    line-height: 1.8;
+}
+
+.missionCard li {
+    margin-bottom: 0.5rem;
+}
+
+.contact {
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+    text-align: center;
+}
+
+.contactContent {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.contactContent p {
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+.contactActions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.disclaimer {
+    background: var(--color-surface-muted);
+    border-left: 4px solid var(--color-accent);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-top: 2rem;
+}
+
+.disclaimerContent {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+
+.disclaimerIcon {
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.disclaimerText h3 {
+    color: var(--color-text-strong);
+    margin-bottom: 0.75rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.disclaimerText p {
+    color: var(--color-text-muted);
+    margin-bottom: 0.75rem;
+}
+
+.disclaimerNote {
+    font-style: italic;
+    opacity: 0.8;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .missionGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .contactActions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .disclaimerContent {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .disclaimerIcon {
+        align-self: center;
+    }
+}

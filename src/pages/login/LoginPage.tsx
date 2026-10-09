@@ -1,0 +1,69 @@
+import { useState, type FormEvent } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { authApi } from "features/auth";
+import styles from "./LoginPage.module.css";
+
+export const LoginPage = () => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+    // Set by ProtectedRoute when it redirected here.
+    const from = (useLocation().state as { from?: string } | null)?.from;
+
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setError("");
+        setLoading(true);
+
+        const { error } = await authApi.loginWithEmail(email, password);
+
+        if (error) {
+            setError("Неверный email или пароль");
+            setLoading(false);
+        } else {
+            navigate(from ?? "/admin/create-article", { replace: true });
+        }
+    };
+
+    return (
+        <div className={styles.page}>
+            <div className={styles.card}>
+                <h1 className={styles.title}>Вход в админ-панель</h1>
+
+                {error && (
+                    <div className={styles.error} role="alert">
+                        {error}
+                    </div>
+                )}
+
+                <form onSubmit={handleSubmit} className={styles.form}>
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        aria-label="Email"
+                        autoComplete="username"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                        className={styles.input}
+                    />
+                    <input
+                        type="password"
+                        placeholder="Пароль"
+                        aria-label="Пароль"
+                        autoComplete="current-password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                        className={styles.input}
+                    />
+                    <button type="submit" disabled={loading} className={styles.button}>
+                        {loading ? "Загрузка..." : "Войти"}
+                    </button>
+                </form>
+            </div>
+        </div>
+    );
+};

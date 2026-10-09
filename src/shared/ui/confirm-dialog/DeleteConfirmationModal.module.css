@@ -1,0 +1,118 @@
+.modal {
+    background-color: var(--color-surface);
+    border-radius: var(--radius-md);
+    max-width: 28rem;
+    overflow: hidden;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.headerContent {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.iconWrapper {
+    padding: 0.5rem;
+    background-color: var(--color-danger-soft);
+    border-radius: var(--radius-pill);
+}
+
+.icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--color-danger);
+    display: block;
+}
+
+.title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text-strong);
+}
+
+.closeButton {
+    color: var(--color-text-subtle);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    transition: color var(--transition-fast);
+}
+
+.closeButton:hover {
+    color: var(--color-text-muted);
+}
+
+.content {
+    padding: 1.5rem 1rem;
+}
+
+.description {
+    color: var(--color-text-strong);
+    margin-bottom: 0.5rem;
+}
+
+.footer {
+    display: flex;
+    gap: 0.75rem;
+    padding: 1rem;
+}
+
+.button {
+    flex: 1;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    border: none;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.cancelButton {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border-strong);
+    color: var(--color-text-secondary);
+}
+
+.cancelButton:hover {
+    background-color: var(--color-surface-muted);
+}
+
+.confirmButton {
+    color: var(--color-on-accent);
+    background-color: var(--color-danger);
+}
+
+.confirmButton:hover {
+    background-color: var(--color-danger-hover);
+}
+
+.spinner {
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid var(--color-on-accent);
+    border-top-color: transparent;
+    border-radius: var(--radius-pill);
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

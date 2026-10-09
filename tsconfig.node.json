@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+        "target": "ES2023",
+        "lib": ["ES2023"],
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "types": ["node"],
+        "noEmit": true,
+        "isolatedModules": true,
+        "verbatimModuleSyntax": true,
+        "skipLibCheck": true,
+        "strict": true,
+        "allowImportingTsExtensions": true,
+        "erasableSyntaxOnly": true
+    },
+    "include": [
+        "vite.config.ts",
+        "vitest.emulator.config.ts",
+        "eslint.config.js",
+        "stylelint.config.js",
+        "rules-tests",
+        "emulator",
+        "e2e",
+        "playwright.config.ts"
+    ]
+}

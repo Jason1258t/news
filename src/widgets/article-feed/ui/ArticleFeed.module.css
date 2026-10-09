@@ -1,0 +1,43 @@
+.feedGrid {
+    display: grid;
+    gap: 20px;
+}
+
+/* HomeFeed.module.css */
+.feedContainer {
+    position: relative;
+}
+
+.endMessage {
+    text-align: center;
+    padding: 20px;
+    color: var(--color-text-muted);
+    font-style: italic;
+}
+
+.emptyState {
+    text-align: center;
+    padding: 40px;
+    color: var(--color-text-muted);
+}
+
+.layoutSurface {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.layoutSurface:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+@media (max-width: 768px) {
+    .feedGrid {
+        gap: 1.5rem;
+    }
+}

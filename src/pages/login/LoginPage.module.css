@@ -1,0 +1,68 @@
+.page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: var(--gradient-accent);
+}
+
+.card {
+    background: var(--color-surface);
+    padding: 3rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    width: 100%;
+    max-width: 600px;
+}
+
+.title {
+    margin: 0 0 2rem;
+    text-align: center;
+    color: var(--color-text-strong);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.input {
+    padding: 1rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+}
+
+.button {
+    padding: 1rem;
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background var(--transition-fast);
+}
+
+.button:hover:not(:disabled) {
+    background: var(--color-accent-hover);
+}
+
+.button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.error {
+    padding: 1rem;
+    background: var(--color-danger-soft);
+    color: var(--color-danger-text);
+    border-radius: var(--radius-md);
+    margin-bottom: 1rem;
+}

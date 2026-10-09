@@ -1,0 +1,41 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-sans);
+    line-height: var(--line-height-base);
+    color: var(--color-text);
+    background-color: var(--color-bg);
+}
+
+a {
+    color: var(--color-accent);
+}
+
+/* Базовые стили для заголовков */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--color-text-strong);
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 2.5rem;
+    line-height: var(--line-height-tight);
+    margin-bottom: 1rem;
+}
+
+h2 {
+    font-size: 1.8rem;
+}
+
+h3 {
+    font-size: 1.3rem;
+}

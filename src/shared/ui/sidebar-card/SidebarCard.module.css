@@ -1,0 +1,21 @@
+.widget {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 1.5rem;
+}
+
+.title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-text-strong);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.clickable {
+    cursor: pointer;
+}

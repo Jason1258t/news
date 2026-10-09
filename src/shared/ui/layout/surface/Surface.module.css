@@ -1,0 +1,10 @@
+.surface {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+}
+
+.noPadding {
+    padding: 0;
+}

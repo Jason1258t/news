@@ -1,0 +1,54 @@
+.dialog {
+    background: var(--color-surface);
+    padding: 24px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    min-width: 400px;
+    max-width: 90vw;
+}
+
+.dialog h3 {
+    margin: 0 0 20px 0;
+    color: var(--color-text);
+    text-align: center;
+}
+
+.badgesContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 24px;
+    justify-content: center;
+}
+
+.badge {
+    padding: 8px 16px;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-muted);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.badge:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+.badgeSelected {
+    border-color: var(--color-accent);
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+}
+
+.badgeSelected:hover {
+    color: var(--color-on-accent);
+}
+.actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}

@@ -22,3 +22,14 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# vite
+/dist
+
+# firebase emulators
+firebase-debug.log
+firestore-debug.log
+
+# playwright
+/test-results
+/playwright-report

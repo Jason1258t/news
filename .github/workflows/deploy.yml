@@ -1,0 +1,58 @@
+name: Deploy
+
+# Builds the site and publishes dist/ to the gh-pages branch, which GitHub Pages serves
+# (Settings → Pages → Source: Deploy from a branch, gh-pages). Runs on every push to main
+# and by hand from the Actions tab.
+on:
+    push:
+        branches: [main]
+    workflow_dispatch:
+
+permissions:
+    contents: write
+
+concurrency:
+    group: pages
+    cancel-in-progress: false
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        # Firebase web config: VITE_FIREBASE_* variables of the github-pages environment.
+        environment:
+            name: github-pages
+            url: https://vtech-news.ru
+        env:
+            VITE_FIREBASE_API_KEY: ${{ vars.VITE_FIREBASE_API_KEY }}
+            VITE_FIREBASE_AUTH_DOMAIN: ${{ vars.VITE_FIREBASE_AUTH_DOMAIN }}
+            VITE_FIREBASE_PROJECT_ID: ${{ vars.VITE_FIREBASE_PROJECT_ID }}
+            VITE_FIREBASE_STORAGE_BUCKET: ${{ vars.VITE_FIREBASE_STORAGE_BUCKET }}
+            VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ vars.VITE_FIREBASE_MESSAGING_SENDER_ID }}
+            VITE_FIREBASE_APP_ID: ${{ vars.VITE_FIREBASE_APP_ID }}
+            VITE_FIREBASE_MEASUREMENT_ID: ${{ vars.VITE_FIREBASE_MEASUREMENT_ID }}
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 24
+                  cache: npm
+            # A build without the config would deploy a site that cannot load anything.
+            - name: Check Firebase config
+              run: |
+                  missing=0
+                  for name in VITE_FIREBASE_API_KEY VITE_FIREBASE_AUTH_DOMAIN VITE_FIREBASE_PROJECT_ID VITE_FIREBASE_APP_ID; do
+                      if [ -z "${!name}" ]; then echo "::error::variable $name is not set in the github-pages environment"; missing=1; fi
+                  done
+                  if [[ "$VITE_FIREBASE_PROJECT_ID" == demo-* ]]; then echo "::error::demo- project in production config"; missing=1; fi
+                  exit $missing
+            - run: npm ci
+            - run: npm run build
+            - uses: peaceiris/actions-gh-pages@v4
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: dist
+                  publish_branch: gh-pages
+                  force_orphan: true
+                  user_name: github-actions[bot]
+                  user_email: 41898282+github-actions[bot]@users.noreply.github.com
+                  commit_message: "deploy: ${{ github.sha }}"
