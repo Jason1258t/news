@@ -113,7 +113,7 @@ src/
 - [x] Vitest 5 + RTL, хелперы, TZ в UTC; ESLint 10 + typescript-eslint + react-hooks + boundaries; Prettier; CI.
 - [x] `.env.example`.
 - [x] `firestore.rules` (копия боевых) + `firebase.json` (эмулятор на порту 8085) + тесты правил в CI.
-- [ ] Firebase 12 → 13.
+- [x] Firebase 12 → 13 (`@firebase/rules-unit-testing` 5 → 6 вместе с ним).
 
 **Этап 3 — Перестройка слоёв** ✅ (сделан раньше этапов 1–2)
 
