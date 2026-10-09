@@ -1,16 +1,15 @@
 name: Deploy
 
-# Builds the site and publishes it to GitHub Pages (Settings → Pages → Source: GitHub Actions).
-# Firebase web config comes from Actions variables, see README → Развертывание.
+# Builds the site and publishes dist/ to the gh-pages branch, which GitHub Pages serves
+# (Settings → Pages → Source: Deploy from a branch, gh-pages). Runs on every push to main
+# and by hand from the Actions tab.
 on:
     push:
         branches: [main]
     workflow_dispatch:
 
 permissions:
-    contents: read
-    pages: write
-    id-token: write
+    contents: write
 
 concurrency:
     group: pages
@@ -19,17 +18,18 @@ concurrency:
 jobs:
     deploy:
         runs-on: ubuntu-latest
+        # Firebase web config: VITE_FIREBASE_* Actions secrets (repository or github-pages environment).
         environment:
             name: github-pages
-            url: ${{ steps.deployment.outputs.page_url }}
+            url: https://vtech-news.ru
         env:
-            VITE_FIREBASE_API_KEY: ${{ vars.VITE_FIREBASE_API_KEY }}
-            VITE_FIREBASE_AUTH_DOMAIN: ${{ vars.VITE_FIREBASE_AUTH_DOMAIN }}
-            VITE_FIREBASE_PROJECT_ID: ${{ vars.VITE_FIREBASE_PROJECT_ID }}
-            VITE_FIREBASE_STORAGE_BUCKET: ${{ vars.VITE_FIREBASE_STORAGE_BUCKET }}
-            VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ vars.VITE_FIREBASE_MESSAGING_SENDER_ID }}
-            VITE_FIREBASE_APP_ID: ${{ vars.VITE_FIREBASE_APP_ID }}
-            VITE_FIREBASE_MEASUREMENT_ID: ${{ vars.VITE_FIREBASE_MEASUREMENT_ID }}
+            VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+            VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
+            VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+            VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
+            VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
+            VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
+            VITE_FIREBASE_MEASUREMENT_ID: ${{ secrets.VITE_FIREBASE_MEASUREMENT_ID }}
         steps:
             - uses: actions/checkout@v4
             - uses: actions/setup-node@v4
@@ -41,15 +41,18 @@ jobs:
               run: |
                   missing=0
                   for name in VITE_FIREBASE_API_KEY VITE_FIREBASE_AUTH_DOMAIN VITE_FIREBASE_PROJECT_ID VITE_FIREBASE_APP_ID; do
-                      if [ -z "${!name}" ]; then echo "::error::Actions variable $name is not set"; missing=1; fi
+                      if [ -z "${!name}" ]; then echo "::error::Actions secret $name is not set"; missing=1; fi
                   done
                   if [[ "$VITE_FIREBASE_PROJECT_ID" == demo-* ]]; then echo "::error::demo- project in production config"; missing=1; fi
                   exit $missing
             - run: npm ci
             - run: npm run build
-            - uses: actions/configure-pages@v5
-            - uses: actions/upload-pages-artifact@v3
+            - uses: peaceiris/actions-gh-pages@v4
               with:
-                  path: dist
-            - id: deployment
-              uses: actions/deploy-pages@v4
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: dist
+                  publish_branch: gh-pages
+                  force_orphan: true
+                  user_name: github-actions[bot]
+                  user_email: 41898282+github-actions[bot]@users.noreply.github.com
+                  commit_message: "deploy: ${{ github.sha }}"

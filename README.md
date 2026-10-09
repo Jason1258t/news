@@ -105,14 +105,9 @@ CI (`.github/workflows/ci.yml`) на каждый PR запускает форм
 
 ## 🚀 Развертывание
 
-Каждый пуш в `main` собирает сайт и публикует его на GitHub Pages (`.github/workflows/deploy.yml`, можно запустить и вручную из вкладки Actions).
+Каждый пуш в `main` собирает сайт и кладёт `dist/` в ветку `gh-pages`, которую раздаёт GitHub Pages (`.github/workflows/deploy.yml`; можно запустить и вручную из вкладки Actions). Домен `vtech-news.ru` задан в настройках Pages и файлом `public/CNAME`.
 
-Один раз в настройках репозитория:
-
-1. **Settings → Pages → Build and deployment → Source: GitHub Actions.** Домен `vtech-news.ru` остаётся в настройках Pages.
-2. **Settings → Secrets and variables → Actions → Variables:** конфиг Firebase из `.env` — `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_PROJECT_ID`, `VITE_FIREBASE_STORAGE_BUCKET`, `VITE_FIREBASE_MESSAGING_SENDER_ID`, `VITE_FIREBASE_APP_ID`, `VITE_FIREBASE_MEASUREMENT_ID`. Это публичный веб-конфиг (он всё равно попадает в бандл), поэтому переменные, а не секреты; доступ к данным защищают правила Firestore.
-
-Без обязательных переменных деплой останавливается до сборки.
+Конфиг Firebase берётся из секретов Actions (**Settings → Secrets and variables → Actions**): `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_PROJECT_ID`, `VITE_FIREBASE_STORAGE_BUCKET`, `VITE_FIREBASE_MESSAGING_SENDER_ID`, `VITE_FIREBASE_APP_ID`, `VITE_FIREBASE_MEASUREMENT_ID`. Это публичный веб-конфиг (он всё равно попадает в бандл), доступ к данным защищают правила Firestore. Без обязательных переменных деплой останавливается до сборки.
 
 ## 📝 Лицензия
 
