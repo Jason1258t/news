@@ -1,0 +1,36 @@
+.page {
+    margin: 0 auto;
+}
+
+.narrow {
+    max-width: 960px;
+}
+
+.wide {
+    max-width: 1200px;
+}
+
+.header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-bottom: var(--space-5);
+}
+
+.title {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-text-strong);
+}
+
+.description {
+    margin: var(--space-1) 0 0;
+    color: var(--color-text-muted);
+}
+
+.actions {
+    display: flex;
+    gap: var(--space-2);
+}

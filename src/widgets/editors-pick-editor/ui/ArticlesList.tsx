@@ -17,8 +17,8 @@ export const ArticlesList = ({
 
     const allArticles = data?.pages.flatMap((page) => page.data) ?? [];
     return (
-        <div>
-            <h2 className={styles.title}>Список статей</h2>
+        <div className={styles.panel}>
+            <h2 className={styles.title}>Статьи</h2>
             <div className={styles.list}>
                 {isLoading && <LoadingSpinner />}
                 {error && <ErrorWidget message={error.message} />}
