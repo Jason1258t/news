@@ -1,6 +1,7 @@
 import Linkify from "linkify-react";
 import { useState } from "react";
 import type { Todo } from "entities/todo";
+import { Button } from "shared/ui/button";
 import styles from "./TodoItem.module.css";
 
 export interface TodoActions {
@@ -49,20 +50,12 @@ export const TodoItem = ({ todo, onToggle, onDelete, onUpdate }: { todo: Todo } 
                         aria-label="Текст задачи"
                         autoFocus
                     />
-                    <button
-                        type="button"
-                        className={`${styles.button} ${styles.saveButton}`}
-                        onClick={handleSave}
-                    >
+                    <Button size="sm" onClick={handleSave}>
                         Сохранить
-                    </button>
-                    <button
-                        type="button"
-                        className={`${styles.button} ${styles.cancelButton}`}
-                        onClick={handleCancel}
-                    >
+                    </Button>
+                    <Button size="sm" variant="ghost" onClick={handleCancel}>
                         Отмена
-                    </button>
+                    </Button>
                 </>
             ) : (
                 <>
@@ -71,22 +64,22 @@ export const TodoItem = ({ todo, onToggle, onDelete, onUpdate }: { todo: Todo } 
                             {todo.text}
                         </Linkify>
                     </span>
-                    <button
-                        type="button"
-                        className={`${styles.button} ${styles.editButton}`}
+                    <Button
+                        size="sm"
+                        variant="ghost"
                         onClick={() => setIsEditing(true)}
                         aria-label={`Редактировать: ${todo.text}`}
                     >
                         Редактировать
-                    </button>
-                    <button
-                        type="button"
-                        className={`${styles.button} ${styles.deleteButton}`}
+                    </Button>
+                    <Button
+                        size="sm"
+                        variant="danger"
                         onClick={() => onDelete(todo.id)}
                         aria-label={`Удалить: ${todo.text}`}
                     >
                         Удалить
-                    </button>
+                    </Button>
                 </>
             )}
         </div>

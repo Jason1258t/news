@@ -6,11 +6,12 @@ export const CopyPromptButtons = ({ publishDate, imageUrl }: PublicationInfo) =>
     <>
         <Button
             variant="secondary"
+            size="sm"
             onClick={() => copyArticleFormatPrompt({ publishDate, imageUrl })}
         >
             Скопировать промпт форматирования
         </Button>
-        <Button variant="secondary" onClick={copyTelegramPostPrompt}>
+        <Button variant="secondary" size="sm" onClick={copyTelegramPostPrompt}>
             Скопировать промпт для тг
         </Button>
     </>

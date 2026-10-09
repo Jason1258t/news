@@ -36,13 +36,14 @@ export const TodoList = ({
 
     return (
         <>
-            <div className={styles.stats}>
-                Всего: {stats.total} | Активных: {stats.active} | Завершённых: {stats.completed}
-            </div>
-
             <TodoForm onAdd={onAddTodo} />
 
-            <TodoFilter filter={filter} onFilterChange={setFilter} />
+            <div className={styles.toolbar}>
+                <TodoFilter filter={filter} onFilterChange={setFilter} />
+                <div className={styles.stats}>
+                    Всего: {stats.total} | Активных: {stats.active} | Завершённых: {stats.completed}
+                </div>
+            </div>
 
             <div className={styles.todoList}>
                 {filteredTodos.length === 0 ? (

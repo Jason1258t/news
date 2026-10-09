@@ -33,12 +33,11 @@ export const PicksList = ({
                         <EditorsPickCard pick={e} />
                     </div>
                     <div className={styles.actionsContainer}>
-                        <Button variant="danger" onClick={() => removeEditorsPick(e.id)}>
-                            Удалить
-                        </Button>
-
-                        <Button variant="secondary" onClick={() => changeBadge(e.id)}>
+                        <Button size="sm" variant="ghost" onClick={() => changeBadge(e.id)}>
                             Изменить бейдж
+                        </Button>
+                        <Button size="sm" variant="danger" onClick={() => removeEditorsPick(e.id)}>
+                            Удалить
                         </Button>
                     </div>
                 </div>
