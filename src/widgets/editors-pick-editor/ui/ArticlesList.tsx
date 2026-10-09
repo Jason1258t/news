@@ -3,6 +3,7 @@ import { EditorsPickCard } from "entities/editors-pick";
 import { Button } from "shared/ui/button";
 import { ErrorWidget } from "shared/ui/error-widget";
 import { LoadingSpinner } from "shared/ui/loading-widget";
+import { clickableProps } from "shared/lib/a11y";
 import styles from "./ArticlesList.module.css";
 
 export const ArticlesList = ({
@@ -25,7 +26,7 @@ export const ArticlesList = ({
                     <div
                         key={article.slug}
                         className={styles.cardWrapper}
-                        onClick={() => onArticleSelected(article)}
+                        {...clickableProps(() => onArticleSelected(article))}
                     >
                         <EditorsPickCard pick={{ title: article.title }} />
                     </div>

@@ -16,15 +16,18 @@ export const ArticleFeed = () => {
     const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError, error } =
         useArticles({ category, tags: selectedTags });
 
+    const allArticles = data?.pages.flatMap((page) => page.data) ?? [];
+    // With category + tags the category is filtered on the client (B15), so a loaded page can
+    // be empty while later pages still match; there is no last card to scroll to then.
+    const needsMore = inView || allArticles.length === 0;
+
     useEffect(() => {
-        if (inView && hasNextPage && !isFetchingNextPage) {
+        if (needsMore && hasNextPage && !isFetchingNextPage) {
             fetchNextPage();
         }
-    }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+    }, [needsMore, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-    const allArticles = data?.pages.flatMap((page) => page.data) || [];
-
-    if (isLoading) {
+    if (isLoading || (allArticles.length === 0 && hasNextPage)) {
         return <LoadingWidget />;
     }
 
@@ -41,7 +44,7 @@ export const ArticleFeed = () => {
     }
 
     return (
-        <div className={styles.feedContainer}>
+        <section className={styles.feedContainer} aria-label="Лента статей">
             <div className={styles.feedGrid}>
                 {allArticles.map((article, index) => (
                     <div
@@ -65,9 +68,9 @@ export const ArticleFeed = () => {
 
             {!hasNextPage && (
                 <div className={styles.endMessage}>
-                    <p>{allArticles.length > 0 ? "Больше ничего нет" : "Здесь ничего"}</p>
+                    <p>Больше ничего нет</p>
                 </div>
             )}
-        </div>
+        </section>
     );
 };

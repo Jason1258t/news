@@ -8,6 +8,7 @@ import {
     type DocumentSnapshot,
 } from "firebase/firestore";
 import { db } from "shared/api";
+import { toFirestoreContent } from "../model/firestore-content";
 import { mapArticleFromFirestore } from "../model/mappers";
 import type { Article, ArticleInput } from "../model/types";
 import { parseArticleInput } from "../model/validators";
@@ -29,6 +30,7 @@ export const createArticle = async (articleData: unknown): Promise<{ slug: strin
 const prepareArticleToSave = (article: ArticleInput) => {
     return {
         ...article,
+        content: toFirestoreContent(article.content),
         datePublishedISO: article.datePublishedISO || new Date().toISOString(),
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),

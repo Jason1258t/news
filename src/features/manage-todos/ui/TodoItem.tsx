@@ -32,6 +32,7 @@ export const TodoItem = ({ todo, onToggle, onDelete, onUpdate }: { todo: Todo } 
                 type="checkbox"
                 checked={todo.completed}
                 onChange={() => onToggle(todo.id, todo.completed)}
+                aria-label={todo.text}
             />
 
             {isEditing ? (
@@ -41,16 +42,22 @@ export const TodoItem = ({ todo, onToggle, onDelete, onUpdate }: { todo: Todo } 
                         type="text"
                         value={editText}
                         onChange={(e) => setEditText(e.target.value)}
-                        onKeyDown={(e) => e.key === "Enter" && handleSave()}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") handleSave();
+                            if (e.key === "Escape") handleCancel();
+                        }}
+                        aria-label="Текст задачи"
                         autoFocus
                     />
                     <button
+                        type="button"
                         className={`${styles.button} ${styles.saveButton}`}
                         onClick={handleSave}
                     >
                         Сохранить
                     </button>
                     <button
+                        type="button"
                         className={`${styles.button} ${styles.cancelButton}`}
                         onClick={handleCancel}
                     >
@@ -65,14 +72,18 @@ export const TodoItem = ({ todo, onToggle, onDelete, onUpdate }: { todo: Todo } 
                         </Linkify>
                     </span>
                     <button
+                        type="button"
                         className={`${styles.button} ${styles.editButton}`}
                         onClick={() => setIsEditing(true)}
+                        aria-label={`Редактировать: ${todo.text}`}
                     >
                         Редактировать
                     </button>
                     <button
+                        type="button"
                         className={`${styles.button} ${styles.deleteButton}`}
                         onClick={() => onDelete(todo.id)}
+                        aria-label={`Удалить: ${todo.text}`}
                     >
                         Удалить
                     </button>

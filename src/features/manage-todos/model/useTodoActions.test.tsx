@@ -2,7 +2,7 @@ import { act, renderHook, waitFor } from "@testing-library/react";
 import toast from "react-hot-toast";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { addTodo, toggleTodo } from "entities/todo";
-import { createWrapper } from "../../../test/render";
+import { createWrapper } from "test/render";
 import { useTodoActions } from "./useTodoActions";
 
 vi.mock("entities/todo/api/todo-api", () => ({

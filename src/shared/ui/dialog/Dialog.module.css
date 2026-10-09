@@ -8,3 +8,8 @@
     background-color: var(--color-overlay);
     padding: 1rem;
 }
+
+/* Focus goes to the panel itself when the dialog opens; no ring for that programmatic focus. */
+.panel:focus {
+    outline: none;
+}

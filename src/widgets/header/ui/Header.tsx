@@ -17,7 +17,7 @@ export const Header = () => {
                 <div className={styles.content}>
                     <Link to="/" className={styles.logo} onClick={closeMenu}>
                         <img src={logo} alt={`${PROJECT_NAME} logo`} />
-                        <h1>{PROJECT_NAME}</h1>
+                        <span className={styles.logoText}>{PROJECT_NAME}</span>
                     </Link>
 
                     <div className={styles.actions}>

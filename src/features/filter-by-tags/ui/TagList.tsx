@@ -14,8 +14,8 @@ export const TagList = ({ selectedTags = [], onRemoveTag, onClearAll }: TagListP
     return (
         <div className={styles.tagsContainer}>
             <div className={styles.tagsList}>
-                {selectedTags.map((tag, index) => (
-                    <div key={index} className={styles.tagItem}>
+                {selectedTags.map((tag) => (
+                    <div key={tag} className={styles.tagItem}>
                         <span className={styles.tagText}>{tag}</span>
                         <button
                             className={styles.removeButton}

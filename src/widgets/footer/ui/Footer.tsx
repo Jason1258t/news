@@ -17,6 +17,7 @@ export const Footer = () => {
                                 to={TELEGRAM_CHANNEL_URL}
                                 target="_blank"
                                 rel="noopener noreferrer"
+                                aria-label="Telegram-канал"
                             >
                                 <img className={styles.socialIcon} alt="" src={telegram} />
                             </Link>

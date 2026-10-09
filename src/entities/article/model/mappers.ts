@@ -1,5 +1,6 @@
 import type { DocumentSnapshot } from "firebase/firestore";
 import { formatDate } from "shared/lib/date";
+import { fromFirestoreContent } from "./firestore-content";
 import type { Article, ArticleDoc } from "./types";
 
 export const mapArticleFromFirestore = (doc: DocumentSnapshot): Article => {
@@ -15,6 +16,6 @@ export const mapArticleFromFirestore = (doc: DocumentSnapshot): Article => {
         tags: data.tags || [],
         hero: data.hero || { url: "", alt: "" },
         og: data.og || {},
-        content: data.content || [],
+        content: fromFirestoreContent(data.content || []),
     };
 };

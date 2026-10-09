@@ -1,17 +1,4 @@
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--color-overlay);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.overlayContent {
+.dialog {
     background: var(--color-surface);
     padding: 24px;
     border-radius: var(--radius-lg);
@@ -20,7 +7,7 @@
     max-width: 90vw;
 }
 
-.overlayContent h3 {
+.dialog h3 {
     margin: 0 0 20px 0;
     color: var(--color-text);
     text-align: center;
@@ -60,7 +47,7 @@
 .badgeSelected:hover {
     color: var(--color-on-accent);
 }
-.overlayActions {
+.actions {
     display: flex;
     gap: 12px;
     justify-content: flex-end;

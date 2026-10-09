@@ -1,8 +1,8 @@
 import { act, renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { articleKeys, createArticle, fetchArticleBySlug } from "entities/article";
-import { makeArticle } from "../../../test/fixtures";
-import { createTestQueryClient, createWrapper } from "../../../test/render";
+import { makeArticle } from "test/fixtures";
+import { createTestQueryClient, createWrapper } from "test/render";
 import { useCreateArticle } from "./useCreateArticle";
 
 vi.mock("entities/article/api/articles-api", async (importOriginal) => ({

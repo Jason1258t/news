@@ -2,41 +2,26 @@ import { useEffect, useState } from "react";
 import styles from "./ScrollToTopButton.module.css";
 import chevron from "./chevron.svg";
 
+/** Appears after scrolling down 300px; scrolls the page back to the top. */
 export const ScrollToTopButton = () => {
     const [isVisible, setIsVisible] = useState(false);
 
-    const toggleVisibility = () => {
-        if (window.pageYOffset > 300) {
-            setIsVisible(true);
-        } else {
-            setIsVisible(false);
-        }
-    };
-
-    const scrollToTop = () => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-        });
-    };
-
     useEffect(() => {
-        window.addEventListener("scroll", toggleVisibility);
-
-        return () => {
-            window.removeEventListener("scroll", toggleVisibility);
-        };
+        const toggleVisibility = () => setIsVisible(window.scrollY > 300);
+        window.addEventListener("scroll", toggleVisibility, { passive: true });
+        return () => window.removeEventListener("scroll", toggleVisibility);
     }, []);
 
     return (
         <div className={styles.scrollToTop}>
             {isVisible && (
                 <button
-                    onClick={scrollToTop}
+                    type="button"
+                    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                     className={styles.scrollButton}
-                    aria-label="Scroll to top"
+                    aria-label="Наверх"
                 >
-                    <img src={chevron} alt="chevron-up" />
+                    <img src={chevron} alt="" />
                 </button>
             )}
         </div>

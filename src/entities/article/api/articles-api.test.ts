@@ -1,6 +1,6 @@
 import { getDoc, getDocs } from "firebase/firestore";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { fakeDocSnapshot, fakeQuerySnapshot } from "../../../test/firestore";
+import { fakeDocSnapshot, fakeQuerySnapshot } from "test/firestore";
 import { fetchArticleBySlug, fetchArticles } from "./articles-api";
 
 vi.mock("firebase/firestore", async (importOriginal) => ({

@@ -8,6 +8,11 @@
     min-height: calc(150px + 2rem);
 }
 
+.card:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
 .card.highlight {
     background-color: var(--color-surface-muted);
     border: 2px solid var(--color-accent);

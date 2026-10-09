@@ -34,7 +34,9 @@
         "test": "vitest",
         "test:run": "vitest run",
         "coverage": "vitest run --coverage",
-        "test:rules": "firebase emulators:exec --only firestore --project demo-news-rules \"vitest run --config vitest.rules.config.ts\"",
+        "test:emulator": "firebase emulators:exec --only firestore,auth --project demo-news \"vitest run --config vitest.emulator.config.ts --mode emulator\"",
+        "test:e2e": "firebase emulators:exec --only firestore,auth --project demo-news \"playwright test\"",
+        "dev:emulator": "firebase emulators:exec --only firestore,auth --project demo-news \"node emulator/run-seed.ts && vite --mode emulator\"",
         "predeploy": "npm run build",
         "deploy": "gh-pages -d dist"
     },
@@ -43,6 +45,7 @@
         "@emnapi/runtime": "^1.10.0",
         "@eslint/js": "^10.0.1",
         "@firebase/rules-unit-testing": "^5.0.2",
+        "@playwright/test": "^1.64.0",
         "@testing-library/dom": "^10.4.2",
         "@testing-library/jest-dom": "^7.0.1",
         "@testing-library/react": "^16.3.3",

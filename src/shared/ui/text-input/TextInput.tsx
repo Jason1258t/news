@@ -1,4 +1,4 @@
-import type { ChangeEvent, HTMLInputTypeAttribute } from "react";
+import { useId, type HTMLInputTypeAttribute } from "react";
 import styles from "./TextInput.module.css";
 
 interface TextInputProps {
@@ -16,17 +16,20 @@ export const TextInput = ({
     placeholder = "",
     type = "text",
 }: TextInputProps) => {
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        onChange?.(e.target.value);
-    };
+    const id = useId();
 
     return (
-        <div className={`${styles.container}`}>
-            {label && <label className={styles.label}>{label}</label>}
+        <div className={styles.container}>
+            {label && (
+                <label htmlFor={id} className={styles.label}>
+                    {label}
+                </label>
+            )}
             <input
+                id={id}
                 type={type}
                 value={value}
-                onChange={handleChange}
+                onChange={(event) => onChange?.(event.target.value)}
                 placeholder={placeholder}
                 className={styles.input}
             />

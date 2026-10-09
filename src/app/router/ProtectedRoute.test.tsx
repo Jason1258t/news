@@ -1,9 +1,11 @@
 import { render, screen } from "@testing-library/react";
-import { MemoryRouter, Route, Routes } from "react-router-dom";
+import { MemoryRouter, Route, Routes, useLocation } from "react-router-dom";
 import type { User } from "firebase/auth";
 import { describe, expect, it } from "vitest";
 import { SessionContext } from "entities/session";
 import { ProtectedRoute } from "./ProtectedRoute";
+
+const LoginProbe = () => <p>login page, back to {String(useLocation().state?.from)}</p>;
 
 const renderWithAuth = (value: { user: User | null; loading: boolean }) =>
     render(
@@ -18,7 +20,7 @@ const renderWithAuth = (value: { user: User | null; loading: boolean }) =>
                             </ProtectedRoute>
                         }
                     />
-                    <Route path="/login" element={<p>login page</p>} />
+                    <Route path="/login" element={<LoginProbe />} />
                 </Routes>
             </MemoryRouter>
         </SessionContext.Provider>,
@@ -33,7 +35,7 @@ describe("ProtectedRoute", () => {
 
     it("redirects guests to the login page", () => {
         renderWithAuth({ user: null, loading: false });
-        expect(screen.getByText("login page")).toBeInTheDocument();
+        expect(screen.getByText("login page, back to /admin")).toBeInTheDocument();
     });
 
     it("renders children for a signed-in user", () => {

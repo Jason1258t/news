@@ -10,13 +10,18 @@
         "isolatedModules": true,
         "verbatimModuleSyntax": true,
         "skipLibCheck": true,
-        "strict": true
+        "strict": true,
+        "allowImportingTsExtensions": true,
+        "erasableSyntaxOnly": true
     },
     "include": [
         "vite.config.ts",
-        "vitest.rules.config.ts",
+        "vitest.emulator.config.ts",
         "eslint.config.js",
         "stylelint.config.js",
-        "rules-tests"
+        "rules-tests",
+        "emulator",
+        "e2e",
+        "playwright.config.ts"
     ]
 }
