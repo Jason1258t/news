@@ -11,7 +11,7 @@
 
 ## 1. Текущее состояние
 
-**Стек:** Vite 8, React 18, TypeScript 6 (strict), React Router 7 (HashRouter), TanStack Query 5, Zustand 5, Firebase 12 (Auth + Firestore), zod 4, Helmet, Prism, KaTeX, lucide, react-hot-toast. Тесты — Vitest 5 + Testing Library. Деплой — `gh-pages`, домен `vtech-news.ru`.
+**Стек:** Vite 8, React 18, TypeScript 6 (strict), React Router 7 (HashRouter), TanStack Query 5, Zustand 5, Firebase 13 (Auth + Firestore), zod 4, Helmet, Prism, KaTeX, lucide, react-hot-toast. Тесты — Vitest 5 + Testing Library. Деплой — GitHub Pages через Actions, домен `vtech-news.ru`.
 
 **Сделано:** этап 0 (инфраструктура), этап 3 (слои FSD + TS), конструктор LLM-промптов. 12 тестовых файлов, 110 тестов, покрытие 31.8%.
 
@@ -54,7 +54,7 @@
     - Новому аккаунту нужно выставить claim `admin: true` через Admin SDK (в консоли его не задать). Иначе админка откроется, но любая запись упадёт с `permission-denied`.
     - В правилах остался блок `horoscopes`. Его можно удалить вместе с данными коллекции, когда будет решено, что они не нужны.
     - Деплой правил из репозитория: `firebase deploy --only firestore:rules --project <id>`.
-- `npm audit`: уязвимый `@grpc/grpc-js` внутри Firebase 12 (только Node, в бандл не попадает) → Firebase 13.
+- `npm audit`: уязвимый `@grpc/grpc-js` внутри `@firebase/firestore` — остаётся и в Firebase 13; используется только Node-сборкой Firestore, в браузерный бандл не попадает.
 
 ### 2.3 Архитектура
 
@@ -113,7 +113,7 @@ src/
 - [x] Vitest 5 + RTL, хелперы, TZ в UTC; ESLint 10 + typescript-eslint + react-hooks + boundaries; Prettier; CI.
 - [x] `.env.example`.
 - [x] `firestore.rules` (копия боевых) + `firebase.json` (эмулятор на порту 8085) + тесты правил в CI.
-- [ ] Firebase 12 → 13.
+- [x] Firebase 12 → 13 (`@firebase/rules-unit-testing` 5 → 6 вместе с ним).
 
 **Этап 3 — Перестройка слоёв** ✅ (сделан раньше этапов 1–2)
 

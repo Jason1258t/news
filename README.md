@@ -105,11 +105,9 @@ CI (`.github/workflows/ci.yml`) на каждый PR запускает форм
 
 ## 🚀 Развертывание
 
-Сайт развёртывается на GitHub Pages (`dist/` → ветка `gh-pages`):
+Каждый пуш в `main` собирает сайт и кладёт `dist/` в ветку `gh-pages`, которую раздаёт GitHub Pages (`.github/workflows/deploy.yml`; можно запустить и вручную из вкладки Actions). Домен `vtech-news.ru` задан в настройках Pages и файлом `public/CNAME`.
 
-```bash
-npm run deploy
-```
+Конфиг Firebase берётся из переменных окружения `github-pages` (**Settings → Environments → github-pages → Environment variables**): `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_PROJECT_ID`, `VITE_FIREBASE_STORAGE_BUCKET`, `VITE_FIREBASE_MESSAGING_SENDER_ID`, `VITE_FIREBASE_APP_ID`, `VITE_FIREBASE_MEASUREMENT_ID`. Это публичный веб-конфиг (он всё равно попадает в бандл), доступ к данным защищают правила Firestore. Без обязательных переменных деплой останавливается до сборки.
 
 ## 📝 Лицензия
 

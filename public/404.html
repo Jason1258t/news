@@ -1,17 +1,15 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="ru">
     <head>
         <meta charset="utf-8" />
-        <title>Redirecting...</title>
+        <title>Перенаправление…</title>
         <script>
-            // Получаем путь и перенаправляем на index.html
-            const path = window.location.pathname;
-            const search = window.location.search;
-            const hash = window.location.hash;
-            window.location.href = "/index.html" + path + search + hash;
+            // The app uses hash routing (/#/articles/...). A plain path such as
+            // /articles/slug is not a file on GitHub Pages, so send it to the same route.
+            location.replace("/#" + location.pathname + location.search);
         </script>
     </head>
     <body>
-        <p>Redirecting...</p>
+        <p>Перенаправление… <a href="/">На главную</a></p>
     </body>
 </html>
