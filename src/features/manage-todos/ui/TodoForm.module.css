@@ -1,19 +1,23 @@
 .container {
     display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
 }
 
 .input {
     flex: 1;
-    padding: 12px 16px;
-    font-size: 16px;
-    border: 2px solid var(--color-border);
+    min-width: 0;
+    padding: 0.6rem var(--space-4);
+    font: inherit;
+    border: 1px solid var(--color-border-strong);
     border-radius: var(--radius-md);
     outline: none;
-    transition: border-color var(--transition-base);
+    transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast);
 }
 
 .input:focus {
     border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px var(--color-focus-ring);
 }

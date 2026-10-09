@@ -1,4 +1,12 @@
 .editor {
-    display: flex;
-    gap: 3rem;
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: var(--space-5);
+    align-items: start;
+}
+
+@media (max-width: 1024px) {
+    .editor {
+        grid-template-columns: minmax(0, 1fr);
+    }
 }

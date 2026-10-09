@@ -1,20 +1,25 @@
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+}
+
 .stats {
-    text-align: center;
-    color: var(--color-text-secondary);
-    font-size: 14px;
-    margin-bottom: 20px;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
 }
 
 .empty {
+    padding: var(--space-7) 0;
     text-align: center;
-    color: var(--color-text-secondary);
-    font-size: 16px;
-    margin-top: 40px;
-    font-style: italic;
+    color: var(--color-text-muted);
 }
 
 .todoList {
-    margin-top: 20px;
-    max-height: 50vh;
+    max-height: 60vh;
     overflow-y: auto;
+    border-top: 1px solid var(--color-border);
 }

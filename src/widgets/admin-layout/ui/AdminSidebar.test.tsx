@@ -49,7 +49,7 @@ describe("AdminSidebar", () => {
     it("goes back to the site", async () => {
         renderSidebar();
 
-        await userEvent.click(screen.getByRole("button", { name: "На главную" }));
+        await userEvent.click(screen.getByRole("link", { name: "На главную" }));
 
         expect(screen.getByText("home page")).toBeInTheDocument();
     });

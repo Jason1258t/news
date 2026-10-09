@@ -1,35 +1,38 @@
+/* Segmented control; the pressed segment is styled through aria-pressed. */
 .container {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    justify-content: center;
+    display: inline-flex;
+    padding: 3px;
+    gap: 2px;
+    background: var(--color-surface-sunken);
+    border-radius: var(--radius-md);
 }
 
 .button {
-    padding: 10px 20px;
-    font-size: 14px;
-    border: 2px solid var(--color-border);
+    padding: 0.35rem var(--space-3);
+    border: none;
     border-radius: 6px;
-    cursor: pointer;
-    background-color: var(--color-surface);
-    color: var(--color-text-strong);
+    background: transparent;
+    color: var(--color-text-secondary);
+    font: inherit;
+    font-size: var(--font-size-sm);
     font-weight: 500;
-    transition: all var(--transition-base);
+    cursor: pointer;
+    transition:
+        background var(--transition-fast),
+        color var(--transition-fast);
 }
 
 .button:hover {
-    border-color: var(--color-accent);
-    color: var(--color-accent);
+    color: var(--color-text-strong);
 }
 
-.buttonActive {
-    background-color: var(--color-accent);
-    color: var(--color-on-accent);
-    border: 2px solid var(--color-accent);
-    padding: 10px 20px;
-    font-size: 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: all var(--transition-base);
+.button[aria-pressed="true"] {
+    background: var(--color-surface);
+    color: var(--color-text-strong);
+    box-shadow: var(--shadow-sm);
+}
+
+.button:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 1px;
 }

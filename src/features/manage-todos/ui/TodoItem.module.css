@@ -1,87 +1,48 @@
 .item {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 12px;
-    padding: 16px;
-    background-color: var(--color-surface);
-    border-radius: var(--radius-md);
-    margin-bottom: 10px;
-    box-shadow: var(--shadow-sm);
-    transition:
-        transform 0.2s,
-        box-shadow 0.2s;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-2);
+    border-bottom: 1px solid var(--color-border);
+    transition: background var(--transition-fast);
 }
 
 .item:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
+    background: var(--color-surface-muted);
 }
 
 .checkbox {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    accent-color: var(--color-accent);
     cursor: pointer;
 }
 
+/* On narrow screens the buttons wrap under the text instead of squeezing it. */
+.text,
+.textCompleted {
+    flex: 1 1 12rem;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
 .text {
-    flex: 1;
-    font-size: 16px;
     color: var(--color-text-strong);
 }
 
 .textCompleted {
-    flex: 1;
-    font-size: 16px;
-    color: var(--color-text-secondary);
+    color: var(--color-text-subtle);
     text-decoration: line-through;
 }
 
 .editInput {
-    flex: 1;
-    padding: 8px;
-    font-size: 16px;
+    flex: 1 1 12rem;
+    min-width: 0;
+    padding: 0.4rem var(--space-3);
+    font: inherit;
     border: 2px solid var(--color-accent);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
     outline: none;
-}
-
-.button {
-    padding: 8px 16px;
-    font-size: 14px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 500;
-    border: 1px solid;
-    transition: opacity var(--transition-fast);
-}
-
-.button:hover {
-    opacity: 0.9;
-}
-
-.editButton {
-    background-color: var(--color-surface);
-
-    border-color: var(--color-border);
-    color: var(--color-text-strong);
-}
-
-.editButton:hover {
-    border-color: var(--color-accent);
-    color: var(--color-accent);
-}
-.deleteButton {
-    background-color: var(--color-danger);
-    color: var(--color-on-accent);
-}
-
-.saveButton {
-    background-color: var(--color-accent);
-    color: var(--color-on-accent);
-}
-
-.cancelButton {
-    background-color: var(--color-text-subtle);
-    color: var(--color-on-accent);
 }

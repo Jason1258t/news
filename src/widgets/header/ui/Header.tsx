@@ -4,7 +4,7 @@ import { useSession } from "entities/session";
 import { ARTICLE_CATEGORIES, PROJECT_NAME } from "shared/config";
 import { Container } from "shared/ui/layout";
 import styles from "./Header.module.css";
-import logo from "./logo.jpg";
+import logo from "shared/assets/logo.jpg";
 
 export const Header = () => {
     const { user } = useSession();

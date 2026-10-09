@@ -21,7 +21,7 @@ export const TodoFilter = ({ filter, onFilterChange }: TodoFilterProps) => {
                     key={f.value}
                     type="button"
                     aria-pressed={filter === f.value}
-                    className={filter === f.value ? styles.buttonActive : styles.button}
+                    className={styles.button}
                     onClick={() => onFilterChange(f.value)}
                 >
                     {f.label}

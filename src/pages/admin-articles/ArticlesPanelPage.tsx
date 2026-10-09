@@ -1,10 +1,9 @@
 import { Trash2, X } from "lucide-react";
 import { useState } from "react";
-import { Helmet } from "react-helmet-async";
 import toast from "react-hot-toast";
 import { ArticleCard, ArticleCardSmall, useArticles } from "entities/article";
 import { useDeleteArticle } from "features/article-delete";
-import { PROJECT_NAME } from "shared/config";
+import { AdminPage } from "widgets/admin-layout";
 import { getErrorMessage } from "shared/lib/error";
 import { Button } from "shared/ui/button";
 import { DeleteConfirmationModal, useDeleteConfirmation } from "shared/ui/confirm-dialog";
@@ -45,14 +44,13 @@ export const ArticlesPanelPage = () => {
     };
 
     return (
-        <>
-            <Helmet>
-                <title>{`Управление статьями | ${PROJECT_NAME}`}</title>
-                <meta name="description" content="Панель для управления статьями" />
-            </Helmet>
+        <AdminPage
+            title="Управление статьями"
+            description="Выберите статью в списке, чтобы открыть или удалить её"
+        >
             <div className={styles.page}>
                 <div className={styles.listSection}>
-                    <h2>Список статей</h2>
+                    <h2 className={styles.sectionTitle}>Статьи</h2>
                     <div className={styles.list}>
                         {isLoading && <LoadingSpinner />}
                         {error && <ErrorWidget message={error.message} />}
@@ -69,7 +67,7 @@ export const ArticlesPanelPage = () => {
                         ))}
                         {isFetchingNextPage && <LoadingSpinner />}
                         {hasNextPage && !isFetchingNextPage && (
-                            <Button variant="secondary" onClick={() => fetchNextPage()}>
+                            <Button variant="ghost" size="sm" onClick={() => fetchNextPage()}>
                                 Показать ещё
                             </Button>
                         )}
@@ -78,9 +76,10 @@ export const ArticlesPanelPage = () => {
 
                 <div className={styles.selectedArticleSection}>
                     <div className={styles.currentArticleHeader}>
-                        <h2>Выбранная статья</h2>
+                        <h2 className={styles.sectionTitle}>Выбранная статья</h2>
                         {selectedArticle && (
                             <button
+                                type="button"
                                 onClick={() => setSelectedSlug(null)}
                                 className={styles.closeButton}
                                 aria-label="Закрыть"
@@ -103,13 +102,10 @@ export const ArticlesPanelPage = () => {
                                     category={selectedArticle.category}
                                 />
                                 <div className={styles.selectedArticleActions}>
-                                    <button
-                                        onClick={onDeleteArticle}
-                                        className={styles.deleteButton}
-                                    >
-                                        <Trash2 size="1.25rem" />
+                                    <Button variant="danger" size="sm" onClick={onDeleteArticle}>
+                                        <Trash2 size="1rem" aria-hidden="true" />
                                         Удалить
-                                    </button>
+                                    </Button>
                                 </div>
                             </>
                         )}
@@ -117,6 +113,6 @@ export const ArticlesPanelPage = () => {
                 </div>
             </div>
             <DeleteConfirmationModal {...deleteConfirmation.modalProps} />
-        </>
+        </AdminPage>
     );
 };

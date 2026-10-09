@@ -1,19 +1,32 @@
 .button {
-    display: inline-block;
-    padding: 0.75rem 2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
     border: none;
     border-radius: 10px;
     font-family: inherit;
     line-height: normal;
-    font-size: 1rem;
     font-weight: 600;
     text-decoration: none;
     cursor: pointer;
     transition: all var(--transition-base);
 }
 
+.md {
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+}
+
+.sm {
+    padding: 0.4rem 0.85rem;
+    font-size: var(--font-size-sm);
+    border-radius: var(--radius-md);
+}
+
 .button:disabled {
     cursor: not-allowed;
+    opacity: 0.45;
 }
 
 .button:focus-visible {
@@ -28,8 +41,6 @@
 
 .primary:not(:disabled):hover {
     background-color: var(--color-accent-hover);
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-accent);
 }
 
 .secondary {
@@ -41,26 +52,39 @@
 .secondary:not(:disabled):hover {
     background: var(--color-accent);
     color: var(--color-on-accent);
+}
+
+/* Lift on hover only for the large buttons: small ones sit inside lists and cards. */
+.md.primary:not(:disabled):hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-accent);
+}
+
+.md.secondary:not(:disabled):hover {
     transform: translateY(-3px);
 }
 
 .danger {
-    background-color: var(--color-danger);
-    color: var(--color-on-accent);
+    background-color: var(--color-danger-soft);
+    color: var(--color-danger-text);
 }
 
 .danger:not(:disabled):hover {
-    background-color: var(--color-danger-hover);
-    transform: translateY(-3px);
+    background-color: var(--color-danger-soft-hover);
 }
 
-.primary:disabled,
-.danger:disabled {
-    background-color: var(--color-text-muted);
+.ghost {
+    background: transparent;
+    color: var(--color-text-secondary);
+}
+
+.ghost:not(:disabled):hover {
+    background: var(--color-surface-sunken);
+    color: var(--color-text-strong);
 }
 
 @media (max-width: 768px) {
-    .button {
+    .md {
         width: 220px;
         padding: 0.5rem 1.5rem;
     }

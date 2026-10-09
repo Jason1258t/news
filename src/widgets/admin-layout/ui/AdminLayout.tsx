@@ -7,7 +7,10 @@ import styles from "./AdminLayout.module.css";
 export const AdminLayout = () => {
     return (
         <div className={styles.layout}>
-            <AdminSidebar />
+            {/* The column carries the background so it spans long pages; the sidebar inside sticks. */}
+            <div className={styles.sidebarColumn}>
+                <AdminSidebar />
+            </div>
             <main className={styles.content}>
                 <Suspense fallback={<LoadingWidget />}>
                     <Outlet />
