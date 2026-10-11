@@ -27,8 +27,8 @@
     box-shadow: var(--shadow-md);
     overflow: hidden;
     transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
 }
 
 .layoutSurface:hover {

@@ -2,7 +2,7 @@
     padding: 1rem;
     background: var(--color-surface-muted);
     border-radius: var(--radius-md);
-    border-left: 3px solid var(--color-accent);
+    border-left: 2px solid var(--color-accent);
     transition: transform var(--transition-fast);
 }
 

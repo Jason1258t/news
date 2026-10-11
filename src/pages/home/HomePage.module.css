@@ -1,0 +1,4 @@
+/* Muted backdrop so the white cards and sidebar read as raised. */
+.page {
+    background: var(--color-surface-muted);
+}

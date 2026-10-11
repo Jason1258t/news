@@ -51,8 +51,13 @@ test("article tag → filtered feed → remove the tag", async ({ page }) => {
 
 test("category + tag filter (B15)", async ({ page }) => {
     await page.goto("/");
-    await page.getByRole("navigation").getByRole("link", { name: "Спорт" }).click();
-    await expect(page.getByRole("heading", { level: 2, name: "Спорт" })).toBeVisible();
+    await page
+        .getByRole("navigation", { name: "Категории" })
+        .getByRole("link", { name: "Спорт" })
+        .click();
+    await expect(
+        page.getByRole("navigation", { name: "Категории" }).getByRole("link", { name: "Спорт" }),
+    ).toHaveAttribute("aria-current", "page");
 
     await page.goto("/#/?category=Спорт&tags=футбол");
 
@@ -84,5 +89,7 @@ test("mobile menu opens and navigates @mobile", async ({ page, isMobile }) => {
 
     await expect(burger).toHaveAttribute("aria-expanded", "false");
     await expect(feedTitles(page).first()).toHaveText(allBlocksArticle.title);
-    await expect(page.getByRole("heading", { level: 2, name: "Наука" })).toBeVisible();
+    await expect(
+        page.getByRole("navigation", { name: "Категории" }).getByRole("link", { name: "Наука" }),
+    ).toHaveAttribute("aria-current", "page");
 });
