@@ -35,29 +35,19 @@
     }
 }
 
+/* Below desktop the sidebar moves above the feed so its content is not buried under infinite scroll. */
 @media (max-width: 1024px) {
     .layout {
         grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
-    .sidebar {
-        position: static;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
         gap: 1.5rem;
     }
-}
 
-@media (max-width: 768px) {
     .sidebar {
-        grid-template-columns: 1fr;
+        order: -1;
+        position: static;
+        display: block;
         max-height: none;
-    }
-}
-
-@media (max-width: 480px) {
-    .sidebar {
-        display: none;
+        overflow: visible;
+        padding-bottom: 0;
     }
 }

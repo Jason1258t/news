@@ -11,11 +11,10 @@ export const HomePage = () => {
             <HomeMeta />
             <Main>
                 <Container>
-                    <SubscribeCta />
                     <LayoutWithSidebar>
                         <LayoutWithSidebar.MainContent>
                             <FeedHeader />
-                            <ArticleFeed />
+                            <ArticleFeed promo={<SubscribeCta />} />
                         </LayoutWithSidebar.MainContent>
                         <LayoutWithSidebar.Sidebar>
                             <EditorsPickSidebar />

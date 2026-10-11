@@ -70,6 +70,17 @@ describe("ArticleFeed", () => {
         expect(screen.queryByText("Статьи не найдены")).not.toBeInTheDocument();
     });
 
+    it("places the promo block after the third card", async () => {
+        fetchMock.mockResolvedValue(page(["a", "b", "c", "d"]));
+        renderWithProviders(<ArticleFeed promo={<p>promo</p>} />);
+
+        const promo = await screen.findByText("promo");
+        const before = screen.getByText("Статья c").closest("a");
+        const after = screen.getByText("Статья d").closest("a");
+        expect(before!.compareDocumentPosition(promo)).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
+        expect(after!.compareDocumentPosition(promo)).toBe(Node.DOCUMENT_POSITION_PRECEDING);
+    });
+
     it("shows the empty state when nothing matches", async () => {
         fetchMock.mockResolvedValue(page([]));
         renderWithProviders(<ArticleFeed />);

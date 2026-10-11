@@ -7,3 +7,28 @@
 .link {
     text-decoration: none;
 }
+
+/* Below desktop the picks become a horizontal swipeable strip above the feed. */
+@media (max-width: 1024px) {
+    .list {
+        flex-direction: row;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        padding-bottom: 0.25rem;
+    }
+
+    .list::-webkit-scrollbar {
+        display: none;
+    }
+
+    .link {
+        display: block;
+        flex: 0 0 min(15rem, 75%);
+        scroll-snap-align: start;
+    }
+
+    .link > * {
+        height: 100%;
+    }
+}

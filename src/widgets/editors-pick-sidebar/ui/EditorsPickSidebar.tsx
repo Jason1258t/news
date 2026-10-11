@@ -8,7 +8,7 @@ export const EditorsPickSidebar = () => {
     const { data: editorsPicks = [], isLoading } = useEditorsPicks();
 
     return (
-        <SidebarCard title="👑 Выбор редакции">
+        <SidebarCard title="Выбор редакции">
             <div className={styles.list}>
                 {isLoading ? (
                     <LoadingSpinner />

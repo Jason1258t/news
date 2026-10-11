@@ -23,17 +23,14 @@
 
 .layoutSurface {
     background: var(--color-surface);
+    border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
     overflow: hidden;
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+    transition: border-color var(--transition-fast);
 }
 
 .layoutSurface:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
+    border-color: var(--color-border-strong);
 }
 
 @media (max-width: 768px) {
