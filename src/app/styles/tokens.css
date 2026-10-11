@@ -21,9 +21,8 @@
     --palette-slate-900: #1a202c;
     --palette-slate-300: #bdc3c7;
     --palette-code: #2d2d2d;
-    --palette-indigo-500: #667eea;
-    --palette-indigo-600: #5a6fd8;
-    --palette-violet-600: #764ba2;
+    --palette-indigo-500: #4f46e5;
+    --palette-indigo-600: #4338ca;
     --palette-blue-500: #3498db;
     --palette-red-500: #e74c3c;
     --palette-red-600: #c0392b;
@@ -58,14 +57,14 @@
     /* ---- Accent ---- */
     --color-accent: var(--palette-indigo-500);
     --color-accent-hover: var(--palette-indigo-600);
-    --color-accent-soft: rgba(102, 126, 234, 0.1);
+    --color-accent-soft: rgba(79, 70, 229, 0.1);
     --color-on-accent: var(--palette-white);
     --gradient-accent: linear-gradient(
         135deg,
         var(--palette-indigo-500) 0%,
-        var(--palette-violet-600) 100%
+        var(--palette-indigo-600) 100%
     );
-    --color-focus-ring: rgba(102, 126, 234, 0.2);
+    --color-focus-ring: rgba(79, 70, 229, 0.2);
 
     /* ---- Status ---- */
     --color-info: var(--palette-blue-500);
@@ -97,7 +96,7 @@
     --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.08);
     --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
     --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.3);
-    --shadow-accent: 0 6px 20px rgba(102, 126, 234, 0.4);
+    --shadow-accent: 0 6px 20px rgba(79, 70, 229, 0.35);
 
     /* ---- Shape ---- */
     --radius-sm: 4px;

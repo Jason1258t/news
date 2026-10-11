@@ -3,7 +3,8 @@ import { useInView } from "react-intersection-observer";
 import { ArticleCard, useArticles } from "entities/article";
 import styles from "./ArticleFeed.module.css";
 import { useSearchParams } from "react-router-dom";
-import { LoadingWidget, LoadingSpinner } from "shared/ui/loading-widget";
+import { LoadingSpinner } from "shared/ui/loading-widget";
+import { FeedSkeleton } from "./FeedSkeleton";
 import { ErrorWidget } from "shared/ui/error-widget";
 import { useQueryTags } from "features/filter-by-tags";
 
@@ -18,7 +19,7 @@ interface ArticleFeedProps {
 export const ArticleFeed = ({ promo }: ArticleFeedProps) => {
     const [searchParams] = useSearchParams();
     const category = searchParams.get("category");
-    const { selectedTags } = useQueryTags();
+    const { selectedTags, addTag } = useQueryTags();
     const { ref, inView } = useInView();
 
     const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError, error } =
@@ -36,7 +37,7 @@ export const ArticleFeed = ({ promo }: ArticleFeedProps) => {
     }, [needsMore, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
     if (isLoading || (allArticles.length === 0 && hasNextPage)) {
-        return <LoadingWidget />;
+        return <FeedSkeleton />;
     }
 
     if (isError) {
@@ -67,6 +68,8 @@ export const ArticleFeed = ({ promo }: ArticleFeedProps) => {
                                 date={article.dateDisplay}
                                 category={article.category}
                                 imageUrl={article.hero.url}
+                                tags={article.tags}
+                                onTagClick={addTag}
                             />
                         </div>
                         {promo && index === Math.min(PROMO_AFTER, allArticles.length) - 1

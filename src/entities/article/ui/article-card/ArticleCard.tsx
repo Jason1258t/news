@@ -10,9 +10,13 @@ interface ArticleCardProps {
     /** Categories joined with " • "; the card shows only the first one. */
     category?: string;
     imageUrl?: string;
+    tags?: string[];
+    /** Makes the tags clickable; without it they are not rendered. */
+    onTagClick?: (tag: string) => void;
 }
 
 const CATEGORY_SEPARATOR = " • ";
+const MAX_TAGS = 2;
 
 export const ArticleCard = ({
     to = "",
@@ -21,18 +25,26 @@ export const ArticleCard = ({
     date,
     category,
     imageUrl,
+    tags = [],
+    onTagClick,
 }: ArticleCardProps) => {
     const mainCategory = category?.split(CATEGORY_SEPARATOR)[0];
+    const visibleTags = onTagClick ? tags.slice(0, MAX_TAGS) : [];
 
     return (
-        <Link to={to} className={styles.card}>
+        <article className={styles.card}>
             {imageUrl ? (
                 <div className={styles.imageWrap}>
-                    <img src={imageUrl} alt={title} className={styles.image} />
+                    <img src={imageUrl} alt="" className={styles.image} />
                 </div>
             ) : null}
             <div className={styles.content}>
-                <h3 className={styles.title}>{title}</h3>
+                <h3 className={styles.title}>
+                    {/* The ::after overlay makes the whole card the link target. */}
+                    <Link to={to} className={styles.link}>
+                        {title}
+                    </Link>
+                </h3>
                 {excerpt ? <p className={styles.excerpt}>{excerpt}</p> : null}
                 {mainCategory || date ? (
                     <div className={styles.meta}>
@@ -43,7 +55,22 @@ export const ArticleCard = ({
                         {date ? <span className={styles.date}>{date}</span> : null}
                     </div>
                 ) : null}
+                {visibleTags.length > 0 ? (
+                    <ul className={styles.tags}>
+                        {visibleTags.map((tag) => (
+                            <li key={tag}>
+                                <button
+                                    type="button"
+                                    className={styles.tag}
+                                    onClick={() => onTagClick?.(tag)}
+                                >
+                                    #{tag}
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                ) : null}
             </div>
-        </Link>
+        </article>
     );
 };

@@ -1,0 +1,61 @@
+.grid {
+    display: grid;
+    gap: 20px;
+}
+
+.card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.image,
+.line {
+    background: linear-gradient(
+        90deg,
+        var(--color-surface-sunken) 25%,
+        var(--color-border) 50%,
+        var(--color-surface-sunken) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.4s linear infinite;
+}
+
+.image {
+    aspect-ratio: 16 / 9;
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 1.25rem;
+}
+
+.line {
+    height: 0.9rem;
+    border-radius: var(--radius-sm);
+}
+
+.title {
+    height: 1.4rem;
+    width: 70%;
+}
+
+.short {
+    width: 50%;
+}
+
+@keyframes shimmer {
+    to {
+        background-position: -200% 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .image,
+    .line {
+        animation: none;
+    }
+}
