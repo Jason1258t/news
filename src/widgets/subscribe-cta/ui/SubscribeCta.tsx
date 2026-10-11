@@ -8,7 +8,7 @@ export const SubscribeCta = () => {
     const navigate = useNavigate();
 
     return (
-        <aside className={styles.section} aria-label="Подписка на обновления">
+        <section className={styles.section} aria-label="Подписка на обновления">
             <p className={styles.text}>
                 Подпишитесь на наши обновления, чтобы первыми получать самые важные и интересные
                 новости
@@ -25,6 +25,6 @@ export const SubscribeCta = () => {
                     О проекте
                 </Button>
             </div>
-        </aside>
+        </section>
     );
 };
