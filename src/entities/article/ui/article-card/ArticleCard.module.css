@@ -16,11 +16,11 @@
     inset: 0;
 }
 
-/* Contain keeps the whole picture visible; the muted backdrop makes any bars look intentional. */
+/* Contain keeps the whole picture visible; the bars are card-white, so they never blend into the page. */
 .imageWrap {
     display: block;
     overflow: hidden;
-    background: var(--color-surface-sunken);
+    background: var(--color-surface);
 }
 
 .image {
