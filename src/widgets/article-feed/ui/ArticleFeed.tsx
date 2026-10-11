@@ -1,16 +1,25 @@
-import { useEffect } from "react";
+import { Fragment, useEffect, type ReactNode } from "react";
 import { useInView } from "react-intersection-observer";
 import { ArticleCard, useArticles } from "entities/article";
 import styles from "./ArticleFeed.module.css";
 import { useSearchParams } from "react-router-dom";
-import { LoadingWidget, LoadingSpinner } from "shared/ui/loading-widget";
+import { LoadingSpinner } from "shared/ui/loading-widget";
+import { FeedSkeleton } from "./FeedSkeleton";
 import { ErrorWidget } from "shared/ui/error-widget";
 import { useQueryTags } from "features/filter-by-tags";
 
-export const ArticleFeed = () => {
+/** Number of cards shown before the promo block. */
+const PROMO_AFTER = 3;
+
+interface ArticleFeedProps {
+    /** Native block placed inside the feed after the third card (or the last one if fewer). */
+    promo?: ReactNode;
+}
+
+export const ArticleFeed = ({ promo }: ArticleFeedProps) => {
     const [searchParams] = useSearchParams();
     const category = searchParams.get("category");
-    const { selectedTags } = useQueryTags();
+    const { selectedTags, addTag } = useQueryTags();
     const { ref, inView } = useInView();
 
     const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError, error } =
@@ -28,7 +37,7 @@ export const ArticleFeed = () => {
     }, [needsMore, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
     if (isLoading || (allArticles.length === 0 && hasNextPage)) {
-        return <LoadingWidget />;
+        return <FeedSkeleton />;
     }
 
     if (isError) {
@@ -47,20 +56,26 @@ export const ArticleFeed = () => {
         <section className={styles.feedContainer} aria-label="Лента статей">
             <div className={styles.feedGrid}>
                 {allArticles.map((article, index) => (
-                    <div
-                        key={article.slug}
-                        className={styles.layoutSurface}
-                        ref={index === allArticles.length - 1 ? ref : null}
-                    >
-                        <ArticleCard
-                            to={`/articles/${article.slug}`}
-                            title={article.title}
-                            excerpt={article.description}
-                            date={article.dateDisplay}
-                            category={article.category}
-                            imageUrl={article.hero.url}
-                        />
-                    </div>
+                    <Fragment key={article.slug}>
+                        <div
+                            className={styles.layoutSurface}
+                            ref={index === allArticles.length - 1 ? ref : null}
+                        >
+                            <ArticleCard
+                                to={`/articles/${article.slug}`}
+                                title={article.title}
+                                excerpt={article.description}
+                                date={article.dateDisplay}
+                                category={article.category}
+                                imageUrl={article.hero.url}
+                                tags={article.tags}
+                                onTagClick={addTag}
+                            />
+                        </div>
+                        {promo && index === Math.min(PROMO_AFTER, allArticles.length) - 1
+                            ? promo
+                            : null}
+                    </Fragment>
                 ))}
             </div>
 

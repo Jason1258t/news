@@ -1,4 +1,5 @@
 import { act, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { mockAllIsIntersecting } from "react-intersection-observer/test-utils";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { fetchArticles, type ArticlesPage } from "entities/article/api/articles-api";
@@ -68,6 +69,28 @@ describe("ArticleFeed", () => {
         expect(await screen.findByText("Статья match")).toBeInTheDocument();
         expect(fetchMock).toHaveBeenCalledTimes(2);
         expect(screen.queryByText("Статьи не найдены")).not.toBeInTheDocument();
+    });
+
+    it("adds a tag filter when a card tag is clicked", async () => {
+        fetchMock.mockResolvedValue(page(["a"]));
+        renderWithProviders(<ArticleFeed />);
+
+        await userEvent.click(await screen.findByRole("button", { name: "#тег" }));
+
+        await waitFor(() =>
+            expect(fetchMock).toHaveBeenLastCalledWith(expect.objectContaining({ tags: ["тег"] })),
+        );
+    });
+
+    it("places the promo block after the third card", async () => {
+        fetchMock.mockResolvedValue(page(["a", "b", "c", "d"]));
+        renderWithProviders(<ArticleFeed promo={<p>promo</p>} />);
+
+        const promo = await screen.findByText("promo");
+        const before = screen.getByText("Статья c").closest("a");
+        const after = screen.getByText("Статья d").closest("a");
+        expect(before!.compareDocumentPosition(promo)).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
+        expect(after!.compareDocumentPosition(promo)).toBe(Node.DOCUMENT_POSITION_PRECEDING);
     });
 
     it("shows the empty state when nothing matches", async () => {

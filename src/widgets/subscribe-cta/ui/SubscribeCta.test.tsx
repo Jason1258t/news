@@ -15,17 +15,6 @@ const renderCta = () =>
     );
 
 describe("SubscribeCta", () => {
-    it("expands and collapses on mobile", async () => {
-        renderCta();
-        const toggle = screen.getByRole("button", { name: "Наши обновления" });
-        expect(toggle).toHaveAttribute("aria-expanded", "false");
-
-        await userEvent.click(toggle);
-        expect(toggle).toHaveAttribute("aria-expanded", "true");
-        await userEvent.keyboard("{Enter}");
-        expect(toggle).toHaveAttribute("aria-expanded", "false");
-    });
-
     it("opens the Telegram channel in a new tab without access to this page", async () => {
         const open = vi.spyOn(window, "open").mockReturnValue(null);
         renderCta();

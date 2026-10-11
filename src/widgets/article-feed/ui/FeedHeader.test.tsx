@@ -17,17 +17,31 @@ const renderHeader = (route: string) =>
     );
 
 describe("FeedHeader", () => {
-    it("shows the selected category", () => {
+    it("marks the selected category", () => {
         renderHeader("/?category=Наука");
 
-        expect(screen.getByRole("heading", { name: "Наука" })).toBeInTheDocument();
+        expect(screen.getByRole("link", { name: "Наука" })).toHaveAttribute("aria-current", "page");
+        expect(screen.getByRole("link", { name: "Все" })).not.toHaveAttribute("aria-current");
     });
 
-    it("renders nothing extra without filters", () => {
+    it("marks «Все» and shows no tag controls without filters", () => {
         renderHeader("/");
 
-        expect(screen.queryByRole("heading")).not.toBeInTheDocument();
+        expect(screen.getByRole("link", { name: "Все" })).toHaveAttribute("aria-current", "page");
         expect(screen.queryByRole("button")).not.toBeInTheDocument();
+    });
+
+    it("keeps the tags when switching category and drops the category on «Все»", () => {
+        renderHeader("/?category=Наука&tags=ии");
+
+        expect(screen.getByRole("link", { name: "Спорт" })).toHaveAttribute(
+            "href",
+            "/?category=%D0%A1%D0%BF%D0%BE%D1%80%D1%82&tags=%D0%B8%D0%B8",
+        );
+        expect(screen.getByRole("link", { name: "Все" })).toHaveAttribute(
+            "href",
+            "/?tags=%D0%B8%D0%B8",
+        );
     });
 
     it("removes a single tag and keeps the category", async () => {
