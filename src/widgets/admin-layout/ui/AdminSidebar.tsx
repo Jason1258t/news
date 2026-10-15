@@ -1,5 +1,6 @@
 import {
     ArrowLeft,
+    BarChart3,
     FilePlus2,
     ListTodo,
     LogOut,
@@ -19,6 +20,7 @@ const NAV: Array<{ to: string; label: string; icon: LucideIcon }> = [
     { to: "/admin/articles-panel", label: "Управление статьями", icon: Newspaper },
     { to: "/admin/editors-pick", label: "Выбор редакции", icon: Star },
     { to: "/admin/studio", label: "Студия", icon: ListTodo },
+    { to: "/admin/analytics", label: "Аналитика", icon: BarChart3 },
 ];
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>

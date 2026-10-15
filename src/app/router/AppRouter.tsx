@@ -4,6 +4,7 @@ import { AboutPage } from "pages/about";
 import { ArticlePage } from "pages/article";
 import { HomePage } from "pages/home";
 import { LoginPage } from "pages/login";
+import { useTrackVisit } from "features/track-views";
 import { AdminLayout } from "widgets/admin-layout";
 import { Footer } from "widgets/footer";
 import { Header } from "widgets/header";
@@ -23,8 +24,11 @@ const CreateArticlePage = lazyNamed(
 const ArticlesPanelPage = lazyNamed(() => import("pages/admin-articles"), "ArticlesPanelPage");
 const EditorsPickPage = lazyNamed(() => import("pages/admin-editors-pick"), "EditorsPickPage");
 const StudioPage = lazyNamed(() => import("pages/admin-studio"), "StudioPage");
+const AnalyticsPage = lazyNamed(() => import("pages/admin-analytics"), "AnalyticsPage");
 
 const PublicLayout = () => {
+    useTrackVisit();
+
     return (
         <>
             <Header />
@@ -57,6 +61,7 @@ export const AppRouter = () => {
                 <Route path="articles-panel" element={<ArticlesPanelPage />} />
                 <Route path="editors-pick" element={<EditorsPickPage />} />
                 <Route path="studio" element={<StudioPage />} />
+                <Route path="analytics" element={<AnalyticsPage />} />
             </Route>
         </Routes>
     );

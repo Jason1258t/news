@@ -3,7 +3,7 @@
  * CLI: `node emulator/run-seed.ts`; tests import seedEmulators directly.
  * Talks to the emulators' REST APIs with the "owner" token, which bypasses security rules.
  */
-import { SEED_ADMIN, seedArticles, seedEditorsPicks, seedTodos } from "./seed-data.ts";
+import { SEED_ADMIN, seedArticles, seedEditorsPicks, seedStats, seedTodos } from "./seed-data.ts";
 import { toFirestoreContent } from "../src/entities/article/model/firestore-content.ts";
 
 export const PROJECT_ID = "demo-news";
@@ -96,5 +96,6 @@ export const seedEmulators = async () => {
             putDoc("editors-pick", id, { ...pick, createdAt, updatedAt: createdAt }),
         ),
         ...seedTodos.map(({ id, ...todo }) => putDoc("todos", id, { ...todo, createdAt })),
+        ...seedStats().map(({ day, ...stats }) => putDoc("stats", day, stats)),
     ]);
 };

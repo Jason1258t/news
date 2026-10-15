@@ -5,7 +5,16 @@ import {
     initializeTestEnvironment,
     type RulesTestEnvironment,
 } from "@firebase/rules-unit-testing";
-import { deleteDoc, doc, getDoc, setDoc, type Firestore } from "firebase/firestore";
+import {
+    deleteDoc,
+    doc,
+    getDoc,
+    increment,
+    setDoc,
+    updateDoc,
+    type Firestore,
+} from "firebase/firestore";
+import { getStatsDay } from "../src/entities/site-stats/model/stats-day";
 import { afterAll, beforeAll, beforeEach, describe, it } from "vitest";
 
 // Runs against the Firestore emulator: npm run test:emulator
@@ -79,6 +88,84 @@ describe("todos (studio)", () => {
         await assertSucceeds(create("admin", "todos"));
         await assertSucceeds(update("admin", "todos"));
         await assertSucceeds(remove("admin", "todos"));
+    });
+});
+
+describe("stats (analytics counters)", () => {
+    const today = getStatsDay();
+    const stats = (role: Role, day = today) => doc(db(role), "stats", day);
+    const view = (role: Role, slug: string, day = today) =>
+        setDoc(
+            stats(role, day),
+            { articles: { [slug]: increment(1) }, lastArticle: slug },
+            { merge: true },
+        );
+
+    beforeEach(async () => {
+        await env.withSecurityRulesDisabled(async (context) => {
+            const admin = context.firestore();
+            await setDoc(doc(admin, "articles", "real-article"), { title: "seed" });
+            await setDoc(doc(admin, "stats", today), {
+                visits: 5,
+                articles: { "real-article": 2 },
+            });
+        });
+    });
+
+    it.each<Role>(["guest", "user"])("%s can add a visit and an article view", async (role) => {
+        await assertSucceeds(updateDoc(stats(role), { visits: increment(1) }));
+        await assertSucceeds(view(role, "real-article"));
+    });
+
+    it("a guest can start a new day", async () => {
+        await env.withSecurityRulesDisabled((context) =>
+            deleteDoc(doc(context.firestore(), "stats", today)),
+        );
+        await assertSucceeds(setDoc(stats("guest"), { visits: increment(1) }, { merge: true }));
+        await assertSucceeds(view("guest", "real-article"));
+    });
+
+    it("a guest cannot add more than one or reset counters", async () => {
+        await assertFails(updateDoc(stats("guest"), { visits: increment(2) }));
+        await assertFails(updateDoc(stats("guest"), { visits: 0 }));
+        await assertFails(
+            updateDoc(stats("guest"), { visits: increment(1), "articles.real-article": 3 }),
+        );
+        await assertFails(updateDoc(stats("guest"), { "articles.real-article": 1 }));
+    });
+
+    it("a guest cannot touch other fields, other days or delete", async () => {
+        await assertFails(setDoc(stats("guest"), { hacked: true }, { merge: true }));
+        await assertFails(
+            setDoc(stats("guest", "2020-01-01"), { visits: increment(1) }, { merge: true }),
+        );
+        await assertFails(
+            setDoc(stats("guest", "not-a-day"), { visits: increment(1) }, { merge: true }),
+        );
+        await assertFails(deleteDoc(stats("guest")));
+    });
+
+    it("a guest can only count articles that exist", async () => {
+        await assertFails(
+            setDoc(
+                stats("guest"),
+                { articles: { "no-such-article": increment(1) } },
+                { merge: true },
+            ),
+        );
+        await assertFails(
+            setDoc(
+                stats("guest"),
+                { articles: { "real-article": increment(1), other: increment(1) } },
+                { merge: true },
+            ),
+        );
+    });
+
+    it("only an admin can read", async () => {
+        await assertFails(getDoc(stats("guest")));
+        await assertFails(getDoc(stats("user")));
+        await assertSucceeds(getDoc(stats("admin")));
     });
 });
 
