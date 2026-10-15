@@ -127,3 +127,26 @@ export const seedTodos = [
     { id: "todo-1", text: "Проверить вёрстку", completed: false },
     { id: "todo-2", text: "Опубликовать анонс", completed: true },
 ];
+
+/**
+ * Analytics counters for the 29 days before today, so the admin "Аналитика" page has
+ * something to show; today stays empty for the tests that count views.
+ */
+export const seedStats = (now = new Date()) =>
+    Array.from({ length: 29 }, (_, i) => {
+        const daysAgo = i + 1;
+        // Moscow date, like getStatsDay
+        const day = new Date(now.getTime() + 3 * 3600_000 - daysAgo * 86_400_000)
+            .toISOString()
+            .slice(0, 10);
+        const wave = Math.round(20 + 12 * Math.sin(daysAgo / 3));
+        return {
+            day,
+            visits: wave,
+            articles: {
+                "all-blocks": Math.round(wave / 2),
+                "quantum-computer": Math.round(wave / 3),
+                ...(daysAgo % 4 === 0 ? { "mars-mission": 3 } : {}),
+            },
+        };
+    });

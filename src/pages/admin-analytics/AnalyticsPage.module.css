@@ -1,0 +1,226 @@
+.layout {
+    display: grid;
+    gap: var(--space-5);
+}
+
+.periods {
+    display: inline-flex;
+    padding: var(--space-1);
+    background: var(--color-surface-sunken);
+    border-radius: var(--radius-md);
+}
+
+.period {
+    padding: var(--space-1) var(--space-3);
+    font: inherit;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+    cursor: pointer;
+    background: none;
+    border: none;
+    border-radius: var(--radius-sm);
+}
+
+.period[aria-pressed="true"] {
+    color: var(--color-text-strong);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+}
+
+.period:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 1px;
+}
+
+.tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--space-4);
+    margin: 0;
+}
+
+.tile,
+.card {
+    padding: var(--space-5);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+}
+
+.tile dt {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+.tile dd {
+    margin: var(--space-1) 0 0;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-text-strong);
+    font-variant-numeric: tabular-nums;
+}
+
+.cardTitle {
+    margin: 0 0 var(--space-4);
+    font-size: var(--font-size-lg);
+    color: var(--color-text-strong);
+}
+
+.muted {
+    color: var(--color-text-muted);
+}
+
+/* ---- Bar chart ---- */
+
+.chart {
+    display: flex;
+    gap: var(--space-2);
+    margin: 0;
+}
+
+.chartScale {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 200px;
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.bars {
+    display: flex;
+    flex: 1;
+    gap: 2px;
+    align-items: flex-end;
+    height: 200px;
+    padding: 0;
+    margin: 0 0 var(--space-5);
+    list-style: none;
+    border-bottom: 1px solid var(--color-border-strong);
+}
+
+.barSlot {
+    position: relative;
+    display: flex;
+    flex: 1;
+    align-items: flex-end;
+    height: 100%;
+}
+
+.bar {
+    width: 100%;
+    min-height: 0;
+    background: var(--color-accent);
+    border-radius: 4px 4px 0 0;
+}
+
+.barSlot:hover .bar {
+    background: var(--color-accent-hover);
+}
+
+.barLabel {
+    position: absolute;
+    top: calc(100% + var(--space-1));
+    left: 50%;
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    transform: translateX(-50%);
+}
+
+.barSlot:first-child .barLabel {
+    left: 0;
+    transform: none;
+}
+
+.barSlot:last-child .barLabel {
+    right: 0;
+    left: auto;
+    transform: none;
+}
+
+.tooltip {
+    position: absolute;
+    bottom: calc(100% + var(--space-1));
+    left: 50%;
+    z-index: 1;
+    display: none;
+    padding: var(--space-1) var(--space-2);
+    font-size: var(--font-size-xs);
+    color: var(--color-inverse-text);
+    white-space: nowrap;
+    pointer-events: none;
+    background: var(--color-inverse-bg);
+    border-radius: var(--radius-sm);
+    transform: translateX(-50%);
+}
+
+.barSlot:hover .tooltip {
+    display: block;
+}
+
+/* Tooltip above a bar near the edge would overflow the card. */
+.barSlot:nth-child(-n + 3) .tooltip {
+    left: 0;
+    transform: none;
+}
+
+.barSlot:nth-last-child(-n + 3) .tooltip {
+    right: 0;
+    left: auto;
+    transform: none;
+}
+
+/* ---- Top articles ---- */
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th {
+    padding: var(--space-2);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.table td {
+    padding: var(--space-2);
+    vertical-align: top;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.table td:first-child {
+    width: 2.5rem;
+}
+
+.table a {
+    color: var(--color-text-strong);
+    text-decoration: none;
+}
+
+.table a:hover {
+    color: var(--color-accent);
+    text-decoration: underline;
+}
+
+.table .numeric {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.share {
+    display: block;
+    height: 4px;
+    margin-top: var(--space-1);
+    background: var(--color-accent);
+    border-radius: var(--radius-pill);
+    opacity: 0.35;
+}
