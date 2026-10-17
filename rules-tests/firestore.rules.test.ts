@@ -15,8 +15,8 @@ import {
     writeBatch,
     type Firestore,
 } from "firebase/firestore";
-import { getStatsDay } from "../src/entities/site-stats/model/stats-day";
-import { afterAll, beforeAll, beforeEach, describe, it } from "vitest";
+import { getStatsDay } from "../src/shared/lib/date/stats-day";
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 
 // Runs against the Firestore emulator: npm run test:emulator
 let env: RulesTestEnvironment;
@@ -175,11 +175,15 @@ describe("likes", () => {
     const likes = (db: Firestore, slug = "real-article") => doc(db, "likes", slug);
     const voter = (db: Firestore, uid: string, slug = "real-article") =>
         doc(db, "likes", slug, "voters", uid);
+    const today = getStatsDay();
+    const dayLikes = (db: Firestore, slug: string, by = 1) =>
+        [doc(db, "stats", today), { likes: increment(by), lastLiked: slug }] as const;
     const toggle = (uid: string, liked: boolean, { slug = "real-article", by = 1 } = {}) => {
         const db = fs(uid);
         const batch = writeBatch(db);
         if (liked) batch.set(voter(db, uid, slug), {});
         else batch.delete(voter(db, uid, slug));
+        batch.set(...dayLikes(db, slug, liked ? by : -by), { merge: true });
         batch.set(likes(db, slug), { count: increment(liked ? by : -by) }, { merge: true });
         return batch.commit();
     };
@@ -239,6 +243,39 @@ describe("likes", () => {
         likeAsOther.set(voter(db, "ghost"), {});
         likeAsOther.set(likes(db), { count: increment(1) }, { merge: true });
         await assertFails(likeAsOther.commit());
+    });
+
+    it("today's likes move by one, and only together with the like itself", async () => {
+        const todayLikes = async () => {
+            let likes: unknown;
+            await env.withSecurityRulesDisabled(async (context) => {
+                likes = (await getDoc(doc(context.firestore(), "stats", today))).data()?.likes;
+            });
+            return likes;
+        };
+        await assertSucceeds(toggle("reader", true));
+        await assertSucceeds(toggle("reader", false));
+        await assertSucceeds(toggle("reader", true));
+        expect(await todayLikes()).toBe(1);
+        // A like from before today can be taken back: today goes below zero.
+        await assertSucceeds(toggle("old-fan", false));
+        expect(await todayLikes()).toBe(0);
+
+        // Without a new vote in the same batch: already liked, or no vote at all.
+        const reader = fs("reader");
+        await assertFails(setDoc(...dayLikes(reader, "real-article"), { merge: true }));
+        await assertFails(setDoc(...dayLikes(fs("someone"), "real-article"), { merge: true }));
+
+        // Taking back a like that was never given.
+        await assertFails(setDoc(...dayLikes(fs("someone"), "real-article", -1), { merge: true }));
+
+        // More than one per like.
+        const other = fs("other");
+        const batch = writeBatch(other);
+        batch.set(voter(other, "other"), {});
+        batch.set(likes(other), { count: increment(1) }, { merge: true });
+        batch.set(...dayLikes(other, "real-article", 2), { merge: true });
+        await assertFails(batch.commit());
     });
 
     it("rejects missing articles and extra fields", async () => {

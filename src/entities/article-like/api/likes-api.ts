@@ -1,6 +1,7 @@
-import { doc, getDoc, increment, writeBatch } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, increment, writeBatch } from "firebase/firestore";
 import { db } from "shared/api";
-import type { ArticleLikes } from "../model/types";
+import { getStatsDay } from "shared/lib/date";
+import type { ArticleLikeCount, ArticleLikes } from "../model/types";
 
 const COLLECTION = "likes";
 
@@ -13,6 +14,20 @@ const toCount = (value: unknown) => (typeof value === "number" && value > 0 ? va
 export const fetchLikeCount = async (slug: string) => {
     try {
         return toCount((await getDoc(likesRef(slug))).data()?.count);
+    } catch (error) {
+        console.error("❌ Ошибка при получении лайков:", error);
+        throw new Error("Не удалось загрузить лайки", { cause: error });
+    }
+};
+
+/** Лайки всех статей за всё время, по убыванию; статьи без лайков не попадают. */
+export const fetchAllLikeCounts = async (): Promise<ArticleLikeCount[]> => {
+    try {
+        const snapshot = await getDocs(collection(db, COLLECTION));
+        return snapshot.docs
+            .map((item) => ({ slug: item.id, likes: toCount(item.data().count) }))
+            .filter((item) => item.likes > 0)
+            .sort((a, b) => b.likes - a.likes || a.slug.localeCompare(b.slug));
     } catch (error) {
         console.error("❌ Ошибка при получении лайков:", error);
         throw new Error("Не удалось загрузить лайки", { cause: error });
@@ -39,6 +54,9 @@ export const fetchArticleLikes = async (
 /**
  * Ставит или снимает лайк одной пакетной записью: документ голосующего и count ± 1.
  * Правила пропускают только такую пару, поэтому повторный лайк того же uid отклоняется.
+ * Заодно меняет на ±1 likes сегодняшнего дня в stats (прирост лайков в аналитике), поэтому
+ * лайк и снятие туда-обратно график не накручивают. lastLiked нужен правилам, чтобы найти
+ * документ голосующего.
  */
 export const setArticleLiked = (slug: string, uid: string, liked: boolean) => {
     const batch = writeBatch(db);
@@ -47,6 +65,11 @@ export const setArticleLiked = (slug: string, uid: string, liked: boolean) => {
     } else {
         batch.delete(voterRef(slug, uid));
     }
+    batch.set(
+        doc(db, "stats", getStatsDay()),
+        { likes: increment(liked ? 1 : -1), lastLiked: slug },
+        { merge: true },
+    );
     batch.set(likesRef(slug), { count: increment(liked ? 1 : -1) }, { merge: true });
     return batch.commit();
 };

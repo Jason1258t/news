@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getLastDays } from "../model/stats-day";
+import { getLastDays } from "shared/lib/date";
 import { summarizeStats } from "../model/summarize";
 import { fetchDailyStats } from "./stats-api";
 import { statsKeys } from "./stats-keys";
