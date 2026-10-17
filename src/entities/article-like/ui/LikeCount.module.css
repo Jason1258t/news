@@ -1,0 +1,8 @@
+.count {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-left: auto;
+    color: var(--color-text-muted);
+    font-variant-numeric: tabular-nums;
+}

@@ -12,6 +12,10 @@ vi.mock("entities/article/api/articles-api", async (importOriginal) => ({
     fetchArticles: vi.fn(),
 }));
 
+vi.mock("entities/article-like/api/likes-api", () => ({
+    fetchLikeCount: vi.fn().mockResolvedValue(3),
+}));
+
 const fetchMock = vi.mocked(fetchArticles);
 
 const page = (slugs: string[], nextCursor?: string): ArticlesPage => ({
@@ -35,6 +39,16 @@ describe("ArticleFeed", () => {
         expect(fetchMock).toHaveBeenCalledWith(
             expect.objectContaining({ category: "Наука", tags: ["ии", "космос"] }),
         );
+    });
+
+    it("shows the like count on cards that came into view", async () => {
+        fetchMock.mockResolvedValue(page(["a"]));
+        renderWithProviders(<ArticleFeed />);
+        await screen.findByText("Статья a");
+
+        act(() => mockAllIsIntersecting(true));
+
+        expect(await screen.findByLabelText("Лайков: 3")).toBeInTheDocument();
     });
 
     it("links each card to its article", async () => {

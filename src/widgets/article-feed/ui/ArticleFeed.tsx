@@ -1,6 +1,7 @@
 import { Fragment, useEffect, type ReactNode } from "react";
 import { useInView } from "react-intersection-observer";
 import { ArticleCard, useArticles } from "entities/article";
+import { LikeCount } from "entities/article-like";
 import styles from "./ArticleFeed.module.css";
 import { useSearchParams } from "react-router-dom";
 import { LoadingSpinner } from "shared/ui/loading-widget";
@@ -70,6 +71,7 @@ export const ArticleFeed = ({ promo }: ArticleFeedProps) => {
                                 imageUrl={article.hero.url}
                                 tags={article.tags}
                                 onTagClick={addTag}
+                                stats={<LikeCount slug={article.slug} />}
                             />
                         </div>
                         {promo && index === Math.min(PROMO_AFTER, allArticles.length) - 1
