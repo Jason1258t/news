@@ -7,8 +7,8 @@ import { useSession } from "./useSession";
 vi.mock("firebase/auth", () => ({ onAuthStateChanged: vi.fn() }));
 
 const Probe = () => {
-    const { user, loading } = useSession();
-    return <p>{loading ? "loading" : (user?.email ?? "guest")}</p>;
+    const { user, visitorId, loading } = useSession();
+    return <p>{loading ? "loading" : `${user?.email ?? "guest"} / ${visitorId ?? "none"}`}</p>;
 };
 
 describe("SessionProvider", () => {
@@ -27,9 +27,12 @@ describe("SessionProvider", () => {
         expect(screen.getByText("loading")).toBeInTheDocument();
 
         act(() => report(null));
-        expect(screen.getByText("guest")).toBeInTheDocument();
-        act(() => report({ email: "admin@news.test" } as User));
-        expect(screen.getByText("admin@news.test")).toBeInTheDocument();
+        expect(screen.getByText("guest / none")).toBeInTheDocument();
+        act(() => report({ uid: "a1", email: "admin@news.test", isAnonymous: false } as User));
+        expect(screen.getByText("admin@news.test / a1")).toBeInTheDocument();
+        // Анонимный вход (лайки) — это всё ещё гость, но со своим uid.
+        act(() => report({ uid: "anon", email: null, isAnonymous: true } as User));
+        expect(screen.getByText("guest / anon")).toBeInTheDocument();
 
         unmount();
         expect(unsubscribe).toHaveBeenCalled();

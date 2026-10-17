@@ -14,7 +14,7 @@ vi.mock("entities/site-stats/api/stats-api", () => ({
 const visitMock = vi.mocked(recordVisit);
 const viewMock = vi.mocked(recordArticleView);
 
-const guest: SessionContextValue = { user: null, loading: false };
+const guest: SessionContextValue = { user: null, visitorId: null, loading: false };
 
 const withSession = (session: SessionContextValue) =>
     function Wrapper({ children }: { children: ReactNode }) {
@@ -56,9 +56,13 @@ describe("view tracking", () => {
     });
 
     it("waits for the session and skips signed-in admins", () => {
-        const admin = { user: { email: "admin@news.test" } as User, loading: false };
+        const admin = {
+            user: { email: "admin@news.test" } as User,
+            visitorId: "admin",
+            loading: false,
+        };
         renderHook(() => useTrackVisit(), {
-            wrapper: withSession({ user: null, loading: true }),
+            wrapper: withSession({ user: null, visitorId: null, loading: true }),
         });
         renderHook(() => useTrackVisit(), { wrapper: withSession(admin) });
 

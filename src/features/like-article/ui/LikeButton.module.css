@@ -1,0 +1,47 @@
+.bar {
+    display: flex;
+    justify-content: center;
+    max-width: 800px;
+    margin: 2rem auto 0;
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 0.55rem 1.1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--color-text-muted);
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.button:hover:not(:disabled) {
+    border-color: var(--color-danger);
+    color: var(--color-danger);
+}
+
+.button:disabled {
+    cursor: default;
+}
+
+.button:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--color-focus-ring);
+}
+
+.liked {
+    border-color: var(--color-danger);
+    background: var(--color-danger-soft);
+    color: var(--color-danger);
+}
+
+.count {
+    min-width: 1ch;
+    font-variant-numeric: tabular-nums;
+}

@@ -12,6 +12,7 @@ import {
     increment,
     setDoc,
     updateDoc,
+    writeBatch,
     type Firestore,
 } from "firebase/firestore";
 import { getStatsDay } from "../src/entities/site-stats/model/stats-day";
@@ -166,6 +167,87 @@ describe("stats (analytics counters)", () => {
         await assertFails(getDoc(stats("guest")));
         await assertFails(getDoc(stats("user")));
         await assertSucceeds(getDoc(stats("admin")));
+    });
+});
+
+describe("likes", () => {
+    const fs = (uid: string) => env.authenticatedContext(uid).firestore() as unknown as Firestore;
+    const likes = (db: Firestore, slug = "real-article") => doc(db, "likes", slug);
+    const voter = (db: Firestore, uid: string, slug = "real-article") =>
+        doc(db, "likes", slug, "voters", uid);
+    const toggle = (uid: string, liked: boolean, { slug = "real-article", by = 1 } = {}) => {
+        const db = fs(uid);
+        const batch = writeBatch(db);
+        if (liked) batch.set(voter(db, uid, slug), {});
+        else batch.delete(voter(db, uid, slug));
+        batch.set(likes(db, slug), { count: increment(liked ? by : -by) }, { merge: true });
+        return batch.commit();
+    };
+
+    beforeEach(async () => {
+        await env.withSecurityRulesDisabled(async (context) => {
+            const admin = context.firestore();
+            await setDoc(doc(admin, "articles", "real-article"), { title: "seed" });
+            await setDoc(doc(admin, "articles", "fresh-article"), { title: "seed" });
+            await setDoc(doc(admin, "likes", "real-article"), { count: 3 });
+            await setDoc(doc(admin, "likes", "real-article", "voters", "old-fan"), {});
+        });
+    });
+
+    it("anyone reads the count, a voter reads only their own vote", async () => {
+        await assertSucceeds(getDoc(likes(db("guest"))));
+        await assertSucceeds(getDoc(voter(fs("old-fan"), "old-fan")));
+        await assertFails(getDoc(voter(fs("someone"), "old-fan")));
+        await assertFails(getDoc(voter(db("guest"), "old-fan")));
+    });
+
+    it("a reader likes once and can take the like back", async () => {
+        await assertSucceeds(toggle("reader", true));
+        await assertFails(toggle("reader", true));
+        await assertSucceeds(toggle("reader", false));
+        await assertFails(toggle("reader", false));
+        await assertSucceeds(toggle("reader", true));
+    });
+
+    it("the first like creates the counter", async () => {
+        await assertSucceeds(toggle("reader", true, { slug: "fresh-article" }));
+    });
+
+    it("a guest without a uid cannot like", async () => {
+        const guest = db("guest");
+        const batch = writeBatch(guest);
+        batch.set(likes(guest), { count: increment(1) }, { merge: true });
+        await assertFails(batch.commit());
+    });
+
+    it("the counter and the vote change only together, by one", async () => {
+        await assertFails(toggle("reader", true, { by: 2 }));
+        await assertFails(updateDoc(likes(fs("reader")), { count: increment(1) }));
+        await assertFails(setDoc(voter(fs("reader"), "reader"), {}));
+        await assertFails(updateDoc(likes(fs("reader")), { count: 0 }));
+        await assertFails(deleteDoc(likes(fs("reader"))));
+    });
+
+    it("a reader cannot vote or unvote for someone else", async () => {
+        const db = fs("reader");
+        const unlikeOther = writeBatch(db);
+        unlikeOther.delete(voter(db, "old-fan"));
+        unlikeOther.set(likes(db), { count: increment(-1) }, { merge: true });
+        await assertFails(unlikeOther.commit());
+
+        const likeAsOther = writeBatch(db);
+        likeAsOther.set(voter(db, "ghost"), {});
+        likeAsOther.set(likes(db), { count: increment(1) }, { merge: true });
+        await assertFails(likeAsOther.commit());
+    });
+
+    it("rejects missing articles and extra fields", async () => {
+        await assertFails(toggle("reader", true, { slug: "no-such-article" }));
+        const db = fs("reader");
+        const batch = writeBatch(db);
+        batch.set(voter(db, "reader"), { weight: 100 });
+        batch.set(likes(db), { count: increment(1) }, { merge: true });
+        await assertFails(batch.commit());
     });
 });
 

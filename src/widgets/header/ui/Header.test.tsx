@@ -8,7 +8,7 @@ import { Header } from "./Header";
 
 const renderHeader = (user: User | null) =>
     renderWithProviders(
-        <SessionContext.Provider value={{ user, loading: false }}>
+        <SessionContext.Provider value={{ user, visitorId: user?.uid ?? null, loading: false }}>
             <Header />
         </SessionContext.Provider>,
     );

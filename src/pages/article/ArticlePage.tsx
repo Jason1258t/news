@@ -3,6 +3,7 @@ import { ArticleView } from "widgets/article-view";
 import { ArticleMeta } from "./ArticleMeta";
 import { useArticle } from "entities/article";
 import { useTrackArticleView } from "features/track-views";
+import { LikeButton } from "features/like-article";
 import { LoadingWidget } from "shared/ui/loading-widget";
 import { ErrorWidget } from "shared/ui/error-widget";
 import { NotFoundWidget } from "shared/ui/not-found-widget";
@@ -32,6 +33,7 @@ export const ArticlePage = () => {
             <SurfacePage fullWidthOnMobile>
                 <Content>
                     <ArticleView article={article} />
+                    <LikeButton slug={article.slug} />
                 </Content>
             </SurfacePage>
         </>
