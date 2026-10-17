@@ -25,6 +25,49 @@ service cloud.firestore {
       allow create, update: if isRecentDay(day) && (isVisitIncrement() || isArticleViewIncrement());
     }
 
+    // Лайки: likes/{slug} = { count }, likes/{slug}/voters/{uid} = {} — кто лайкнул.
+    // Читатель входит анонимно (Firebase Anonymous Auth), uid живёт в браузере как кука.
+    // Лайк и его отмена — одна пакетная запись: документ голосующего появляется (исчезает)
+    // вместе с count ± 1, поэтому один uid даёт не больше одного лайка на статью.
+    match /likes/{slug} {
+      allow read: if true;
+      allow create, update: if request.auth != null
+        && exists(/databases/$(database)/documents/articles/$(slug))
+        && request.resource.data.keys().hasOnly(['count'])
+        && (isLike(slug) || isUnlike(slug));
+
+      match /voters/{uid} {
+        allow get: if request.auth != null && request.auth.uid == uid;
+        allow create: if request.auth != null && request.auth.uid == uid
+          && request.resource.data.keys().size() == 0
+          && getAfter(likesPath(slug)).data.count == likeCount(slug) + 1;
+        allow delete: if request.auth != null && request.auth.uid == uid
+          && getAfter(likesPath(slug)).data.count == likeCount(slug) - 1;
+      }
+    }
+
+    function likesPath(slug) {
+      return /databases/$(database)/documents/likes/$(slug);
+    }
+
+    function voterPath(slug) {
+      return /databases/$(database)/documents/likes/$(slug)/voters/$(request.auth.uid);
+    }
+
+    function likeCount(slug) {
+      return exists(likesPath(slug)) ? get(likesPath(slug)).data.count : 0;
+    }
+
+    function isLike(slug) {
+      return request.resource.data.count == likeCount(slug) + 1
+        && !exists(voterPath(slug)) && existsAfter(voterPath(slug));
+    }
+
+    function isUnlike(slug) {
+      return request.resource.data.count == likeCount(slug) - 1
+        && exists(voterPath(slug)) && !existsAfter(voterPath(slug));
+    }
+
     // День документа близок к текущему времени (с запасом на часовой пояс и неточные часы).
     function isRecentDay(day) {
       return day.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')

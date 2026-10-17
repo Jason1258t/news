@@ -15,7 +15,11 @@ vi.mock("features/auth/api/auth-api", () => ({
 const renderSidebar = () =>
     renderWithProviders(
         <SessionContext.Provider
-            value={{ user: { email: "admin@news.test" } as User, loading: false }}
+            value={{
+                user: { email: "admin@news.test" } as User,
+                visitorId: "admin",
+                loading: false,
+            }}
         >
             <Routes>
                 <Route path="/admin/studio" element={<AdminSidebar />} />

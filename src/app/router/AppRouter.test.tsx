@@ -23,7 +23,7 @@ vi.mock("entities/todo/api/todo-api", () => ({
 
 const renderAt = (route: string, user: User | null = null) =>
     renderWithProviders(
-        <SessionContext.Provider value={{ user, loading: false }}>
+        <SessionContext.Provider value={{ user, visitorId: user?.uid ?? null, loading: false }}>
             <AppRouter />
         </SessionContext.Provider>,
         { route },

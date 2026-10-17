@@ -4,17 +4,24 @@ import { auth } from "shared/api";
 import { SessionContext } from "./session-context";
 
 export const SessionProvider = ({ children }: { children: ReactNode }) => {
-    const [user, setUser] = useState<User | null>(null);
+    const [current, setCurrent] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            setUser(currentUser);
+            setCurrent(currentUser);
             setLoading(false);
         });
 
         return () => unsubscribe();
     }, []);
 
-    return <SessionContext.Provider value={{ user, loading }}>{children}</SessionContext.Provider>;
+    // Анонимный вход нужен только для лайков: для остального приложения это гость.
+    const user = current && !current.isAnonymous ? current : null;
+
+    return (
+        <SessionContext.Provider value={{ user, visitorId: current?.uid ?? null, loading }}>
+            {children}
+        </SessionContext.Provider>
+    );
 };

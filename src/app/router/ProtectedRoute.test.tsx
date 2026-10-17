@@ -2,14 +2,14 @@ import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes, useLocation } from "react-router-dom";
 import type { User } from "firebase/auth";
 import { describe, expect, it } from "vitest";
-import { SessionContext } from "entities/session";
+import { SessionContext, type SessionContextValue } from "entities/session";
 import { ProtectedRoute } from "./ProtectedRoute";
 
 const LoginProbe = () => <p>login page, back to {String(useLocation().state?.from)}</p>;
 
-const renderWithAuth = (value: { user: User | null; loading: boolean }) =>
+const renderWithAuth = (value: Omit<SessionContextValue, "visitorId">) =>
     render(
-        <SessionContext.Provider value={value}>
+        <SessionContext.Provider value={{ ...value, visitorId: null }}>
             <MemoryRouter initialEntries={["/admin"]}>
                 <Routes>
                     <Route
