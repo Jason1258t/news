@@ -2,7 +2,12 @@ import { signInAnonymously } from "firebase/auth";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { auth } from "shared/api";
 import { seedEmulators, signOutUser } from "test/emulator";
-import { fetchArticleLikes, fetchLikeCount, setArticleLiked } from "./likes-api";
+import {
+    fetchAllLikeCounts,
+    fetchArticleLikes,
+    fetchLikeCount,
+    setArticleLiked,
+} from "./likes-api";
 
 // Real Firestore and Auth (emulators) with firestore.rules: npm run test:emulator.
 describe("likes API on the emulator", () => {
@@ -30,5 +35,18 @@ describe("likes API on the emulator", () => {
 
         await setArticleLiked("all-blocks", second, false);
         expect(await fetchArticleLikes("all-blocks", second)).toEqual({ count: 1, liked: false });
+    });
+
+    it("lists all-time likes for analytics, most liked first, without zeros", async () => {
+        const uid = (await signInAnonymously(auth)).user.uid;
+        await setArticleLiked("all-blocks", uid, true);
+        await setArticleLiked("quantum-computer", uid, true);
+        await setArticleLiked("quantum-computer", uid, false);
+        await signOutUser();
+        const other = (await signInAnonymously(auth)).user.uid;
+        await setArticleLiked("all-blocks", other, true);
+        await signOutUser();
+
+        expect(await fetchAllLikeCounts()).toEqual([{ slug: "all-blocks", likes: 2 }]);
     });
 });
