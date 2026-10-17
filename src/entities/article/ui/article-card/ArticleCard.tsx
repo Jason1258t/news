@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import styles from "./ArticleCard.module.css";
 
@@ -13,6 +14,8 @@ interface ArticleCardProps {
     tags?: string[];
     /** Makes the tags clickable; without it they are not rendered. */
     onTagClick?: (tag: string) => void;
+    /** Counters at the end of the meta row (likes). */
+    stats?: ReactNode;
 }
 
 const CATEGORY_SEPARATOR = " • ";
@@ -27,6 +30,7 @@ export const ArticleCard = ({
     imageUrl,
     tags = [],
     onTagClick,
+    stats,
 }: ArticleCardProps) => {
     const mainCategory = category?.split(CATEGORY_SEPARATOR)[0];
     const visibleTags = onTagClick ? tags.slice(0, MAX_TAGS) : [];
@@ -46,13 +50,14 @@ export const ArticleCard = ({
                     </Link>
                 </h3>
                 {excerpt ? <p className={styles.excerpt}>{excerpt}</p> : null}
-                {mainCategory || date ? (
+                {mainCategory || date || stats ? (
                     <div className={styles.meta}>
                         {mainCategory ? (
                             <span className={styles.category}>{mainCategory}</span>
                         ) : null}
                         {mainCategory && date ? <span aria-hidden="true">·</span> : null}
                         {date ? <span className={styles.date}>{date}</span> : null}
+                        {stats}
                     </div>
                 ) : null}
                 {visibleTags.length > 0 ? (
