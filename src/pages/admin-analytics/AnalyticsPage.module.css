@@ -67,6 +67,12 @@
     color: var(--color-text-strong);
 }
 
+.cardNote {
+    font-size: var(--font-size-sm);
+    font-weight: 400;
+    color: var(--color-text-muted);
+}
+
 .muted {
     color: var(--color-text-muted);
 }

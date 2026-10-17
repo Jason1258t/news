@@ -6,6 +6,8 @@ export interface DailyStats {
     visits: number;
     /** Просмотры статей по slug: один на статью за сеанс. */
     articles: Record<string, number>;
+    /** Прирост лайков за день: поставленные минус снятые, может быть меньше нуля. */
+    likes: number;
 }
 
 export interface ArticleViews {
@@ -18,6 +20,7 @@ export interface StatsSummary {
     days: DailyStats[];
     totalVisits: number;
     totalArticleViews: number;
+    totalNewLikes: number;
     /** Статьи по убыванию просмотров. */
     topArticles: ArticleViews[];
 }

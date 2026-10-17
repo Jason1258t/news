@@ -143,6 +143,7 @@ export const seedStats = (now = new Date()) =>
         return {
             day,
             visits: wave,
+            likes: Math.max(0, Math.round(wave / 6) - (daysAgo % 3)),
             articles: {
                 "all-blocks": Math.round(wave / 2),
                 "quantum-computer": Math.round(wave / 3),
