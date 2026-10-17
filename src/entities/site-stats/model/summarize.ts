@@ -3,7 +3,7 @@ import type { ArticleViews, DailyStats, StatsSummary } from "./types";
 /** Сводка за период `days`: недостающие дни заполняются нулями. */
 export const summarizeStats = (days: string[], stats: DailyStats[]): StatsSummary => {
     const byDay = new Map(stats.map((item) => [item.day, item]));
-    const filled = days.map((day) => byDay.get(day) ?? { day, visits: 0, articles: {} });
+    const filled = days.map((day) => byDay.get(day) ?? { day, visits: 0, articles: {}, likes: 0 });
 
     const views = new Map<string, number>();
     for (const { articles } of filled) {
@@ -20,6 +20,7 @@ export const summarizeStats = (days: string[], stats: DailyStats[]): StatsSummar
         days: filled,
         totalVisits: filled.reduce((sum, item) => sum + item.visits, 0),
         totalArticleViews: topArticles.reduce((sum, item) => sum + item.views, 0),
+        totalNewLikes: filled.reduce((sum, item) => sum + item.likes, 0),
         topArticles,
     };
 };

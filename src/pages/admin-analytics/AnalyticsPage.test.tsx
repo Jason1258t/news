@@ -27,8 +27,8 @@ describe("AnalyticsPage", () => {
     beforeEach(() => {
         const [yesterday, today] = getLastDays(2);
         statsMock.mockReset().mockResolvedValue([
-            { day: yesterday!, visits: 10, articles: { popular: 5, gone: 1 } },
-            { day: today!, visits: 20, articles: { popular: 3, other: 4 } },
+            { day: yesterday!, visits: 10, articles: { popular: 5, gone: 1 }, likes: 1 },
+            { day: today!, visits: 20, articles: { popular: 3, other: 4 }, likes: 3 },
         ]);
         likesMock.mockReset().mockResolvedValue([
             { slug: "other", likes: 6 },
@@ -51,7 +51,8 @@ describe("AnalyticsPage", () => {
 
         const days = getLastDays(30);
         expect(statsMock).toHaveBeenCalledWith(days[0], days[29]);
-        expect(screen.getAllByRole("listitem")).toHaveLength(30);
+        const visits = screen.getByRole("list", { name: "Сеансы по дням" });
+        expect(within(visits).getAllByRole("listitem")).toHaveLength(30);
     });
 
     it("ranks articles by views and marks deleted ones", async () => {
@@ -82,6 +83,19 @@ describe("AnalyticsPage", () => {
         expect(await within(top!).findByRole("link")).toHaveTextContent("Статья other");
         expect(top).toHaveTextContent("6");
         expect(await within(next!).findByRole("link")).toHaveTextContent("Статья popular");
+    });
+
+    it("charts the net likes per day for the period", async () => {
+        renderWithProviders(<AnalyticsPage />);
+
+        const chart = await screen.findByRole("list", { name: "Прирост лайков по дням" });
+        const bars = within(chart).getAllByRole("listitem");
+        expect(bars).toHaveLength(30);
+        expect(bars[29]!.getAttribute("aria-label")).toMatch(/: 3$/);
+        expect(bars[28]!.getAttribute("aria-label")).toMatch(/: 1$/);
+        expect(screen.getByRole("region", { name: /Прирост лайков по дням/ })).toHaveTextContent(
+            "за период: 4",
+        );
     });
 
     it("keeps the stats when likes fail to load", async () => {

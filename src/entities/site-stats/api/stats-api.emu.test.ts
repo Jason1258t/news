@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { seedEmulators, signInAsAdmin, signOutUser } from "test/emulator";
-import { getStatsDay } from "../model/stats-day";
+import { getStatsDay } from "shared/lib/date";
 import { fetchDailyStats, recordArticleView, recordVisit } from "./stats-api";
 
 // Real Firestore (emulator) with firestore.rules: npm run test:emulator.
@@ -28,6 +28,7 @@ describe("stats API on the emulator", () => {
             day: today,
             visits: 2,
             articles: { "quantum-computer": 1, "all-blocks": 1 },
+            likes: 0,
         });
     });
 

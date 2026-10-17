@@ -7,7 +7,7 @@ import { LoadingSpinner } from "shared/ui/loading-widget";
 import styles from "./AnalyticsPage.module.css";
 import { TopArticles } from "./TopArticles";
 import { TopLiked } from "./TopLiked";
-import { VisitsChart } from "./VisitsChart";
+import { DailyChart } from "./DailyChart";
 
 const PERIODS = [7, 30, 90] as const;
 type Period = (typeof PERIODS)[number];
@@ -44,7 +44,7 @@ export const AnalyticsPage = () => {
     return (
         <AdminPage
             title="Аналитика"
-            description="Сеансы и просмотры — за выбранный период, лайки — за всё время. Посещения админов не учитываются."
+            description="Сеансы, просмотры и прирост лайков — за выбранный период; итоги по лайкам — за всё время. Посещения админов не учитываются."
             actions={periodSwitch}
         >
             {isLoading && <LoadingSpinner />}
@@ -74,7 +74,25 @@ export const AnalyticsPage = () => {
                         <h2 id="visits-title" className={styles.cardTitle}>
                             Сеансы по дням
                         </h2>
-                        <VisitsChart days={stats.days} />
+                        <DailyChart
+                            days={stats.days}
+                            value={(day) => day.visits}
+                            label="Сеансы по дням"
+                        />
+                    </section>
+
+                    <section className={styles.card} aria-labelledby="likes-title">
+                        <h2 id="likes-title" className={styles.cardTitle}>
+                            Прирост лайков по дням{" "}
+                            <span className={styles.cardNote}>
+                                за период: {formatNumber(stats.totalNewLikes)}
+                            </span>
+                        </h2>
+                        <DailyChart
+                            days={stats.days}
+                            value={(day) => day.likes}
+                            label="Прирост лайков по дням"
+                        />
                     </section>
 
                     <section className={styles.card} aria-labelledby="top-title">

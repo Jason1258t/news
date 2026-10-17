@@ -10,7 +10,7 @@ import {
     type DocumentSnapshot,
 } from "firebase/firestore";
 import { db } from "shared/api";
-import { getStatsDay } from "../model/stats-day";
+import { getStatsDay } from "shared/lib/date";
 import type { DailyStats } from "../model/types";
 
 const COLLECTION = "stats";
@@ -23,6 +23,7 @@ export const mapDailyStatsFromFirestore = (snapshot: DocumentSnapshot): DailySta
     return {
         day: snapshot.id,
         visits: toCount(data.visits),
+        likes: typeof data.likes === "number" ? data.likes : 0,
         articles: Object.fromEntries(
             Object.entries(articles).map(([slug, count]) => [slug, toCount(count)]),
         ),

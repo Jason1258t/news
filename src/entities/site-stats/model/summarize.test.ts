@@ -6,8 +6,8 @@ describe("summarizeStats", () => {
 
     it("fills missing days with zeros and keeps the period order", () => {
         const summary = summarizeStats(period, [
-            { day: "2026-10-15", visits: 4, articles: {} },
-            { day: "2026-10-13", visits: 2, articles: {} },
+            { day: "2026-10-15", visits: 4, articles: {}, likes: 3 },
+            { day: "2026-10-13", visits: 2, articles: {}, likes: 1 },
         ]);
 
         expect(summary.days.map((d) => [d.day, d.visits])).toEqual([
@@ -16,12 +16,14 @@ describe("summarizeStats", () => {
             ["2026-10-15", 4],
         ]);
         expect(summary.totalVisits).toBe(6);
+        expect(summary.days.map((d) => d.likes)).toEqual([1, 0, 3]);
+        expect(summary.totalNewLikes).toBe(4);
     });
 
     it("sums article views across days and sorts them, ties by slug", () => {
         const summary = summarizeStats(period, [
-            { day: "2026-10-13", visits: 1, articles: { b: 1, a: 2 } },
-            { day: "2026-10-15", visits: 1, articles: { b: 3, c: 2 } },
+            { day: "2026-10-13", visits: 1, articles: { b: 1, a: 2 }, likes: 0 },
+            { day: "2026-10-15", visits: 1, articles: { b: 3, c: 2 }, likes: 0 },
         ]);
 
         expect(summary.topArticles).toEqual([
@@ -34,7 +36,7 @@ describe("summarizeStats", () => {
 
     it("ignores days outside the period", () => {
         const summary = summarizeStats(period, [
-            { day: "2026-10-01", visits: 9, articles: { old: 9 } },
+            { day: "2026-10-01", visits: 9, articles: { old: 9 }, likes: 0 },
         ]);
 
         expect(summary.totalVisits).toBe(0);

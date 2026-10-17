@@ -18,11 +18,12 @@ service cloud.firestore {
     }
 
     // Счётчики посещений: один документ на день (id — дата YYYY-MM-DD по Москве),
-    // { visits: число, articles: { <slug>: число } }. Читатели только прибавляют +1
-    // к сегодняшнему дню, читать может только админ.
+    // { visits: число, articles: { <slug>: число }, likes: число }. Читатели только прибавляют +1
+    // (likes — ещё и −1 при снятии лайка) к сегодняшнему дню, читать может только админ.
     match /stats/{day} {
       allow read: if request.auth != null && request.auth.token.admin == true;
-      allow create, update: if isRecentDay(day) && (isVisitIncrement() || isArticleViewIncrement());
+      allow create, update: if isRecentDay(day)
+        && (isVisitIncrement() || isArticleViewIncrement() || isLikeChange());
     }
 
     // Лайки: likes/{slug} = { count }, likes/{slug}/voters/{uid} = {} — кто лайкнул.
@@ -82,6 +83,20 @@ service cloud.firestore {
     function isVisitIncrement() {
       return request.resource.data.diff(statsBefore()).affectedKeys().hasOnly(['visits'])
         && request.resource.data.visits == statsBefore().get('visits', 0) + 1;
+    }
+
+    // Прирост лайков за день меняется на ±1 только вместе с самим лайком в той же пакетной
+    // записи: документ голосующего для статьи из lastLiked появляется (+1) или исчезает (−1).
+    function isLikeChange() {
+      let slug = request.resource.data.get('lastLiked', '');
+      let before = statsBefore().get('likes', 0);
+      let after = request.resource.data.get('likes', 0);
+      return request.auth != null
+        && request.resource.data.diff(statsBefore()).affectedKeys().hasOnly(['likes', 'lastLiked'])
+        && slug is string
+        && slug.matches('^[a-z0-9-]{1,120}$')
+        && ((after == before + 1 && !exists(voterPath(slug)) && existsAfter(voterPath(slug)))
+          || (after == before - 1 && exists(voterPath(slug)) && !existsAfter(voterPath(slug))));
     }
 
     // Ровно один счётчик в articles вырос на 1, и это существующая статья. Достать ключ

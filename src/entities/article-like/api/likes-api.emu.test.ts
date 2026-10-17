@@ -1,7 +1,9 @@
 import { signInAnonymously } from "firebase/auth";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { auth } from "shared/api";
-import { seedEmulators, signOutUser } from "test/emulator";
+import { fetchDailyStats } from "entities/site-stats";
+import { getStatsDay } from "shared/lib/date";
+import { seedEmulators, signInAsAdmin, signOutUser } from "test/emulator";
 import {
     fetchAllLikeCounts,
     fetchArticleLikes,
@@ -48,5 +50,17 @@ describe("likes API on the emulator", () => {
         await signOutUser();
 
         expect(await fetchAllLikeCounts()).toEqual([{ slug: "all-blocks", likes: 2 }]);
+    });
+
+    it("tracks the net likes in today's stats", async () => {
+        const uid = (await signInAnonymously(auth)).user.uid;
+        await setArticleLiked("all-blocks", uid, true);
+        await setArticleLiked("quantum-computer", uid, true);
+        await setArticleLiked("quantum-computer", uid, false);
+
+        await signInAsAdmin();
+        const today = getStatsDay();
+        const [stats] = await fetchDailyStats(today, today);
+        expect(stats?.likes).toBe(1);
     });
 });
