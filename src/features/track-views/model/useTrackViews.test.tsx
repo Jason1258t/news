@@ -1,6 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import type { User } from "firebase/auth";
 import type { ReactNode } from "react";
+import { MemoryRouter, type InitialEntry } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { recordArticleView, recordVisit } from "entities/site-stats";
 import { SessionContext, type SessionContextValue } from "entities/session";
@@ -16,9 +17,15 @@ const viewMock = vi.mocked(recordArticleView);
 
 const guest: SessionContextValue = { user: null, visitorId: null, loading: false };
 
-const withSession = (session: SessionContextValue) =>
+const withSession = (session: SessionContextValue, entries: InitialEntry[] = ["/"]) =>
     function Wrapper({ children }: { children: ReactNode }) {
-        return <SessionContext.Provider value={session}>{children}</SessionContext.Provider>;
+        return (
+            <SessionContext.Provider value={session}>
+                <MemoryRouter initialEntries={entries} initialIndex={entries.length - 1}>
+                    {children}
+                </MemoryRouter>
+            </SessionContext.Provider>
+        );
     };
 
 describe("view tracking", () => {
@@ -34,11 +41,28 @@ describe("view tracking", () => {
         vi.unstubAllEnvs();
     });
 
-    it("counts a visit once per tab session", () => {
+    it("counts a visit once per tab session, with where it came from", () => {
         renderHook(() => useTrackVisit(), { wrapper: withSession(guest) });
         renderHook(() => useTrackVisit(), { wrapper: withSession(guest) });
 
-        expect(visitMock).toHaveBeenCalledTimes(1);
+        expect(visitMock.mock.calls).toEqual([["direct"]]);
+    });
+
+    it("takes the source of an article opened inside the site from the link", () => {
+        renderHook(() => useTrackArticleView("a"), {
+            wrapper: withSession(guest, [
+                "/",
+                { pathname: "/articles/a", state: { from: "feed" } },
+            ]),
+        });
+        renderHook(() => useTrackArticleView("b"), {
+            wrapper: withSession(guest, ["/about", "/articles/b"]),
+        });
+
+        expect(viewMock.mock.calls).toEqual([
+            ["a", "feed"],
+            ["b", "site"],
+        ]);
     });
 
     it("counts each article once per session", () => {
@@ -52,7 +76,10 @@ describe("view tracking", () => {
         rerender({ slug: "b" });
         rerender({ slug: "a" });
 
-        expect(viewMock.mock.calls).toEqual([["a"], ["b"]]);
+        expect(viewMock.mock.calls).toEqual([
+            ["a", "direct"],
+            ["b", "direct"],
+        ]);
     });
 
     it("waits for the session and skips signed-in admins", () => {

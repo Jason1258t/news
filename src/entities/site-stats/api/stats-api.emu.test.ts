@@ -16,10 +16,10 @@ describe("stats API on the emulator", () => {
     });
 
     it("lets a reader count visits and article views that the admin then reads", async () => {
-        await recordVisit();
-        await recordVisit();
-        await recordArticleView("quantum-computer");
-        await recordArticleView("all-blocks");
+        await recordVisit("telegram");
+        await recordVisit("direct");
+        await recordArticleView("quantum-computer", "telegram");
+        await recordArticleView("all-blocks", "feed");
 
         await signInAsAdmin();
         const [stats] = await fetchDailyStats(today, today);
@@ -27,17 +27,19 @@ describe("stats API on the emulator", () => {
         expect(stats).toEqual({
             day: today,
             visits: 2,
+            entries: { telegram: 1, direct: 1 },
             articles: { "quantum-computer": 1, "all-blocks": 1 },
+            articleSources: { "quantum-computer": { telegram: 1 }, "all-blocks": { feed: 1 } },
             likes: 0,
         });
     });
 
     it("does not count views of articles that do not exist", async () => {
-        await expect(recordArticleView("no-such-article")).rejects.toThrow(/permission/i);
+        await expect(recordArticleView("no-such-article", "direct")).rejects.toThrow(/permission/i);
     });
 
     it("does not let a reader see the stats", async () => {
-        await recordVisit();
+        await recordVisit("direct");
 
         await expect(fetchDailyStats(today, today)).rejects.toThrow(
             "Не удалось загрузить статистику",

@@ -8,6 +8,7 @@ import styles from "./AnalyticsPage.module.css";
 import { TopArticles } from "./TopArticles";
 import { TopLiked } from "./TopLiked";
 import { DailyChart } from "./DailyChart";
+import { SourceList } from "./SourceList";
 
 const PERIODS = [7, 30, 90] as const;
 type Period = (typeof PERIODS)[number];
@@ -80,6 +81,24 @@ export const AnalyticsPage = () => {
                             label="Сеансы по дням"
                         />
                     </section>
+
+                    <div className={styles.pair}>
+                        <section className={styles.card} aria-labelledby="entries-title">
+                            <h2 id="entries-title" className={styles.cardTitle}>
+                                Откуда приходят на сайт
+                            </h2>
+                            <SourceList sources={stats.entrySources} label="Источники сеансов" />
+                        </section>
+                        <section className={styles.card} aria-labelledby="opens-title">
+                            <h2 id="opens-title" className={styles.cardTitle}>
+                                Откуда открывают статьи
+                            </h2>
+                            <SourceList
+                                sources={stats.articleSources}
+                                label="Источники просмотров статей"
+                            />
+                        </section>
+                    </div>
 
                     <section className={styles.card} aria-labelledby="likes-title">
                         <h2 id="likes-title" className={styles.cardTitle}>

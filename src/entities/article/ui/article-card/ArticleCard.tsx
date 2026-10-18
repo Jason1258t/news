@@ -5,6 +5,8 @@ import styles from "./ArticleCard.module.css";
 interface ArticleCardProps {
     /** Link target; without it the card renders as a link to the current page. */
     to?: string;
+    /** Router state passed with the link (where the reader came from, for analytics). */
+    linkState?: unknown;
     title: string;
     excerpt?: string;
     date?: string;
@@ -23,6 +25,7 @@ const MAX_TAGS = 2;
 
 export const ArticleCard = ({
     to = "",
+    linkState,
     title,
     excerpt,
     date,
@@ -45,7 +48,7 @@ export const ArticleCard = ({
             <div className={styles.content}>
                 <h3 className={styles.title}>
                     {/* The ::after overlay makes the whole card the link target. */}
-                    <Link to={to} className={styles.link}>
+                    <Link to={to} state={linkState} className={styles.link}>
                         {title}
                     </Link>
                 </h3>

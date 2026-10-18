@@ -18,7 +18,8 @@ service cloud.firestore {
     }
 
     // Счётчики посещений: один документ на день (id — дата YYYY-MM-DD по Москве),
-    // { visits: число, articles: { <slug>: число }, likes: число }. Читатели только прибавляют +1
+    // { visits, entries: { <источник>: число }, articles: { <slug>: число },
+    // articleSources: { <slug>: { <источник>: число } }, likes }. Читатели только прибавляют +1
     // (likes — ещё и −1 при снятии лайка) к сегодняшнему дню, читать может только админ.
     match /stats/{day} {
       allow read: if request.auth != null && request.auth.token.admin == true;
@@ -80,9 +81,30 @@ service cloud.firestore {
       return resource == null ? {} : resource.data;
     }
 
+    // Источники, как TRAFFIC_SOURCES в entities/site-stats/model/sources.ts.
+    function sourceKeys() {
+      return ['feed', 'picks', 'site', 'telegram', 'search', 'external', 'direct'];
+    }
+
+    // В карте `after` по сравнению с `before` вырос на 1 ровно ключ `key`, остальное не тронуто.
+    function isOneKeyIncrement(before, after, key) {
+      return after is map
+        && after.diff(before).affectedKeys() == [key].toSet()
+        && after.diff(before).removedKeys().size() == 0
+        && after[key] == before.get(key, 0) + 1;
+    }
+
+    // +1 сеанс и, если клиент его прислал, +1 к источнику входа из lastEntry.
+    // Без источника — запись старого клиента, её тоже принимаем.
     function isVisitIncrement() {
-      return request.resource.data.diff(statsBefore()).affectedKeys().hasOnly(['visits'])
-        && request.resource.data.visits == statsBefore().get('visits', 0) + 1;
+      let keys = request.resource.data.diff(statsBefore()).affectedKeys();
+      let source = request.resource.data.get('lastEntry', '');
+      return keys.hasOnly(['visits', 'entries', 'lastEntry'])
+        && request.resource.data.visits == statsBefore().get('visits', 0) + 1
+        && (!keys.hasAny(['entries', 'lastEntry'])
+          || (source in sourceKeys()
+            && isOneKeyIncrement(statsBefore().get('entries', {}),
+                request.resource.data.get('entries', {}), source)));
     }
 
     // Прирост лайков за день меняется на ±1 только вместе с самим лайком в той же пакетной
@@ -99,13 +121,27 @@ service cloud.firestore {
           || (after == before - 1 && exists(voterPath(slug)) && !existsAfter(voterPath(slug))));
     }
 
+    // В articleSources.<slug> вырос на 1 ровно счётчик источника из lastSource.
+    function isArticleSourceIncrement(slug) {
+      let source = request.resource.data.get('lastSource', '');
+      let before = statsBefore().get('articleSources', {});
+      let after = request.resource.data.get('articleSources', {});
+      return source in sourceKeys()
+        && after is map
+        && after.diff(before).affectedKeys() == [slug].toSet()
+        && after.diff(before).removedKeys().size() == 0
+        && isOneKeyIncrement(before.get(slug, {}), after[slug], source);
+    }
+
     // Ровно один счётчик в articles вырос на 1, и это существующая статья. Достать ключ
     // из diff правила не умеют, поэтому клиент дублирует slug в поле lastArticle.
     function isArticleViewIncrement() {
       let before = statsBefore().get('articles', {});
       let after = request.resource.data.get('articles', {});
       let slug = request.resource.data.get('lastArticle', '');
-      return request.resource.data.diff(statsBefore()).affectedKeys().hasOnly(['articles', 'lastArticle'])
+      let keys = request.resource.data.diff(statsBefore()).affectedKeys();
+      return keys.hasOnly(['articles', 'lastArticle', 'articleSources', 'lastSource'])
+        && (!keys.hasAny(['articleSources', 'lastSource']) || isArticleSourceIncrement(slug))
         && slug is string
         && slug.matches('^[a-z0-9-]{1,120}$')
         && after is map

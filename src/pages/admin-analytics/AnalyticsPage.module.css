@@ -67,6 +67,40 @@
     color: var(--color-text-strong);
 }
 
+.pair {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-4);
+}
+
+.sources {
+    display: grid;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.source {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-1) var(--space-3);
+}
+
+.sourceBar {
+    flex-basis: 100%;
+}
+
+.sourceBar .share {
+    margin-top: 0;
+}
+
+.sourceCount {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
 .cardNote {
     font-size: var(--font-size-sm);
     font-weight: 400;
