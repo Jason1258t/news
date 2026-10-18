@@ -163,6 +163,74 @@ describe("stats (analytics counters)", () => {
         );
     });
 
+    it("counts the source of a visit and of an article view", async () => {
+        await assertSucceeds(
+            setDoc(
+                stats("guest"),
+                {
+                    visits: increment(1),
+                    entries: { telegram: increment(1) },
+                    lastEntry: "telegram",
+                },
+                { merge: true },
+            ),
+        );
+        await assertSucceeds(
+            setDoc(
+                stats("guest"),
+                {
+                    articles: { "real-article": increment(1) },
+                    articleSources: { "real-article": { feed: increment(1) } },
+                    lastArticle: "real-article",
+                    lastSource: "feed",
+                },
+                { merge: true },
+            ),
+        );
+    });
+
+    it("rejects sources that are unknown, inflated or without the counted event", async () => {
+        const visit = (entries: object, lastEntry: string, visits = increment(1)) =>
+            setDoc(stats("guest"), { visits, entries, lastEntry }, { merge: true });
+        await assertFails(visit({ spam: increment(1) }, "spam"));
+        await assertFails(visit({ telegram: increment(2) }, "telegram"));
+        await assertFails(visit({ telegram: increment(1) }, "direct"));
+        await assertFails(visit({ telegram: increment(1), direct: increment(1) }, "telegram"));
+        await assertFails(
+            setDoc(
+                stats("guest"),
+                { entries: { telegram: increment(1) }, lastEntry: "telegram" },
+                { merge: true },
+            ),
+        );
+
+        const open = (sources: object, lastSource: string, slug = "real-article") =>
+            setDoc(
+                stats("guest"),
+                {
+                    articles: { [slug]: increment(1) },
+                    articleSources: sources,
+                    lastArticle: slug,
+                    lastSource,
+                },
+                { merge: true },
+            );
+        await assertFails(open({ "real-article": { spam: increment(1) } }, "spam"));
+        await assertFails(open({ "real-article": { feed: increment(5) } }, "feed"));
+        await assertFails(open({ "other-article": { feed: increment(1) } }, "feed"));
+        await assertFails(open({ "real-article": { feed: increment(1) } }, "telegram"));
+        await assertFails(
+            setDoc(
+                stats("guest"),
+                {
+                    articleSources: { "real-article": { feed: increment(1) } },
+                    lastSource: "feed",
+                },
+                { merge: true },
+            ),
+        );
+    });
+
     it("only an admin can read", async () => {
         await assertFails(getDoc(stats("guest")));
         await assertFails(getDoc(stats("user")));

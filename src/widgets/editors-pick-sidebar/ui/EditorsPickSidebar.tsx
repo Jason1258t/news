@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { EditorsPickCard, useEditorsPicks } from "entities/editors-pick";
+import { withFromParam } from "features/track-views";
 import { LoadingSpinner } from "shared/ui/loading-widget";
 import { SidebarCard } from "shared/ui/sidebar-card";
 import styles from "./EditorsPickSidebar.module.css";
@@ -16,7 +17,7 @@ export const EditorsPickSidebar = () => {
                     editorsPicks.map((pick) => (
                         <Link
                             key={pick.id}
-                            to={pick.articleUrl}
+                            to={withFromParam(pick.articleUrl, "picks")}
                             className={styles.link}
                             target="_blank"
                             rel="noopener noreferrer"

@@ -8,6 +8,7 @@ import { LoadingSpinner } from "shared/ui/loading-widget";
 import { FeedSkeleton } from "./FeedSkeleton";
 import { ErrorWidget } from "shared/ui/error-widget";
 import { useQueryTags } from "features/filter-by-tags";
+import { linkFrom } from "features/track-views";
 
 /** Number of cards shown before the promo block. */
 const PROMO_AFTER = 3;
@@ -64,6 +65,7 @@ export const ArticleFeed = ({ promo }: ArticleFeedProps) => {
                         >
                             <ArticleCard
                                 to={`/articles/${article.slug}`}
+                                linkState={linkFrom("feed")}
                                 title={article.title}
                                 excerpt={article.description}
                                 date={article.dateDisplay}

@@ -27,8 +27,22 @@ describe("AnalyticsPage", () => {
     beforeEach(() => {
         const [yesterday, today] = getLastDays(2);
         statsMock.mockReset().mockResolvedValue([
-            { day: yesterday!, visits: 10, articles: { popular: 5, gone: 1 }, likes: 1 },
-            { day: today!, visits: 20, articles: { popular: 3, other: 4 }, likes: 3 },
+            {
+                day: yesterday!,
+                visits: 10,
+                entries: { direct: 6, telegram: 4 },
+                articles: { popular: 5, gone: 1 },
+                articleSources: { popular: { telegram: 4, feed: 1 } },
+                likes: 1,
+            },
+            {
+                day: today!,
+                visits: 20,
+                entries: { telegram: 20 },
+                articles: { popular: 3, other: 4 },
+                articleSources: { popular: { telegram: 1 }, other: { feed: 4 } },
+                likes: 3,
+            },
         ]);
         likesMock.mockReset().mockResolvedValue([
             { slug: "other", likes: 6 },
@@ -96,6 +110,34 @@ describe("AnalyticsPage", () => {
         expect(screen.getByRole("region", { name: /Прирост лайков по дням/ })).toHaveTextContent(
             "за период: 4",
         );
+    });
+
+    it("shows where readers come from and how many opened each article from Telegram", async () => {
+        renderWithProviders(<AnalyticsPage />);
+
+        const entries = await screen.findByRole("list", { name: "Источники сеансов" });
+        expect(
+            within(entries)
+                .getAllByRole("listitem")
+                .map((item) => item.textContent),
+        ).toEqual(["Telegram24 · 80%", "Прямой заход6 · 20%"]);
+
+        const opens = screen.getByRole("list", { name: "Источники просмотров статей" });
+        expect(
+            within(opens)
+                .getAllByRole("listitem")
+                .map((item) => item.textContent),
+        ).toEqual(["Лента на главной5 · 38%", "Telegram5 · 38%", "Не определён3 · 23%"]);
+
+        const popular = within(screen.getByRole("region", { name: "Популярные статьи" }));
+        const [header, first] = popular.getAllByRole("row");
+        expect(header).toHaveTextContent("из Telegram");
+        // Просмотры 8, из Telegram 5, лайки 2.
+        expect([...first!.querySelectorAll("td")].slice(2).map((td) => td.textContent)).toEqual([
+            "8",
+            "5",
+            "2",
+        ]);
     });
 
     it("keeps the stats when likes fail to load", async () => {

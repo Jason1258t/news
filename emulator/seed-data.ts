@@ -140,9 +140,24 @@ export const seedStats = (now = new Date()) =>
             .toISOString()
             .slice(0, 10);
         const wave = Math.round(20 + 12 * Math.sin(daysAgo / 3));
+        const telegram = Math.round(wave / 3);
+        const allBlocks = Math.round(wave / 2);
+        const quantum = Math.round(wave / 3);
         return {
             day,
             visits: wave,
+            entries: {
+                telegram,
+                direct: wave - telegram - 2,
+                search: 2,
+            },
+            articleSources: {
+                "all-blocks": {
+                    telegram: Math.round(allBlocks / 2),
+                    feed: allBlocks - Math.round(allBlocks / 2),
+                },
+                "quantum-computer": { feed: quantum - 1, picks: 1 },
+            },
             likes: Math.max(0, Math.round(wave / 6) - (daysAgo % 3)),
             articles: {
                 "all-blocks": Math.round(wave / 2),
