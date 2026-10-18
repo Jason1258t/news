@@ -98,4 +98,9 @@ describe("buildTelegramPostPrompt", () => {
         expect(prompt).toContain(`${SITE_URL}/#/articles/`);
         expect(prompt).toContain(TELEGRAM_CHANNEL_URL);
     });
+
+    it("asks to tag the article link with ?from=tg for analytics", () => {
+        expect(buildTelegramPostPrompt()).toMatch(/\/#\/articles\/[a-z-]+\?from=tg\)/);
+        expect(buildTelegramPostPrompt()).toContain("?from=tg в конце обязательна");
+    });
 });

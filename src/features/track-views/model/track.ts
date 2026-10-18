@@ -1,4 +1,4 @@
-import { recordArticleView, recordVisit } from "entities/site-stats";
+import { recordArticleView, recordVisit, type TrafficSource } from "entities/site-stats";
 
 /** Считаем только на боевом сайте: dev-сервер и эмуляторы статистику не трогают. */
 export const isTrackingEnabled = () =>
@@ -20,7 +20,8 @@ const oncePerSession = (key: string, record: () => Promise<unknown>) => {
     record().catch(() => {});
 };
 
-export const trackVisit = () => oncePerSession("visit", recordVisit);
+export const trackVisit = (source: TrafficSource) =>
+    oncePerSession("visit", () => recordVisit(source));
 
-export const trackArticleView = (slug: string) =>
-    oncePerSession(`article:${slug}`, () => recordArticleView(slug));
+export const trackArticleView = (slug: string, source: TrafficSource) =>
+    oncePerSession(`article:${slug}`, () => recordArticleView(slug, source));
